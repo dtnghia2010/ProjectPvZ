@@ -22,10 +22,10 @@ public class World extends JPanel implements Runnable{
     }
     @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
-        double nextDraw = System.nanoTime() + drawInterval;
+        double drawInterval = 1000000000/FPS; // 1000000000 nano seconds = 1 second
+        double nextDraw = System.nanoTime() + drawInterval; // System.nanoTime(): the current (real) time shows in nano-second
         while (gameThread != null){
-            double remainingTime = nextDraw - System.nanoTime();
+            double remainingTime = nextDraw - System.nanoTime(); // remaining time after executing every code inside this class
             remainingTime = remainingTime/1000000;
             if(remainingTime < 0){
                 remainingTime = 0;
@@ -33,7 +33,7 @@ public class World extends JPanel implements Runnable{
 
             move();
             try {
-                Thread.sleep((long) remainingTime);
+                Thread.sleep((long) remainingTime); // let the program stop for the remaining time to avoid bugs
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
