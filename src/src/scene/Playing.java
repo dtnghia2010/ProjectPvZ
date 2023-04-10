@@ -12,4 +12,9 @@ public class Playing implements SceneMethods{
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, panel.getWidth(), panel.getHeight(), null);
     }
+
+    @Override
+    public void mouseClicked(int x, int y) {
+
+    }
 }

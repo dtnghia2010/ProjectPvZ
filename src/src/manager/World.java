@@ -40,7 +40,7 @@ public class World extends JPanel implements Runnable {
 
     public void initInput() {
         System.out.println("initInput succeed");
-        myMouseListener = new MyMouseListener();
+        myMouseListener = new MyMouseListener(this);
         keyBoardListener = new KeyBoardListener();
         addKeyListener(keyBoardListener);
         setFocusable(true);
@@ -121,4 +121,16 @@ public class World extends JPanel implements Runnable {
             }
         }
     }
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public Playing getPlaying() {
+        return playing;
+    }
+
+    public Lose getLose() {
+        return lose;
+    }
+
 }

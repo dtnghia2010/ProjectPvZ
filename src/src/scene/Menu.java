@@ -1,9 +1,8 @@
 package scene;
 
 
-import manager.World;
 import ui.MyButton;
-
+import static scene.GameStates.*;
 import javax.swing.*;
 import java.awt.*;
 public class Menu implements SceneMethods {
@@ -26,5 +25,17 @@ public class Menu implements SceneMethods {
         bPlaying.draw(g);
         bSetting.draw(g);
         bQuit.draw(g);
+    }
+
+    public void mouseClicked(int x, int y) {
+        System.out.println("Call mouseClicked");
+        if(bPlaying.getBounds().contains(x,y)) {
+            System.out.println("Call setGameState");
+            setGameStates(GameStates.Playing);
+        } else if (bQuit.getBounds().contains(x,y)) {
+            setGameStates(GameStates.Lose);
+        } else if (bSetting.getBounds().contains(x,y)) {
+            System.out.println("Setting");
+        }
     }
 }
