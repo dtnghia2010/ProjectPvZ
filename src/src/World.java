@@ -14,6 +14,7 @@ public class World extends JPanel implements Runnable{
 
     }
     Thread gameThread;
+    private int FPS = 60;
     private Rectangle rectangle = new Rectangle(500,250,100,100);
     public void startThread(){
         gameThread = new Thread(this);
@@ -21,7 +22,7 @@ public class World extends JPanel implements Runnable{
     }
     @Override
     public void run() {
-        double drawInterval = 1000000000/60;
+        double drawInterval = 1000000000/FPS;
         double nextDraw = System.nanoTime() + drawInterval;
         while (gameThread != null){
             double remainingTime = nextDraw - System.nanoTime();
