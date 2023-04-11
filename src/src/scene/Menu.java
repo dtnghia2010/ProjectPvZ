@@ -1,6 +1,8 @@
 package scene;
 
 
+import inputs.MyMouseListener;
+import manager.World;
 import ui.MyButton;
 import static scene.GameStates.*;
 import javax.swing.*;
@@ -8,6 +10,7 @@ import java.awt.*;
 public class Menu implements SceneMethods {
     private JPanel panel;
     private MyButton bPlaying, bSetting, bQuit;
+    private MyMouseListener myMouseListener;
     public Menu(JPanel panel) {
         this.panel = panel;
         initButtons();
@@ -16,6 +19,7 @@ public class Menu implements SceneMethods {
         bPlaying = new MyButton("Play", panel.getWidth()/2, 329,150,70);
         bSetting = new MyButton("Setting", 430, 410, 150, 70);
         bQuit = new MyButton("Quit", 430,491, 150, 70);
+        panel.addMouseListener(myMouseListener);
     }
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, panel.getWidth(), panel.getHeight(), null);
@@ -40,5 +44,11 @@ public class Menu implements SceneMethods {
     }
     public MyButton getbPlaying(){
         return this.bPlaying;
+    }
+    public MyButton getbSetting(){
+        return this.bSetting;
+    }
+    public MyButton getbQuit(){
+        return this.bQuit;
     }
 }
