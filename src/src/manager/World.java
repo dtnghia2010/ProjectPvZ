@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class World extends JPanel implements Runnable {
-    private BufferedImage img;
-    private ArrayList<BufferedImage> sprites = new ArrayList<>();
+    private Image[] image= new Image[3];;
     private Random random;
     private double FPS_SET = 200.0;
     private double UPS_SET = 150.0;
@@ -22,6 +21,7 @@ public class World extends JPanel implements Runnable {
     private Lose lose = new Lose(this);
     private Menu menu = new Menu(this);
     private Playing playing = new Playing(this);
+    private Toolkit t = Toolkit.getDefaultToolkit();
     public void start() {
         Thread thread = new Thread(this);
         thread.start();
@@ -43,12 +43,12 @@ public class World extends JPanel implements Runnable {
     }
 
     public void initClasses() {
+
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         render(g);
-//        g.drawImage(img, 0,0,null);
 
     }
 
@@ -56,7 +56,7 @@ public class World extends JPanel implements Runnable {
         switch (GameScenes.gameScenes) {
             case MENU:
                 //dang lam toi day
-//                menu.render(g, );
+                menu.render(g, image[0]);
                 break;
             case PLAYING:
 
@@ -65,28 +65,20 @@ public class World extends JPanel implements Runnable {
 
                 break;
         }
-//        for (int i = 0; i < 16; i++) {
-//            for (int j = 0; j < 16; j++) {
-//                g.drawImage(sprites.get(getRnd()), j * 16, i * 16, null);
-//            }
-//        }
     }
 
     public void importImg() {
-//        InputStream is = getClass().getResourceAsStream("/menu.jpg");
-//        try {
-//            img = ImageIO.read(is);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            image[0] = t.getImage(getClass().getResource("/menu.jpg"));
+            image[1] = t.getImage(getClass().getResource("/lawn.png"));
+            image[2] = t.getImage(getClass().getResource("/lose.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+//            e.getLocalizedMessage();
+        }
     }
 
     public void loadSprites() {
-//        for (int i = 0; i < 16; i++) {
-//            for (int j = 0; j < 16; j++) {
-//                sprites.add(img.getSubimage(i * 16, j * 16, 16, 16));
-//            }
-//        }
     }
 
     public int getRnd() {
