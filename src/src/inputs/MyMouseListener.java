@@ -2,6 +2,7 @@ package inputs;
 
 import manager.World;
 import scene.GameStates;
+import scene.Menu;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -9,12 +10,15 @@ import java.awt.event.MouseMotionListener;
 
 public class MyMouseListener implements MouseListener, MouseMotionListener {
     private World w;
+    private Menu menu;
     public MyMouseListener(World w) {
         this.w = w;
+        menu = new Menu(w);
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1) {
+
+        if(menu.getbPlaying().getBounds().contains(e.getX(),e.getY())) {
             System.out.println("Mouse test 2");
             switch (GameStates.gameStates) {
                 case Menu:

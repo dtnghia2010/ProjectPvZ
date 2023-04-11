@@ -14,9 +14,10 @@ public class MyButton {
         this.y = y;
         this.width = width;
         this.height = height;
+        initBound();
     }
     public void initBound() {
-        bounds = new Rectangle(x,y,width,height);
+        bounds = new Rectangle(this.x,this.y,this.width,this.height);
     }
     public void draw(Graphics g) {
         g.setColor(Color.GRAY);
@@ -30,6 +31,6 @@ public class MyButton {
         g.drawString(text, x - w/2 + width/2,y + h/2 + height/2);
     }
     public Rectangle getBounds() {
-        return getBounds();
+        return this.bounds;
     }
 }

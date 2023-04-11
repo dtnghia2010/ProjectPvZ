@@ -42,6 +42,7 @@ public class World extends JPanel implements Runnable {
         System.out.println("initInput succeed");
         myMouseListener = new MyMouseListener(this);
         keyBoardListener = new KeyBoardListener();
+        addMouseListener(myMouseListener);
         addKeyListener(keyBoardListener);
         setFocusable(true);
         requestFocus();

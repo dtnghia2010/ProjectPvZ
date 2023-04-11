@@ -14,6 +14,7 @@ public class Menu implements SceneMethods {
     }
     public void initButtons() {
         bPlaying = new MyButton("Play", panel.getWidth()/2, 329,150,70);
+
         bSetting = new MyButton("Setting", 430, 410, 150, 70);
         bQuit = new MyButton("Quit", 430,491, 150, 70);
     }
@@ -37,5 +38,8 @@ public class Menu implements SceneMethods {
         } else if (bSetting.getBounds().contains(x,y)) {
             System.out.println("Setting");
         }
+    }
+    public MyButton getbPlaying(){
+        return this.bPlaying;
     }
 }
