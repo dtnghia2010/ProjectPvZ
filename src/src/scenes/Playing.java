@@ -11,6 +11,6 @@ public class Playing implements SceneMethods{
     }
     @Override
     public void render(Graphics g, Image img) {
-
+        g.drawImage(img,0,0, w.getWidth(), w.getHeight(), null);
     }
 }

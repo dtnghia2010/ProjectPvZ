@@ -1,32 +1,39 @@
 package manager;
 
+import inputs.KeyBoardListener;
 import inputs.MyMouseListener;
 import scenes.GameScenes;
 import scenes.Lose;
 import scenes.Menu;
 import scenes.Playing;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class World extends JPanel implements Runnable {
-    private Image[] image= new Image[3];;
+    private int screenWidth = 1024, screenHeight = 625;
+    private ArrayList<Image> img = new ArrayList<>();
     private Random random;
     private double FPS_SET = 200.0;
     private double UPS_SET = 150.0;
     private MyMouseListener myMouseListener;
-    private Lose lose = new Lose(this);
-    private Menu menu = new Menu(this);
-    private Playing playing = new Playing(this);
+    private KeyBoardListener keyBoardListener;
+    private Lose lose;
+    private Menu menu;
+    private Playing playing;
     private Toolkit t = Toolkit.getDefaultToolkit();
     public void start() {
         Thread thread = new Thread(this);
         thread.start();
     }
     public World() {
+        setPreferredSize(new Dimension(screenWidth, screenHeight));
         random = new Random();
         initInput();
         initClasses();
@@ -36,46 +43,44 @@ public class World extends JPanel implements Runnable {
     }
     public void initInput() {
         myMouseListener = new MyMouseListener();
+        keyBoardListener = new KeyBoardListener();
         addMouseListener(myMouseListener);
         addMouseMotionListener(myMouseListener);
+        addKeyListener(keyBoardListener);
         setFocusable(true);
         requestFocus();
     }
 
     public void initClasses() {
-
+        lose = new Lose(this);
+        playing = new Playing(this);
+        menu = new Menu(this);
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         render(g);
-
     }
 
     public void render(Graphics g) {
         switch (GameScenes.gameScenes) {
             case MENU:
-                //dang lam toi day
-                menu.render(g, image[0]);
+                menu.render(g, img.get(0));
                 break;
             case PLAYING:
-
+                playing.render(g, img.get(1));
                 break;
             case LOSE:
-
+                lose.render(g, img.get(2));
                 break;
         }
     }
 
     public void importImg() {
-        try {
-            image[0] = t.getImage(getClass().getResource("/menu.jpg"));
-            image[1] = t.getImage(getClass().getResource("/lawn.png"));
-            image[2] = t.getImage(getClass().getResource("/lose.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-//            e.getLocalizedMessage();
-        }
+        img.add(t.getImage(getClass().getResource("/menu.jpg")));
+        img.add(t.getImage(getClass().getResource("/lawn.png")));
+        img.add(t.getImage(getClass().getResource("/lose.png")));
+
     }
 
     public void loadSprites() {

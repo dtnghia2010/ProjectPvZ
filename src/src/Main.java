@@ -7,8 +7,8 @@ public class Main {
         JFrame frame = new JFrame();
         frame.add(new World());
         frame.setTitle("Plants vs Zombies");
-        frame.setBounds(127, 0, 1024, 625);
-        frame.setResizable(false);
+        frame.pack();
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
