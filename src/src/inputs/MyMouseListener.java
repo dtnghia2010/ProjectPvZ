@@ -18,16 +18,19 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        if(menu.getbPlaying().getBounds().contains(e.getX(),e.getY())) {
-            System.out.println("Mouse test 2");
+        if(e.getButton() == MouseEvent.BUTTON1) {
             switch (GameStates.gameStates) {
                 case Menu:
-                    System.out.println("Mouse test");
                     w.getMenu().mouseClicked(e.getX(), e.getY());
                     break;
                 case Playing:
+                    w.getPlaying().mouseClicked(e.getX(), e.getY());
                     break;
                 case Lose:
+                    w.getLose().mouseClicked(e.getX(), e.getY());
+                    break;
+                case Setting:
+                    w.getSetting().mouseClicked(e.getX(), e.getY());
                     break;
             }
         }

@@ -5,19 +5,20 @@ import static scene.GameStates.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class Playing implements SceneMethods{
-    private JPanel panel;
+
+public class Setting implements SceneMethods {
+    private JPanel jpanel;
     private MyButton bMenu;
-    public Playing(JPanel panel) {
-        this.panel = panel;
+    public Setting(JPanel jpanel) {
+        this.jpanel = jpanel;
         initButtons();
     }
     public void initButtons() {
-        bMenu = new MyButton("Main menu", 0,0,150,70);
+        bMenu = new MyButton("Main menu", 0,0,150, 70);
     }
     @Override
     public void render(Graphics g, Image img) {
-        g.drawImage(img, 0, 0, panel.getWidth(), panel.getHeight(), null);
+        g.drawImage(img, 0,0,jpanel.getWidth(), jpanel.getHeight(), null);
         drawButtons(g);
     }
 

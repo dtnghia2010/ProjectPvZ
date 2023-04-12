@@ -2,14 +2,12 @@ package manager;
 
 import inputs.KeyBoardListener;
 import inputs.MyMouseListener;
-import scene.GameStates;
+import scene.*;
+import scene.Menu;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
-import scene.Menu;
-import scene.Playing;
-import scene.Lose;
 
 public class World extends JPanel implements Runnable {
     private int screenWidth = 1024;
@@ -19,6 +17,7 @@ public class World extends JPanel implements Runnable {
     private Menu menu;
     private Playing playing;
     private Lose lose;
+    private Setting setting;
     private Random random = new Random();
     private Thread gameThread;
     private double FPS_SET = 10000.0;
@@ -53,6 +52,7 @@ public class World extends JPanel implements Runnable {
         menu = new Menu(this);
         playing = new Playing(this);
         lose = new Lose(this);
+        setting = new Setting(this);
     }
 
     @Override
@@ -71,8 +71,8 @@ public class World extends JPanel implements Runnable {
             case Lose:
                 lose.render(g, img[2]);
                 break;
-            case Background:
-                //get background
+            case Setting:
+                setting.render(g, img[3]);
                 break;
         }
     }
@@ -82,7 +82,7 @@ public class World extends JPanel implements Runnable {
             img[0] = t.getImage(getClass().getResource("/menu.jpg"));
             img[1] = t.getImage(getClass().getResource("/lawn.png"));
             img[2] = t.getImage(getClass().getResource("/lose.png"));
-            img[3] = t.getImage(getClass().getResource("/playing.png"));
+            img[3] = t.getImage(getClass().getResource("/setting.png"));
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open image!"); //show error dialog
@@ -133,5 +133,6 @@ public class World extends JPanel implements Runnable {
     public Lose getLose() {
         return lose;
     }
+    public Setting getSetting() {return setting;};
 
 }
