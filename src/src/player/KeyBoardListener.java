@@ -1,4 +1,4 @@
-package inputs;
+package player;
 
 import scenes.GameScenes;
 import scenes.Menu;

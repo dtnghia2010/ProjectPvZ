@@ -1,18 +1,14 @@
 package manager;
 
-import inputs.KeyBoardListener;
-import inputs.MyMouseListener;
+import player.KeyBoardListener;
+import player.MyMouseListener;
 import scenes.GameScenes;
 import scenes.Lose;
 import scenes.Menu;
 import scenes.Playing;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -41,8 +37,21 @@ public class World extends JPanel implements Runnable {
         loadSprites();
         start();
     }
+
+    public Lose getLose() {
+        return lose;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public Playing getPlaying() {
+        return playing;
+    }
+
     public void initInput() {
-        myMouseListener = new MyMouseListener();
+        myMouseListener = new MyMouseListener(this);
         keyBoardListener = new KeyBoardListener();
         addMouseListener(myMouseListener);
         addMouseMotionListener(myMouseListener);
