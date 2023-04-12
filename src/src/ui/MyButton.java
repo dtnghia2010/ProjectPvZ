@@ -3,11 +3,14 @@ package ui;
 import inputs.MyMouseListener;
 
 import java.awt.*;
+import javax.swing.*;
+import inputs.MyMouseListener;
 
 public class MyButton {
     private int x, y, width, height;
     private String text;
     private Rectangle bounds;
+    private MyMouseListener myMouseListener;
     public MyButton(String text, int x, int y, int width, int height) {
         this.text = text;
         this.x = x;
