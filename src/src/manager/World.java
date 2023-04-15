@@ -10,8 +10,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class World extends JPanel implements Runnable {
-    private int screenWidth = 1024;
-    private int screenHeight = 625;
+    private int screenWidth = 1024, screenHeight = 625;
     private Image[] img = new Image[4];
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Menu menu;
@@ -21,10 +20,11 @@ public class World extends JPanel implements Runnable {
     private Random random = new Random();
     private Thread gameThread;
     private double FPS_SET = 10000.0;
-    private double UPS_SET = 10000.0;
+    private double UPS_SET = 60.0;
 
     private MyMouseListener myMouseListener;
     private KeyBoardListener keyBoardListener;
+
     public void start() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -37,8 +37,9 @@ public class World extends JPanel implements Runnable {
         start();
     }
 
+
+
     public void initInput() {
-        System.out.println("initInput succeed");
         myMouseListener = new MyMouseListener(this);
         keyBoardListener = new KeyBoardListener();
         addMouseListener(myMouseListener);
@@ -77,12 +78,14 @@ public class World extends JPanel implements Runnable {
         }
     }
 
+
+
     public void importImg() {
         try {
-            img[0] = t.getImage(getClass().getResource("/menu.jpg"));
-            img[1] = t.getImage(getClass().getResource("/lawn.png"));
-            img[2] = t.getImage(getClass().getResource("/lose.png"));
-            img[3] = t.getImage(getClass().getResource("/setting.png"));
+            img[0] = t.getImage(getClass().getResource("/scene/menu.jpg"));
+            img[1] = t.getImage(getClass().getResource("/scene/lawn.png"));
+            img[2] = t.getImage(getClass().getResource("/scene/lose.png"));
+            img[3] = t.getImage(getClass().getResource("/scene/setting.png"));
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open image!"); //show error dialog
@@ -111,7 +114,7 @@ public class World extends JPanel implements Runnable {
             if(now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
-                //updates()
+                updates();
             }
             //check FPS & UPS
             if(System.currentTimeMillis() - lastTimeCheck >= 1000) {
@@ -122,6 +125,21 @@ public class World extends JPanel implements Runnable {
             }
         }
     }
+
+    private void updates() {
+        switch (GameStates.gameStates) {
+            case Playing:
+                playing.update();
+                break;
+            case Menu:
+                break;
+            case Lose:
+                break;
+            case Setting:
+                break;
+        }
+    }
+
     public Menu getMenu() {
         return menu;
     }

@@ -36,4 +36,8 @@ public class MyButton {
     public Rectangle getBounds() {
         return this.bounds;
     }
+
+    public String getText() {
+        return text;
+    }
 }

@@ -31,4 +31,10 @@ public class Lose implements SceneMethods{
     public void drawButtons(Graphics g) {
         bMenu.draw(g);
     }
+
+    public void mousePressed(int x, int y) {
+    }
+
+    public void mouseReleased(int x, int y) {
+    }
 }

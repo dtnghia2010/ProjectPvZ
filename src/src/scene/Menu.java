@@ -40,4 +40,10 @@ public class Menu implements SceneMethods {
     public MyButton getbPlaying(){
         return this.bPlaying;
     }
+
+    public void mousePressed(int x, int y) {
+    }
+
+    public void mouseReleased(int x, int y) {
+    }
 }
