@@ -6,6 +6,7 @@ import scene.Playing;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ZombieManager {
     private Playing playing;
@@ -43,19 +44,17 @@ public class ZombieManager {
         return zomImg[z.getType()];
     }
     public void update() {
-        for(Zombie z: zombies) {
-            if(z != null ) {
-                move();
+        Iterator<Zombie> itZ = zombies.iterator();
+        while ((itZ.hasNext())) {
+            Zombie z = itZ.next();
+            if(z.getX() < 100) {
+                zombies.remove(itZ);
+            } else {
+                move(z);
             }
         }
     }
-    public void move() {
-        for(Zombie z: zombies) {
-            if(z.getX() < 100) {
-                z = null;
-            } else {
-                z.setX(z.getX()-z.getSpd());
-            }
-        }
+    public void move(Zombie z) {
+        z.setX(z.getX()-z.getSpd());
     }
 }
