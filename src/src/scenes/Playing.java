@@ -4,8 +4,10 @@ import manager.World;
 import player.MyButtons;
 import static scenes.GameScenes.*;
 import java.awt.*;
+import scenes.Tile;
 
 public class Playing implements SceneMethods{
+    private Tile tile = new Tile();
     private World w;
     private MyButtons bMenu, bQuit;
     public Playing(World w) {
@@ -17,6 +19,7 @@ public class Playing implements SceneMethods{
         initButtons();
         bMenu.draw(g);
         bQuit.draw(g);
+        tile.render(g);
     }
 
     private void initButtons() {
