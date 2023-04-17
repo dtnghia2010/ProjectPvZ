@@ -2,14 +2,21 @@ package scenes;
 
 import manager.World;
 import player.MyButtons;
+
+import javax.swing.*;
+
 import static scenes.GameScenes.*;
 import java.awt.*;
 
 public class Playing implements SceneMethods{
     private World w;
     private MyButtons bMenu, bQuit;
+    private Image[] pick_plantBar;
+    private Toolkit t = Toolkit.getDefaultToolkit();
+
     public Playing(World w) {
         this.w = w;
+        importImage();
     }
     @Override
     public void render(Graphics g, Image img) {
@@ -17,11 +24,37 @@ public class Playing implements SceneMethods{
         initButtons();
         bMenu.draw(g);
         bQuit.draw(g);
+        drawPlantbar(g);
     }
 
     private void initButtons() {
         bMenu = new MyButtons("Main menu", 0,0,150,70);
         bQuit = new MyButtons("End game", 0, 80, 150, 70);
+    }
+
+    private void drawPlantbar(Graphics g){
+        g.setColor(Color.black);
+        g.drawRect(350, 0,450,90);
+        g.setColor(Color.pink);
+        g.fillRect(350, 0, 450, 90);
+        int distance = 0;
+        for (Image p : pick_plantBar){
+            g.drawImage(p, 350 + distance, 0, 90, 90, null);
+            distance += 90;
+        }
+    }
+
+    private void importImage(){
+        pick_plantBar = new Image[5];
+        try {
+            pick_plantBar[0] = t.getImage(getClass().getResource("/plantBar/PvZ_Sunflower.jpg"));
+            pick_plantBar[1] = t.getImage(getClass().getResource("/plantBar/PvZ_Peashooter.jpg"));
+            pick_plantBar[2] = t.getImage(getClass().getResource("/plantBar/PvZ_Wall-nut.jpg"));
+            pick_plantBar[3] = t.getImage(getClass().getResource("/plantBar/PvZ_Snow_Pea.jpg"));
+            pick_plantBar[4] = t.getImage(getClass().getResource("/plantBar/PvZ_Cherry_Bomb.jpg"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void mouseClicked(int x, int y) {
