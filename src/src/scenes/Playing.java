@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class Playing implements SceneMethods{
     private World w;
-    private MyButtons bMenu, bQuit;
+    private MyButtons bMenu, bQuit, pickPlant[];
     private Image[] pick_plantBar;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -30,6 +30,12 @@ public class Playing implements SceneMethods{
     private void initButtons() {
         bMenu = new MyButtons("Main menu", 0,0,150,70);
         bQuit = new MyButtons("End game", 0, 80, 150, 70);
+        pickPlant = new MyButtons[5];
+        pickPlant[0] = new MyButtons("Sunflower", 350, 0, 90, 90);
+        pickPlant[1] = new MyButtons("Peashooter", 440, 0, 90, 90);
+        pickPlant[2] = new MyButtons("Wall-nut", 530, 0, 90, 90);
+        pickPlant[3] = new MyButtons("Snow Pea", 620, 0, 90, 90);
+        pickPlant[4] = new MyButtons("Cherry Bomb", 710, 0, 90, 90);
     }
 
     private void drawPlantbar(Graphics g){
@@ -62,6 +68,11 @@ public class Playing implements SceneMethods{
             setGameScenes(MENU);
         } else if(bQuit.getBounds().contains(x,y)) {
             setGameScenes(LOSE);
+        }
+        for (MyButtons b : pickPlant){
+            if (b.getBounds().contains(x, y)){
+                System.out.println("You choose " + b.getText());
+            }
         }
     }
 }
