@@ -7,10 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ZombieManager {
     private Playing playing;
     private ArrayList<Zombie> zombies;
+    private Graphics g;
     private Image[] zomImg;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private int zWidth = 80, zHeight = 150;
@@ -24,9 +27,11 @@ public class ZombieManager {
         zombies.add(new Zombie(type, x, y));
     }
     public void draw(Graphics g) {
-        for(Zombie z: zombies) {
-            if(z != null) {
-                g.drawImage(getZomImg(z), (int)z.getX(), (int)z.getY(), zWidth, zHeight, null);
+        if(zombies.size() > 0) {
+            for(Zombie z: zombies) {
+                if(z != null) {
+                    g.drawImage(getZomImg(z), (int)z.getX(), (int)z.getY(), zWidth, zHeight, null);
+                }
             }
         }
     }
@@ -44,13 +49,18 @@ public class ZombieManager {
         return zomImg[z.getType()];
     }
     public void update() {
-        Iterator<Zombie> itZ = zombies.iterator();
+        ListIterator<Zombie> itZ = zombies.listIterator();
         while ((itZ.hasNext())) {
             Zombie z = itZ.next();
-            if(z.getX() < 100) {
-                zombies.remove(itZ);
-            } else {
-                move(z);
+            try {
+                if(z.getX() < 100) {
+                    itZ.remove();
+                } else {
+                    move(z);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error in update()");
             }
         }
     }

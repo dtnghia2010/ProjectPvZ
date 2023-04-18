@@ -17,14 +17,16 @@ public class Playing implements SceneMethods{
     private Tile[] tiles = new Tile[45];
     private ZombieManager zM;
     private Toolkit t = Toolkit.getDefaultToolkit();
-
     public Playing(JPanel panel) {
         this.panel = panel;
-        zM = new ZombieManager(this);
-        zM.addZombie(0,900,250);
+        initZombies();
         initPlants();
         importImg();
         initTiles();
+    }
+    public void initZombies() {
+        zM = new ZombieManager(this);
+        zM.addZombie(0,900,250);
     }
     public void update() {
         zM.update();
@@ -63,7 +65,7 @@ public class Playing implements SceneMethods{
             plantChoiceImg[6] = t.getImage(getClass().getResource("/plantBar/PvZ_Chomper.jpg"));
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "ERROR - importing images");
+            JOptionPane.showMessageDialog(null, "ERROR - importImg()");
         }
     }
 
