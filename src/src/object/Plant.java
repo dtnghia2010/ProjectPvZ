@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Plant implements Character {
-    private boolean seleted = false, placed = false;
+    private boolean seleted = false;
+    private boolean placed = false;
+    private boolean isThreaten = false;
     private boolean idle = true, threaten = false;
     private int x, y, type;
     private int hp, dmg;
@@ -33,6 +35,12 @@ public class Plant implements Character {
     public void setSeleted(Boolean b) {
         seleted = b;
     }
+    public void setThreaten(boolean b) {
+        this.isThreaten = b;
+    }
+    public boolean isThreaten() {
+        return isThreaten;
+    }
     public void setPlaced(boolean b) {
         placed = b;
     }
@@ -50,6 +58,5 @@ public class Plant implements Character {
 
     @Override
     public void getHit() {
-
     }
 }

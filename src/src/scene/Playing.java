@@ -1,5 +1,6 @@
 package scene;
 
+import manager.WaveManager;
 import manager.ZombieManager;
 import object.Zombie;
 import tile.Tile;
@@ -18,6 +19,7 @@ public class Playing implements SceneMethods{
     private Plant[] plants;
     private Tile[] tiles = new Tile[45];
     private ZombieManager zM;
+    private WaveManager wM;
     private Toolkit t = Toolkit.getDefaultToolkit();
     public Playing(JPanel panel) {
         this.panel = panel;
@@ -28,10 +30,19 @@ public class Playing implements SceneMethods{
     }
     public void initZombies() {
         zM = new ZombieManager(this);
-        zM.addZombie(0,900,250);
+        wM = new WaveManager(this);
     }
+
+    private void spawnZombies() {
+        if(wM.isTimeForNewZombie()) {
+            zM.spawnZombie(1, 1024, 150);
+        }
+    }
+
     public void update() {
+        spawnZombies();
         zM.update();
+        wM.update();
     }
 
     private void initPlants() {
@@ -135,11 +146,11 @@ public class Playing implements SceneMethods{
                     break;
                 }
             }
-            for (Tile tl: tiles) {
+/*            for (Tile tl: tiles) {
                 if(tl.getBound().contains(x,y)) {
-                    zM.addZombie(1,x,y);
+                    zM.spawnZombie(1,x,y);
                 }
-            }
+            }*/
         }
 
     }

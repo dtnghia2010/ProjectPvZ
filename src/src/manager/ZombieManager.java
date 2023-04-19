@@ -18,12 +18,26 @@ public class ZombieManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private int zWidth = 80, zHeight = 150;
 
+    private int zombieNum = 10;
+
     public ZombieManager(Playing playing) {
         this.playing = playing;
         zombies = new ArrayList<>();
         importImg();
+        startHorde();
     }
-    public void addZombie(int type, int x, int y) {
+
+    private void startHorde() {
+        while(true) {
+            if(zombieNum > 0) {
+                zombieNum--;
+            } else {
+                break;
+            }
+        }
+    }
+
+    public void spawnZombie(int type, int x, int y) {
         zombies.add(new Zombie(type, x, y));
     }
     public void draw(Graphics g) {
@@ -50,22 +64,38 @@ public class ZombieManager {
     }
     public void update() {
         ListIterator<Zombie> itZ = zombies.listIterator();
-        while ((itZ.hasNext())) {
-            Zombie z = itZ.next();
-            try {
-                if(z.getX() < 100) {
-                    z.dead();
-                } else {
-                    move(z);
+        if(allZombieDead()) {
+            zombies.clear();
+            System.out.println("Clear horde succeed!");
+        } else {
+            while ((itZ.hasNext())) {
+                Zombie z = itZ.next();
+                try {
+                    if(z.getX() < 100) {
+                        z.dead();
+                    } else {
+                        move(z);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error in update()");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Error in update()");
             }
         }
+        System.out.println("number of zombie: " + zombies.size());
     }
     public void move(Zombie z) {
         z.setX(z.getX()-z.getSpd());
+    }
+
+    public boolean allZombieDead() {
+        boolean checkDead = true;
+        for(Zombie z: zombies) {
+            if(z.isAlived()) {
+                checkDead = false;
+            }
+        }
+        return checkDead;
     }
 
 }
