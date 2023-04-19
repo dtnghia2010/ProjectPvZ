@@ -6,6 +6,7 @@ import java.awt.*;
 public class Zombie implements Character {
     private int hp, dmg, type;
     private float spd, x, y;
+    private boolean isAlived = true;
 
     public Zombie(int type, int x, int y) {
         this.type = type;
@@ -54,5 +55,14 @@ public class Zombie implements Character {
     @Override
     public void getHit() {
 
+    }
+
+    public void dead() {
+        this.isAlived = false;
+        this.hp = 0;
+    }
+
+    public boolean isAlived() {
+        return isAlived;
     }
 }

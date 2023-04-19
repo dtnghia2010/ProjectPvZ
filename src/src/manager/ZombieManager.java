@@ -29,7 +29,7 @@ public class ZombieManager {
     public void draw(Graphics g) {
         if(zombies.size() > 0) {
             for(Zombie z: zombies) {
-                if(z != null) {
+                if(z.isAlived()) {
                     g.drawImage(getZomImg(z), (int)z.getX(), (int)z.getY(), zWidth, zHeight, null);
                 }
             }
@@ -54,7 +54,7 @@ public class ZombieManager {
             Zombie z = itZ.next();
             try {
                 if(z.getX() < 100) {
-                    itZ.remove();
+                    z.dead();
                 } else {
                     move(z);
                 }
@@ -67,4 +67,5 @@ public class ZombieManager {
     public void move(Zombie z) {
         z.setX(z.getX()-z.getSpd());
     }
+
 }

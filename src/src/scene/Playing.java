@@ -1,12 +1,14 @@
 package scene;
 
 import manager.ZombieManager;
+import object.Zombie;
 import tile.Tile;
 import ui.MyButton;
 import object.Plant;
 import static scene.GameStates.*;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ListIterator;
 
 public class Playing implements SceneMethods{
     private int wTile = 70, hTile = 80;
