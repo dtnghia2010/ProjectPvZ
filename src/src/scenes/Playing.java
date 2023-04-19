@@ -7,8 +7,10 @@ import javax.swing.*;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
+import scenes.Tile;
 
 public class Playing implements SceneMethods{
+    private Tile tile = new Tile();
     private World w;
     private MyButtons bMenu, bQuit, pickPlant[];
     private Image[] pick_plantBar;
@@ -24,6 +26,7 @@ public class Playing implements SceneMethods{
         initButtons();
         bMenu.draw(g);
         bQuit.draw(g);
+        tile.render(g);
         drawPlantbar(g);
     }
 
