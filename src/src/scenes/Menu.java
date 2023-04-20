@@ -1,7 +1,7 @@
 package scenes;
 
 import manager.World;
-import player.MyButtons;
+import component.MyButtons;
 import static scenes.GameScenes.*;
 import java.awt.*;
 
