@@ -1,16 +1,15 @@
 package scenes;
 
+import manager.TileManager;
 import manager.World;
 import player.MyButtons;
 
-import javax.swing.*;
-
 import static scenes.GameScenes.*;
 import java.awt.*;
-import scenes.Tile;
+import component.Tile;
 
 public class Playing implements SceneMethods{
-    private Tile tile = new Tile();
+    private TileManager tileManager;
     private World w;
     private MyButtons bMenu, bQuit, pickPlant[];
     private Image[] pick_plantBar;
@@ -19,14 +18,20 @@ public class Playing implements SceneMethods{
     public Playing(World w) {
         this.w = w;
         importImage();
+        initComponents();
     }
+
+    private void initComponents() {
+        tileManager = new TileManager();
+    }
+
     @Override
     public void render(Graphics g, Image img) {
         g.drawImage(img,0,0, w.getWidth(), w.getHeight(), null);
         initButtons();
         bMenu.draw(g);
         bQuit.draw(g);
-        tile.render(g);
+        tileManager.drawTiles(g);
         drawPlantbar(g);
     }
 
