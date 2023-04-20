@@ -1,9 +1,6 @@
 package scenes;
 
-import manager.BarManager;
-import manager.ButtonManager;
-import manager.TileManager;
-import manager.World;
+import manager.*;
 import component.MyButtons;
 
 import static scenes.GameScenes.*;
@@ -13,6 +10,7 @@ public class Playing implements SceneMethods{
     private TileManager tileManager;
     private BarManager barManager;
     private ButtonManager buttonManager;
+    private ZombieManager zombieManager;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
