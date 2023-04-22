@@ -13,6 +13,4 @@ public class Plant {
         this.plantHP = plantHP;
     }
 
-
-
 }

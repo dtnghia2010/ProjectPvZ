@@ -1,8 +1,10 @@
 package component;
 
 import manager.PlantManager;
+import scenes.Playing;
 
 import java.awt.*;
+import java.util.List;
 
 public class Tile {
     private final int ROWS = 5, COLS = 9;
@@ -42,8 +44,8 @@ public class Tile {
 //        this.plants = plants;
 //    }
 //
-    public PlantManager getPlantManager() {
-        return plantManager;
+    public List<PlantManager> getPlantManager(Playing playing) {
+        return playing.getListOfPlant();
     }
 
     public void setPlantManager(PlantManager plantManager) {

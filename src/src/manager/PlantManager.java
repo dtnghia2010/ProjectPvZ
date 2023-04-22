@@ -24,17 +24,16 @@ public class PlantManager {
         this.type = type;
     }
 
-    public PlantManager(int type) {
-        this.type = type;
+    public PlantManager() {
         importImg();
         initButtons();
     }
 
-    public void initPlants(){
+    public void initPlants() {
         plantList.add(new Plant(100));
     }
 
-    private void initButtons(){
+    private void initButtons() {
         plantFromBar = new MyButtons[5];
         plantFromBar[0] = new MyButtons("Sunflower", 350, 0, 90, 90);
         plantFromBar[1] = new MyButtons("Peashooter", 440, 0, 90, 90);
@@ -62,22 +61,23 @@ public class PlantManager {
     }
 
 
-
     public List<Plant> getPlantList() {
         return plantList;
     }
 
 
-
     public MyButtons[] getPlantFromBar() {
         return plantFromBar;
     }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
-    public boolean getSelected(){
+
+    public boolean getSelected() {
         return selected;
     }
+
     public boolean setLocated(boolean located) {
         this.located = located;
         return located;
