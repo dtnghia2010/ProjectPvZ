@@ -1,5 +1,7 @@
 package scenes;
 
+import component.Tile;
+import event.Wave;
 import manager.*;
 import component.MyButtons;
 
@@ -11,14 +13,23 @@ public class Playing implements SceneMethods{
     private BarManager barManager;
     private ButtonManager buttonManager;
     private ZombieManager zombieManager;
+    private WaveManager waveManager;
     private World w;
-    private Toolkit t = Toolkit.getDefaultToolkit();
 
     public Playing(World w) {
         this.w = w;
         initComponents();
+        initObjects();
+        initEvents();
     }
 
+    private void initEvents() {
+        waveManager = new WaveManager(this);
+    }
+
+    private void initObjects() {
+        zombieManager = new ZombieManager(this);
+    }
     private void initComponents() {
         barManager = new BarManager();
         tileManager = new TileManager();
@@ -31,6 +42,7 @@ public class Playing implements SceneMethods{
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g);
         barManager.drawPlantbar(g);
+        zombieManager.draw(g);
     }
 
     public void mouseClicked(int x, int y) {
@@ -44,5 +56,12 @@ public class Playing implements SceneMethods{
                 System.out.println("You choose " + b.getText());
             }
         }
+    }
+    public void updates() {
+//        zombieManager.move();
+        waveManager.updates();
+    }
+    public ZombieManager getZombieManager() {
+        return zombieManager;
     }
 }

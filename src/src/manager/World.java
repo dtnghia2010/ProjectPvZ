@@ -18,7 +18,7 @@ public class World extends JPanel implements Runnable {
     private ArrayList<Image> img = new ArrayList<>();
     private Random random;
     private double FPS_SET = 200.0;
-    private double UPS_SET = 150.0;
+    private double UPS_SET = 60.0;
     private MyMouseListener myMouseListener;
     private KeyBoardListener keyBoardListener;
     private Lose lose;
@@ -85,6 +85,19 @@ public class World extends JPanel implements Runnable {
                 break;
         }
     }
+    public void updates() {
+        switch (GameScenes.gameScenes) {
+            case MENU:
+                getMenu().updates();
+                break;
+            case PLAYING:
+                getPlaying().updates();
+                break;
+            case LOSE:
+                getLose().updates();
+                break;
+        }
+    }
 
     public void importImg() {
         img.add(t.getImage(getClass().getResource("/scene/menu.jpg")));
@@ -122,7 +135,7 @@ public class World extends JPanel implements Runnable {
             if (now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
-                //updates()
+                updates();
             }
             //check FPS & UPS
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {

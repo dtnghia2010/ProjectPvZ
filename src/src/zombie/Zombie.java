@@ -3,19 +3,19 @@ package zombie;
 import scenes.Playing;
 
 public class Zombie {
-    private Playing playing;
-    private int hp, dmg, spd, type;
+    private int hp, dmg, type;
+    private float spd = 0.1f;
+    private int x, y;
     private boolean isAlived = true;
-    public Zombie(Playing playing) {
+    public Zombie(int x, int y, int type) {
         //for safety in the future
-        this.playing = playing;
+        this.x = x;
+        this.y = y;
+        this.type = type;
     }
 
     public void dead() {
         isAlived = false;
-    }
-    public Playing getPlaying() {
-        return playing;
     }
 
     public int getHp() {
@@ -26,7 +26,7 @@ public class Zombie {
         return dmg;
     }
 
-    public int getSpd() {
+    public float getSpd() {
         return spd;
     }
 
@@ -37,6 +37,15 @@ public class Zombie {
     public boolean isAlived() {
         return isAlived;
     }
+    public int X() {
+        return x;
+    }
 
+    public int Y() {
+        return y;
+    }
+    public void move() {
+        x -= spd;
+    }
 
 }

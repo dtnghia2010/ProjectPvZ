@@ -24,6 +24,11 @@ public class TileManager {
             rowCounter++;
         }
     }
+
+    public Tile[] getTiles() {
+        return tiles;
+    }
+
     public void drawTiles(Graphics g) {
         for (Tile tl : tiles) {
             Rectangle r = tl.getBound();
@@ -34,8 +39,8 @@ public class TileManager {
 //                    }
 //                }
 //            } else {
-            g.setColor(Color.blue);
-            g.fillRect(r.x, r.y, r.width, r.height);
+/*            g.setColor(Color.blue);
+            g.fillRect(r.x, r.y, r.width, r.height);*/
 //            }
         }
     }
