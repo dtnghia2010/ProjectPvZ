@@ -1,0 +1,27 @@
+Index: src/src/manager/World.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package manager;\r\n\r\nimport inputs.KeyBoardListener;\r\nimport inputs.MyMouseListener;\r\nimport scene.*;\r\nimport scene.Menu;\r\n\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\nimport java.util.Random;\r\n\r\npublic class World extends JPanel implements Runnable {\r\n    private int screenWidth = 1024, screenHeight = 625;\r\n    private Image[] img = new Image[4];\r\n    private Toolkit t = Toolkit.getDefaultToolkit();\r\n    private Menu menu;\r\n    private Playing playing;\r\n    private Lose lose;\r\n    private Setting setting;\r\n    private Random random = new Random();\r\n    private Thread gameThread;\r\n    private double FPS_SET = 10000.0;\r\n    private double UPS_SET = 60.0;\r\n\r\n    private MyMouseListener myMouseListener;\r\n    private KeyBoardListener keyBoardListener;\r\n\r\n    public void start() {\r\n        gameThread = new Thread(this);\r\n        gameThread.start();\r\n    }\r\n    public World() {\r\n        this.setPreferredSize(new Dimension(screenWidth, screenHeight));\r\n        initInput();\r\n        importImg();\r\n        initClass();\r\n        start();\r\n    }\r\n\r\n\r\n\r\n    public void initInput() {\r\n        myMouseListener = new MyMouseListener(this);\r\n        keyBoardListener = new KeyBoardListener();\r\n        addMouseListener(myMouseListener);\r\n        addKeyListener(keyBoardListener);\r\n        setFocusable(true);\r\n        requestFocus();\r\n    }\r\n\r\n\r\n    public void initClass() {\r\n        menu = new Menu(this);\r\n        playing = new Playing(this);\r\n        lose = new Lose(this);\r\n        setting = new Setting(this);\r\n    }\r\n\r\n    @Override\r\n    protected void paintComponent(Graphics g) {\r\n        super.paintComponent(g);\r\n        render(g);\r\n    }\r\n    public void render(Graphics g) {\r\n        switch (GameStates.gameStates) {\r\n            case Menu:\r\n                menu.render(g, img[0]);\r\n                break;\r\n            case Playing:\r\n                playing.render(g, img[1]);\r\n                break;\r\n            case Lose:\r\n                lose.render(g, img[2]);\r\n                break;\r\n            case Setting:\r\n                setting.render(g, img[3]);\r\n                break;\r\n        }\r\n    }\r\n\r\n\r\n\r\n    public void importImg() {\r\n        try {\r\n            img[0] = t.getImage(getClass().getResource(\"/scene/menu.jpg\"));\r\n            img[1] = t.getImage(getClass().getResource(\"/scene/lawn.png\"));\r\n            img[2] = t.getImage(getClass().getResource(\"/scene/lose.png\"));\r\n            img[3] = t.getImage(getClass().getResource(\"/scene/setting.png\"));\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n            JOptionPane.showMessageDialog(null, \"Cannot open image!\"); //show error dialog\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void run() {\r\n        double timePerFrame =1000000000.0/FPS_SET;\r\n        long lastFrame = System.nanoTime();\r\n        double timePerUpdate = 1000000000.0/UPS_SET;\r\n        long lastUpdate = System.nanoTime();\r\n        int updates = 0;\r\n        int frames = 0;\r\n        long lastTimeCheck = System.currentTimeMillis();\r\n        long now;\r\n        while(true) {\r\n            now = System.nanoTime();\r\n            //repaint game\r\n            if(now - lastFrame >= timePerFrame) {\r\n                lastFrame = now;\r\n                frames++;\r\n                repaint();\r\n            }\r\n            //update game\r\n            if(now - lastUpdate >= timePerUpdate) {\r\n                lastUpdate = now;\r\n                updates++;\r\n                updates();\r\n            }\r\n            //check FPS & UPS\r\n            if(System.currentTimeMillis() - lastTimeCheck >= 1000) {\r\n                System.out.println(\"FPS: \" + frames + \" | UPS: \" + updates);\r\n                frames = 0;\r\n                updates = 0;\r\n                lastTimeCheck = System.currentTimeMillis();\r\n            }\r\n        }\r\n    }\r\n\r\n    private void updates() {\r\n        switch (GameStates.gameStates) {\r\n            case Playing:\r\n                playing.update();\r\n                break;\r\n            case Menu:\r\n                break;\r\n            case Lose:\r\n                break;\r\n            case Setting:\r\n                break;\r\n        }\r\n    }\r\n\r\n    public Menu getMenu() {\r\n        return menu;\r\n    }\r\n\r\n    public Playing getPlaying() {\r\n        return playing;\r\n    }\r\n\r\n    public Lose getLose() {\r\n        return lose;\r\n    }\r\n    public Setting getSetting() {return setting;};\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/src/manager/World.java b/src/src/manager/World.java
+--- a/src/src/manager/World.java	
++++ b/src/src/manager/World.java	
+@@ -37,8 +37,6 @@
+         start();
+     }
+ 
+-
+-
+     public void initInput() {
+         myMouseListener = new MyMouseListener(this);
+         keyBoardListener = new KeyBoardListener();
+@@ -48,7 +46,6 @@
+         requestFocus();
+     }
+ 
+-
+     public void initClass() {
+         menu = new Menu(this);
+         playing = new Playing(this);
