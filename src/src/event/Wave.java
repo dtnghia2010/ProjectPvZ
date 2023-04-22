@@ -14,5 +14,8 @@ public class Wave {
     public int type2() {
         return zType2;
     }
+    public void recudeWave() {
+        zType1--;
+    }
 
 }

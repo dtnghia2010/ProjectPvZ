@@ -58,8 +58,8 @@ public class Playing implements SceneMethods{
         }
     }
     public void updates() {
-//        zombieManager.move();
         waveManager.updates();
+        zombieManager.move();
     }
     public ZombieManager getZombieManager() {
         return zombieManager;
