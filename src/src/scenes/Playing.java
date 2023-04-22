@@ -20,7 +20,7 @@ public class Playing implements SceneMethods{
         this.w = w;
         initComponents();
         initObjects();
-        initEvents();
+//        initEvents();
     }
 
     private void initEvents() {
@@ -50,6 +50,8 @@ public class Playing implements SceneMethods{
             setGameScenes(MENU);
         } else if(buttonManager.getbQuit().getBounds().contains(x,y)) {
             setGameScenes(LOSE);
+        } else if (buttonManager.getbStart().getBounds().contains(x,y)) {
+            initEvents();
         }
         for (MyButtons b : barManager.getPickPlant()){
             if (b.getBounds().contains(x, y)){
@@ -58,7 +60,6 @@ public class Playing implements SceneMethods{
         }
     }
     public void updates() {
-        waveManager.updates();
         zombieManager.move();
     }
     public ZombieManager getZombieManager() {

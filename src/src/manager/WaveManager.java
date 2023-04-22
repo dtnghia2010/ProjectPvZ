@@ -3,26 +3,26 @@ package manager;
 import event.Wave;
 import scenes.Playing;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WaveManager {
-    private int size;
     private Playing playing;
     private Wave[] waves;
-    private Timer timer;
+    private long ZOMBIE_SPAWN_SET = 2;
+    private int zombieType = 0;
+    private int zombiesToSpawn = 2;
+    private Timer timer;;
     public WaveManager(Playing playing) {
         this.playing = playing;
         waves = new Wave[1];
         initWaves();
-        zombieCreated();
-        timer.start();
+        timer = new Timer();
+        start();
     }
 
     private void initWaves() {
         waves[0] = new Wave(2,2);
-        size = waves[0].type1();
     }
 
     private Wave getDegreeWave(int degree) {
@@ -32,21 +32,39 @@ public class WaveManager {
         }
         return waves[degree];
     }
-    public void zombieCreated(){
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(waves[0].type1() > 0) {
-                    System.out.println("1");
-                    playing.getZombieManager().spawnZombie(1);
+/*    public void updates() {
+        if(waves[0].type1() >= 1) {
+            double timePerUpdate = 1000000000.0 / ZOMBIE_SPAWN_SET;
+            long lastUpdate = System.nanoTime();
+            long now;
+            now = System.nanoTime();
+            while(true) {
+                if (now - lastUpdate >= timePerUpdate) {
+                    lastUpdate = now;
+                    System.out.println("1 zombie created");
+                    playing.getZombieManager().spawnZombie(0);
                     waves[0].recudeWave();
                 }
+                if(waves[0].type1() < 1) {
+                    break;
+                }
             }
-        });
+        }
+    }*/
+    public void start() {
+        timer.schedule(new SpawnZombieTask(),2000,2000);
     }
-    public void updates() {
-        if(waves[0].type1() > 1) {
-            timer.stop();
+
+    private class SpawnZombieTask extends TimerTask {
+        private int zombiesSpawned = 0;
+        @Override
+        public void run() {
+            System.out.println("a zom created");
+            playing.getZombieManager().spawnZombie(zombieType);
+            zombiesSpawned++;
+            if (zombiesSpawned >= zombiesToSpawn) {
+                timer.cancel();
+            }
         }
     }
 }
