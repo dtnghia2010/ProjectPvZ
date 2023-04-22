@@ -1,13 +1,11 @@
 package manager;
 
+import component.Plant;
 import component.Tile;
-
 import java.awt.*;
 
 public class TileManager {
     private Tile[] tiles = new Tile[45];
-    private int wTile = 70, hTile = 80;
-
     public TileManager() {
         initTiles();
     }
@@ -15,28 +13,39 @@ public class TileManager {
         int curX = 250, curY = 120, rowCounter = 0;
         for(int i = 0; i < 45; i++) {
             if(rowCounter >= 9) {
-                curY += hTile+15;
+                curY += 80+15;
                 curX = 250;
                 rowCounter = 0;
             }
-            curX += (wTile+8);
-            tiles[i] = new Tile(new Rectangle(curX, curY, wTile, hTile));
+            curX += (70+8);
+            tiles[i] = new Tile(new Rectangle(curX, curY, 70, 80));
             rowCounter++;
         }
     }
-    public void drawTiles(Graphics g) {
-        for (Tile tl : tiles) {
-            Rectangle r = tl.getBound();
+    public void drawTiles(Graphics g, PlantManager plantManager) {
+        for (Tile t : tiles) {
+            Rectangle r = t.getBound();
+            if (t.isOccupied() == true){
+                for (int i = 0;i<plantManager.getPlantList().size();i++){
+                    if (plantManager.setLocated(true)){
+                        g.drawImage(t.getPlantManager().getPlantImages(), r.x, r.y, r.width, r.height, null);
+                    }
+                }
+            }
 //            if (tl.isOccupied() == true) {
-//                for(Plant pl: plants) {
+//                for(Plant pl: PlantInTiles) {
 //                    if(pl.isPlaced() == true) {
 //                        g.drawImage(tl.getPlant().getPlantImg(), r.x, r.y, r.width, r.height, null);
 //                    }
 //                }
 //            } else {
-            g.setColor(Color.blue);
-            g.fillRect(r.x, r.y, r.width, r.height);
+//            g.setColor(Color.blue);
+//            g.fillRect(r.x, r.y, r.width, r.height);
 //            }
         }
+    }
+
+    public Tile[] getTiles() {
+        return tiles;
     }
 }
