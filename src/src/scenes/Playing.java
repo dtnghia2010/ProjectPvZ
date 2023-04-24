@@ -60,7 +60,7 @@ public class Playing implements SceneMethods{
         }
     }
     public void updates() {
-        zombieManager.move();
+        zombieManager.updates();
     }
     public ZombieManager getZombieManager() {
         return zombieManager;
