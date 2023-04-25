@@ -1,21 +1,30 @@
 package event;
 
 public class Wave {
-    private int zType1, zType2;
-    public Wave(int zType1, int zType2) {
-        this.zType1 = zType1;
-        this.zType2 = zType2;
+    private int amType0, amType1;
+    public Wave(int amType0, int amType1) {
+        this.amType0 = amType0;
+        this.amType1 = amType1;
     }
 
-    public int type1() {
-        return zType1;
+    public int amountType(int type) {
+        switch (type) {
+            case 0:
+                return amType0;
+            case 1:
+                return amType1;
+        }
+        return -1;
     }
-
-    public int type2() {
-        return zType2;
-    }
-    public void recudeWave() {
-        zType1--;
+    public void recudeWave(int type) {
+        switch (type) {
+            case 0:
+                amType0--;
+                break;
+            case 1:
+                amType1--;
+                break;
+        }
     }
 
 }

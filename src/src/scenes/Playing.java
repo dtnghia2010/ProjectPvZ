@@ -1,19 +1,19 @@
 package scenes;
 
-import component.Tile;
-import event.Wave;
 import manager.*;
 import component.MyButtons;
 
 import static scenes.GameScenes.*;
+
 import java.awt.*;
 
-public class Playing implements SceneMethods{
+public class Playing implements SceneMethods {
     private TileManager tileManager;
     private BarManager barManager;
     private ButtonManager buttonManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
+    private boolean startWave = false;
     private World w;
 
     public Playing(World w) {
@@ -30,6 +30,7 @@ public class Playing implements SceneMethods{
     private void initObjects() {
         zombieManager = new ZombieManager(this);
     }
+
     private void initComponents() {
         barManager = new BarManager();
         tileManager = new TileManager();
@@ -38,7 +39,7 @@ public class Playing implements SceneMethods{
 
     @Override
     public void render(Graphics g, Image img) {
-        g.drawImage(img,0,0, w.getWidth(), w.getHeight(), null);
+        g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g);
         barManager.drawPlantbar(g);
@@ -46,27 +47,36 @@ public class Playing implements SceneMethods{
     }
 
     public void mouseClicked(int x, int y) {
-        if(buttonManager.getbMenu().getBounds().contains(x,y)) {
+        if (buttonManager.getbMenu().getBounds().contains(x, y)) {
             setGameScenes(MENU);
-        } else if(buttonManager.getbQuit().getBounds().contains(x,y)) {
+        } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
             setGameScenes(LOSE);
-        } else if (buttonManager.getbStart().getBounds().contains(x,y)) {
-
+        } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
+            startWave = true;
         }
-        for (MyButtons b : barManager.getPickPlant()){
-            if (b.getBounds().contains(x, y)){
+        for (MyButtons b : barManager.getPickPlant()) {
+            if (b.getBounds().contains(x, y)) {
                 System.out.println("You choose " + b.getText());
             }
         }
     }
+
     public void updates() {
-        if(isTimeForNewZombie()) {
-           if(!waveManager.isWaveTimeOver()) {
-               spawnZombie();
-           }
+        if(startWave) {
+            if (isTimeForNewZombie()) {
+                if (!waveManager.isWaveTimeOver()) {
+                    spawnZombie();
+                }
+            }
+            waveManager.updates();
+            zombieManager.updates();
+            if(zombieManager.allZombieDead()) {
+                startWave = false;
+                zombieManager.getZombies().clear();
+                System.out.println("Zombies cleared");
+            }
         }
-        waveManager.updates();
-        zombieManager.updates();
+
     }
 
     private void spawnZombie() {
@@ -74,8 +84,8 @@ public class Playing implements SceneMethods{
     }
 
     private boolean isTimeForNewZombie() {
-        if(waveManager.isTimeForNewZombie()) {
-            if(waveManager.isThereMoreZombieInWave()) {
+        if (waveManager.isTimeForNewZombie()) {
+            if (waveManager.isThereMoreZombieInWave()) {
                 return true;
             }
         }
