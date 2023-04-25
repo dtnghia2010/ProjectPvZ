@@ -6,30 +6,36 @@ import scenes.Playing;
 public class WaveManager {
     private Playing playing;
     private Wave[] waves;
-    private int zombieSpawnTickLimit = 60 * 3;
+    private int zombieSpawnTickLimit = 10;
     private int zombieSpawnTick = zombieSpawnTickLimit;
-    private boolean waveTickTimeOver = false;
-    private int curZom = 0;
+    private int curZom = 0, curWave = 0;
 
     public WaveManager(Playing playing) {
         this.playing = playing;
-        waves = new Wave[1];
+        waves = new Wave[3];
         initWaves();
     }
 
     private void initWaves() {
-        waves[0] = new Wave(5, 3);
+        waves[0] = new Wave(2, 2,1);
+        waves[1] = new Wave(4,3,2);
+        waves[2] = new Wave(6,4,3);
     }
 
-    public boolean isWaveTimeOver() {
-        return waveTickTimeOver;
+    public void readyNewWave() {
+        if(curWave < waves.length-1) {
+            if(curZom > 2) {
+                curWave++;
+                curZom = 0;
+            }
+        }
     }
 
     public int getNextZombie() {
         zombieSpawnTick = 0;
-        if (waves[0].amountType(curZom) > 0) {
-            waves[0].recudeWave(curZom);
-            if(waves[0].amountType(curZom) == 0) {
+        if (waves[curWave].amountType(curZom) > 0) {
+            waves[curWave].recudeWave(curZom);
+            if(waves[curWave].amountType(curZom) == 0) {
                 curZom++;
                 return curZom-1;
             }
@@ -43,7 +49,8 @@ public class WaveManager {
     }
 
     public boolean isThereMoreZombieInWave() {
-        return waves[0].amountType(curZom) > 0;
+        System.out.println("curWave:" +  curWave);
+        return waves[curWave].amountType(curZom) > 0;
     }
 
     public void updates() {

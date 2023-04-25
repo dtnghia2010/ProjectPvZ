@@ -2,6 +2,7 @@ package manager;
 
 import scenes.Playing;
 import zombie.Zombie;
+import Object.FakePlant;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,10 +24,11 @@ public class ZombieManager {
     }
 
     public void importImg() {
-        zImages = new Image[2];
+        zImages = new Image[3];
         try {
             zImages[0] = t.getImage(getClass().getResource("/zombie/zombie.png"));
             zImages[1] = t.getImage(getClass().getResource("/zombie/conehead_zombie.png"));
+            zImages[2] = t.getImage(getClass().getResource("/zombie/candyZombie.png"));
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("ERROR-importImg()-ZombieManager");
@@ -77,9 +79,13 @@ public class ZombieManager {
         return true;
     }
 
-    public void bite() {
-
+    public void attack() {
+        FakePlant fakePlant = null;
+        for (Zombie z: zombies) {
+            z.bite(fakePlant);
+        }
     }
+
     private int rnd() {
         return random.nextInt(0,5);
     }

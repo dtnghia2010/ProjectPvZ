@@ -1,17 +1,34 @@
 package zombie;
 
-import scenes.Playing;
+import Object.FakePlant;
 
 public class Zombie {
     private int hp, dmg, type;
-    private float spd = 0.1f;
+    private float spd = 10f;
     private int x, y;
     private boolean isAlived = true;
     public Zombie(int x, int y, int type) {
-        //for safety in the future
         this.x = x;
         this.y = y;
         this.type = type;
+        setStatus(this.type);
+    }
+
+    private void setStatus(int type) {
+        switch (type) {
+            case 0:
+                hp = 70;
+                dmg = 9;
+                break;
+            case 1:
+                hp = 130;
+                dmg = 9;
+                break;
+            case 2:
+                hp = 90;
+                dmg = 20;
+                break;
+        }
     }
 
     public void dead() {
@@ -46,6 +63,12 @@ public class Zombie {
     }
     public void move() {
         x -= spd;
+    }
+    public void bite(FakePlant fakePlant) {
+
+    }
+    public void hurt() {
+
     }
 
 }

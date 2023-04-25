@@ -53,6 +53,7 @@ public class Playing implements SceneMethods {
             setGameScenes(LOSE);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             startWave = true;
+            waveManager.readyNewWave();
         }
         for (MyButtons b : barManager.getPickPlant()) {
             if (b.getBounds().contains(x, y)) {
@@ -64,9 +65,9 @@ public class Playing implements SceneMethods {
     public void updates() {
         if(startWave) {
             if (isTimeForNewZombie()) {
-                if (!waveManager.isWaveTimeOver()) {
+//                if (waveManager.isNewWaveReady()) {
                     spawnZombie();
-                }
+//                }
             }
             waveManager.updates();
             zombieManager.updates();
