@@ -6,7 +6,7 @@ import scenes.Playing;
 public class WaveManager {
     private Playing playing;
     private Wave[] waves;
-    private int zombieSpawnTickLimit = 10;
+    private int zombieSpawnTickLimit = 60;
     private int zombieSpawnTick = zombieSpawnTickLimit;
     private int curZom = 0, curWave = 0;
 
@@ -17,7 +17,7 @@ public class WaveManager {
     }
 
     private void initWaves() {
-        waves[0] = new Wave(2, 2,1);
+        waves[0] = new Wave(2,2,1);
         waves[1] = new Wave(4,3,2);
         waves[2] = new Wave(6,4,3);
     }

@@ -20,7 +20,6 @@ public class ZombieManager {
         this.playing = playing;
         zombies = new ArrayList<>();
         importImg();
-
     }
 
     public void importImg() {

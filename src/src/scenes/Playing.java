@@ -77,7 +77,6 @@ public class Playing implements SceneMethods {
                 System.out.println("Zombies cleared");
             }
         }
-
     }
 
     private void spawnZombie() {
