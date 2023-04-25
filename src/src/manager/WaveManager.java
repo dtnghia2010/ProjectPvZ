@@ -9,30 +9,56 @@ import java.util.TimerTask;
 public class WaveManager {
     private Playing playing;
     private Wave[] waves;
-    private long ZOMBIE_SPAWN_SET = 2;
-    private int zombieType;
-    private int zombiesToSpawn;
-    private Timer timer;;
+    private int zombieSpawnTickLimit = 60*1;
+    private int zombieSpawnTick = zombieSpawnTickLimit;
+    private boolean waveTickTimeOver = false;
+    private int commonZom = 5, coneHeadZom = 2;
     public WaveManager(Playing playing) {
         this.playing = playing;
         waves = new Wave[1];
         initWaves();
-        timer = new Timer();
-        start();
     }
 
     private void initWaves() {
-        waves[0] = new Wave(10,2);
+        waves[0] = new Wave(commonZom,coneHeadZom);
     }
 
-    private Wave getDegreeWave(int degree) {
+    public boolean isWaveTimeOver() {
+        return waveTickTimeOver;
+    }
+
+    public int getNextZombie() {
+        zombieSpawnTick = 0;
+        if(waves[0].type1() > 0) {
+            waves[0].recudeWave();
+            return 0;
+        }
+        return -1;
+    }
+
+    public boolean isTimeForNewZombie() {
+        return zombieSpawnTick >= zombieSpawnTickLimit;
+    }
+
+    public boolean isThereMoreZombieInWave() {
+        return waves[0].type1() > 0;
+    }
+
+    public void updates() {
+        if(zombieSpawnTick < zombieSpawnTickLimit) {
+            zombieSpawnTick++;
+        }
+    }
+
+
+/*    private Wave getDegreeWave(int degree) {
         if(degree >= waves.length) {
             System.err.println("Degree of wave is not available!");
             return null;
         }
         return waves[degree];
-    }
-    public void start() {
+    }*/
+/*    public void start() {
         timer.schedule(new SpawnZombieTask(),0,1000*ZOMBIE_SPAWN_SET);
     }
 
@@ -49,5 +75,5 @@ public class WaveManager {
                 timer.cancel();
             }
         }
-    }
+    }*/
 }

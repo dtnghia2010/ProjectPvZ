@@ -55,8 +55,8 @@ public class ZombieManager {
     }
     public void updates() {
         if(allZombieDead()) {
-//            zombies.clear();
-//            System.out.println("Cleared wave");
+            zombies.clear();
+            System.out.println("Cleared wave");
         } else {
             for(Zombie z: zombies) {
                 if(z.isAlived()) {
@@ -64,7 +64,6 @@ public class ZombieManager {
                 }
             }
         }
-
     }
     public void move(Zombie z) {
         if(z.X() <= 100) {
