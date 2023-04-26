@@ -9,7 +9,6 @@ public class WaveManager {
     private int zombieSpawnTickLimit = 60;
     private int zombieSpawnTick = zombieSpawnTickLimit;
     private int curZom = 0, curWave = 0;
-
     public WaveManager(Playing playing) {
         this.playing = playing;
         waves = new Wave[3];
