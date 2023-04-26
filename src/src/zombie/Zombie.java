@@ -2,15 +2,20 @@ package zombie;
 
 import Object.FakePlant;
 
+import java.awt.*;
+
 public class Zombie {
     private int hp, dmg, type;
+    private final int width = 80, height = 140;
     private float spd = 10f;
     private int x, y;
     private boolean isAlived = true;
+    private Rectangle bound;
     public Zombie(int x, int y, int type) {
         this.x = x;
         this.y = y;
         this.type = type;
+        this.bound = new Rectangle(new Dimension(width, height));
         setStatus(this.type);
     }
 
@@ -69,6 +74,14 @@ public class Zombie {
     }
     public void hurt() {
 
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
 }

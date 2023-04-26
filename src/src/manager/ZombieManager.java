@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ZombieManager {
-    private final int zWidth = 80, zHeight = 140;
     private ArrayList<Zombie> zombies;
     private Image[] zImages;
     private Playing playing;
@@ -46,7 +45,9 @@ public class ZombieManager {
             if (zombies.size() > 0) {
                 for (Zombie z : zombies) {
                     if (z.isAlived()) {
-                        g.drawImage(zImages[z.getType()], z.X(), z.Y(), zWidth, zHeight, null);
+                        g.drawImage(zImages[z.getType()], z.X(), z.Y(), z.getWidth(), z.getHeight(), null);
+                        g.setColor(Color.RED);
+                        g.drawRect(z.X(), z.Y(), z.getWidth(), z.getHeight());
                     }
                 }
             }
