@@ -43,7 +43,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if(GameScenes.gameScenes == GameScenes.PLAYING){
+            w.getPlaying().mouseReleased(e.getX(),e.getY());
+        }
     }
 
     @Override

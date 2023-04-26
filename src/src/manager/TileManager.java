@@ -10,6 +10,7 @@ public class TileManager {
         initTiles();
     }
 
+
     public Tile[] getTiles() {
         return tiles;
     }
@@ -39,8 +40,8 @@ public class TileManager {
 //                    }
 //                }
 //            } else {
-            g.setColor(Color.blue);
-            g.fillRect(r.x, r.y, r.width, r.height);
+//            g.setColor(Color.blue);
+//            g.fillRect(r.x, r.y, r.width, r.height);
 //            }
         }
     }

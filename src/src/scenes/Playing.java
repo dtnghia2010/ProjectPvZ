@@ -1,9 +1,6 @@
 package scenes;
 
-import manager.BarManager;
-import manager.ButtonManager;
-import manager.TileManager;
-import manager.World;
+import manager.*;
 import component.MyButtons;
 
 import static scenes.GameScenes.*;
@@ -13,6 +10,7 @@ public class Playing implements SceneMethods{
     private TileManager tileManager;
     private BarManager barManager;
     private ButtonManager buttonManager;
+    private plantManager plantManager;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -25,6 +23,7 @@ public class Playing implements SceneMethods{
         barManager = new BarManager();
         tileManager = new TileManager();
         buttonManager = new ButtonManager();
+        plantManager = new plantManager();
     }
 
     @Override
@@ -33,6 +32,7 @@ public class Playing implements SceneMethods{
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g);
         barManager.drawPlantbar(g);
+        plantManager.drawPlant(g);
     }
 
     public void mouseClicked(int x, int y) {
@@ -44,7 +44,15 @@ public class Playing implements SceneMethods{
         for (MyButtons b : barManager.getPickPlant()){
             if (b.getBounds().contains(x, y)){
                 System.out.println("You choose " + b.getText());
+                if(b.getText().equals("Sunflower")){
+                    plantManager.setIDholder(1);
+                } else if(b.getText().equals("Peashooter")){
+                    plantManager.setIDholder(2);
+                }
             }
         }
+    }
+    public void mouseReleased(int x, int y){//method to plant plants
+        plantManager.mousePressedField(x,y);
     }
 }
