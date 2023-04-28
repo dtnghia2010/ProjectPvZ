@@ -11,7 +11,7 @@ public class WaveManager {
     private int curZom = 0, curWave = 0;
     public WaveManager(Playing playing) {
         this.playing = playing;
-        waves = new Wave[3];
+        waves = new Wave[4];
         initWaves();
     }
 
@@ -19,6 +19,7 @@ public class WaveManager {
         waves[0] = new Wave(2,2,1);
         waves[1] = new Wave(4,3,2);
         waves[2] = new Wave(6,4,3);
+        waves[3] = new Wave(5,5,6);
     }
 
     public void readyNewWave() {
