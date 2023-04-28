@@ -86,20 +86,12 @@ public class ZombieManager {
     }
 
     public void updates() {
-//        ArrayList<Zombie> deadZombies = new ArrayList<>(); // danh sách phụ để lưu trữ các zombie đã chết
         for (Zombie z : zombies) {
             if (z.isAlived()) {
                 // Cập nhật tọa độ di chuyển cho zombie còn sống
-                //fix later
                 move(z);
             }
-            /*else {
-                // Thêm zombie đã chết vào danh sách phụ
-                deadZombies.add(z);
-            }*/
         }
-        // Loại bỏ các zombie đã chết khỏi danh sách zombies
-//        zombies.removeAll(deadZombies);
     }
 
 

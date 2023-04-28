@@ -8,7 +8,7 @@ import java.awt.*;
 public class Zombie {
     private int hp, dmg, type;
     private final int width = 80, height = 140;
-    private float spd = 1f;
+    private float spd = 10f;
     private int x, y;
     private boolean isAlived = true;
     private FakePlant fakePlant;
