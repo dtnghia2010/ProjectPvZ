@@ -2,7 +2,7 @@ package manager;
 
 import scenes.Playing;
 import zombie.Zombie;
-import Object.FakePlant;
+import object.FakePlant;
 
 import java.awt.*;
 import java.util.ArrayList;

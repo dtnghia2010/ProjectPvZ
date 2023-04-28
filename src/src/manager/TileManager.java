@@ -1,6 +1,7 @@
 package manager;
 
 import component.Tile;
+import object.FakePlant;
 
 import java.awt.*;
 
@@ -32,13 +33,12 @@ public class TileManager {
     public void drawTiles(Graphics g) {
         for (Tile tl : tiles) {
             Rectangle r = tl.getBound();
-//            if (tl.isOccupied() == true) {
-//                for(Plant pl: plants) {
-//                    if(pl.isPlaced() == true) {
-//                        g.drawImage(tl.getPlant().getPlantImg(), r.x, r.y, r.width, r.height, null);
-//                    }
-//                }
-//            } else {
+            if (tl.isOccupied() == true) {
+                if(tl.getFakePlant().isPlaced() == true) {
+                    g.drawImage(tl.getFakePlant().getPlantImg(), r.x, r.y, r.width, r.height, null);
+                }
+            }
+//            else {
 /*            g.setColor(Color.blue);
             g.fillRect(r.x, r.y, r.width, r.height);*/
 //            }

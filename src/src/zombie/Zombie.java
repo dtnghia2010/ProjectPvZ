@@ -1,6 +1,6 @@
 package zombie;
 
-import Object.FakePlant;
+import object.FakePlant;
 
 import java.awt.*;
 
