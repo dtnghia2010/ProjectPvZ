@@ -4,6 +4,7 @@ import scenes.Playing;
 import zombie.Zombie;
 import Object.FakePlant;
 
+import javax.tools.Tool;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,7 +37,7 @@ public class ZombieManager {
     public void spawnZombie(int type) {
         synchronized (zombies) {
             System.out.println("a zombie created");
-            zombies.add(new Zombie(1024, 60+95*rnd(), type));
+            zombies.add(new Zombie(1024, 60 + 95 * rnd(), type));
         }
     }
 
@@ -54,13 +55,7 @@ public class ZombieManager {
         }
     }
 
-    public void updates() {
-        for (Zombie z : zombies) {
-            if (z.isAlived()) {
-                move(z);
-            }
-        }
-    }
+}
 
     public void move(Zombie z) {
         if (z.X() <= 100) {
@@ -79,20 +74,45 @@ public class ZombieManager {
         return true;
     }
 
+    public void addRandomZombies(int count) {
+        Random random = new Random();
+        for (int i = 0; i < count; i++) {
+            int x = 1500 + random.nextInt(1000);
+            int y = 60 + 95 * random.nextInt(5);
+            int type = random.nextInt(2);
+            Zombie zombie = new Zombie(x, y, type);
+            zombies.add(zombie);
+        }
+    }
+
+    public void updates() {
+        ArrayList<Zombie> deadZombies = new ArrayList<>(); // danh sách phụ để lưu trữ các zombie đã chết
+        for (Zombie z : zombies) {
+            if (z.isAlived()) {
+                // Cập nhật tọa độ di chuyển cho zombie còn sống
+                //fix later
+                move(z);
+            } else {
+                // Thêm zombie đã chết vào danh sách phụ
+                deadZombies.add(zombie);
+            }
+        }
+        // Loại bỏ các zombie đã chết khỏi danh sách zombies
+        zombies.removeAll(deadZombies);
+    }
+
+
     public void attack() {
         FakePlant fakePlant = null;
-        for (Zombie z: zombies) {
+        for (Zombie z : zombies) {
             z.bite(fakePlant);
         }
     }
 
     private int rnd() {
-        return random.nextInt(0,5);
+        return random.nextInt(0, 5);
     }
 
     public ArrayList<Zombie> getZombies() {
         return zombies;
     }
-
-
-}

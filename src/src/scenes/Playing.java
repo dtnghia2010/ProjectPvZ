@@ -4,7 +4,6 @@ import manager.*;
 import component.MyButtons;
 
 import static scenes.GameScenes.*;
-
 import java.awt.*;
 
 public class Playing implements SceneMethods {
@@ -21,6 +20,7 @@ public class Playing implements SceneMethods {
         initComponents();
         initObjects();
         initEvents();
+        startGame();
     }
 
     private void initEvents() {
@@ -30,7 +30,6 @@ public class Playing implements SceneMethods {
     private void initObjects() {
         zombieManager = new ZombieManager(this);
     }
-
     private void initComponents() {
         barManager = new BarManager();
         tileManager = new TileManager();
@@ -100,3 +99,10 @@ public class Playing implements SceneMethods {
         return zombieManager;
     }
 }
+        public void updates() {
+            zombieManager.updates();
+
+        }
+        public void startGame() {
+            zombieManager.addRandomZombies(45);
+        }

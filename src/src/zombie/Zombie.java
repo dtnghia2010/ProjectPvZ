@@ -1,8 +1,6 @@
 package zombie;
 
-import Object.FakePlant;
-
-import java.awt.*;
+import scenes.Playing;
 
 public class Zombie {
     private int hp, dmg, type;
@@ -39,6 +37,9 @@ public class Zombie {
     public void dead() {
         isAlived = false;
     }
+    public Playing getPlaying() {
+        return playing;
+    }
 
     public int getHp() {
         return hp;
@@ -48,7 +49,7 @@ public class Zombie {
         return dmg;
     }
 
-    public float getSpd() {
+    public int getSpd() {
         return spd;
     }
 
