@@ -6,6 +6,7 @@ import scenes.GameScenes;
 import scenes.Lose;
 import scenes.Menu;
 import scenes.Playing;
+import zombie.Zombie;
 
 
 import javax.swing.*;
@@ -25,10 +26,12 @@ public class World extends JPanel implements Runnable {
     private Menu menu;
     private Playing playing;
     private Toolkit t = Toolkit.getDefaultToolkit();
+
     public void start() {
         Thread thread = new Thread(this);
         thread.start();
     }
+
     public World() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         random = new Random();
@@ -66,6 +69,7 @@ public class World extends JPanel implements Runnable {
         playing = new Playing(this);
         menu = new Menu(this);
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -122,7 +126,7 @@ public class World extends JPanel implements Runnable {
             if (now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
-                //updates()
+                updates();
             }
             //check FPS & UPS
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
@@ -131,6 +135,20 @@ public class World extends JPanel implements Runnable {
                 updates = 0;
                 lastTimeCheck = System.currentTimeMillis();
             }
+        }
+    }
+
+    private void updates() {
+      switch (GameScenes.gameScenes) {
+          case MENU:
+             menu.updates();
+             break;
+          case PLAYING:
+                playing.updates();
+                break;
+          case LOSE:
+                lose.updates();
+                break;
         }
     }
 }
