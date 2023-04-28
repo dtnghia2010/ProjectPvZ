@@ -1,7 +1,10 @@
 package scenes;
 
+import component.Tile;
 import manager.*;
 import component.MyButtons;
+import object.FakePlant;
+import zombie.Zombie;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
@@ -12,6 +15,7 @@ public class Playing implements SceneMethods {
     private ButtonManager buttonManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
+    private FakePlantManager fakePlantManager;
     private boolean startWave = false;
     private World w;
 
@@ -28,6 +32,7 @@ public class Playing implements SceneMethods {
 
     private void initObjects() {
         zombieManager = new ZombieManager(this);
+        fakePlantManager = new FakePlantManager(this);
     }
     private void initComponents() {
         barManager = new BarManager();
@@ -52,6 +57,14 @@ public class Playing implements SceneMethods {
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             startWave = true;
             waveManager.readyNewWave();
+        } else {
+            for(Tile tl: tileManager.getTiles()) {
+                if(tl.getBound().contains(x,y)) {
+                    tl.setOccupied(true);
+                    fakePlantManager.getPlant().setPlaced(true);
+                    tl.setFakePlant(fakePlantManager.getPlant());
+                }
+            }
         }
         for (MyButtons b : barManager.getPickPlant()) {
             if (b.getBounds().contains(x, y)) {
@@ -60,22 +73,37 @@ public class Playing implements SceneMethods {
         }
     }
 
+    @Override
+    public void mousePressed(int x, int y) {
+    }
+
+    @Override
+    public void mouseReleased(int x, int y) {
+
+    }
+
     public void updates() {
         if(startWave) {
             if (isTimeForNewZombie()) {
-//                if (waveManager.isNewWaveReady()) {
                     spawnZombie();
-//                }
             }
             if(zombieManager.allZombieDead()) {
                 startWave = false;
                 zombieManager.getZombies().clear();
                 createHorde();
                 System.out.println("Zombies cleared");
+            } else {
+                zombieAtk();
             }
         }
         waveManager.updates();
         zombieManager.updates();
+    }
+
+    private void zombieAtk() {
+        for(Zombie z: zombieManager.getZombies()) {
+            //TODO zombie attack plant
+        }
     }
 
     private void spawnZombie() {
