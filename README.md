@@ -1,2 +1,2 @@
 # ProjectPvZ
-Object-Oriented Programming project
+object-Oriented Programming project

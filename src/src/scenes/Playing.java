@@ -4,7 +4,6 @@ import manager.*;
 import component.MyButtons;
 
 import static scenes.GameScenes.*;
-
 import java.awt.*;
 
 public class Playing implements SceneMethods {
@@ -30,7 +29,6 @@ public class Playing implements SceneMethods {
     private void initObjects() {
         zombieManager = new ZombieManager(this);
     }
-
     private void initComponents() {
         barManager = new BarManager();
         tileManager = new TileManager();
@@ -69,14 +67,15 @@ public class Playing implements SceneMethods {
                     spawnZombie();
 //                }
             }
-            waveManager.updates();
-            zombieManager.updates();
             if(zombieManager.allZombieDead()) {
                 startWave = false;
                 zombieManager.getZombies().clear();
+                createHorde();
                 System.out.println("Zombies cleared");
             }
         }
+        waveManager.updates();
+        zombieManager.updates();
     }
 
     private void spawnZombie() {
@@ -99,4 +98,8 @@ public class Playing implements SceneMethods {
     public ZombieManager getZombieManager() {
         return zombieManager;
     }
+    public void createHorde() {
+        zombieManager.createHorde(45);
+    }
 }
+

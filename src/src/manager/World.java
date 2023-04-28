@@ -6,6 +6,7 @@ import scenes.GameScenes;
 import scenes.Lose;
 import scenes.Menu;
 import scenes.Playing;
+import zombie.Zombie;
 
 
 import javax.swing.*;
@@ -25,10 +26,12 @@ public class World extends JPanel implements Runnable {
     private Menu menu;
     private Playing playing;
     private Toolkit t = Toolkit.getDefaultToolkit();
+
     public void start() {
         Thread thread = new Thread(this);
         thread.start();
     }
+
     public World() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         random = new Random();
@@ -66,6 +69,7 @@ public class World extends JPanel implements Runnable {
         playing = new Playing(this);
         menu = new Menu(this);
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
