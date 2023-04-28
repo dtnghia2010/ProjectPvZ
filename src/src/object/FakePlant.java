@@ -6,6 +6,7 @@ public class FakePlant {
     private int hp, dmg;
     private boolean isSelected = false;
     private boolean isPlaced = false;
+    private Rectangle bound = new Rectangle(new Dimension(70,80));
 
     public void setSelected(boolean selected) {
         isSelected = selected;
@@ -44,5 +45,9 @@ public class FakePlant {
     }
     public Image getPlantImg() {
         return image;
+    }
+
+    public Rectangle getBound() {
+        return bound;
     }
 }

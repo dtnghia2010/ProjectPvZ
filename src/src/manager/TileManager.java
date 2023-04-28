@@ -36,6 +36,9 @@ public class TileManager {
             if (tl.isOccupied() == true) {
                 if(tl.getFakePlant().isPlaced() == true) {
                     g.drawImage(tl.getFakePlant().getPlantImg(), r.x, r.y, r.width, r.height, null);
+                    g.setColor(Color.RED);
+                    Rectangle r_ = tl.getFakePlant().getBound();
+                    g.drawRect(r.x, r.y, r_.width, r_.height);
                 }
             }
 //            else {
