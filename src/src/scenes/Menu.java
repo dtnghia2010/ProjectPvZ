@@ -38,4 +38,7 @@ public class Menu implements SceneMethods {
         initButtons();
         drawButtons(g);
     }
+    public void updates() {
+
+    }
 }

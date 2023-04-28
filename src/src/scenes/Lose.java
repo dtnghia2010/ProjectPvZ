@@ -29,4 +29,7 @@ public class Lose implements SceneMethods {
             setGameScenes(MENU);
         }
     }
+
+    public void updates() {
+    }
 }
