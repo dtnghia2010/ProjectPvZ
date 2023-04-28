@@ -1,4 +1,4 @@
-package Object;
+package object;
 
 public class FakePlant {
     private int hp, dmg, type;

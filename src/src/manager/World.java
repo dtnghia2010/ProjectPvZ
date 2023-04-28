@@ -150,19 +150,5 @@ public class World extends JPanel implements Runnable {
             }
         }
     }
-
-    private void updates() {
-      switch (GameScenes.gameScenes) {
-          case MENU:
-             menu.updates();
-             break;
-          case PLAYING:
-                playing.updates();
-                break;
-          case LOSE:
-                lose.updates();
-                break;
-        }
-    }
 }
 

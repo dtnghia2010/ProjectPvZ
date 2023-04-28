@@ -2,9 +2,8 @@ package manager;
 
 import scenes.Playing;
 import zombie.Zombie;
-import Object.FakePlant;
+import object.FakePlant;
 
-import javax.tools.Tool;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,6 +14,7 @@ public class ZombieManager {
     private Playing playing;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Random random = new Random();
+    private FakePlant fakePlant ;
 
     public ZombieManager(Playing playing) {
         this.playing = playing;
@@ -37,7 +37,11 @@ public class ZombieManager {
     public void spawnZombie(int type) {
         synchronized (zombies) {
             System.out.println("a zombie created");
-            zombies.add(new Zombie(1024, 60 + 95 * rnd(), type));
+            if(!allZombieDead()) {
+                zombies.add(new Zombie(1024+rnd(0,1000), 60 + 95 * rnd(0,5), type));
+            } else {
+                zombies.add(new Zombie(1024, 60 + 95 * rnd(0,5), type));
+            }
         }
     }
 
@@ -54,9 +58,6 @@ public class ZombieManager {
             }
         }
     }
-
-}
-
     public void move(Zombie z) {
         if (z.X() <= 100) {
             z.dead();
@@ -74,45 +75,48 @@ public class ZombieManager {
         return true;
     }
 
-    public void addRandomZombies(int count) {
-        Random random = new Random();
+    public void createHorde(int count) {
         for (int i = 0; i < count; i++) {
-            int x = 1500 + random.nextInt(1000);
-            int y = 60 + 95 * random.nextInt(5);
-            int type = random.nextInt(2);
-            Zombie zombie = new Zombie(x, y, type);
-            zombies.add(zombie);
+/*            int x = 1500 + rnd(0,1000);
+            int y = 60 + 95 * rnd(0,1000);
+            int type = rnd(0,2);
+            Zombie zombie = new Zombie(x, y, type);*/
+            spawnZombie(rnd(0,2));
         }
     }
 
     public void updates() {
-        ArrayList<Zombie> deadZombies = new ArrayList<>(); // danh sách phụ để lưu trữ các zombie đã chết
+//        ArrayList<Zombie> deadZombies = new ArrayList<>(); // danh sách phụ để lưu trữ các zombie đã chết
         for (Zombie z : zombies) {
             if (z.isAlived()) {
                 // Cập nhật tọa độ di chuyển cho zombie còn sống
                 //fix later
                 move(z);
-            } else {
-                // Thêm zombie đã chết vào danh sách phụ
-                deadZombies.add(zombie);
             }
+            /*else {
+                // Thêm zombie đã chết vào danh sách phụ
+                deadZombies.add(z);
+            }*/
         }
         // Loại bỏ các zombie đã chết khỏi danh sách zombies
-        zombies.removeAll(deadZombies);
+//        zombies.removeAll(deadZombies);
     }
 
 
     public void attack() {
-        FakePlant fakePlant = null;
         for (Zombie z : zombies) {
             z.bite(fakePlant);
         }
     }
-
-    private int rnd() {
-        return random.nextInt(0, 5);
+    private int rnd(int s, int e) {
+        return random.nextInt(s,e);
     }
 
     public ArrayList<Zombie> getZombies() {
         return zombies;
     }
+
+}
+
+
+

@@ -20,7 +20,6 @@ public class Playing implements SceneMethods {
         initComponents();
         initObjects();
         initEvents();
-        startGame();
     }
 
     private void initEvents() {
@@ -68,14 +67,15 @@ public class Playing implements SceneMethods {
                     spawnZombie();
 //                }
             }
-            waveManager.updates();
-            zombieManager.updates();
             if(zombieManager.allZombieDead()) {
                 startWave = false;
                 zombieManager.getZombies().clear();
+                createHorde();
                 System.out.println("Zombies cleared");
             }
         }
+        waveManager.updates();
+        zombieManager.updates();
     }
 
     private void spawnZombie() {
@@ -98,11 +98,8 @@ public class Playing implements SceneMethods {
     public ZombieManager getZombieManager() {
         return zombieManager;
     }
+    public void createHorde() {
+        zombieManager.createHorde(45);
+    }
 }
-        public void updates() {
-            zombieManager.updates();
 
-        }
-        public void startGame() {
-            zombieManager.addRandomZombies(45);
-        }
