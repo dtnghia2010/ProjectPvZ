@@ -62,52 +62,22 @@ public class Playing implements SceneMethods {
             }
         }
 
-        for (MyButtons b2 : plantManager.getPlantFromBar()) {
+        for (MyButtons b2 : barManager.getPickPlant()) {
             if (b2.getBounds().contains(x, y)) {
                 if (b2.getText().contains("Sunflower")) {
-                    for (int i = 0; i < plantManager.getPlantList().size(); i++){
-                        if (plantManager.getPlantList().get(i) == null){
-                            plantManager.initPlants();
-                            listOfPlant.add(new PlantManager());
-                            listOfPlant.get(i).setType(0);
-                        }
-                    }
+                    plantManager.initPlants(0);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Peashooter")) {
-                    for (int i = 0; i < plantManager.getPlantList().size(); i++){
-                        if (plantManager.getPlantList().get(i) == null){
-                            plantManager.initPlants();
-                            listOfPlant.add(new PlantManager());
-                            listOfPlant.get(i).setType(1);
-                        }
-                    }
+                    plantManager.initPlants(1);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Wall-nut")) {
-                    for (int i = 0; i < plantManager.getPlantList().size(); i++){
-                        if (plantManager.getPlantList().get(i) == null){
-                            plantManager.initPlants();
-                            listOfPlant.add(new PlantManager());
-                            listOfPlant.get(i).setType(2);
-                        }
-                    }
+                    plantManager.initPlants(2);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Snow Pea")) {
-                    for (int i = 0; i < plantManager.getPlantList().size(); i++){
-                        if (plantManager.getPlantList().get(i) == null){
-                            plantManager.initPlants();
-                            listOfPlant.add(new PlantManager());
-                            listOfPlant.get(i).setType(3);
-                        }
-                    }
+                    plantManager.initPlants(3);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Cherry Bomb")) {
-                    for (int i = 0; i < plantManager.getPlantList().size(); i++){
-                        if (plantManager.getPlantList().get(i) == null){
-                            plantManager.initPlants();
-                            listOfPlant.add(new PlantManager());
-                            listOfPlant.get(i).setType(4);
-                        }
-                    }
+                    plantManager.initPlants(4);
                     plantManager.setSelected(true);
                 }
             }
@@ -117,9 +87,8 @@ public class Playing implements SceneMethods {
     public void mouseReleased(int x, int y) {
         if (plantManager.getSelected()) {
             for (int i = 0; i < 45; i++) {
-                if (tileManager.getTiles()[i].getBound().contains(x, y) && tileManager.getTiles()[i].isOccupied() == false) {
+                if (tileManager.getTiles()[i].getBound().contains(x, y) && !tileManager.getTiles()[i].isOccupied()) {
                     tileManager.getTiles()[i].setOccupied(true);
-                    tileManager.getTiles()[i].setPlantManager(plantManager);
                     plantManager.setSelected(false);
                     plantManager.setLocated(true);
                 }

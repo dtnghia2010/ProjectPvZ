@@ -1,6 +1,5 @@
 package manager;
 
-import component.Plant;
 import component.Tile;
 import scenes.Playing;
 
@@ -8,6 +7,7 @@ import java.awt.*;
 
 public class TileManager {
     private Tile[] tiles = new Tile[45];
+
     public TileManager() {
         initTiles();
     }
@@ -31,18 +31,11 @@ public class TileManager {
             Rectangle r = t.getBound();
             if (t.isOccupied() == true) {
                 for (int i = 0; i < plantManager.getPlantList().size(); i++) {
-                    if (plantManager.setLocated(true)) {
-                        g.drawImage(t.getPlantManager(playing).get(i).getPlantImages(), r.x, r.y, r.width, r.height, null);
+                    if (plantManager.isLocated()) {
+                        g.drawImage(plantManager.getPlantImages(plantManager.getPlantList().get(i).getPlantID()), r.x, r.y, r.width, r.height, null);
                 }
                 }
             }
-//            if (tl.isOccupied() == true) {
-//                for(Plant pl: PlantInTiles) {
-//                    if(pl.isPlaced() == true) {
-//                        g.drawImage(tl.getPlant().getPlantImg(), r.x, r.y, r.width, r.height, null);
-//                    }
-//                }
-//            } else {
 //            g.setColor(Color.blue);
 //            g.fillRect(r.x, r.y, r.width, r.height);
 //            }

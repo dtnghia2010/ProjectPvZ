@@ -20,7 +20,6 @@ public class Tile {
         return hTile;
     }
 
-    //    private Plant plants;
     private PlantManager plantManager;
 
     public Tile(Rectangle bound) {

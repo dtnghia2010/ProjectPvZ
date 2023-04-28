@@ -2,6 +2,7 @@ package manager;
 
 import component.MyButtons;
 import component.Plant;
+import component.Tile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +13,17 @@ public class PlantManager {
     private Image[] plantImages;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private List<Plant> plantList = new ArrayList<>();
-    private MyButtons[] plantFromBar;
     private int type;
-    private boolean selected, located;
+    private boolean selected = false;
+    private boolean located = false;
+
+    public boolean isLocated() {
+        return located;
+    }
+
+    public void setLocated(boolean located) {
+        this.located = located;
+    }
 
     public int getType() {
         return type;
@@ -26,20 +35,10 @@ public class PlantManager {
 
     public PlantManager() {
         importImg();
-        initButtons();
     }
 
-    public void initPlants() {
-        plantList.add(new Plant(100));
-    }
-
-    private void initButtons() {
-        plantFromBar = new MyButtons[5];
-        plantFromBar[0] = new MyButtons("Sunflower", 350, 0, 90, 90);
-        plantFromBar[1] = new MyButtons("Peashooter", 440, 0, 90, 90);
-        plantFromBar[2] = new MyButtons("Wall-nut", 530, 0, 90, 90);
-        plantFromBar[3] = new MyButtons("Snow Pea", 620, 0, 90, 90);
-        plantFromBar[4] = new MyButtons("Cherry Bomb", 710, 0, 90, 90);
+    public void initPlants(int plantID) {
+        plantList.add(new Plant(100, plantID));
     }
 
     private void importImg() {
@@ -56,8 +55,8 @@ public class PlantManager {
         }
     }
 
-    public Image getPlantImages() {
-        return plantImages[type];
+    public Image getPlantImages(int plantID) {
+        return plantImages[plantID];
     }
 
 
@@ -66,20 +65,11 @@ public class PlantManager {
     }
 
 
-    public MyButtons[] getPlantFromBar() {
-        return plantFromBar;
-    }
-
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
     public boolean getSelected() {
         return selected;
-    }
-
-    public boolean setLocated(boolean located) {
-        this.located = located;
-        return located;
     }
 }
