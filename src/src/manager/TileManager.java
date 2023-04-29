@@ -33,7 +33,7 @@ public class TileManager {
                 for (int i = 0; i < plantManager.getPlantList().size(); i++) {
                     if (plantManager.isLocated()) {
                         g.drawImage(plantManager.getPlantImages(plantManager.getPlantList().get(i).getPlantID()), r.x, r.y, r.width, r.height, null);
-                }
+                    }
                 }
             }
 //            g.setColor(Color.blue);
