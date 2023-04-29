@@ -11,9 +11,21 @@ public class PlantManager {
     private Image[] plantImages;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private List<Plant> plantList = new ArrayList<>();
+    private TileManager tileManager = new TileManager();
     private int type;
     private boolean selected = false;
     private boolean located = false;
+    private int IDhold;
+
+    public int getIDhold() {
+        return IDhold;
+    }
+
+    public void setIDhold(int IDhold) {
+        this.IDhold = IDhold;
+    }
+
+
 
     public boolean isLocated() {
         return located;
@@ -53,6 +65,22 @@ public class PlantManager {
         }
     }
 
+    public void drawPlant(Graphics g){
+        for (Plant pl : plantList){
+            if (pl.getPlantID() == 0){
+                g.drawImage(plantImages[0], tileManager.getTiles()[pl.getTileHold()].getCurX(), tileManager.getTiles()[pl.getTileHold()].getCurY(), tileManager.getTiles()[pl.getTileHold()].getwTile(), tileManager.getTiles()[pl.getTileHold()].gethTile(), null);
+            } else if (pl.getPlantID() == 1){
+                g.drawImage(plantImages[1], tileManager.getTiles()[pl.getTileHold()].getCurX(), tileManager.getTiles()[pl.getTileHold()].getCurY(), tileManager.getTiles()[pl.getTileHold()].getwTile(), tileManager.getTiles()[pl.getTileHold()].gethTile(), null);
+            } else if (pl.getPlantID() == 2){
+                g.drawImage(plantImages[2], tileManager.getTiles()[pl.getTileHold()].getCurX(), tileManager.getTiles()[pl.getTileHold()].getCurY(), tileManager.getTiles()[pl.getTileHold()].getwTile(), tileManager.getTiles()[pl.getTileHold()].gethTile(), null);
+            } else if (pl.getPlantID() == 3){
+                g.drawImage(plantImages[3], tileManager.getTiles()[pl.getTileHold()].getCurX(), tileManager.getTiles()[pl.getTileHold()].getCurY(), tileManager.getTiles()[pl.getTileHold()].getwTile(), tileManager.getTiles()[pl.getTileHold()].gethTile(), null);
+            } else if (pl.getPlantID() == 4){
+                g.drawImage(plantImages[4], tileManager.getTiles()[pl.getTileHold()].getCurX(), tileManager.getTiles()[pl.getTileHold()].getCurY(), tileManager.getTiles()[pl.getTileHold()].getwTile(), tileManager.getTiles()[pl.getTileHold()].gethTile(), null);
+            }
+        }
+    }
+
     public Image getPlantImages(int plantID) {
         return plantImages[plantID];
     }
@@ -69,5 +97,17 @@ public class PlantManager {
 
     public boolean getSelected() {
         return selected;
+    }
+
+    public void mouse(int x, int y){
+        for (int i = 0; i < tileManager.getTiles().length; i++){
+            Rectangle r = new Rectangle(tileManager.getTiles()[i].getCurX(), tileManager.getTiles()[i].getCurY(), tileManager.getTiles()[i].getwTile(), tileManager.getTiles()[i].gethTile());
+            if (r.contains(x, y)){
+                initPlants(IDhold);
+                for (int j = 0; j < plantList.size(); j++){
+                    plantList.get(plantList.size() - 1).setTileHold(i);
+                }
+            }
+        }
     }
 }

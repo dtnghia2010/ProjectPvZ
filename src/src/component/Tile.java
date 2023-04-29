@@ -11,6 +11,7 @@ public class Tile {
     private int wTile = 70, hTile = 80;
     private Rectangle bound;
     private Boolean occupied = false;
+    private int curX, curY;
 
     public int getwTile() {
         return wTile;
@@ -41,6 +42,22 @@ public class Tile {
 
     public void setPlantManager(PlantManager plantManager) {
         this.plantManager = plantManager;
+    }
+
+    public int getCurX() {
+        return curX;
+    }
+
+    public void setCurX(int curX) {
+        this.curX = curX;
+    }
+
+    public int getCurY() {
+        return curY;
+    }
+
+    public void setCurY(int curY) {
+        this.curY = curY;
     }
 }
 
