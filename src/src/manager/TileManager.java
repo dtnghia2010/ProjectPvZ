@@ -26,10 +26,10 @@ public class TileManager {
         }
     }
 
-    public void drawTiles(Graphics g, PlantManager plantManager, Playing playing) {
+    public void drawTiles(Graphics g, PlantManager plantManager) {
         for (Tile t : tiles) {
             Rectangle r = t.getBound();
-            if (t.isOccupied() == true) {
+            if (t.isOccupied()) {
                 for (int i = 0; i < plantManager.getPlantList().size(); i++) {
                     if (plantManager.isLocated()) {
                         g.drawImage(plantManager.getPlantImages(plantManager.getPlantList().get(i).getPlantID()), r.x, r.y, r.width, r.height, null);

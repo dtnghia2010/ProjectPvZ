@@ -41,7 +41,7 @@ public class Playing implements SceneMethods {
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
-        tileManager.drawTiles(g, plantManager, this);
+        tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
     }
 

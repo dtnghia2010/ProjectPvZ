@@ -34,15 +34,7 @@ public class Tile {
     public boolean isOccupied() {
         return occupied;
     }
-//
-//    public Plant getPlants() {
-//        return plants;
-//    }
-//
-//    public void setPlants(Plant plants) {
-//        this.plants = plants;
-//    }
-//
+
     public List<PlantManager> getPlantManager(Playing playing) {
         return playing.getListOfPlant();
     }

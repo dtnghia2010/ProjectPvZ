@@ -1,8 +1,6 @@
 package manager;
 
-import component.MyButtons;
 import component.Plant;
-import component.Tile;
 
 import javax.swing.*;
 import java.awt.*;
