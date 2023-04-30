@@ -1,19 +1,17 @@
 package component;
 
+import manager.PlantManager;
+import scenes.Playing;
+
 import java.awt.*;
+import java.util.List;
 
 public class Tile {
     private final int ROWS = 5, COLS = 9;
-    private int curX, curY;
     private int wTile = 70, hTile = 80;
-
-    public void setwTile(int wTile) {
-        this.wTile = wTile;
-    }
-
-    public void sethTile(int hTile) {
-        this.hTile = hTile;
-    }
+    private Rectangle bound;
+    private Boolean occupied = false;
+    private int curX, curY;
 
     public int getwTile() {
         return wTile;
@@ -21,6 +19,29 @@ public class Tile {
 
     public int gethTile() {
         return hTile;
+    }
+
+    private PlantManager plantManager;
+
+    public Tile(Rectangle bound) {
+        this.bound = bound;
+    }
+    public Rectangle getBound() {
+        return bound;
+    }
+    public void setOccupied(Boolean b) {
+        occupied = b;
+    }
+    public boolean isOccupied() {
+        return occupied;
+    }
+
+    public List<PlantManager> getPlantManager(Playing playing) {
+        return playing.getListOfPlant();
+    }
+
+    public void setPlantManager(PlantManager plantManager) {
+        this.plantManager = plantManager;
     }
 
     public int getCurX() {
@@ -37,21 +58,6 @@ public class Tile {
 
     public void setCurY(int curY) {
         this.curY = curY;
-    }
-
-    private Rectangle bound;
-    private Boolean occupied = false;
-    public Tile(Rectangle bound) {
-        this.bound = bound;
-    }
-    public Rectangle getBound() {
-        return bound;
-    }
-    public void setOccupied(Boolean b) {
-        occupied = b;
-    }
-    public boolean isOccupied() {
-        return occupied;
     }
 }
 
