@@ -13,6 +13,15 @@ public class Tile {
     private Boolean occupied = false;
     private int curX, curY;
 
+    public boolean isPlanted() {
+        return isPlanted;
+    }
+
+    public void setPlanted(boolean planted) {
+        isPlanted = planted;
+    }
+
+    private boolean isPlanted = false;
     public int getwTile() {
         return wTile;
     }

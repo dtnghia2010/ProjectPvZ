@@ -71,7 +71,13 @@ public class World extends JPanel implements Runnable {
         super.paintComponent(g);
         render(g);
     }
-
+    public void update(){
+        switch (GameScenes.gameScenes){
+            case PLAYING:
+                playing.update();
+                break;
+        }
+    }
     public void render(Graphics g) {
         switch (GameScenes.gameScenes) {
             case MENU:
@@ -122,7 +128,7 @@ public class World extends JPanel implements Runnable {
             if (now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
-                //updates()
+                update();
             }
             //check FPS & UPS
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {

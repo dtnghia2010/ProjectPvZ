@@ -19,6 +19,8 @@ public class Playing implements SceneMethods {
     private BarManager barManager;
     private PlantManager plantManager;
     private ButtonManager buttonManager;
+    private ProjectileManager projectileManager;
+    private Zombie_fakeManager zombieFakeManager;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -33,8 +35,16 @@ public class Playing implements SceneMethods {
         tileManager = new TileManager();
         buttonManager = new ButtonManager();
         plantManager = new PlantManager();
+        projectileManager = new ProjectileManager();
+        zombieFakeManager = new Zombie_fakeManager();
     }
-
+    public void update(){
+        plantManager.alertPlant(tileManager,zombieFakeManager);
+//        projectileManager.projectileCreated(plantManager);
+        plantManager.plantAttack(projectileManager);
+        projectileManager.update();
+        projectileManager.projectileCollideZombie(zombieFakeManager);
+    }
     @Override
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
@@ -42,6 +52,8 @@ public class Playing implements SceneMethods {
         tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
         plantManager.drawPlant(g);
+        projectileManager.drawProjectile(g);
+        zombieFakeManager.drawZombie(g);
     }
 
     public PlantManager getPlantManager() {
@@ -65,18 +77,28 @@ public class Playing implements SceneMethods {
             if (b2.getBounds().contains(x, y)) {
                 if (b2.getText().contains("Sunflower")) {
                     plantManager.setIDhold(0);
+                    plantManager.setHPhold(1000);
+                    plantManager.setATKhold(0);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Peashooter")) {
                     plantManager.setIDhold(1);
+                    plantManager.setHPhold(1000);
+                    plantManager.setATKhold(100);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Wall-nut")) {
                     plantManager.setIDhold(2);
+                    plantManager.setHPhold(10000);
+                    plantManager.setATKhold(0);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Snow Pea")) {
                     plantManager.setIDhold(3);
+                    plantManager.setHPhold(1000);
+                    plantManager.setATKhold(100);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Cherry Bomb")) {
                     plantManager.setIDhold(4);
+                    plantManager.setHPhold(1000);
+                    plantManager.setATKhold(10000);
                     plantManager.setSelected(true);
                 }
             }
