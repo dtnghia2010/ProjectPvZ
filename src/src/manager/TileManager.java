@@ -16,15 +16,13 @@ public class TileManager {
     private void initTiles() {
         int curX = 250, curY = 120, rowCounter = 0;
         for (int i = 0; i < 45; i++) {
-            tiles[i] = new Tile(new Rectangle(0, 0, 70, 80));
             if (rowCounter >= 9) {
-                curY += tiles[i].gethTile() + 15;
+                curY += 80 + 15;
                 curX = 250;
                 rowCounter = 0;
             }
-            curX += tiles[i].getwTile() + 8;
-            tiles[i].setCurX(curX);
-            tiles[i].setCurY(curY);
+            curX += 70 + 8;
+            tiles[i] = new Tile(new Rectangle(curX, curY, 70, 80));
             rowCounter++;
         }
     }
@@ -42,11 +40,12 @@ public class TileManager {
 //                    g.drawImage(plantManager.getPlantImages(1), r.x, r.y, r.width, r.height, null);
 //                }
 //            }
-        }
-    }
 //            g.setColor(Color.blue);
 //            g.fillRect(r.x, r.y, r.width, r.height);
 //            }
+        }
+    }
+//
 
 
 
