@@ -10,7 +10,6 @@ public class TileManager {
         initTiles();
     }
 
-
     public Tile[] getTiles() {
         return tiles;
     }
