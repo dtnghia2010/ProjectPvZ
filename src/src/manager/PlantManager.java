@@ -102,11 +102,14 @@ public class PlantManager {
     public void mouse(int x, int y){
         if(selected){
             for (int i = 0; i < tileManager.getTiles().length; i++){
-                Rectangle r = new Rectangle(tileManager.getTiles()[i].getCurX(), tileManager.getTiles()[i].getCurY(), tileManager.getTiles()[i].getwTile(), tileManager.getTiles()[i].gethTile());
-                if (r.contains(x, y)){
-                    initPlants(IDhold);
-                    for (int j = 0; j < plantList.size(); j++){
-                        plantList.get(plantList.size() - 1).setTileHold(i);
+                if(!tileManager.getTiles()[i].isOccupied()){
+                    Rectangle r = new Rectangle(tileManager.getTiles()[i].getCurX(), tileManager.getTiles()[i].getCurY(), tileManager.getTiles()[i].getwTile(), tileManager.getTiles()[i].gethTile());
+                    if (r.contains(x, y)){
+                        tileManager.getTiles()[i].setOccupied(true);
+                        initPlants(IDhold);
+                        for (int j = 0; j < plantList.size(); j++){
+                            plantList.get(plantList.size() - 1).setTileHold(i);
+                        }
                     }
                 }
             }
