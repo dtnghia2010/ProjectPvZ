@@ -1,35 +1,44 @@
 package scenes;
 
 import manager.*;
+import component.Tile;
 import component.MyButtons;
+import object.FakePlant;
+import zombie.Zombie;
 import java.util.List;
 
 import static scenes.GameScenes.*;
-
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Playing implements SceneMethods {
-    public List<PlantManager> getListOfPlant() {
-        return listOfPlant;
-    }
-
-    private List<PlantManager> listOfPlant = new ArrayList<>();
     private TileManager tileManager;
     private BarManager barManager;
     private PlantManager plantManager;
     private ButtonManager buttonManager;
     private ProjectileManager projectileManager;
     private Zombie_fakeManager zombieFakeManager;
+    private ZombieManager zombieManager;
+    private WaveManager waveManager;
+    private FakePlantManager fakePlantManager;
+    private boolean startWave = false;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
     public Playing(World w) {
         this.w = w;
         initComponents();
-
+        initObjects();
+        initEvents();
     }
 
+    private void initEvents() {
+        waveManager = new WaveManager(this);
+    }
+
+    private void initObjects() {
+        zombieManager = new ZombieManager(this);
+        fakePlantManager = new FakePlantManager(this);
+    }
     private void initComponents() {
         barManager = new BarManager();
         tileManager = new TileManager();
@@ -51,6 +60,7 @@ public class Playing implements SceneMethods {
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
+        zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
         zombieFakeManager.drawZombie(g);
@@ -65,66 +75,75 @@ public class Playing implements SceneMethods {
             setGameScenes(MENU);
         } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
             setGameScenes(LOSE);
-        }
-
-        for (MyButtons b1 : barManager.getPickPlant()) {
-            if (b1.getBounds().contains(x, y)) {
-                System.out.println("You choose " + b1.getText());
+        } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
+            startWave = true;
+            waveManager.readyNewWave();
+        } else {
+            for(Tile tl: tileManager.getTiles()) {
+                if(tl.getBound().contains(x,y)) {
+                    tl.setOccupied(true);
+                    fakePlantManager.getPlant().setPlaced(true);
+                    tl.setFakePlant(fakePlantManager.getPlant());
+                }
             }
         }
-
-        for (MyButtons b2 : barManager.getPickPlant()) {
-            if (b2.getBounds().contains(x, y)) {
-                if (b2.getText().contains("Sunflower")) {
-                    plantManager.setIDhold(0);
-                    plantManager.setHPhold(1000);
-                    plantManager.setATKhold(0);
-                    plantManager.setSelected(true);
-                } else if (b2.getText().contains("Peashooter")) {
-                    plantManager.setIDhold(1);
-                    plantManager.setHPhold(1000);
-                    plantManager.setATKhold(100);
-                    plantManager.setSelected(true);
-                } else if (b2.getText().contains("Wall-nut")) {
-                    plantManager.setIDhold(2);
-                    plantManager.setHPhold(10000);
-                    plantManager.setATKhold(0);
-                    plantManager.setSelected(true);
-                } else if (b2.getText().contains("Snow Pea")) {
-                    plantManager.setIDhold(3);
-                    plantManager.setHPhold(1000);
-                    plantManager.setATKhold(100);
-                    plantManager.setSelected(true);
-                } else if (b2.getText().contains("Cherry Bomb")) {
-                    plantManager.setIDhold(4);
-                    plantManager.setHPhold(1000);
-                    plantManager.setATKhold(10000);
-                    plantManager.setSelected(true);
-                }
+        for (MyButtons b : barManager.getPickPlant()) {
+            if (b.getBounds().contains(x, y)) {
+                System.out.println("You choose " + b.getText());
             }
         }
     }
 
     public void mouseReleased(int x, int y) {
-//        if (plantManager.getSelected()) {
-//            for (int i = 0; i < 45; i++) {
-//                if (tileManager.getTiles()[i].getBound().contains(x, y) && !tileManager.getTiles()[i].isOccupied()) {
-//                    tileManager.getTiles()[i].setOccupied(true);
-//                    plantManager.setSelected(false);
-//                    plantManager.setLocated(true);
-//                }
-//            }
-//        }
-
-//        for (int i = 0; i < tileManager.getTiles().length; i++){
-//            Rectangle r = new Rectangle(tileManager.getTiles()[i].getCurX(), tileManager.getTiles()[i].getCurY(), tileManager.getTiles()[i].getwTile(), tileManager.getTiles()[i].gethTile());
-//            if (r.contains(x, y)){
-//                plantManager.initPlants(plantManager.getIDhold());
-//                for (int j = 0; j < listOfPlant.size(); j++){
-//                    listOfPlant.get(listOfPlant.size() - 1).getPlantList().get(i).setTileHold(i);
-//                }
-//            }
-//        }
         plantManager.mouse(x, y);
     }
 }
+    public void updates() {
+        if(startWave) {
+            if (isTimeForNewZombie()) {
+                    spawnZombie();
+            }
+            if(zombieManager.allZombieDead()) {
+                startWave = false;
+                zombieManager.getZombies().clear();
+                createHorde();
+                System.out.println("Zombies cleared");
+            } else {
+                zombieAtk();
+            }
+        }
+        waveManager.updates();
+        zombieManager.updates();
+    }
+
+    private void zombieAtk() {
+        for(Zombie z: zombieManager.getZombies()) {
+            //TODO zombie attack plant
+        }
+    }
+
+    private void spawnZombie() {
+        zombieManager.spawnZombie(waveManager.getNextZombie());
+    }
+
+    private boolean isTimeForNewZombie() {
+        if (waveManager.isTimeForNewZombie()) {
+            if (waveManager.isThereMoreZombieInWave()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public WaveManager getWaveManager() {
+        return waveManager;
+    }
+
+    public ZombieManager getZombieManager() {
+        return zombieManager;
+    }
+    public void createHorde() {
+        zombieManager.createHorde(45);
+    }
+}
+

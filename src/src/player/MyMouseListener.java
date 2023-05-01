@@ -18,11 +18,6 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Clicked");
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
         if(e.getButton() == MouseEvent.BUTTON1) {
             switch (GameScenes.gameScenes) {
                 case MENU:
@@ -34,9 +29,23 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 case LOSE:
                     w.getLose().mouseClicked(e.getX(), e.getY());
                     break;
-//                case Setting:
-//                    w.getSetting().mouseClicked(e.getX(), e.getY());
-//                    break;
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if(e.getButton() == MouseEvent.BUTTON1) {
+            switch (GameScenes.gameScenes) {
+                case MENU:
+                    w.getMenu().mousePressed(e.getX(), e.getY());
+                    break;
+                case PLAYING:
+                    w.getPlaying().mousePressed(e.getX(), e.getY());
+                    break;
+                case LOSE:
+                    w.getLose().mousePressed(e.getX(), e.getY());
+                    break;
             }
         }
     }
@@ -45,15 +54,15 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     public void mouseReleased(MouseEvent e) {
         if(e.getButton() == MouseEvent.BUTTON1) {
             switch (GameScenes.gameScenes) {
-//                case MENU:
-//                    w.getMenu().mouseReleased(e.getX(), e.getY());
-//                    break;
+                case MENU:
+                    w.getMenu().mouseReleased(e.getX(), e.getY());
+                    break;
                 case PLAYING:
                     w.getPlaying().mouseReleased(e.getX(), e.getY());
                     break;
-//                case LOSE:
-//                    w.getLose().mouseReleased(e.getX(), e.getY());
-//                    break;
+                case LOSE:
+                    w.getLose().mouseReleased(e.getX(), e.getY());
+                    break;
             }
         }
     }

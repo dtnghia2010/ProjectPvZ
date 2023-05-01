@@ -4,7 +4,6 @@ import manager.PlantManager;
 import scenes.Playing;
 
 import java.awt.*;
-import java.util.List;
 
 public class Tile {
     private final int ROWS = 5, COLS = 9;
@@ -43,14 +42,6 @@ public class Tile {
     }
     public boolean isOccupied() {
         return occupied;
-    }
-
-    public List<PlantManager> getPlantManager(Playing playing) {
-        return playing.getListOfPlant();
-    }
-
-    public void setPlantManager(PlantManager plantManager) {
-        this.plantManager = plantManager;
     }
 
     public int getCurX() {

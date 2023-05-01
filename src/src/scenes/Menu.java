@@ -27,6 +27,17 @@ public class Menu implements SceneMethods {
             System.out.println("Setting");
         }
     }
+
+    @Override
+    public void mousePressed(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseReleased(int x, int y) {
+
+    }
+
     public void drawButtons(Graphics g) {
         bPlaying.draw(g);
         bSetting.draw(g);
@@ -37,5 +48,7 @@ public class Menu implements SceneMethods {
         g.drawImage(img,0,0, w.getWidth(), w.getHeight(), null);
         initButtons();
         drawButtons(g);
+    }
+    public void updates () {
     }
 }
