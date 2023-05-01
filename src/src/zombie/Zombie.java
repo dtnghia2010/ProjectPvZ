@@ -5,7 +5,7 @@ import java.awt.*;
 public class Zombie {
     private int hp, dmg, type;
     private final int width = 80, height = 140;
-    private float spd = 2f;
+    private float spd = 0.8f;
 
     public boolean isSlowed() {
         return isSlowed;
@@ -19,7 +19,7 @@ public class Zombie {
         this.spd = spd;
     }
 
-    private int x, y;
+    private double x, y;
     private boolean isAlived = true;
     private boolean isDead = false;
     private boolean isSlowed = false;
@@ -32,7 +32,7 @@ public class Zombie {
     }
 
     private Rectangle bound;
-    public Zombie(int x, int y, int type) {
+    public Zombie(double x, double y, int type) {
         this.x = x;
         this.y = y;
         this.type = type;
@@ -80,11 +80,11 @@ public class Zombie {
     public boolean isAlived() {
         return isAlived;
     }
-    public int X() {
+    public double X() {
         return x;
     }
 
-    public int Y() {
+    public double Y() {
         return y;
     }
 

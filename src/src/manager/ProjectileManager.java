@@ -89,26 +89,20 @@ public class ProjectileManager {
             Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
             while ((iterator.hasNext())){
                 Zombie zombie = iterator.next();
-                Rectangle r = new Rectangle(zombie.X(),zombie.Y(),zombie.getWidth(),zombie.getHeight());
-                synchronized (listOfProjectile){
-                    Iterator<Projectile> iterator2 = listOfProjectile.iterator();
-                    while (iterator2.hasNext()){
-                        Projectile projectile = iterator2.next();
-                        if(r.contains(projectile.getX()+30,projectile.getY())){
-                            zombie.setHp(zombie.getHp()-projectile.getATK());
-                            if(projectile.getID() == 2 && !zombie.isSlowed()){
-                                zombie.setSpd(zombie.getSpd()/2);
-                                System.out.println(zombie.getSpd());
-                                zombie.setSlowed(true);
-                            }
-                            iterator2.remove();
-                            if(zombie.getHp() <= 0){
-                                zombie.setDead(true);
-                                iterator.remove();
-                                if(zombieManager.getZombies() == null){
-                                    System.out.println("you win");
-                                }
-                            }
+                Rectangle r = new Rectangle((int) zombie.X(),(int) zombie.Y(),zombie.getWidth(),zombie.getHeight());
+                Iterator<Projectile> iterator2 = listOfProjectile.iterator();
+                while (iterator2.hasNext()){
+                    Projectile projectile = iterator2.next();
+                    if(r.contains(projectile.getX()+30,projectile.getY())){
+                        zombie.setHp(zombie.getHp()-projectile.getATK());
+                        if(projectile.getID() == 2 && !zombie.isSlowed()){
+                            zombie.setSpd(zombie.getSpd()/2);
+                            zombie.setSlowed(true);
+                        }
+                        iterator2.remove();
+                        if(zombie.getHp() <= 0){
+                            zombie.setDead(true);
+                            iterator.remove();
                         }
                     }
                 }

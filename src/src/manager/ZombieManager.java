@@ -49,9 +49,9 @@ public class ZombieManager {
             if (zombies.size() > 0) {
                 for (Zombie z : zombies) {
                     if (z.isAlived()) {
-                        g.drawImage(zImages[z.getType()], z.X(), z.Y(), z.getWidth(), z.getHeight(), null);
+                        g.drawImage(zImages[z.getType()], (int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight(), null);
                         g.setColor(Color.RED);
-                        g.drawRect(z.X(), z.Y(), z.getWidth(), z.getHeight());
+                        g.drawRect((int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight());
                     }
                 }
             }
