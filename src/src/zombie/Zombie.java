@@ -1,11 +1,16 @@
 package zombie;
 
+import component.Plant;
+import manager.ZombieManager;
+
 import java.awt.*;
+import java.util.Iterator;
 
 public class Zombie {
     private int hp, dmg, type;
     private final int width = 80, height = 140;
     private float spd = 0.8f;
+    private boolean isCollided = false;
 
     public boolean isSlowed() {
         return isSlowed;
@@ -77,6 +82,10 @@ public class Zombie {
         return type;
     }
 
+    public void setCollided(boolean collided) {
+        isCollided = collided;
+    }
+
     public boolean isAlived() {
         return isAlived;
     }
@@ -93,13 +102,23 @@ public class Zombie {
     }
 
     public void move() {
-        x -= spd;
+        if(!isCollided){
+            x -= spd;
+        }
     }
 //    public void bite(FakePlant fakePlant) {
 //
 //    }
     public void hurt() {
 
+    }
+    public void attackPlant(Plant plant){
+        plant.setPlantHP(plant.getPlantHP() - dmg);
+    }
+    public void defeatPlant(Plant plant){
+        if(plant.getPlantHP() <= 0){
+            isCollided = false;
+        }
     }
 
     public int getWidth() {

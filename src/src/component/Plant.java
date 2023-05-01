@@ -1,11 +1,13 @@
 package component;
 
+import java.util.Iterator;
+
 public class Plant {
     private double plantHP;
     private int plantATK;
     private  int plantID;
     private boolean isDangered = false;
-
+    private boolean isPlantDead = false;
     public boolean isDangered() {
         return isDangered;
     }
@@ -89,5 +91,10 @@ public class Plant {
 
     public void setPlantHP(double plantHP) {
         this.plantHP = plantHP;
+    }
+    public void removePlant(Plant plant,Iterator<Plant> iterator){
+        if(plant.getPlantHP() <= 0){
+            iterator.remove();
+        }
     }
 }

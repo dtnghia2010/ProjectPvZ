@@ -13,14 +13,14 @@ public class ProjectileManager {
     private List<Projectile> listOfProjectile = new ArrayList<>();
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Image[] projectileImage = new Image[2];
-    private int realTimeCounter = 0;
-    private boolean isReset = false;
+    private static int realTimeCounter = 0;
+    private static boolean isReset = false;
 
-    public int getRealTimeCounter() {
+    public static int getRealTimeCounter() {
         return realTimeCounter;
     }
 
-    public void frameCount(){
+    public static void frameCount(){
         if(realTimeCounter<90){
             realTimeCounter++;
         }
@@ -48,12 +48,17 @@ public class ProjectileManager {
 //            }
 //        }
     }
-    public void isResetTime(){
+    public static void isResetTime(){
         if(isReset){
             realTimeCounter = 0;
             isReset = false;
         }
     }
+
+    public static void setIsReset(boolean isReset) {
+        ProjectileManager.isReset = isReset;
+    }
+
     public void update(){
         frameCount();
         synchronized (listOfProjectile){

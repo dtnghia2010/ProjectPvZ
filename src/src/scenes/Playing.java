@@ -80,27 +80,27 @@ public class Playing implements SceneMethods {
             if (b2.getBounds().contains(x, y)) {
                 if (b2.getText().contains("Sunflower")) {
                     plantManager.setIDhold(0);
-                    plantManager.setHPhold(1000);
+                    plantManager.setHPhold(100);
                     plantManager.setATKhold(0);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Peashooter")) {
                     plantManager.setIDhold(1);
-                    plantManager.setHPhold(1000);
+                    plantManager.setHPhold(100);
                     plantManager.setATKhold(20);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Wall-nut")) {
                     plantManager.setIDhold(2);
-                    plantManager.setHPhold(10000);
+                    plantManager.setHPhold(1000);
                     plantManager.setATKhold(0);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Snow Pea")) {
                     plantManager.setIDhold(3);
-                    plantManager.setHPhold(1000);
+                    plantManager.setHPhold(100);
                     plantManager.setATKhold(20);
                     plantManager.setSelected(true);
                 } else if (b2.getText().contains("Cherry Bomb")) {
                     plantManager.setIDhold(4);
-                    plantManager.setHPhold(1000);
+                    plantManager.setHPhold(0);
                     plantManager.setATKhold(10000);
                     plantManager.setSelected(true);
                 }
@@ -133,6 +133,7 @@ public class Playing implements SceneMethods {
         }
         waveManager.updates();
         zombieManager.updates();
+        zombieManager.ZombieCollidePlant(plantManager);
     }
 
     private void zombieAtk() {

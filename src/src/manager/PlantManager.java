@@ -64,17 +64,19 @@ public class PlantManager {
     }
 
     public void drawPlant(Graphics g){
-        for (Plant pl : plantList){
-            if (pl.getPlantID() == 0){
-                g.drawImage(plantImages[0], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
-            } else if (pl.getPlantID() == 1){
-                g.drawImage(plantImages[1], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
-            } else if (pl.getPlantID() == 2){
-                g.drawImage(plantImages[2], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
-            } else if (pl.getPlantID() == 3){
-                g.drawImage(plantImages[3], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
-            } else if (pl.getPlantID() == 4){
-                g.drawImage(plantImages[4], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+        synchronized (plantList){
+            for (Plant pl : plantList){
+                if (pl.getPlantID() == 0){
+                    g.drawImage(plantImages[0], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                } else if (pl.getPlantID() == 1){
+                    g.drawImage(plantImages[1], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                } else if (pl.getPlantID() == 2){
+                    g.drawImage(plantImages[2], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                } else if (pl.getPlantID() == 3){
+                    g.drawImage(plantImages[3], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                } else if (pl.getPlantID() == 4){
+                    g.drawImage(plantImages[4], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                }
             }
         }
     }
@@ -114,6 +116,11 @@ public class PlantManager {
             }
         }
     }
+
+    public List<Plant> getPlantList() {
+        return plantList;
+    }
+
     public void alertPlant(TileManager tileManager, ZombieManager zombieManager){
         for(int i = 0;i<tileManager.getTiles().length;i++){
             Rectangle r = tileManager.getTiles()[i].getBound();
