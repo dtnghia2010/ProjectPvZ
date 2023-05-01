@@ -21,7 +21,6 @@ public class ZombieManager {
     public static int getRealTimeCounter() {
         return realTimeCounter;
     }
-
     public static void frameCount(){
         if(realTimeCounter<90){
             realTimeCounter++;
@@ -125,13 +124,13 @@ public class ZombieManager {
     public ArrayList<Zombie> getZombies() {
         return zombies;
     }
-    public void ZombieCollidePlant(PlantManager plantManager){
+    public void ZombieCollidePlant(){
         synchronized (zombies){
             Iterator<Zombie> iterator = zombies.iterator();
             while (iterator.hasNext()){
                 Zombie zombie = iterator.next();
                 Rectangle r = new Rectangle((int)zombie.X(),(int)zombie.Y(),zombie.getWidth(),zombie.getHeight());
-                Iterator<Plant> iterator1 = plantManager.getPlantList().iterator();
+                Iterator<Plant> iterator1 = playing.getPlantManager().getPlantList().iterator();
                 while (iterator1.hasNext()){
                     Plant plant = iterator1.next();
                     if(r.contains(plant.getX()+plant.getWidth(),plant.getY())){
