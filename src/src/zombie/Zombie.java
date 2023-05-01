@@ -1,17 +1,43 @@
 package zombie;
 
-import object.FakePlant;
+import component.Plant;
+import manager.ZombieManager;
 
 import java.awt.*;
+import java.util.Iterator;
 
 public class Zombie {
     private int hp, dmg, type;
     private final int width = 80, height = 140;
-    private float spd = 10f;
-    private int x, y;
+    private float spd = 0.8f;
+    private boolean isCollided = false;
+
+    public boolean isSlowed() {
+        return isSlowed;
+    }
+
+    public void setSlowed(boolean slowed) {
+        isSlowed = slowed;
+    }
+
+    public void setSpd(float spd) {
+        this.spd = spd;
+    }
+
+    private double x, y;
     private boolean isAlived = true;
+    private boolean isDead = false;
+    private boolean isSlowed = false;
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
     private Rectangle bound;
-    public Zombie(int x, int y, int type) {
+    public Zombie(double x, double y, int type) {
         this.x = x;
         this.y = y;
         this.type = type;
@@ -56,24 +82,43 @@ public class Zombie {
         return type;
     }
 
+    public void setCollided(boolean collided) {
+        isCollided = collided;
+    }
+
     public boolean isAlived() {
         return isAlived;
     }
-    public int X() {
+    public double X() {
         return x;
     }
 
-    public int Y() {
+    public double Y() {
         return y;
     }
-    public void move() {
-        x -= spd;
-    }
-    public void bite(FakePlant fakePlant) {
 
+    public void setHp(int hp) {
+        this.hp = hp;
     }
+
+    public void move() {
+        if(!isCollided){
+            x -= spd;
+        }
+    }
+//    public void bite(FakePlant fakePlant) {
+//
+//    }
     public void hurt() {
 
+    }
+    public void attackPlant(Plant plant){
+        plant.setPlantHP(plant.getPlantHP() - dmg);
+    }
+    public void defeatPlant(Plant plant){
+        if(plant.getPlantHP() <= 0){
+            isCollided = false;
+        }
     }
 
     public int getWidth() {

@@ -1,11 +1,12 @@
 package manager;
 
+import component.Plant;
 import scenes.Playing;
 import zombie.Zombie;
-import object.FakePlant;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class ZombieManager {
@@ -14,8 +15,24 @@ public class ZombieManager {
     private Playing playing;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Random random = new Random();
-    private FakePlant fakePlant ;
+    private static int realTimeCounter = 0;
+    private static boolean isReset = false;
+    private int counter = 0;
+    public static int getRealTimeCounter() {
+        return realTimeCounter;
+    }
 
+    public static void frameCount(){
+        if(realTimeCounter<90){
+            realTimeCounter++;
+        }
+    }
+    public static void isResetTime(){
+        if(isReset){
+            realTimeCounter = 0;
+            isReset = false;
+        }
+    }
     public ZombieManager(Playing playing) {
         this.playing = playing;
         zombies = new ArrayList<>();
@@ -50,9 +67,9 @@ public class ZombieManager {
             if (zombies.size() > 0) {
                 for (Zombie z : zombies) {
                     if (z.isAlived()) {
-                        g.drawImage(zImages[z.getType()], z.X(), z.Y(), z.getWidth(), z.getHeight(), null);
+                        g.drawImage(zImages[z.getType()], (int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight(), null);
                         g.setColor(Color.RED);
-                        g.drawRect(z.X(), z.Y(), z.getWidth(), z.getHeight());
+                        g.drawRect((int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight());
                     }
                 }
             }
@@ -86,6 +103,7 @@ public class ZombieManager {
     }
 
     public void updates() {
+        frameCount();
         for (Zombie z : zombies) {
             if (z.isAlived()) {
                 // Cập nhật tọa độ di chuyển cho zombie còn sống
@@ -95,17 +113,45 @@ public class ZombieManager {
     }
 
 
-    public void attack() {
-        for (Zombie z : zombies) {
-            z.bite(fakePlant);
-        }
-    }
+//    public void attack() {
+//        for (Zombie z : zombies) {
+//            z.bite(fakePlant);
+//        }
+//    }
     private int rnd(int s, int e) {
         return random.nextInt(s,e);
     }
 
     public ArrayList<Zombie> getZombies() {
         return zombies;
+    }
+    public void ZombieCollidePlant(PlantManager plantManager){
+        synchronized (zombies){
+            Iterator<Zombie> iterator = zombies.iterator();
+            while (iterator.hasNext()){
+                Zombie zombie = iterator.next();
+                Rectangle r = new Rectangle((int)zombie.X(),(int)zombie.Y(),zombie.getWidth(),zombie.getHeight());
+                Iterator<Plant> iterator1 = plantManager.getPlantList().iterator();
+                while (iterator1.hasNext()){
+                    Plant plant = iterator1.next();
+                    if(r.contains(plant.getX()+plant.getWidth(),plant.getY())){
+                        zombie.setCollided(true);
+                        if(realTimeCounter >= 90){
+                            zombie.attackPlant(plant);
+                            isReset = true;
+                            plant.removePlant(plant,iterator1);
+                        }
+                        for(Zombie zombie1:zombies){
+                            if(r.contains(zombie1.X(),zombie1.Y())){
+                                zombie1.defeatPlant(plant);
+                            }
+                        }
+                    }
+                }
+            }
+            isResetTime();
+            counter++;
+        }
     }
 
 }

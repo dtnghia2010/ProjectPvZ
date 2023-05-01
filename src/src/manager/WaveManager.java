@@ -49,7 +49,7 @@ public class WaveManager {
     }
 
     public boolean isThereMoreZombieInWave() {
-        System.out.println("curWave:" +  curWave);
+//        System.out.println("curWave:" +  curWave);
         return waves[curWave].amountType(curZom) > 0;
     }
 

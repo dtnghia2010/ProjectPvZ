@@ -31,7 +31,6 @@ public class World extends JPanel implements Runnable {
         Thread thread = new Thread(this);
         thread.start();
     }
-
     public World() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         random = new Random();
@@ -69,13 +68,18 @@ public class World extends JPanel implements Runnable {
         playing = new Playing(this);
         menu = new Menu(this);
     }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         render(g);
     }
-
+    public void update(){
+        switch (GameScenes.gameScenes){
+            case PLAYING:
+                playing.update();
+                break;
+        }
+    }
     public void render(Graphics g) {
         switch (GameScenes.gameScenes) {
             case MENU:
@@ -139,6 +143,7 @@ public class World extends JPanel implements Runnable {
             if (now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
+                update();
                 updates();
             }
             //check FPS & UPS
