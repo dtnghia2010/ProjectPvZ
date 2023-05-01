@@ -2,10 +2,10 @@ package manager;
 
 import scenes.Playing;
 import zombie.Zombie;
-import object.FakePlant;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class ZombieManager {
@@ -14,7 +14,6 @@ public class ZombieManager {
     private Playing playing;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Random random = new Random();
-    private FakePlant fakePlant ;
 
     public ZombieManager(Playing playing) {
         this.playing = playing;
@@ -95,11 +94,11 @@ public class ZombieManager {
     }
 
 
-    public void attack() {
-        for (Zombie z : zombies) {
-            z.bite(fakePlant);
-        }
-    }
+//    public void attack() {
+//        for (Zombie z : zombies) {
+//            z.bite(fakePlant);
+//        }
+//    }
     private int rnd(int s, int e) {
         return random.nextInt(s,e);
     }

@@ -13,15 +13,16 @@ public class TileManager {
     public TileManager() {
         initTiles();
     }
+
     private void initTiles() {
         int curX = 250, curY = 120, rowCounter = 0;
-        for(int i = 0; i < 45; i++) {
-            if(rowCounter >= 9) {
-                curY += hTile+15;
+        for (int i = 0; i < 45; i++) {
+            if (rowCounter >= 9) {
+                curY += hTile + 15;
                 curX = 250;
                 rowCounter = 0;
             }
-            curX += (wTile+8);
+            curX += (wTile + 8);
             tiles[i] = new Tile(new Rectangle(curX, curY, wTile, hTile));
             rowCounter++;
         }
@@ -29,7 +30,7 @@ public class TileManager {
 
     public void drawTiles(Graphics g, PlantManager plantManager) {
         for (Tile t : tiles) {
-            Rectangle r = new Rectangle(t.getCurX(),t.getCurY(),t.getwTile(),t.gethTile());
+            Rectangle r = new Rectangle(t.getCurX(), t.getCurY(), t.getwTile(), t.gethTile());
 //            for (int i = 0; i < plantManager.getPlantList().size(); i++) {
 //                    if (plantManager.isLocated()) {
 //                        g.drawImage(plantManager.getPlantImages(plantManager.getPlantList().get(i).getPlantID()), r.x, r.y, r.width, r.height, null);
@@ -39,26 +40,10 @@ public class TileManager {
 //                } else if (plantManager.getPlantList().get(i).getPlantID() == 1) {
 //                    g.drawImage(plantManager.getPlantImages(1), r.x, r.y, r.width, r.height, null);
 //                }
+        }
+    }
 
     public Tile[] getTiles() {
         return tiles;
-    }
-
-    public void drawTiles(Graphics g) {
-        for (Tile tl : tiles) {
-            Rectangle r = tl.getBound();
-            if (tl.isOccupied() == true) {
-                if(tl.getFakePlant().isPlaced() == true) {
-                    g.drawImage(tl.getFakePlant().getPlantImg(), r.x, r.y, r.width, r.height, null);
-                    g.setColor(Color.RED);
-                    Rectangle r_ = tl.getFakePlant().getBound();
-                    g.drawRect(r.x, r.y, r_.width, r_.height);
-                }
-            }
-//            else {
-/*            g.setColor(Color.blue);
-            g.fillRect(r.x, r.y, r.width, r.height);*/
-//            }
-        }
     }
 }

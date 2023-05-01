@@ -1,11 +1,8 @@
 package scenes;
 
 import manager.*;
-import component.Tile;
 import component.MyButtons;
-import object.FakePlant;
 import zombie.Zombie;
-import java.util.List;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
@@ -16,10 +13,8 @@ public class Playing implements SceneMethods {
     private PlantManager plantManager;
     private ButtonManager buttonManager;
     private ProjectileManager projectileManager;
-    private Zombie_fakeManager zombieFakeManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
-    private FakePlantManager fakePlantManager;
     private boolean startWave = false;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
@@ -37,7 +32,6 @@ public class Playing implements SceneMethods {
 
     private void initObjects() {
         zombieManager = new ZombieManager(this);
-        fakePlantManager = new FakePlantManager(this);
     }
     private void initComponents() {
         barManager = new BarManager();
@@ -45,14 +39,13 @@ public class Playing implements SceneMethods {
         buttonManager = new ButtonManager();
         plantManager = new PlantManager();
         projectileManager = new ProjectileManager();
-        zombieFakeManager = new Zombie_fakeManager();
     }
     public void update(){
-        plantManager.alertPlant(tileManager,zombieFakeManager);
+        plantManager.alertPlant(tileManager,zombieManager);
 //        projectileManager.projectileCreated(plantManager);
         plantManager.plantAttack(projectileManager);
         projectileManager.update();
-        projectileManager.projectileCollideZombie(zombieFakeManager);
+        projectileManager.projectileCollideZombie(zombieManager);
     }
     @Override
     public void render(Graphics g, Image img) {
@@ -63,7 +56,6 @@ public class Playing implements SceneMethods {
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
-        zombieFakeManager.drawZombie(g);
     }
 
     public PlantManager getPlantManager() {
@@ -78,26 +70,53 @@ public class Playing implements SceneMethods {
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             startWave = true;
             waveManager.readyNewWave();
-        } else {
-            for(Tile tl: tileManager.getTiles()) {
-                if(tl.getBound().contains(x,y)) {
-                    tl.setOccupied(true);
-                    fakePlantManager.getPlant().setPlaced(true);
-                    tl.setFakePlant(fakePlantManager.getPlant());
-                }
-            }
         }
         for (MyButtons b : barManager.getPickPlant()) {
             if (b.getBounds().contains(x, y)) {
                 System.out.println("You choose " + b.getText());
             }
         }
+        for (MyButtons b2 : barManager.getPickPlant()) {
+            if (b2.getBounds().contains(x, y)) {
+                if (b2.getText().contains("Sunflower")) {
+                    plantManager.setIDhold(0);
+                    plantManager.setHPhold(1000);
+                    plantManager.setATKhold(0);
+                    plantManager.setSelected(true);
+                } else if (b2.getText().contains("Peashooter")) {
+                    plantManager.setIDhold(1);
+                    plantManager.setHPhold(1000);
+                    plantManager.setATKhold(20);
+                    plantManager.setSelected(true);
+                } else if (b2.getText().contains("Wall-nut")) {
+                    plantManager.setIDhold(2);
+                    plantManager.setHPhold(10000);
+                    plantManager.setATKhold(0);
+                    plantManager.setSelected(true);
+                } else if (b2.getText().contains("Snow Pea")) {
+                    plantManager.setIDhold(3);
+                    plantManager.setHPhold(1000);
+                    plantManager.setATKhold(20);
+                    plantManager.setSelected(true);
+                } else if (b2.getText().contains("Cherry Bomb")) {
+                    plantManager.setIDhold(4);
+                    plantManager.setHPhold(1000);
+                    plantManager.setATKhold(10000);
+                    plantManager.setSelected(true);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void mousePressed(int x, int y) {
+
     }
 
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
     }
-}
+
     public void updates() {
         if(startWave) {
             if (isTimeForNewZombie()) {
