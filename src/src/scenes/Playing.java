@@ -121,7 +121,7 @@ public class Playing implements SceneMethods {
         }
         waveManager.updates();
         zombieManager.updates();
-        zombieManager.ZombieCollidePlant(plantManager);
+        zombieManager.ZombieCollidePlant();
     }
 
     private void zombieAtk() {

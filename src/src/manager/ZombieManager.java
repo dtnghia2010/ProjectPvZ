@@ -125,34 +125,13 @@ public class ZombieManager {
     public ArrayList<Zombie> getZombies() {
         return zombies;
     }
-    public void ZombieCollidePlant(PlantManager plantManager){
-//        synchronized (zombies){
-//            for(int i = 0;i<zombies.size();i++){
-//                Rectangle r = new Rectangle((int)zombies.get(i).X(),(int)zombies.get(i).Y(),zombies.get(i).getWidth(),zombies.get(i).getHeight());
-//                for(int j = 0;j<plantManager.getPlantList().size();j++){
-//                    if(r.contains(plantManager.getPlantList().get(j).getX()+plantManager.getPlantList().get(j).getWidth(),plantManager.getPlantList().get(j).getY())){
-//                        zombies.get(i).setCollided(true);
-//                        if(realTimeCounter >= 90){
-//                            zombies.get(i).attackPlant(plantManager.getPlantList().get(j));
-//                            System.out.println("plant "+j+" hp: "+plantManager.getPlantList().get(j).getPlantHP());
-//                            isReset = true;
-//                        }
-//                        for(int k = 0;k<zombies.size();k++){
-//                            if(r.contains(zombies.get(k).X(),zombies.get(k).Y())){
-//                                zombies.get(k).defeatPlant(plantManager.getPlantList().get(j));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            isResetTime();
-//        }
+    public void ZombieCollidePlant(){
         synchronized (zombies){
             Iterator<Zombie> iterator = zombies.iterator();
             while (iterator.hasNext()){
                 Zombie zombie = iterator.next();
                 Rectangle r = new Rectangle((int)zombie.X(),(int)zombie.Y(),zombie.getWidth(),zombie.getHeight());
-                Iterator<Plant> iterator1 = plantManager.getPlantList().iterator();
+                Iterator<Plant> iterator1 = playing.getPlantManager().getPlantList().iterator();
                 while (iterator1.hasNext()){
                     Plant plant = iterator1.next();
                     if(r.contains(plant.getX()+plant.getWidth(),plant.getY())){
