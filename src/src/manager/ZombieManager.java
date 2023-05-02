@@ -21,8 +21,9 @@ public class ZombieManager {
     public static int getRealTimeCounter() {
         return realTimeCounter;
     }
+
     public static void frameCount(){
-        if(realTimeCounter<90){
+        if(realTimeCounter<60){
             realTimeCounter++;
         }
     }
@@ -135,7 +136,7 @@ public class ZombieManager {
                     Plant plant = iterator1.next();
                     if(r.contains(plant.getX()+plant.getWidth(),plant.getY())){
                         zombie.setCollided(true);
-                        if(realTimeCounter >= 90){
+                        if(realTimeCounter >= 60){
                             zombie.attackPlant(plant);
                             isReset = true;
                             plant.removePlant(plant,iterator1);
