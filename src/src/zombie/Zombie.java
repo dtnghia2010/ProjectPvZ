@@ -101,6 +101,10 @@ public class Zombie {
         this.hp = hp;
     }
 
+    public Rectangle getBound() {
+        return bound;
+    }
+
     public void move() {
         if(!isCollided){
             x -= spd;

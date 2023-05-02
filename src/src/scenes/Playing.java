@@ -42,6 +42,7 @@ public class Playing implements SceneMethods {
     }
     public void update(){
         plantManager.alertPlant(tileManager,zombieManager);
+        plantManager.calmPlant(tileManager,zombieManager);
 //        projectileManager.projectileCreated(plantManager);
         plantManager.plantAttack(projectileManager);
         projectileManager.update();
@@ -78,34 +79,21 @@ public class Playing implements SceneMethods {
         }
         for (MyButtons b2 : barManager.getPickPlant()) {
             if (b2.getBounds().contains(x, y)) {
+                plantManager.setSelected(true);
                 if (b2.getText().contains("Sunflower")) {
-                    plantManager.setIDhold(0);
-                    plantManager.setHPhold(100);
-                    plantManager.setATKhold(0);
-                    plantManager.setSelected(true);
+                    plantManager.sunFlower();
                 } else if (b2.getText().contains("Peashooter")) {
-                    plantManager.setIDhold(1);
-                    plantManager.setHPhold(100);
-                    plantManager.setATKhold(20);
-                    plantManager.setSelected(true);
+                    plantManager.peaShooter();
                 } else if (b2.getText().contains("Wall-nut")) {
-                    plantManager.setIDhold(2);
-                    plantManager.setHPhold(1000);
-                    plantManager.setATKhold(0);
-                    plantManager.setSelected(true);
+                    plantManager.wall_nut();
                 } else if (b2.getText().contains("Snow Pea")) {
-                    plantManager.setIDhold(3);
-                    plantManager.setHPhold(100);
-                    plantManager.setATKhold(20);
-                    plantManager.setSelected(true);
+                    plantManager.snowPea();
                 } else if (b2.getText().contains("Cherry Bomb")) {
-                    plantManager.setIDhold(4);
-                    plantManager.setHPhold(0);
-                    plantManager.setATKhold(10000);
-                    plantManager.setSelected(true);
+                    plantManager.cherryBomb();
                 }
             }
         }
+
     }
 
     @Override

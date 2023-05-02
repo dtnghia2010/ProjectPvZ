@@ -23,7 +23,7 @@ public class ZombieManager {
     }
 
     public static void frameCount(){
-        if(realTimeCounter<90){
+        if(realTimeCounter<60){
             realTimeCounter++;
         }
     }
@@ -126,6 +126,27 @@ public class ZombieManager {
         return zombies;
     }
     public void ZombieCollidePlant(PlantManager plantManager){
+//        synchronized (zombies){
+//            for(int i = 0;i<zombies.size();i++){
+//                Rectangle r = new Rectangle((int)zombies.get(i).X(),(int)zombies.get(i).Y(),zombies.get(i).getWidth(),zombies.get(i).getHeight());
+//                for(int j = 0;j<plantManager.getPlantList().size();j++){
+//                    if(r.contains(plantManager.getPlantList().get(j).getX()+plantManager.getPlantList().get(j).getWidth(),plantManager.getPlantList().get(j).getY())){
+//                        zombies.get(i).setCollided(true);
+//                        if(realTimeCounter >= 90){
+//                            zombies.get(i).attackPlant(plantManager.getPlantList().get(j));
+//                            System.out.println("plant "+j+" hp: "+plantManager.getPlantList().get(j).getPlantHP());
+//                            isReset = true;
+//                        }
+//                        for(int k = 0;k<zombies.size();k++){
+//                            if(r.contains(zombies.get(k).X(),zombies.get(k).Y())){
+//                                zombies.get(k).defeatPlant(plantManager.getPlantList().get(j));
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            isResetTime();
+//        }
         synchronized (zombies){
             Iterator<Zombie> iterator = zombies.iterator();
             while (iterator.hasNext()){
@@ -136,7 +157,7 @@ public class ZombieManager {
                     Plant plant = iterator1.next();
                     if(r.contains(plant.getX()+plant.getWidth(),plant.getY())){
                         zombie.setCollided(true);
-                        if(realTimeCounter >= 90){
+                        if(realTimeCounter >= 60){
                             zombie.attackPlant(plant);
                             isReset = true;
                             plant.removePlant(plant,iterator1);
