@@ -3,6 +3,7 @@ package manager;
 
 import component.Plant;
 import component.Tile;
+import scenes.Playing;
 import zombie.Zombie;
 
 import javax.swing.*;
@@ -15,8 +16,9 @@ public class PlantManager {
     private Image[] plantImages;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private List<Plant> plantList = new ArrayList<>();
-    private TileManager tileManager = new TileManager();
+    private Playing playing;
     private boolean selected = false;
+    private int count = 0;
 
     public void setIDhold(int IDhold) {
         this.IDhold = IDhold;
@@ -33,15 +35,16 @@ public class PlantManager {
     }
 
     private int IDhold, HPhold, ATKhold;
-    public void countTile(){
-        for(int i =0;i<tileManager.getTiles().length;i++){
-            System.out.println(tileManager.getTiles()[i].getBound().getX());
-            System.out.println(tileManager.getTiles()[i].getBound().getY());
-        }
-    }
+//    public void countTile(){
+//        for(int i =0;i<tileManager.getTiles().length;i++){
+//            System.out.println(tileManager.getTiles()[i].getBound().getX());
+//            System.out.println(tileManager.getTiles()[i].getBound().getY());
+//        }
+//    }
 
 
-    public PlantManager() {
+    public PlantManager(Playing playing) {
+        this.playing = playing;
         importImg();
     }
 
@@ -93,15 +96,15 @@ public class PlantManager {
             while (iterator.hasNext()){
                 Plant pl = iterator.next();
                 if (pl.getPlantID() == 0){
-                    g.drawImage(plantImages[0], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                    g.drawImage(plantImages[0], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
                 } else if (pl.getPlantID() == 1){
-                    g.drawImage(plantImages[1], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                    g.drawImage(plantImages[1], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
                 } else if (pl.getPlantID() == 2){
-                    g.drawImage(plantImages[2], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                    g.drawImage(plantImages[2], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
                 } else if (pl.getPlantID() == 3){
-                    g.drawImage(plantImages[3], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                    g.drawImage(plantImages[3], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
                 } else if (pl.getPlantID() == 4){
-                    g.drawImage(plantImages[4], (int)tileManager.getTiles()[pl.getTileHold()].getBound().getX(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getY(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getWidth(), (int)tileManager.getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                    g.drawImage(plantImages[4], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
                 }
             }
         }
@@ -128,20 +131,20 @@ public class PlantManager {
 
     public void mouse(int x, int y){
         if(selected){
-            for (int i = 0; i < tileManager.getTiles().length; i++){
-                if(!tileManager.getTiles()[i].isOccupied()){
-                    Rectangle r = new Rectangle((int)tileManager.getTiles()[i].getBound().getX(), (int)tileManager.getTiles()[i].getBound().getY(), (int)tileManager.getTiles()[i].getBound().getWidth(), (int)tileManager.getTiles()[i].getBound().getHeight());
+            for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
+                if(!playing.getTileManager().getTiles()[i].isOccupied()){
+                    Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(), (int)playing.getTileManager().getTiles()[i].getBound().getY(), (int)playing.getTileManager().getTiles()[i].getBound().getWidth(), (int)playing.getTileManager().getTiles()[i].getBound().getHeight());
                     if (r.contains(x, y)){
-                        tileManager.getTiles()[i].setOccupied(true);
+                        playing.getTileManager().getTiles()[i].setOccupied(true);
                         initPlants(IDhold,HPhold,ATKhold);
                         for (int j = 0; j < plantList.size(); j++){
                             plantList.get(plantList.size() - 1).setTileHold(i);
-                            if(!tileManager.getTiles()[i].isPlanted()){
+                            if(!playing.getTileManager().getTiles()[i].isPlanted()){
                                 plantList.get(plantList.size() - 1).setX(r.x);
                                 plantList.get(plantList.size() - 1).setY(r.y);
                                 plantList.get(plantList.size() - 1).setWidth(r.width);
                                 plantList.get(plantList.size() - 1).setHeight(r.height);
-                                tileManager.getTiles()[i].setPlanted(true);
+                                playing.getTileManager().getTiles()[i].setPlanted(true);
                             }
                         }
                     }

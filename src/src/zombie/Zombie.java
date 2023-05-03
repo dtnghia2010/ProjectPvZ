@@ -49,15 +49,15 @@ public class Zombie {
         switch (type) {
             case 0:
                 hp = 70;
-                dmg = 9;
+                dmg = 30;
                 break;
             case 1:
                 hp = 130;
-                dmg = 9;
+                dmg = 30;
                 break;
             case 2:
                 hp = 90;
-                dmg = 20;
+                dmg = 80;
                 break;
         }
     }
