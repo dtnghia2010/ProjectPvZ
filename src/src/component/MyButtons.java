@@ -1,4 +1,4 @@
-package player;
+package component;
 
 import java.awt.*;
 
@@ -33,5 +33,9 @@ public class MyButtons {
         int w = g.getFontMetrics().stringWidth(text);
         int h = g.getFontMetrics().getHeight();
         g.drawString(text, x - w/2 + width/2,y + h/2 + height/2);
+    }
+
+    public String getText() {
+        return text;
     }
 }

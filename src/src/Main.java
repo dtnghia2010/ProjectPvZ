@@ -1,5 +1,4 @@
 import manager.World;
-
 import javax.swing.*;
 
 public class Main {
@@ -8,7 +7,7 @@ public class Main {
         frame.add(new World());
         frame.setTitle("Plants vs Zombies");
         frame.pack();
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }

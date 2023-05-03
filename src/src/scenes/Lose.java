@@ -1,7 +1,7 @@
 package scenes;
 
 import manager.World;
-import player.MyButtons;
+import component.MyButtons;
 import static scenes.GameScenes.*;
 import java.awt.*;
 
@@ -28,5 +28,18 @@ public class Lose implements SceneMethods {
         if(bMenu.getBounds().contains(x,y)) {
             setGameScenes(MENU);
         }
+    }
+
+    @Override
+    public void mousePressed(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseReleased(int x, int y) {
+
+    }
+
+    public void updates() {
     }
 }
