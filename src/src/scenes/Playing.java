@@ -37,9 +37,14 @@ public class Playing implements SceneMethods {
         barManager = new BarManager();
         tileManager = new TileManager();
         buttonManager = new ButtonManager();
-        plantManager = new PlantManager();
+        plantManager = new PlantManager(this);
         projectileManager = new ProjectileManager();
     }
+
+    public TileManager getTileManager() {
+        return tileManager;
+    }
+
     public void update(){
         plantManager.alertPlant(tileManager,zombieManager);
         plantManager.calmPlant(tileManager,zombieManager);

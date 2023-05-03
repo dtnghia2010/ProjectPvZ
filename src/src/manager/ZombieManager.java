@@ -23,7 +23,7 @@ public class ZombieManager {
     }
 
     public static void frameCount(){
-        if(realTimeCounter<60){
+        if(realTimeCounter<30){
             realTimeCounter++;
         }
     }
@@ -131,19 +131,21 @@ public class ZombieManager {
             while (iterator.hasNext()){
                 Zombie zombie = iterator.next();
                 Rectangle r = new Rectangle((int)zombie.X(),(int)zombie.Y(),zombie.getWidth(),zombie.getHeight());
-                Iterator<Plant> iterator1 = playing.getPlantManager().getPlantList().iterator();
-                while (iterator1.hasNext()){
-                    Plant plant = iterator1.next();
-                    if(r.contains(plant.getX()+plant.getWidth(),plant.getY())){
-                        zombie.setCollided(true);
-                        if(realTimeCounter >= 60){
-                            zombie.attackPlant(plant);
-                            isReset = true;
-                            plant.removePlant(plant,iterator1);
-                        }
-                        for(Zombie zombie1:zombies){
-                            if(r.contains(zombie1.X(),zombie1.Y())){
-                                zombie1.defeatPlant(plant);
+                synchronized (playing.getPlantManager().getPlantList()){
+                    Iterator<Plant> iterator1 = playing.getPlantManager().getPlantList().iterator();
+                    while (iterator1.hasNext()){
+                        Plant plant = iterator1.next();
+                        if(r.contains(plant.getX()+plant.getWidth(),plant.getY())){
+                            zombie.setCollided(true);
+                            if(realTimeCounter >= 30){
+                                zombie.attackPlant(plant);
+                                isReset = true;
+                                plant.removePlant(plant,iterator1,playing.getTileManager());
+                            }
+                            for(Zombie zombie1:zombies){
+                                if(r.contains(zombie1.X(),zombie1.Y())){
+                                    zombie1.defeatPlant(plant);
+                                }
                             }
                         }
                     }

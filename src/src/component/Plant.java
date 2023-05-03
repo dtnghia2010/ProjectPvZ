@@ -1,5 +1,8 @@
 package component;
 
+import manager.TileManager;
+
+import java.awt.*;
 import java.util.Iterator;
 
 public class Plant {
@@ -8,6 +11,7 @@ public class Plant {
     private  int plantID;
     private boolean isDangered = false;
     private boolean isPlantDead = false;
+    private int countTile = 0;
     public boolean isDangered() {
         return isDangered;
     }
@@ -92,8 +96,15 @@ public class Plant {
     public void setPlantHP(double plantHP) {
         this.plantHP = plantHP;
     }
-    public void removePlant(Plant plant,Iterator<Plant> iterator){
+    public void removePlant(Plant plant, Iterator<Plant> iterator, TileManager tileManager){
         if(plant.getPlantHP() <= 0){
+            for(Tile tile:tileManager.getTiles()){
+                Rectangle r = tile.getBound();
+                if(r.contains(plant.getX()+1,plant.getY()+1)){
+                    tile.setOccupied(false);
+                    tile.setPlanted(false);
+                }
+            }
             iterator.remove();
         }
     }
