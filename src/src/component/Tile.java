@@ -1,11 +1,36 @@
 package component;
 
+import manager.PlantManager;
+import scenes.Playing;
+
 import java.awt.*;
 
 public class Tile {
     private final int ROWS = 5, COLS = 9;
+    private int wTile = 70, hTile = 80;
     private Rectangle bound;
     private Boolean occupied = false;
+    private int curX, curY;
+
+    public boolean isPlanted() {
+        return isPlanted;
+    }
+
+    public void setPlanted(boolean planted) {
+        isPlanted = planted;
+    }
+
+    private boolean isPlanted = false;
+    public int getwTile() {
+        return wTile;
+    }
+
+    public int gethTile() {
+        return hTile;
+    }
+
+    private PlantManager plantManager;
+
     public Tile(Rectangle bound) {
         this.bound = bound;
     }
@@ -17,6 +42,22 @@ public class Tile {
     }
     public boolean isOccupied() {
         return occupied;
+    }
+
+    public int getCurX() {
+        return curX;
+    }
+
+    public void setCurX(int curX) {
+        this.curX = curX;
+    }
+
+    public int getCurY() {
+        return curY;
+    }
+
+    public void setCurY(int curY) {
+        this.curY = curY;
     }
 }
 

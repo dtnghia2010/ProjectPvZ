@@ -6,6 +6,7 @@ import scenes.GameScenes;
 import scenes.Lose;
 import scenes.Menu;
 import scenes.Playing;
+import zombie.Zombie;
 
 
 import javax.swing.*;
@@ -18,13 +19,14 @@ public class World extends JPanel implements Runnable {
     private ArrayList<Image> img = new ArrayList<>();
     private Random random;
     private double FPS_SET = 200.0;
-    private double UPS_SET = 150.0;
+    private double UPS_SET = 60.0;
     private MyMouseListener myMouseListener;
     private KeyBoardListener keyBoardListener;
     private Lose lose;
     private Menu menu;
     private Playing playing;
     private Toolkit t = Toolkit.getDefaultToolkit();
+
     public void start() {
         Thread thread = new Thread(this);
         thread.start();
@@ -35,7 +37,6 @@ public class World extends JPanel implements Runnable {
         initInput();
         initClasses();
         importImg();
-        loadSprites();
         start();
     }
 
@@ -71,7 +72,13 @@ public class World extends JPanel implements Runnable {
         super.paintComponent(g);
         render(g);
     }
-
+    public void update(){
+        switch (GameScenes.gameScenes){
+            case PLAYING:
+                playing.update();
+                break;
+        }
+    }
     public void render(Graphics g) {
         switch (GameScenes.gameScenes) {
             case MENU:
@@ -85,6 +92,19 @@ public class World extends JPanel implements Runnable {
                 break;
         }
     }
+    public void updates() {
+        switch (GameScenes.gameScenes) {
+            case MENU:
+                getMenu().updates();
+                break;
+            case PLAYING:
+                getPlaying().updates();
+                break;
+            case LOSE:
+                getLose().updates();
+                break;
+        }
+    }
 
     public void importImg() {
         img.add(t.getImage(getClass().getResource("/scene/menu.jpg")));
@@ -92,14 +112,6 @@ public class World extends JPanel implements Runnable {
         img.add(t.getImage(getClass().getResource("/scene/lose.png")));
 
     }
-
-    public void loadSprites() {
-    }
-
-    public int getRnd() {
-        return random.nextInt(32);
-    }
-
     @Override
     public void run() {
         double timePerFrame = 1000000000.0 / FPS_SET;
@@ -122,7 +134,8 @@ public class World extends JPanel implements Runnable {
             if (now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
-                //updates()
+                update();
+                updates();
             }
             //check FPS & UPS
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
