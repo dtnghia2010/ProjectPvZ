@@ -1,6 +1,7 @@
 package manager;
 
 
+import Audio.Audio;
 import component.Plant;
 import component.Tile;
 import scenes.Playing;
@@ -16,24 +17,13 @@ public class PlantManager {
     private Image[] plantImages;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private List<Plant> plantList = new ArrayList<>();
+
+    public boolean isSelected() {
+        return selected;
+    }
+
     private Playing playing;
     private boolean selected = false;
-    private int count = 0;
-
-    public void setIDhold(int IDhold) {
-        this.IDhold = IDhold;
-    }
-
-
-    public void setHPhold(int HPhold) {
-        this.HPhold = HPhold;
-    }
-
-
-    public void setATKhold(int ATKhold) {
-        this.ATKhold = ATKhold;
-    }
-
     private int IDhold, HPhold, ATKhold;
 //    public void countTile(){
 //        for(int i =0;i<tileManager.getTiles().length;i++){
@@ -51,30 +41,29 @@ public class PlantManager {
     public void initPlants(int plantID,int plantHP, int ATK) {
         plantList.add(new Plant(plantHP, plantID,ATK));
     }
-    public void sunFlower(){
-        IDhold = 0;
-        HPhold = 100;
-        ATKhold = 0;
+
+    public void setIDhold(int IDhold) {
+        this.IDhold = IDhold;
     }
-    public void peaShooter(){
-        IDhold = 1;
-        HPhold = 100;
-        ATKhold = 20;
+
+    public void setHPhold(int HPhold) {
+        this.HPhold = HPhold;
     }
-    public void wall_nut(){
-        IDhold = 2;
-        HPhold = 1000;
-        ATKhold = 0;
+
+    public int getIDhold() {
+        return IDhold;
     }
-    public void snowPea(){
-        IDhold = 3;
-        HPhold = 100;
-        ATKhold = 20;
+
+    public int getHPhold() {
+        return HPhold;
     }
-    public void cherryBomb(){
-        IDhold = 4;
-        HPhold = 1;
-        ATKhold = 1000;
+
+    public int getATKhold() {
+        return ATKhold;
+    }
+
+    public void setATKhold(int ATKhold) {
+        this.ATKhold = ATKhold;
     }
     private void importImg() {
         plantImages = new Image[5];
@@ -129,14 +118,20 @@ public class PlantManager {
         this.selected = selected;
     }
 
+    public boolean getSelected() {
+        return selected;
+    }
+
     public void mouse(int x, int y){
-        if(selected){
+        if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID()]){
             for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
                 if(!playing.getTileManager().getTiles()[i].isOccupied()){
                     Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(), (int)playing.getTileManager().getTiles()[i].getBound().getY(), (int)playing.getTileManager().getTiles()[i].getBound().getWidth(), (int)playing.getTileManager().getTiles()[i].getBound().getHeight());
                     if (r.contains(x, y)){
+                        Audio.tapGrass();
                         playing.getTileManager().getTiles()[i].setOccupied(true);
                         initPlants(IDhold,HPhold,ATKhold);
+                        playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID(),true);
                         for (int j = 0; j < plantList.size(); j++){
                             plantList.get(plantList.size() - 1).setTileHold(i);
                             if(!playing.getTileManager().getTiles()[i].isPlanted()){
@@ -180,32 +175,26 @@ public class PlantManager {
             while (iterator.hasNext()){
                 Zombie zombie = iterator.next();
                 if(r.contains(zombie.X(),zombie.Y()+70)){
-                    switch (i){
-                        case 8:
-                            for(int j = 0;j < 9;j++){
-                                setPlantDangered(tileManager.getTiles()[j]);
-                            }
-                            break;
-                        case 17:
-                            for(int j = 9;j < 18;j++){
-                                setPlantDangered(tileManager.getTiles()[j]);
-                            }
-                            break;
-                        case 26:
-                            for(int j = 18;j < 27;j++){
-                                setPlantDangered(tileManager.getTiles()[j]);
-                            }
-                            break;
-                        case 35:
-                            for(int j = 27;j < 36;j++){
-                                setPlantDangered(tileManager.getTiles()[j]);
-                            }
-                            break;
-                        case 44:
-                            for(int j = 36;j < 45;j++){
-                                setPlantDangered(tileManager.getTiles()[j]);
-                            }
-                            break;
+                    if(i>=0 && i<9){
+                        for(int j = 0;j < 9;j++){
+                            setPlantDangered(tileManager.getTiles()[j]);
+                        }
+                    } else if(i >= 9 && i<18){
+                        for(int j = 9;j < 18;j++){
+                            setPlantDangered(tileManager.getTiles()[j]);
+                        }
+                    } else if(i>=18 && i<27){
+                        for(int j = 18;j < 27;j++){
+                            setPlantDangered(tileManager.getTiles()[j]);
+                        }
+                    } else if(i>=27 && i<36){
+                        for(int j = 27;j < 36;j++){
+                            setPlantDangered(tileManager.getTiles()[j]);
+                        }
+                    } else if (i >= 36 && i<45) {
+                        for(int j = 36;j < 45;j++){
+                            setPlantDangered(tileManager.getTiles()[j]);
+                        }
                     }
                 }
             }
