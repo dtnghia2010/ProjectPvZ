@@ -67,6 +67,7 @@ public class Playing implements SceneMethods {
         tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
         barManager.drawPlantInCD(g);
+        barManager.drawTileSelected(g);
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
@@ -78,6 +79,14 @@ public class Playing implements SceneMethods {
 
     public BarManager getBarManager() {
         return barManager;
+    }
+
+    public void setWaveManager(WaveManager waveManager) {
+        this.waveManager = waveManager;
+    }
+
+    public void setStartWaveForCD(boolean startWaveForCD) {
+        this.startWaveForCD = startWaveForCD;
     }
 
     public void mouseClicked(int x, int y) {
@@ -120,13 +129,24 @@ public class Playing implements SceneMethods {
 
     }
 
+    public boolean isStartWave() {
+        return startWave;
+    }
+
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
     }
+
+    public void setStartWave(boolean startWave) {
+        this.startWave = startWave;
+    }
+
     public void keyBoardPress(KeyEvent e){
         barManager.keyBoardChoosePlant(e);
         barManager.keyBoardSelectPlant(e);
         barManager.tileSelectedByKeyBoard(e);
+        barManager.returnToSelectPlant(e);
+        barManager.startGame(e);
     }
 
     public void updates() {

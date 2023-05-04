@@ -4,6 +4,7 @@ import Audio.Audio;
 import component.MyButtons;
 import component.Plant;
 import component.Tile;
+import scenes.GameScenes;
 import scenes.Playing;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class BarManager {
     private MyButtons pickPlant[];
     private int plantPickedID;
     private int plantPickedByKeyBoard = 0;
+    private boolean isPlantChosen = false;
     private boolean[] isPlantInCD = new boolean[5];
     private boolean[] isCDReducing = new boolean[5];
     private int[] plantCD = new int[5];
@@ -171,23 +173,25 @@ public class BarManager {
         }
     }
     public void keyBoardChoosePlant(KeyEvent e){
-        if(plantPickedByKeyBoard >= 0 && plantPickedByKeyBoard <=4){
-            if(e.getKeyCode() == KeyEvent.VK_A){
-                plantPickedByKeyBoard--;
-            } else if(e.getKeyCode() == KeyEvent.VK_D){
-                plantPickedByKeyBoard++;
+        if(!playing.getPlantManager().isSelected()){
+            if(plantPickedByKeyBoard >= 0 && plantPickedByKeyBoard <=4){
+                if(e.getKeyCode() == KeyEvent.VK_A){
+                    plantPickedByKeyBoard--;
+                } else if(e.getKeyCode() == KeyEvent.VK_D){
+                    plantPickedByKeyBoard++;
+                }
+            } else if(plantPickedByKeyBoard<0){
+                plantPickedByKeyBoard = 0;
+            } else if (plantPickedByKeyBoard >4) {
+                plantPickedByKeyBoard = 4;
             }
-        } else if(plantPickedByKeyBoard<0){
-            plantPickedByKeyBoard = 0;
-        } else if (plantPickedByKeyBoard >4) {
-            plantPickedByKeyBoard = 4;
+            pickPlantByKeyBoard();
         }
-        pickPlantByKeyBoard();
     }
     public void keyBoardSelectPlant(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            System.out.println("1");
             playing.getPlantManager().setSelected(true);
+            Audio.tapPlantBar();
         }
     }
     public void tileSelectedByKeyBoard(KeyEvent e){
@@ -201,23 +205,47 @@ public class BarManager {
             } else if(e.getKeyCode() == KeyEvent.VK_S){
                 tile = tile+9;
             }
+            if(tile<0){
+                tile = tile+9;
+            } else if(tile > 44){
+                tile = tile-9;
+            }
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                plantCreate();
+                if(playing.getPlantManager().isTimeToPlant()){
+                    playing.getPlantManager().setTimeToPlant(false);
+                } else {
+                    plantCreate();
+                }
             }
         }
     }
+    public void returnToSelectPlant(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+            playing.getPlantManager().setSelected(false);
+            playing.getPlantManager().setTimeToPlant(true);
+        }
+    }
+    public void startGame(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            playing.setStartWave(true);
+            playing.setStartWaveForCD(true);
+            playing.getWaveManager().readyNewWave();
+        }
+    }
     public void drawTileSelected(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
-        for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
-            if(i == tile){
-                g2d.drawImage(pickedPlant,playing.getTileManager().getTiles()[i].getCurX(),playing.getTileManager().getTiles()[i].getCurY(),playing.getTileManager().getTiles()[i].getwTile(),playing.getTileManager().getTiles()[i].gethTile(),null);
+        if(playing.getPlantManager().isSelected()){
+            Graphics2D g2d = (Graphics2D) g;
+            for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
+                if(i == tile){
+                    g2d.drawImage(pickedPlant,(int)playing.getTileManager().getTiles()[i].getBound().getX(),(int)playing.getTileManager().getTiles()[i].getBound().getY(),playing.getTileManager().getTiles()[i].getwTile(),playing.getTileManager().getTiles()[i].gethTile(),null);
+                }
             }
         }
     }
     public void plantCreate(){
-        if(playing.getPlantManager().isSelected() && isPlantInCD[plantPickedID]){
+        if(playing.getPlantManager().isSelected() && !isPlantInCD[plantPickedID]){
             for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
-                if(!playing.getTileManager().getTiles()[i].isOccupied()){
+                if(!playing.getTileManager().getTiles()[i].isOccupied() && i == tile){
                     Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(), (int)playing.getTileManager().getTiles()[i].getBound().getY(), (int)playing.getTileManager().getTiles()[i].getBound().getWidth(), (int)playing.getTileManager().getTiles()[i].getBound().getHeight());
                     Audio.tapGrass();
                     playing.getTileManager().getTiles()[i].setOccupied(true);

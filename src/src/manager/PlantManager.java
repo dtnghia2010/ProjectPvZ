@@ -18,6 +18,15 @@ public class PlantManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private List<Plant> plantList = new ArrayList<>();
 
+    public boolean isTimeToPlant() {
+        return isTimeToPlant;
+    }
+
+    public void setTimeToPlant(boolean timeToPlant) {
+        isTimeToPlant = timeToPlant;
+    }
+
+    private boolean isTimeToPlant = true;
     public boolean isSelected() {
         return selected;
     }
@@ -118,10 +127,6 @@ public class PlantManager {
         this.selected = selected;
     }
 
-    public boolean getSelected() {
-        return selected;
-    }
-
     public void mouse(int x, int y){
         if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID()]){
             for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
@@ -157,9 +162,13 @@ public class PlantManager {
     }
     public void setPlantIdle(Tile tile){
         Rectangle rPlant = tile.getBound();
-        for(Plant plant:plantList){
-            if(rPlant.contains(plant.getX(),plant.getY())){
-                plant.setDangered(false);
+        synchronized (plantList){
+            Iterator<Plant> iterator = plantList.iterator();
+            while (iterator.hasNext()){
+                Plant plant = iterator.next();
+                if(rPlant.contains(plant.getX(),plant.getY())){
+                    plant.setDangered(false);
+                }
             }
         }
     }
