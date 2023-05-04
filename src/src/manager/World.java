@@ -37,7 +37,6 @@ public class World extends JPanel implements Runnable {
         initInput();
         initClasses();
         importImg();
-        loadSprites();
         start();
     }
 
@@ -113,14 +112,6 @@ public class World extends JPanel implements Runnable {
         img.add(t.getImage(getClass().getResource("/scene/lose.png")));
 
     }
-
-    public void loadSprites() {
-    }
-
-    public int getRnd() {
-        return random.nextInt(32);
-    }
-
     @Override
     public void run() {
         double timePerFrame = 1000000000.0 / FPS_SET;
