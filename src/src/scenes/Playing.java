@@ -1,11 +1,13 @@
 package scenes;
 
+import Audio.Audio;
 import manager.*;
 import component.MyButtons;
 import zombie.Zombie;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Playing implements SceneMethods {
     private TileManager tileManager;
@@ -16,6 +18,7 @@ public class Playing implements SceneMethods {
     private ZombieManager zombieManager;
     private WaveManager waveManager;
     private boolean startWave = false;
+    private boolean startWaveForCD = false;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -33,8 +36,11 @@ public class Playing implements SceneMethods {
     private void initObjects() {
         zombieManager = new ZombieManager(this);
     }
+    public boolean isStartWaveForCD() {
+        return startWaveForCD;
+    }
     private void initComponents() {
-        barManager = new BarManager();
+        barManager = new BarManager(this);
         tileManager = new TileManager();
         buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
@@ -52,6 +58,7 @@ public class Playing implements SceneMethods {
         plantManager.plantAttack(projectileManager);
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
+        barManager.update();
     }
     @Override
     public void render(Graphics g, Image img) {
@@ -59,6 +66,7 @@ public class Playing implements SceneMethods {
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
+        barManager.drawPlantInCD(g);
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
@@ -68,6 +76,10 @@ public class Playing implements SceneMethods {
         return plantManager;
     }
 
+    public BarManager getBarManager() {
+        return barManager;
+    }
+
     public void mouseClicked(int x, int y) {
         if (buttonManager.getbMenu().getBounds().contains(x, y)) {
             setGameScenes(MENU);
@@ -75,10 +87,12 @@ public class Playing implements SceneMethods {
             setGameScenes(LOSE);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             startWave = true;
+            startWaveForCD = true;
             waveManager.readyNewWave();
         }
         for (MyButtons b : barManager.getPickPlant()) {
             if (b.getBounds().contains(x, y)) {
+                Audio.tapPlantBar();
                 System.out.println("You choose " + b.getText());
             }
         }
@@ -86,22 +100,22 @@ public class Playing implements SceneMethods {
             if (b2.getBounds().contains(x, y)) {
                 plantManager.setSelected(true);
                 if (b2.getText().contains("Sunflower")) {
-                    plantManager.sunFlower();
+                    barManager.sunFlower();
                 } else if (b2.getText().contains("Peashooter")) {
-                    plantManager.peaShooter();
+                    barManager.peaShooter();
                 } else if (b2.getText().contains("Wall-nut")) {
-                    plantManager.wall_nut();
+                    barManager.wall_nut();
                 } else if (b2.getText().contains("Snow Pea")) {
-                    plantManager.snowPea();
+                    barManager.snowPea();
                 } else if (b2.getText().contains("Cherry Bomb")) {
-                    plantManager.cherryBomb();
+                    barManager.cherryBomb();
                 }
             }
         }
 
     }
 
-    @Override
+
     public void mousePressed(int x, int y) {
 
     }
@@ -109,11 +123,16 @@ public class Playing implements SceneMethods {
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
     }
+    public void keyBoardPress(KeyEvent e){
+        barManager.keyBoardChoosePlant(e);
+        barManager.keyBoardSelectPlant(e);
+        barManager.tileSelectedByKeyBoard(e);
+    }
 
     public void updates() {
         if(startWave) {
             if (isTimeForNewZombie()) {
-                    spawnZombie();
+                spawnZombie();
             }
             if(zombieManager.allZombieDead()) {
                 startWave = false;
