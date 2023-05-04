@@ -1,7 +1,7 @@
 package manager;
 
-
 import component.Plant;
+import component.Tile;
 import component.Tile;
 import scenes.Playing;
 import zombie.Zombie;
@@ -127,6 +127,10 @@ public class PlantManager {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public boolean getSelected() {
+        return selected;
     }
 
     public void mouse(int x, int y){

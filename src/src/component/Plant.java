@@ -10,8 +10,7 @@ public class Plant {
     private int plantATK;
     private  int plantID;
     private boolean isDangered = false;
-    private boolean isPlantDead = false;
-    private int countTile = 0;
+
     public boolean isDangered() {
         return isDangered;
     }
