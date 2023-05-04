@@ -1,5 +1,6 @@
 package manager;
 
+import Audio.Audio;
 import component.Plant;
 import component.Projectile;
 import zombie.Zombie;
@@ -96,6 +97,7 @@ public class ProjectileManager {
                     while (iterator2.hasNext()){
                         Projectile projectile = iterator2.next();
                         if(r.contains(projectile.getX()+30,projectile.getY())){
+                            Audio.splat();
                             zombie.setHp(zombie.getHp()-projectile.getATK());
                             if(projectile.getID() == 2 && !zombie.isSlowed()){
                                 zombie.setSpd(zombie.getSpd()/2);
@@ -103,6 +105,7 @@ public class ProjectileManager {
                             }
                             iterator2.remove();
                             if(zombie.getHp() <= 0){
+                                Audio.zombieDeath();
                                 zombie.setDead(true);
                                 iterator.remove();
                             }
