@@ -244,7 +244,6 @@ public class BarManager {
                 switch (plantPickedID.get(i)){
                     case 0:
                         if(!isCDReducing[0]){
-                            System.out.println("1");
                             CDCount(0);
                             isCDReducing[0] = true;
                         }
