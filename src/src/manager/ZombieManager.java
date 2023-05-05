@@ -154,7 +154,6 @@ public class ZombieManager {
                 }
             }
             isResetTime();
-            counter++;
         }
     }
 

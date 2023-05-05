@@ -129,7 +129,7 @@ public class PlantManager {
     }
 
     public void mouse(int x, int y){
-        if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID()]){
+        if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
             for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
                 if(!playing.getTileManager().getTiles()[i].isOccupied()){
                     Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(), (int)playing.getTileManager().getTiles()[i].getBound().getY(), (int)playing.getTileManager().getTiles()[i].getBound().getWidth(), (int)playing.getTileManager().getTiles()[i].getBound().getHeight());
@@ -137,7 +137,7 @@ public class PlantManager {
                         Audio.tapGrass();
                         playing.getTileManager().getTiles()[i].setOccupied(true);
                         initPlants(IDhold,HPhold,ATKhold);
-                        playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID(),true);
+                        playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1),true);
                         for (int j = 0; j < plantList.size(); j++){
                             plantList.get(plantList.size() - 1).setTileHold(i);
                             if(!playing.getTileManager().getTiles()[i].isPlanted()){
@@ -157,14 +157,14 @@ public class PlantManager {
         }
     }
     public void plantCreateByKeyBoard(){
-        if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID()]){
+        if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
             for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
                 if(!playing.getTileManager().getTiles()[i].isOccupied() && i == playing.getTileManager().getTileSelectedByKeyBoard()){
                     Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(), (int)playing.getTileManager().getTiles()[i].getBound().getY(), (int)playing.getTileManager().getTiles()[i].getBound().getWidth(), (int)playing.getTileManager().getTiles()[i].getBound().getHeight());
                     Audio.tapGrass();
                     playing.getTileManager().getTiles()[i].setOccupied(true);
                     playing.getPlantManager().initPlants(playing.getPlantManager().getIDhold(),playing.getPlantManager().getHPhold(),playing.getPlantManager().getATKhold());
-                    playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID(),true);
+                    playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1),true);
                     for (int j = 0; j < playing.getPlantManager().getPlantList().size(); j++){
                         playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setTileHold(i);
                         if(!playing.getTileManager().getTiles()[i].isPlanted()){
@@ -173,7 +173,7 @@ public class PlantManager {
                             playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setWidth(r.width);
                             playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setHeight(r.height);
                             if(plantList.get(plantList.size()-1).getPlantID() == 4){
-                                plantList.get(plantList.size()-1).setExplodeCD(120);
+                                plantList.get(plantList.size()-1).setExplodeCD(115);
                             }
                             playing.getTileManager().getTiles()[i].setPlanted(true);
                         }

@@ -9,14 +9,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class BarManager {
     private Image[] pick_plantBar;
     private Image[] plantInCD;
     private Image pickedPlant;
     private MyButtons pickPlant[];
-    private int plantPickedID;
+    private List<Integer> plantPickedID = new ArrayList<>();
     private int plantPickedByKeyBoard = 0;
     private int plantPickedByMouse = 0;
     private boolean[] isPlantInCD = new boolean[5];
@@ -59,7 +61,7 @@ public class BarManager {
         return isPlantInCD;
     }
 
-    public int getPlantPickedID() {
+    public List<Integer> getPlantPickedID() {
         return plantPickedID;
     }
 
@@ -83,7 +85,7 @@ public class BarManager {
         playing.getPlantManager().setIDhold(0);
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(0);
-        plantPickedID = 0;
+        plantPickedID.add(0);
         if(!playing.isStartWaveForCD()){
             plantCD[0] = 60;
         } else {
@@ -94,7 +96,7 @@ public class BarManager {
         playing.getPlantManager().setIDhold(1);
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(20);
-        plantPickedID = 1;
+        plantPickedID.add(1);
         if(!playing.isStartWaveForCD()){
             plantCD[1] = 60;
         } else {
@@ -105,7 +107,7 @@ public class BarManager {
         playing.getPlantManager().setIDhold(2);
         playing.getPlantManager().setHPhold(1000);
         playing.getPlantManager().setATKhold(0);
-        plantPickedID = 2;
+        plantPickedID.add(2);
         if(!playing.isStartWaveForCD()){
             plantCD[2] = 60;
         } else {
@@ -116,7 +118,7 @@ public class BarManager {
         playing.getPlantManager().setIDhold(3);
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(20);
-        plantPickedID = 3;
+        plantPickedID.add(3);
         if(!playing.isStartWaveForCD()){
             plantCD[3] = 60;
         } else {
@@ -127,7 +129,7 @@ public class BarManager {
         playing.getPlantManager().setIDhold(4);
         playing.getPlantManager().setHPhold(1);
         playing.getPlantManager().setATKhold(1000);
-        plantPickedID = 4;
+        plantPickedID.add(4);
         if(!playing.isStartWaveForCD()){
             plantCD[4] = 60;
         } else {
@@ -238,12 +240,11 @@ public class BarManager {
     }
     public void update(){
         if(playing.getPlantManager().getPlantList() != null){
-            Iterator<Plant> iterator = playing.getPlantManager().getPlantList().iterator();
-            while (iterator.hasNext()){
-                Plant plant = iterator.next();
-                switch (plant.getPlantID()){
+            for(int i = 0; i<plantPickedID.size();i++){
+                switch (plantPickedID.get(i)){
                     case 0:
                         if(!isCDReducing[0]){
+                            System.out.println("1");
                             CDCount(0);
                             isCDReducing[0] = true;
                         }
