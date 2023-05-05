@@ -152,6 +152,29 @@ public class PlantManager {
             }
         }
     }
+    public void plantCreateByKeyBoard(){
+        if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID()]){
+            for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
+                if(!playing.getTileManager().getTiles()[i].isOccupied() && i == playing.getTileManager().getTileSelectedByKeyBoard()){
+                    Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(), (int)playing.getTileManager().getTiles()[i].getBound().getY(), (int)playing.getTileManager().getTiles()[i].getBound().getWidth(), (int)playing.getTileManager().getTiles()[i].getBound().getHeight());
+                    Audio.tapGrass();
+                    playing.getTileManager().getTiles()[i].setOccupied(true);
+                    playing.getPlantManager().initPlants(playing.getPlantManager().getIDhold(),playing.getPlantManager().getHPhold(),playing.getPlantManager().getATKhold());
+                    playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID(),true);
+                    for (int j = 0; j < playing.getPlantManager().getPlantList().size(); j++){
+                        playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setTileHold(i);
+                        if(!playing.getTileManager().getTiles()[i].isPlanted()){
+                            playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setX(r.x);
+                            playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setY(r.y);
+                            playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setWidth(r.width);
+                            playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setHeight(r.height);
+                            playing.getTileManager().getTiles()[i].setPlanted(true);
+                        }
+                    }
+                }
+            }
+        }
+    }
     public void setPlantDangered(Tile tile){
         Rectangle rPlant = tile.getBound();
         for(Plant plant:plantList){

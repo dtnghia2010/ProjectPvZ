@@ -1,17 +1,23 @@
 package manager;
 
-import component.Plant;
 import component.Tile;
 import scenes.Playing;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class TileManager {
     private Tile[] tiles = new Tile[45];
     private int wTile = 70, hTile = 80;
+    private int tileSelectedByMouse;
+    private int tileSelectedByKeyBoard = 0;
+    private Playing playing;
+    private boolean isTileControlledByMouse = false;
+    private boolean isTileControlledByKeyBoard = false;
 
-    public TileManager() {
+    public TileManager(Playing playing) {
         initTiles();
+        this.playing = playing;
     }
 
     private void initTiles() {
@@ -45,5 +51,64 @@ public class TileManager {
 
     public Tile[] getTiles() {
         return tiles;
+    }
+
+    public int getTileSelectedByKeyBoard() {
+        return tileSelectedByKeyBoard;
+    }
+
+    public void tileSelectedByKeyBoard(KeyEvent e){
+        if(playing.getPlantManager().isSelected()){
+            if(e.getKeyCode() == KeyEvent.VK_A){
+                tileSelectedByKeyBoard--;
+                tileSelectedByMouse = tileSelectedByKeyBoard;
+            } else if(e.getKeyCode() == KeyEvent.VK_D){
+                tileSelectedByKeyBoard++;
+                tileSelectedByMouse = tileSelectedByKeyBoard;
+            } else if (e.getKeyCode() == KeyEvent.VK_W) {
+                tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
+                tileSelectedByMouse = tileSelectedByKeyBoard;
+            } else if(e.getKeyCode() == KeyEvent.VK_S){
+                tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
+                tileSelectedByMouse = tileSelectedByKeyBoard;
+            }
+            if(tileSelectedByKeyBoard <0){
+                tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
+            } else if(tileSelectedByKeyBoard > 44){
+                tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
+            }
+            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                if(playing.getPlantManager().isTimeToPlant()){
+                    playing.getPlantManager().setTimeToPlant(false);
+                } else {
+                    playing.getPlantManager().plantCreateByKeyBoard();
+                }
+            }
+        }
+    }
+    public void drawTileSelectedByKeyBoard(Graphics g){
+        if(playing.getPlantManager().isSelected()){
+            Graphics2D g2d = (Graphics2D) g;
+            for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
+                if(i == tileSelectedByKeyBoard){
+                    g2d.drawImage(playing.getBarManager().getPickedPlant(), (int)playing.getTileManager().getTiles()[i].getBound().getX(),(int)playing.getTileManager().getTiles()[i].getBound().getY(),playing.getTileManager().getTiles()[i].getwTile(),playing.getTileManager().getTiles()[i].gethTile(),null);
+                }
+            }
+        }
+    }
+    public void tileTrack(int x, int y){
+        for(int i = 0;i<tiles.length;i++){
+            Rectangle r = new Rectangle((int)tiles[i].getBound().getX(),(int)tiles[i].getBound().getY(),tiles[i].getwTile(),tiles[i].gethTile());
+            if(r.contains(x,y)){
+                tileSelectedByMouse = i;
+                tileSelectedByKeyBoard = tileSelectedByMouse;
+            }
+        }
+    }
+    public void drawTileSelectedByMouse(Graphics g) {
+        if(playing.getPlantManager().isSelected()){
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.drawImage(playing.getBarManager().getPickedPlant(),(int)tiles[tileSelectedByMouse].getBound().getX(),(int)tiles[tileSelectedByMouse].getBound().getY(),tiles[tileSelectedByMouse].getwTile(),tiles[tileSelectedByMouse].gethTile(),null);
+        }
     }
 }
