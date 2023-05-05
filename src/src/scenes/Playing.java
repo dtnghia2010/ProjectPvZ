@@ -57,7 +57,7 @@ public class Playing implements SceneMethods {
         plantManager.calmPlant(tileManager,zombieManager);
         plantManager.timeExplode();
 //        projectileManager.projectileCreated(plantManager);
-        plantManager.plantAttack(projectileManager);
+        plantManager.plantAttack();
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
@@ -92,6 +92,10 @@ public class Playing implements SceneMethods {
 
     public void setStartWaveForCD(boolean startWaveForCD) {
         this.startWaveForCD = startWaveForCD;
+    }
+
+    public ProjectileManager getProjectileManager() {
+        return projectileManager;
     }
 
     public void mouseClicked(int x, int y) {

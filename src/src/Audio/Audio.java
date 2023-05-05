@@ -10,7 +10,7 @@ public class Audio {
     private static Clip[] clips = new Clip[11];
     static {
         try {
-            for(int i = 0;i<7;i++){
+            for(int i = 0;i<9;i++){
                 clips[i] = AudioSystem.getClip();
             }
             InputStream InputStream1 = Audio.class.getResourceAsStream("/Audio/Roof.wav");
@@ -34,6 +34,12 @@ public class Audio {
             InputStream InputStream7 = Audio.class.getResourceAsStream("/Audio/PlantDeath.wav");
             AudioInputStream audioInputStream7 = AudioSystem.getAudioInputStream(InputStream7);
             clips[6].open(audioInputStream7);
+            InputStream InputStream8 = Audio.class.getResourceAsStream("/Audio/Cherry_enlarge.wav");
+            AudioInputStream audioInputStream8 = AudioSystem.getAudioInputStream(InputStream8);
+            clips[7].open(audioInputStream8);
+            InputStream InputStream9 = Audio.class.getResourceAsStream("/Audio/Explode.wav");
+            AudioInputStream audioInputStream9 = AudioSystem.getAudioInputStream(InputStream9);
+            clips[8].open(audioInputStream9);
         } catch(Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open audio!"); //show error dialog
@@ -74,5 +80,14 @@ public class Audio {
         clips[5].setFramePosition(0);
         clips[6].setFramePosition(0);
         clips[6].start();
+    }
+    public static void prepareToExplode(){
+        clips[7].setFramePosition(0);
+        clips[7].start();
+    }
+    public static void Explode(){
+        clips[7].stop();
+        clips[8].setFramePosition(0);
+        clips[8].start();
     }
 }

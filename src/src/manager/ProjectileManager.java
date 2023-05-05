@@ -13,6 +13,11 @@ import java.util.List;
 public class ProjectileManager {
     private List<Projectile> listOfProjectile = new ArrayList<>();
     private Toolkit t = Toolkit.getDefaultToolkit();
+
+    public List<Projectile> getListOfProjectile() {
+        return listOfProjectile;
+    }
+
     private Image[] projectileImage = new Image[2];
     private static int realTimeCounter = 0;
     private static boolean isReset = false;
@@ -22,10 +27,15 @@ public class ProjectileManager {
     }
 
     public static void frameCount(){
-        if(realTimeCounter<90){
+        if(realTimeCounter<100){
             realTimeCounter++;
         }
     }
+
+    public static void setRealTimeCounter(int realTimeCounter) {
+        ProjectileManager.realTimeCounter = realTimeCounter;
+    }
+
     public void projectileCreated(Plant plant){
         synchronized (listOfProjectile){
             if(plant.getPlantID() == 1){

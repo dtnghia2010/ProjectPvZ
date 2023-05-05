@@ -85,6 +85,7 @@ public class BarManager {
         playing.getPlantManager().setIDhold(0);
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(0);
+        playing.getPlantManager().setFrameCountLimitHold(25);
         plantPickedID.add(0);
         if(!playing.isStartWaveForCD()){
             plantCD[0] = 60;
@@ -96,6 +97,7 @@ public class BarManager {
         playing.getPlantManager().setIDhold(1);
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(20);
+        playing.getPlantManager().setFrameCountLimitHold(58);
         plantPickedID.add(1);
         if(!playing.isStartWaveForCD()){
             plantCD[1] = 60;
@@ -107,6 +109,7 @@ public class BarManager {
         playing.getPlantManager().setIDhold(2);
         playing.getPlantManager().setHPhold(1000);
         playing.getPlantManager().setATKhold(0);
+        playing.getPlantManager().setFrameCountLimitHold(81);
         plantPickedID.add(2);
         if(!playing.isStartWaveForCD()){
             plantCD[2] = 60;

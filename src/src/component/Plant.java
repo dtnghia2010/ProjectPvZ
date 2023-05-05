@@ -8,7 +8,50 @@ import java.util.Iterator;
 public class Plant {
     private double plantHP;
     private int plantATK;
+    private int frameCountLimit;
+    public int getFrameCountIdle() {
+        if(frameCountIdle == frameCountLimit){
+            frameCountIdle = 0;
+        }
+        return frameCountIdle;
+    }
+
+    public void setFrameCountIdle(int frameCountIdle) {
+        this.frameCountIdle = frameCountIdle;
+    }
+
+    public int getFrameCDIdle() {
+        return frameCDIdle;
+    }
+
+    public void setFrameCDIdle(int frameCDIdle) {
+        this.frameCDIdle = frameCDIdle;
+    }
+
     private  int plantID;
+    private int frameCountIdle = 0;
+    private int frameCountAttack = 0;
+    private int frameCDIdle = 0;
+    private int frameCDAttack = 0;
+
+    public int getFrameCountAttack() {
+        if(frameCountAttack == 58){
+            frameCountAttack = 0;
+        }
+        return frameCountAttack;
+    }
+
+    public void setFrameCountAttack(int frameCountAttack) {
+        this.frameCountAttack = frameCountAttack;
+    }
+
+    public int getFrameCDAttack() {
+        return frameCDAttack;
+    }
+
+    public void setFrameCDAttack(int frameCDAttack) {
+        this.frameCDAttack = frameCDAttack;
+    }
 
     public int getExplodeCD() {
         return explodeCD;
@@ -77,7 +120,8 @@ public class Plant {
         this.y = y;
     }
 
-    public Plant(double plantHP, int plantID, int ATK){
+    public Plant(double plantHP, int plantID, int ATK, int frameCountLimit){
+        this.frameCountLimit = frameCountLimit;
         this.plantHP = plantHP;
         this.plantID = plantID;
         this.plantATK = ATK;
