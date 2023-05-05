@@ -55,9 +55,9 @@ public class ZombieManager {
         synchronized (zombies) {
             System.out.println("a zombie created");
             if(!allZombieDead()) {
-                zombies.add(new Zombie(1024+rnd(0,1000), 60 + 95 * rnd(0,5), type));
+                zombies.add(new Zombie(1044+rnd(0,1000), 90 + 95 * rnd(0,5), type));
             } else {
-                zombies.add(new Zombie(1024, 60 + 95 * rnd(0,5), type));
+                zombies.add(new Zombie(1044, 90 + 95 * rnd(0,5), type));
             }
         }
     }
@@ -67,7 +67,7 @@ public class ZombieManager {
             if (zombies.size() > 0) {
                 for (Zombie z : zombies) {
                     if (z.isAlived()) {
-                        g.drawImage(zImages[z.getType()], (int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight(), null);
+                        g.drawImage(zImages[z.getType()], (int) z.X() - 20, (int) z.Y() - 30, z.getWidth() + 40, z.getHeight() + 60, null);
                         g.setColor(Color.RED);
                         g.drawRect((int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight());
                     }
