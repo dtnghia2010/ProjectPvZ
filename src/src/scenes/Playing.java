@@ -73,11 +73,11 @@ public class Playing implements SceneMethods {
         barManager.drawPlantSelectedByKeyBoard(g);
         tileManager.drawTileSelectedByKeyBoard(g);
         tileManager.drawTileSelectedByMouse(g);
-        zombieManager.draw(g);
         plantManager.drawPlant(g);
+        plantManager.drawExplosion(g);
+        zombieManager.draw(g);
         projectileManager.drawProjectile(g);
     }
-
     public PlantManager getPlantManager() {
         return plantManager;
     }

@@ -15,9 +15,11 @@ import java.util.List;
 
 public class PlantManager {
     private Image[] plantImages;
+    private Image[] cherryBombGif = new Image[49];
     private Toolkit t = Toolkit.getDefaultToolkit();
     private List<Plant> plantList = new ArrayList<>();
-
+    private double frameCount = 0;
+    private int frameCD = 0;
 
     public boolean isTimeToPlant() {
         return isTimeToPlant;
@@ -46,6 +48,7 @@ public class PlantManager {
     public PlantManager(Playing playing) {
         this.playing = playing;
         importImg();
+        importCherryBombGif();
     }
 
     public void initPlants(int plantID,int plantHP, int ATK) {
@@ -88,7 +91,15 @@ public class PlantManager {
             JOptionPane.showMessageDialog(null, "Error - importImage()");
         }
     }
+    public void importCherryBombGif(){
+        try {
+            for(int i = 0;i<cherryBombGif.length;i++){
+                cherryBombGif[i] = t.getImage(getClass().getResource("/cherryBomb/" + (i + 1)+".png"));
+            }
+        } catch (Exception e){
 
+        }
+    }
     public void drawPlant(Graphics g){
         synchronized (plantList){
             Iterator<Plant> iterator = plantList.iterator();
@@ -103,7 +114,11 @@ public class PlantManager {
                 } else if (pl.getPlantID() == 3){
                     g.drawImage(plantImages[3], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
                 } else if (pl.getPlantID() == 4){
-                    g.drawImage(plantImages[4], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                    g.drawImage(cherryBombGif[(int)frameCount],(int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
+                    frameCD++;
+                    if(frameCD%5 == 0){
+                        frameCount++;
+                    }
                 }
             }
         }
@@ -304,31 +319,49 @@ public class PlantManager {
             while (iterator.hasNext()){
                 Plant plant = iterator.next();
                 if(plant.getPlantID() == 4){
-                    plant.setExplodeCD(plant.getExplodeCD()-1);
-                    System.out.println(plant.getExplodeCD());
-                    if(plant.getExplodeCD() == 0){
-                        cherryExplode(plant.getX(), plant.getY());
+                    if(frameCount == 29){
+                        cherryExplode(plant.getX(),plant.getY());
                         iterator.remove();
+                        frameCount = 0;
+                        frameCD = 0;
                     }
                 }
             }
         }
     }
     public void cherryExplode(int x, int y){
-        Rectangle explodeRange = new Rectangle(x-90,y-70,240,210);
+        Rectangle explodeRange = new Rectangle(x-100,y-120,250,300);
+        explosionX = explodeRange.getX();
+        explosionY = explodeRange.getY();
+        explosionWidth = explodeRange.getWidth();
+        explosionHeight = explodeRange.getHeight();
         synchronized (playing.getZombieManager().getZombies()){
             Iterator<Zombie> iterator = playing.getZombieManager().getZombies().iterator();
             while (iterator.hasNext()){
                 Zombie zombie = iterator.next();
-                if(explodeRange.contains(zombie.X(),zombie.Y())){
+                if(explodeRange.contains(zombie.X(),zombie.Y()+70)){
                     iterator.remove();
                 }
             }
         }
+        isExploded = true;
     }
+    private double explosionX;
+    private double explosionY;
+    private double explosionWidth;
+    private double explosionHeight;
+    private boolean isExploded = false;
+    private int explosionTime = 0;
     public void drawExplosion(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-
+        Image Explosion = t.getImage(getClass().getResource("/Event/Powie.png"));
+        explosionTime++;
+        if(explosionTime<60 && isExploded){
+            g2d.drawImage(Explosion,(int)explosionX,(int)explosionY,(int)explosionWidth,(int)explosionHeight,null);
+        } else {
+            isExploded = false;
+            explosionTime = 0;
+        }
     }
 
 }

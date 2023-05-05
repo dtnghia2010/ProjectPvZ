@@ -127,7 +127,7 @@ public class BarManager {
     }
     public void cherryBomb(){
         playing.getPlantManager().setIDhold(4);
-        playing.getPlantManager().setHPhold(1);
+        playing.getPlantManager().setHPhold(10000);
         playing.getPlantManager().setATKhold(1000);
         plantPickedID.add(4);
         if(!playing.isStartWaveForCD()){
