@@ -3,6 +3,7 @@ package scenes;
 import Audio.Audio;
 import manager.*;
 import component.MyButtons;
+import notification.PlayingNotif;
 import zombie.Zombie;
 
 import static scenes.GameScenes.*;
@@ -17,6 +18,7 @@ public class Playing implements SceneMethods {
     private ProjectileManager projectileManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
+    private NotifManager notifManager;
     private boolean startWave = false;
     private boolean startWaveForCD = false;
     private World w;
@@ -27,6 +29,11 @@ public class Playing implements SceneMethods {
         initComponents();
         initObjects();
         initEvents();
+        initNotifs();
+    }
+
+    private void initNotifs() {
+        notifManager = new NotifManager();
     }
 
     private void initEvents() {
@@ -70,6 +77,14 @@ public class Playing implements SceneMethods {
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
+        showNotifs(g);
+    }
+
+    private void showNotifs(Graphics g) {
+        if(zombieManager.allZombieDead() && !waveManager.isThereMoreZombieInWave()) {
+//            notifManager.setNotif(new PlayingNotif());
+            notifManager.showNotif(g);
+        }
     }
 
     public PlantManager getPlantManager() {
@@ -139,6 +154,7 @@ public class Playing implements SceneMethods {
                 zombieManager.getZombies().clear();
                 createHorde();
                 System.out.println("Zombies cleared");
+                notifManager.setNotif(new PlayingNotif(0));
             } else {
                 zombieAtk();
             }
@@ -175,7 +191,7 @@ public class Playing implements SceneMethods {
         return zombieManager;
     }
     public void createHorde() {
-        zombieManager.createHorde(45);
+        zombieManager.createHorde(10);
     }
 }
 

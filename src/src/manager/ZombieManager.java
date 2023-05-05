@@ -94,10 +94,6 @@ public class ZombieManager {
 
     public void createHorde(int count) {
         for (int i = 0; i < count; i++) {
-/*            int x = 1500 + rnd(0,1000);
-            int y = 60 + 95 * rnd(0,1000);
-            int type = rnd(0,2);
-            Zombie zombie = new Zombie(x, y, type);*/
             spawnZombie(rnd(0,2));
         }
     }
