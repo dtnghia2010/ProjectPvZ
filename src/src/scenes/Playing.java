@@ -8,6 +8,7 @@ import zombie.Zombie;
 import static scenes.GameScenes.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class Playing implements SceneMethods {
     private TileManager tileManager;
@@ -41,7 +42,7 @@ public class Playing implements SceneMethods {
     }
     private void initComponents() {
         barManager = new BarManager(this);
-        tileManager = new TileManager();
+        tileManager = new TileManager(this);
         buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
         projectileManager = new ProjectileManager();
@@ -54,6 +55,7 @@ public class Playing implements SceneMethods {
     public void update(){
         plantManager.alertPlant(tileManager,zombieManager);
         plantManager.calmPlant(tileManager,zombieManager);
+        plantManager.timeExplode();
 //        projectileManager.projectileCreated(plantManager);
         plantManager.plantAttack(projectileManager);
         projectileManager.update();
@@ -67,6 +69,10 @@ public class Playing implements SceneMethods {
         tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
         barManager.drawPlantInCD(g);
+        barManager.drawPlantSelectedByMouse(g);
+        barManager.drawPlantSelectedByKeyBoard(g);
+        tileManager.drawTileSelectedByKeyBoard(g);
+        tileManager.drawTileSelectedByMouse(g);
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
@@ -78,6 +84,14 @@ public class Playing implements SceneMethods {
 
     public BarManager getBarManager() {
         return barManager;
+    }
+
+    public void setWaveManager(WaveManager waveManager) {
+        this.waveManager = waveManager;
+    }
+
+    public void setStartWaveForCD(boolean startWaveForCD) {
+        this.startWaveForCD = startWaveForCD;
     }
 
     public void mouseClicked(int x, int y) {
@@ -119,14 +133,32 @@ public class Playing implements SceneMethods {
     public void mousePressed(int x, int y) {
 
     }
+    public void MousePress(){
+        barManager.returnToSelectPlantByMouse();
+    }
+    public boolean isStartWave() {
+        return startWave;
+    }
 
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
     }
+    public void mouseMove(int x, int y){
+        barManager.mouseTrackPlantBar(x,y);
+        tileManager.tileTrack(x,y);
+    }
+
+
+    public void setStartWave(boolean startWave) {
+        this.startWave = startWave;
+    }
+
     public void keyBoardPress(KeyEvent e){
         barManager.keyBoardChoosePlant(e);
         barManager.keyBoardSelectPlant(e);
-        barManager.tileSelectedByKeyBoard(e);
+        tileManager.tileSelectedByKeyBoard(e);
+        barManager.returnToSelectPlantByKeyBoard(e);
+        barManager.startGame(e);
     }
 
     public void updates() {
