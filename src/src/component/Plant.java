@@ -9,6 +9,16 @@ public class Plant {
     private double plantHP;
     private int plantATK;
     private  int plantID;
+
+    public int getExplodeCD() {
+        return explodeCD;
+    }
+
+    public void setExplodeCD(int explodeCD) {
+        this.explodeCD = explodeCD;
+    }
+
+    private int explodeCD;
     private boolean isDangered = false;
 
     public boolean isDangered() {

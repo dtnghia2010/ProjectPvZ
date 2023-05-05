@@ -18,6 +18,7 @@ public class PlantManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private List<Plant> plantList = new ArrayList<>();
 
+
     public boolean isTimeToPlant() {
         return isTimeToPlant;
     }
@@ -81,7 +82,7 @@ public class PlantManager {
             plantImages[1] = t.getImage(getClass().getResource("/plant/pea_shooter.png"));
             plantImages[2] = t.getImage(getClass().getResource("/plant/Wall-nut.png"));
             plantImages[3] = t.getImage(getClass().getResource("/plant/snow_pea_shooter.png"));
-            plantImages[4] = t.getImage(getClass().getResource("/plant/cherry_bomb.png"));
+            plantImages[4] = t.getImage(getClass().getResource("/plant/cherry_bomb.gif"));
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error - importImage()");
@@ -144,6 +145,9 @@ public class PlantManager {
                                 plantList.get(plantList.size() - 1).setY(r.y);
                                 plantList.get(plantList.size() - 1).setWidth(r.width);
                                 plantList.get(plantList.size() - 1).setHeight(r.height);
+                                if(plantList.get(plantList.size()-1).getPlantID() == 4){
+                                    plantList.get(plantList.size()-1).setExplodeCD(110);
+                                }
                                 playing.getTileManager().getTiles()[i].setPlanted(true);
                             }
                         }
@@ -168,6 +172,9 @@ public class PlantManager {
                             playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setY(r.y);
                             playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setWidth(r.width);
                             playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setHeight(r.height);
+                            if(plantList.get(plantList.size()-1).getPlantID() == 4){
+                                plantList.get(plantList.size()-1).setExplodeCD(120);
+                            }
                             playing.getTileManager().getTiles()[i].setPlanted(true);
                         }
                     }
@@ -291,4 +298,37 @@ public class PlantManager {
             projectileManager.isResetTime();
         }
     }
+    public void timeExplode(){
+        synchronized (plantList){
+            Iterator<Plant> iterator = plantList.iterator();
+            while (iterator.hasNext()){
+                Plant plant = iterator.next();
+                if(plant.getPlantID() == 4){
+                    plant.setExplodeCD(plant.getExplodeCD()-1);
+                    System.out.println(plant.getExplodeCD());
+                    if(plant.getExplodeCD() == 0){
+                        cherryExplode(plant.getX(), plant.getY());
+                        iterator.remove();
+                    }
+                }
+            }
+        }
+    }
+    public void cherryExplode(int x, int y){
+        Rectangle explodeRange = new Rectangle(x-90,y-70,240,210);
+        synchronized (playing.getZombieManager().getZombies()){
+            Iterator<Zombie> iterator = playing.getZombieManager().getZombies().iterator();
+            while (iterator.hasNext()){
+                Zombie zombie = iterator.next();
+                if(explodeRange.contains(zombie.X(),zombie.Y())){
+                    iterator.remove();
+                }
+            }
+        }
+    }
+    public void drawExplosion(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+
+    }
+
 }

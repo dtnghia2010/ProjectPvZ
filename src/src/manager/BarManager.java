@@ -155,7 +155,7 @@ public class BarManager {
     }
     public void keyBoardChoosePlant(KeyEvent e){
         if(!playing.getPlantManager().isSelected()){
-            if(plantPickedByKeyBoard >= 0 && plantPickedByKeyBoard <=4){
+            if(plantPickedByKeyBoard > 0 && plantPickedByKeyBoard <4){
                 if(e.getKeyCode() == KeyEvent.VK_A){
                     plantPickedByKeyBoard--;
                     plantPickedByMouse = plantPickedByKeyBoard;
@@ -163,12 +163,16 @@ public class BarManager {
                     plantPickedByKeyBoard++;
                     plantPickedByMouse = plantPickedByKeyBoard;
                 }
-            } else if(plantPickedByKeyBoard<0){
-                plantPickedByKeyBoard = 0;
-                plantPickedByMouse = plantPickedByKeyBoard;
-            } else if (plantPickedByKeyBoard >4) {
-                plantPickedByKeyBoard = 4;
-                plantPickedByMouse = plantPickedByKeyBoard;
+            } else if(plantPickedByKeyBoard==0){
+                if(e.getKeyCode() == KeyEvent.VK_D){
+                    plantPickedByKeyBoard++;
+                    plantPickedByMouse = plantPickedByKeyBoard;
+                }
+            } else if (plantPickedByKeyBoard==4) {
+                if(e.getKeyCode() == KeyEvent.VK_A){
+                    plantPickedByKeyBoard--;
+                    plantPickedByMouse = plantPickedByKeyBoard;
+                }
             }
             pickPlantByKeyBoard();
         }
@@ -178,15 +182,20 @@ public class BarManager {
         g2d.drawImage(pickedPlant,(int)pickPlant[plantPickedByKeyBoard].getBounds().getX(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getY(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getWidth(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getHeight(),null);
     }
     public void mouseTrackPlantBar(int x, int y){
-        if(!playing.getPlantManager().isSelected()){
-            for(int i = 0;i<pickPlant.length;i++){
-                Rectangle r = pickPlant[i].getBounds();
-                if(r.contains(x,y)){
-                    plantPickedByMouse = i;
-                    plantPickedByKeyBoard = plantPickedByMouse;
+        for(int i = 0;i<pickPlant.length;i++){
+            Rectangle r = pickPlant[i].getBounds();
+            if(r.contains(x,y)){
+                if(playing.getTileManager().isInTile()){
+                    playing.getTileManager().setInTile(false);
+                    playing.getPlantManager().setSelected(false);
                 }
+                plantPickedByMouse = i;
+                plantPickedByKeyBoard = plantPickedByMouse;
             }
         }
+//        if(!playing.getPlantManager().isSelected()){
+//
+//        }
     }
     public void drawPlantSelectedByMouse(Graphics g){
         Graphics2D g2d = (Graphics2D) g;

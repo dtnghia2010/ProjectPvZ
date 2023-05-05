@@ -55,6 +55,7 @@ public class Playing implements SceneMethods {
     public void update(){
         plantManager.alertPlant(tileManager,zombieManager);
         plantManager.calmPlant(tileManager,zombieManager);
+        plantManager.timeExplode();
 //        projectileManager.projectileCreated(plantManager);
         plantManager.plantAttack(projectileManager);
         projectileManager.update();
@@ -111,19 +112,17 @@ public class Playing implements SceneMethods {
         }
         for (MyButtons b2 : barManager.getPickPlant()) {
             if (b2.getBounds().contains(x, y)) {
-                if(!plantManager.isSelected()){
-                    plantManager.setSelected(true);
-                    if (b2.getText().contains("Sunflower")) {
-                        barManager.sunFlower();
-                    } else if (b2.getText().contains("Peashooter")) {
-                        barManager.peaShooter();
-                    } else if (b2.getText().contains("Wall-nut")) {
-                        barManager.wall_nut();
-                    } else if (b2.getText().contains("Snow Pea")) {
-                        barManager.snowPea();
-                    } else if (b2.getText().contains("Cherry Bomb")) {
-                        barManager.cherryBomb();
-                    }
+                plantManager.setSelected(true);
+                if (b2.getText().contains("Sunflower")) {
+                    barManager.sunFlower();
+                } else if (b2.getText().contains("Peashooter")) {
+                    barManager.peaShooter();
+                } else if (b2.getText().contains("Wall-nut")) {
+                    barManager.wall_nut();
+                } else if (b2.getText().contains("Snow Pea")) {
+                    barManager.snowPea();
+                } else if (b2.getText().contains("Cherry Bomb")) {
+                    barManager.cherryBomb();
                 }
             }
         }

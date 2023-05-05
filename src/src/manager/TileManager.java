@@ -11,9 +11,13 @@ public class TileManager {
     private int wTile = 70, hTile = 80;
     private int tileSelectedByMouse;
     private int tileSelectedByKeyBoard = 0;
+
+    public boolean isInTile() {
+        return isInTile;
+    }
+
     private Playing playing;
-    private boolean isTileControlledByMouse = false;
-    private boolean isTileControlledByKeyBoard = false;
+    private boolean isInTile = false;
 
     public TileManager(Playing playing) {
         initTiles();
@@ -62,15 +66,19 @@ public class TileManager {
             if(e.getKeyCode() == KeyEvent.VK_A){
                 tileSelectedByKeyBoard--;
                 tileSelectedByMouse = tileSelectedByKeyBoard;
+                isInTile = true;
             } else if(e.getKeyCode() == KeyEvent.VK_D){
                 tileSelectedByKeyBoard++;
                 tileSelectedByMouse = tileSelectedByKeyBoard;
+                isInTile = true;
             } else if (e.getKeyCode() == KeyEvent.VK_W) {
                 tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
                 tileSelectedByMouse = tileSelectedByKeyBoard;
+                isInTile = true;
             } else if(e.getKeyCode() == KeyEvent.VK_S){
                 tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
                 tileSelectedByMouse = tileSelectedByKeyBoard;
+                isInTile = true;
             }
             if(tileSelectedByKeyBoard <0){
                 tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
@@ -98,10 +106,16 @@ public class TileManager {
             }
         }
     }
+
+    public void setInTile(boolean inTile) {
+        isInTile = inTile;
+    }
+
     public void tileTrack(int x, int y){
         for(int i = 0;i<tiles.length;i++){
             Rectangle r = new Rectangle((int)tiles[i].getBound().getX(),(int)tiles[i].getBound().getY(),tiles[i].getwTile(),tiles[i].gethTile());
             if(r.contains(x,y)){
+                isInTile = true;
                 tileSelectedByMouse = i;
                 tileSelectedByKeyBoard = tileSelectedByMouse;
             }
