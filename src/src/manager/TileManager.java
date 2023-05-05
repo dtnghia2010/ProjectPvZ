@@ -74,8 +74,10 @@ public class TileManager {
             }
             if(tileSelectedByKeyBoard <0){
                 tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
+                tileSelectedByMouse = tileSelectedByKeyBoard;
             } else if(tileSelectedByKeyBoard > 44){
                 tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
+                tileSelectedByMouse = tileSelectedByKeyBoard;
             }
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
                 if(playing.getPlantManager().isTimeToPlant()){

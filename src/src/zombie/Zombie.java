@@ -1,5 +1,6 @@
 package zombie;
 
+import Audio.Audio;
 import component.Plant;
 import manager.ZombieManager;
 
@@ -121,6 +122,7 @@ public class Zombie {
     }
     public void defeatPlant(Plant plant){
         if(plant.getPlantHP() <= 0){
+            Audio.plantDeath();
             isCollided = false;
         }
     }

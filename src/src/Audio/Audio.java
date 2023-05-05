@@ -63,8 +63,8 @@ public class Audio {
         clips[4].start();
     }
     public static void zombieEat(){
+        clips[5].setFramePosition(0);
         clips[5].start();
-        clips[5].loop(Clip.LOOP_CONTINUOUSLY);
     }
     public static void zombieDeath(){
         clips[5].stop();

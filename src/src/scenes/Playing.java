@@ -8,6 +8,7 @@ import zombie.Zombie;
 import static scenes.GameScenes.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class Playing implements SceneMethods {
     private TileManager tileManager;
@@ -110,17 +111,19 @@ public class Playing implements SceneMethods {
         }
         for (MyButtons b2 : barManager.getPickPlant()) {
             if (b2.getBounds().contains(x, y)) {
-                plantManager.setSelected(true);
-                if (b2.getText().contains("Sunflower")) {
-                    barManager.sunFlower();
-                } else if (b2.getText().contains("Peashooter")) {
-                    barManager.peaShooter();
-                } else if (b2.getText().contains("Wall-nut")) {
-                    barManager.wall_nut();
-                } else if (b2.getText().contains("Snow Pea")) {
-                    barManager.snowPea();
-                } else if (b2.getText().contains("Cherry Bomb")) {
-                    barManager.cherryBomb();
+                if(!plantManager.isSelected()){
+                    plantManager.setSelected(true);
+                    if (b2.getText().contains("Sunflower")) {
+                        barManager.sunFlower();
+                    } else if (b2.getText().contains("Peashooter")) {
+                        barManager.peaShooter();
+                    } else if (b2.getText().contains("Wall-nut")) {
+                        barManager.wall_nut();
+                    } else if (b2.getText().contains("Snow Pea")) {
+                        barManager.snowPea();
+                    } else if (b2.getText().contains("Cherry Bomb")) {
+                        barManager.cherryBomb();
+                    }
                 }
             }
         }
@@ -131,7 +134,9 @@ public class Playing implements SceneMethods {
     public void mousePressed(int x, int y) {
 
     }
-
+    public void MousePress(){
+        barManager.returnToSelectPlantByMouse();
+    }
     public boolean isStartWave() {
         return startWave;
     }
@@ -153,7 +158,7 @@ public class Playing implements SceneMethods {
         barManager.keyBoardChoosePlant(e);
         barManager.keyBoardSelectPlant(e);
         tileManager.tileSelectedByKeyBoard(e);
-        barManager.returnToSelectPlant(e);
+        barManager.returnToSelectPlantByKeyBoard(e);
         barManager.startGame(e);
     }
 

@@ -3,13 +3,12 @@ package manager;
 import Audio.Audio;
 import component.MyButtons;
 import component.Plant;
-import component.Tile;
-import scenes.GameScenes;
 import scenes.Playing;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
 public class BarManager {
@@ -86,7 +85,7 @@ public class BarManager {
         playing.getPlantManager().setATKhold(0);
         plantPickedID = 0;
         if(!playing.isStartWaveForCD()){
-            plantCD[0] = 120;
+            plantCD[0] = 60;
         } else {
             plantCD[0] = 240;
         }
@@ -97,7 +96,7 @@ public class BarManager {
         playing.getPlantManager().setATKhold(20);
         plantPickedID = 1;
         if(!playing.isStartWaveForCD()){
-            plantCD[1] = 120;
+            plantCD[1] = 60;
         } else {
             plantCD[1] = 240;
         }
@@ -108,7 +107,7 @@ public class BarManager {
         playing.getPlantManager().setATKhold(0);
         plantPickedID = 2;
         if(!playing.isStartWaveForCD()){
-            plantCD[2] = 120;
+            plantCD[2] = 60;
         } else {
             plantCD[2] = 600;
         }
@@ -119,7 +118,7 @@ public class BarManager {
         playing.getPlantManager().setATKhold(20);
         plantPickedID = 3;
         if(!playing.isStartWaveForCD()){
-            plantCD[3] = 120;
+            plantCD[3] = 60;
         } else {
             plantCD[3] = 240;
         }
@@ -130,7 +129,7 @@ public class BarManager {
         playing.getPlantManager().setATKhold(1000);
         plantPickedID = 4;
         if(!playing.isStartWaveForCD()){
-            plantCD[4] = 120;
+            plantCD[4] = 60;
         } else {
             plantCD[4] = 900;
         }
@@ -166,17 +165,17 @@ public class BarManager {
                 }
             } else if(plantPickedByKeyBoard<0){
                 plantPickedByKeyBoard = 0;
+                plantPickedByMouse = plantPickedByKeyBoard;
             } else if (plantPickedByKeyBoard >4) {
                 plantPickedByKeyBoard = 4;
+                plantPickedByMouse = plantPickedByKeyBoard;
             }
             pickPlantByKeyBoard();
         }
     }
     public void drawPlantSelectedByKeyBoard(Graphics g){
-        if(!playing.getPlantManager().isSelected()){
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.drawImage(pickedPlant,(int)pickPlant[plantPickedByKeyBoard].getBounds().getX(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getY(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getWidth(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getHeight(),null);
-        }
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(pickedPlant,(int)pickPlant[plantPickedByKeyBoard].getBounds().getX(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getY(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getWidth(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getHeight(),null);
     }
     public void mouseTrackPlantBar(int x, int y){
         if(!playing.getPlantManager().isSelected()){
@@ -190,10 +189,8 @@ public class BarManager {
         }
     }
     public void drawPlantSelectedByMouse(Graphics g){
-        if(!playing.getPlantManager().isSelected()){
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.drawImage(pickedPlant,(int)pickPlant[plantPickedByMouse].getBounds().getX(),(int)pickPlant[plantPickedByMouse].getBounds().getY(),(int)pickPlant[plantPickedByMouse].getBounds().getWidth(),(int)pickPlant[plantPickedByMouse].getBounds().getHeight(),null);
-        }
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(pickedPlant,(int)pickPlant[plantPickedByMouse].getBounds().getX(),(int)pickPlant[plantPickedByMouse].getBounds().getY(),(int)pickPlant[plantPickedByMouse].getBounds().getWidth(),(int)pickPlant[plantPickedByMouse].getBounds().getHeight(),null);
     }
     public void keyBoardSelectPlant(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
@@ -206,11 +203,15 @@ public class BarManager {
         return pickedPlant;
     }
 
-    public void returnToSelectPlant(KeyEvent e){
+    public void returnToSelectPlantByKeyBoard(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             playing.getPlantManager().setSelected(false);
             playing.getPlantManager().setTimeToPlant(true);
         }
+    }
+    public void returnToSelectPlantByMouse(){
+        playing.getPlantManager().setSelected(false);
+        playing.getPlantManager().setTimeToPlant(true);
     }
     public void startGame(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
@@ -273,7 +274,7 @@ public class BarManager {
     }
     public void resetCD(int index){
         if(!playing.isStartWaveForCD()){
-            plantCD[index] = 120;
+            plantCD[index] = 60;
         } else {
             switch (index){
                 case 0:

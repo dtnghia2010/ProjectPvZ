@@ -47,6 +47,12 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                     w.getLose().mousePressed(e.getX(), e.getY());
                     break;
             }
+        } else if (e.getButton() == MouseEvent.BUTTON3) {
+            switch (GameScenes.gameScenes){
+                case PLAYING:
+                    w.getPlaying().MousePress();
+                    break;
+            }
         }
     }
 
