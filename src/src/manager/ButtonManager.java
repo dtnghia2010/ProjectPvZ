@@ -1,13 +1,16 @@
 package manager;
 
 import component.MyButtons;
+import scenes.Playing;
 
 import java.awt.*;
 
 public class ButtonManager {
     private MyButtons bMenu, bQuit, bStart;
+    private Playing playing;
 
-    public ButtonManager() {
+    public ButtonManager(Playing playing) {
+        this.playing = playing;
         initButtons();
     }
 
@@ -20,13 +23,14 @@ public class ButtonManager {
     public void drawButtons(Graphics g) {
         bMenu.draw(g);
         bQuit.draw(g);
-        bStart.draw(g);
+        if(!playing.isStartWave()) {
+            bStart.draw(g);
+        }
     }
 
     public MyButtons getbMenu() {
         return bMenu;
     }
-
     public MyButtons getbQuit() {
         return bQuit;
     }

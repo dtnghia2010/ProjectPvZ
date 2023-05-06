@@ -7,7 +7,7 @@ import scenes.Playing;
 public class WaveManager extends timeLogic {
     private Playing playing;
     private Wave[] waves;
-    private boolean endWaves = false;
+    private boolean endWaves = false, hordeActive = true;
 /*    private int zombieSpawnTickLimit = 60;
     private int zombieSpawnTick = zombieSpawnTickLimit;*/
     private int curZom = 0, curWave = 0;
@@ -64,11 +64,21 @@ public class WaveManager extends timeLogic {
     @Override
     public void updates() {
         super.updates();
+        if(hordeActive == true && !isThereMoreZombieInWave()) {
+            hordeActive = false;
+            System.out.println("execute");
+        }
     }
     public boolean isEndWaves() {
         return endWaves;
     }
+
+    public boolean hordeDead() {
+        return !hordeActive;
+    }
+
     public void createHorde() {
+        hordeActive = true;
         playing.getZombieManager().createHorde(hordeNum);
         hordeNum += 5;
     }

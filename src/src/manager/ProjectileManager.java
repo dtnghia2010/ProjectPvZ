@@ -3,6 +3,7 @@ package manager;
 import Audio.Audio;
 import component.Plant;
 import component.Projectile;
+import scenes.Playing;
 import zombie.Zombie;
 
 import java.awt.*;
@@ -16,7 +17,10 @@ public class ProjectileManager {
     private Image[] projectileImage = new Image[2];
     private static int realTimeCounter = 0;
     private static boolean isReset = false;
-
+    private Playing playing;
+    public ProjectileManager(Playing playing) {
+        this.playing = playing;
+    }
     public static int getRealTimeCounter() {
         return realTimeCounter;
     }

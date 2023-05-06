@@ -9,8 +9,10 @@ import java.awt.*;
 public class TileManager {
     private Tile[] tiles = new Tile[45];
     private int wTile = 70, hTile = 80;
+    private Playing playing;
 
-    public TileManager() {
+    public TileManager(Playing playing) {
+        this.playing = playing;
         initTiles();
     }
 

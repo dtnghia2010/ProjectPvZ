@@ -48,10 +48,10 @@ public class Playing implements SceneMethods {
     }
     private void initComponents() {
         barManager = new BarManager(this);
-        tileManager = new TileManager();
-        buttonManager = new ButtonManager();
+        tileManager = new TileManager(this);
+        buttonManager = new ButtonManager(this);
         plantManager = new PlantManager(this);
-        projectileManager = new ProjectileManager();
+        projectileManager = new ProjectileManager(this);
     }
 
     public TileManager getTileManager() {
@@ -152,7 +152,6 @@ public class Playing implements SceneMethods {
                 spawnZombie();
             }
             if(zombieManager.allZombieDead()) {
-                startWave = false;
                 zombieManager.getZombies().clear();
                 System.out.println("Zombies cleared");
                 if(waveManager.isEndWaves()) {
@@ -162,7 +161,11 @@ public class Playing implements SceneMethods {
                 }
                 notifManager.setNotif(new PlayingNotif(0));
             }
+            if(waveManager.hordeDead()) {
+                startWave = false;
+            }
         }
+
         waveManager.updates();
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();
@@ -187,6 +190,10 @@ public class Playing implements SceneMethods {
 
     public ZombieManager getZombieManager() {
         return zombieManager;
+    }
+
+    public boolean isStartWave() {
+        return startWave;
     }
 }
 
