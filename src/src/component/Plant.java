@@ -8,9 +8,10 @@ import java.util.Iterator;
 public class Plant {
     private double plantHP;
     private int plantATK;
-    private int frameCountLimit;
+    private int frameCountIdleLimit;
+    private int frameCountAttackLimit;
     public int getFrameCountIdle() {
-        if(frameCountIdle == frameCountLimit){
+        if(frameCountIdle == frameCountIdleLimit){
             frameCountIdle = 0;
         }
         return frameCountIdle;
@@ -35,7 +36,7 @@ public class Plant {
     private int frameCDAttack = 0;
 
     public int getFrameCountAttack() {
-        if(frameCountAttack == 58){
+        if(frameCountAttack == frameCountAttackLimit){
             frameCountAttack = 0;
         }
         return frameCountAttack;
@@ -116,12 +117,16 @@ public class Plant {
         return y;
     }
 
+    public void setFrameCountAttackLimit(int frameCountAttackLimit) {
+        this.frameCountAttackLimit = frameCountAttackLimit;
+    }
+
     public void setY(int y) {
         this.y = y;
     }
 
-    public Plant(double plantHP, int plantID, int ATK, int frameCountLimit){
-        this.frameCountLimit = frameCountLimit;
+    public Plant(double plantHP, int plantID, int ATK, int frameCountIdleLimit){
+        this.frameCountIdleLimit = frameCountIdleLimit;
         this.plantHP = plantHP;
         this.plantID = plantID;
         this.plantATK = ATK;

@@ -87,9 +87,9 @@ public class BarManager {
         playing.getPlantManager().setATKhold(0);
         playing.getPlantManager().setFrameCountLimitHold(25);
         plantPickedID.add(0);
-        if(!playing.isStartWaveForCD()){
+        if(!playing.isStartWaveForCD() && !isPlantInCD[0]){
             plantCD[0] = 60;
-        } else {
+        } else if(playing.isStartWaveForCD() && !isPlantInCD[0]) {
             plantCD[0] = 240;
         }
     }
@@ -99,9 +99,9 @@ public class BarManager {
         playing.getPlantManager().setATKhold(20);
         playing.getPlantManager().setFrameCountLimitHold(58);
         plantPickedID.add(1);
-        if(!playing.isStartWaveForCD()){
+        if(!playing.isStartWaveForCD() && !isPlantInCD[1]){
             plantCD[1] = 60;
-        } else {
+        } else if(playing.isStartWaveForCD() && !isPlantInCD[1]) {
             plantCD[1] = 240;
         }
     }
@@ -111,9 +111,9 @@ public class BarManager {
         playing.getPlantManager().setATKhold(0);
         playing.getPlantManager().setFrameCountLimitHold(81);
         plantPickedID.add(2);
-        if(!playing.isStartWaveForCD()){
+        if(!playing.isStartWaveForCD() && !isPlantInCD[2]){
             plantCD[2] = 60;
-        } else {
+        } else if(playing.isStartWaveForCD() && !isPlantInCD[2]) {
             plantCD[2] = 600;
         }
     }
@@ -121,10 +121,11 @@ public class BarManager {
         playing.getPlantManager().setIDhold(3);
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(20);
+        playing.getPlantManager().setFrameCountLimitHold(22);
         plantPickedID.add(3);
-        if(!playing.isStartWaveForCD()){
+        if(!playing.isStartWaveForCD() && !isPlantInCD[3]){
             plantCD[3] = 60;
-        } else {
+        } else if (playing.isStartWaveForCD() && !isPlantInCD[3]){
             plantCD[3] = 240;
         }
     }
@@ -132,10 +133,11 @@ public class BarManager {
         playing.getPlantManager().setIDhold(4);
         playing.getPlantManager().setHPhold(10000);
         playing.getPlantManager().setATKhold(1000);
+        playing.getPlantManager().setFrameCountLimitHold(30);
         plantPickedID.add(4);
-        if(!playing.isStartWaveForCD()){
+        if(!playing.isStartWaveForCD() && !isPlantInCD[4]){
             plantCD[4] = 60;
-        } else {
+        } else if(playing.isStartWaveForCD() && !isPlantInCD[4]) {
             plantCD[4] = 900;
         }
     }
