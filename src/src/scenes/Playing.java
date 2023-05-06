@@ -8,7 +8,6 @@ import zombie.Zombie;
 import static scenes.GameScenes.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 public class Playing implements SceneMethods {
     private TileManager tileManager;
@@ -124,7 +123,7 @@ public class Playing implements SceneMethods {
                 } else if (b2.getText().contains("Wall-nut")) {
                     barManager.wall_nut();
                 } else if (b2.getText().contains("Snow Pea")) {
-                    barManager.snowPea();
+                    barManager.shadowPea();
                 } else if (b2.getText().contains("Cherry Bomb")) {
                     barManager.cherryBomb();
                 }
@@ -211,7 +210,7 @@ public class Playing implements SceneMethods {
         return zombieManager;
     }
     public void createHorde() {
-        zombieManager.createHorde(45);
+        zombieManager.createHorde(50);
     }
 }
 

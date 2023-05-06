@@ -1,7 +1,7 @@
 package manager;
 
 import Audio.Audio;
-import component.Plant;
+import Plant.Plant;
 import scenes.Playing;
 import zombie.Zombie;
 

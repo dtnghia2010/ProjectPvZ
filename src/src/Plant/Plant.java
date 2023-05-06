@@ -1,5 +1,6 @@
-package component;
+package Plant;
 
+import component.Tile;
 import manager.TileManager;
 
 import java.awt.*;

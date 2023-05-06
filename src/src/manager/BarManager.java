@@ -2,15 +2,12 @@ package manager;
 
 import Audio.Audio;
 import component.MyButtons;
-import component.Plant;
 import scenes.Playing;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class BarManager {
@@ -117,10 +114,10 @@ public class BarManager {
             plantCD[2] = 600;
         }
     }
-    public void snowPea(){
+    public void shadowPea(){
         playing.getPlantManager().setIDhold(3);
         playing.getPlantManager().setHPhold(100);
-        playing.getPlantManager().setATKhold(20);
+        playing.getPlantManager().setATKhold(50);
         playing.getPlantManager().setFrameCountLimitHold(22);
         plantPickedID.add(3);
         if(!playing.isStartWaveForCD() && !isPlantInCD[3]){
@@ -153,7 +150,7 @@ public class BarManager {
                 wall_nut();
                 break;
             case 3:
-                snowPea();
+                shadowPea();
                 break;
             case 4:
                 cherryBomb();

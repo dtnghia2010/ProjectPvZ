@@ -1,11 +1,9 @@
 package zombie;
 
 import Audio.Audio;
-import component.Plant;
-import manager.ZombieManager;
+import Plant.Plant;
 
 import java.awt.*;
-import java.util.Iterator;
 
 public class Zombie {
     private int hp, dmg, type;

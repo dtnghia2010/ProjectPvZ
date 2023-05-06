@@ -2,7 +2,7 @@ package manager;
 
 
 import Audio.Audio;
-import component.Plant;
+import Plant.Plant;
 import component.Tile;
 import scenes.Playing;
 import zombie.Zombie;
@@ -297,27 +297,22 @@ public class PlantManager {
                 Zombie zombie = iterator.next();
                 if(r.contains(zombie.X(),zombie.Y()+70)){
                     if(i>=0 && i<9){
-                        System.out.println("1");
                         for(int j = 0;j < 9;j++){
                             setPlantDangered(tileManager.getTiles()[j]);
                         }
                     } else if(i >= 9 && i<18){
-                        System.out.println("2");
                         for(int j = 9;j < 18;j++){
                             setPlantDangered(tileManager.getTiles()[j]);
                         }
                     } else if(i>=18 && i<27){
-                        System.out.println("3");
                         for(int j = 18;j < 27;j++){
                             setPlantDangered(tileManager.getTiles()[j]);
                         }
                     } else if(i>=27 && i<36){
-                        System.out.println("4");
                         for(int j = 27;j < 36;j++){
                             setPlantDangered(tileManager.getTiles()[j]);
                         }
                     } else if (i >= 36 && i<45) {
-                        System.out.println("5");
                         for(int j = 36;j < 45;j++){
                             setPlantDangered(tileManager.getTiles()[j]);
                         }

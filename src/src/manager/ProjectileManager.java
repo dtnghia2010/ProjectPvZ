@@ -1,8 +1,8 @@
 package manager;
 
 import Audio.Audio;
-import component.Plant;
-import component.Projectile;
+import Plant.Plant;
+import Plant.Projectile;
 import zombie.Zombie;
 
 import java.awt.*;
@@ -82,7 +82,7 @@ public class ProjectileManager {
     public void drawProjectile(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         projectileImage[0] = t.getImage(getClass().getResource("/Projectile/Pea.png"));
-        projectileImage[1] = t.getImage(getClass().getResource("/Projectile/SnowPea.png"));
+        projectileImage[1] = t.getImage(getClass().getResource("/Projectile/shadow_projectile.png"));
         synchronized (listOfProjectile){
             Iterator<Projectile> iterator = listOfProjectile.iterator();
             while ((iterator.hasNext())) {
@@ -90,7 +90,7 @@ public class ProjectileManager {
                 if(projectile.getID() == 1){
                     g2d.drawImage(projectileImage[0],projectile.getX(),projectile.getY(),30,30,null);
                 } else if(projectile.getID() == 2){
-                    g2d.drawImage(projectileImage[1],projectile.getX(),projectile.getY(),30,30,null);
+                    g2d.drawImage(projectileImage[1],projectile.getX(),projectile.getY()-10,70,30,null);
                 }
             }
         }
@@ -106,22 +106,29 @@ public class ProjectileManager {
                     Iterator<Projectile> iterator2 = listOfProjectile.iterator();
                     while (iterator2.hasNext()){
                         Projectile projectile = iterator2.next();
-                        if(r.contains(projectile.getX()+30,projectile.getY())){
-                            Audio.splat();
-                            zombie.setHp(zombie.getHp()-projectile.getATK());
-                            if(projectile.getID() == 2 && !zombie.isSlowed()){
-                                zombie.setSpd(zombie.getSpd()/2);
-                                zombie.setSlowed(true);
-                            }
-                            iterator2.remove();
-                            if(zombie.getHp() <= 0){
-                                Audio.zombieDeath();
-                                zombie.setDead(true);
-                                iterator.remove();
-                            }
+                        if(projectile.getID() == 1){
+                            projectileDealDamage(30,r,projectile,zombie,iterator,iterator2);
+                        } else if(projectile.getID() == 2){
+                            projectileDealDamage(70,r,projectile,zombie,iterator,iterator2);
                         }
                     }
                 }
+            }
+        }
+    }
+    public void projectileDealDamage(int distance,Rectangle r, Projectile projectile, Zombie zombie, Iterator iterator, Iterator iterator2){
+        if(r.contains(projectile.getX()+distance,projectile.getY())){
+            Audio.splat();
+            zombie.setHp(zombie.getHp()-projectile.getATK());
+            if(projectile.getID() == 2 && !zombie.isSlowed()){
+                zombie.setSpd(zombie.getSpd()/2);
+                zombie.setSlowed(true);
+            }
+            iterator2.remove();
+            if(zombie.getHp() <= 0){
+                Audio.zombieDeath();
+                zombie.setDead(true);
+                iterator.remove();
             }
         }
     }
