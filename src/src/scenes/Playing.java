@@ -175,7 +175,7 @@ public class Playing implements SceneMethods {
         return zombieManager;
     }
     public void createHorde() {
-        zombieManager.createHorde(45);
+        zombieManager.createHorde(100);
     }
 }
 
