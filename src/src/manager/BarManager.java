@@ -3,7 +3,6 @@ package manager;
 import Audio.Audio;
 import component.MyButtons;
 import component.Plant;
-import component.Tile;
 import scenes.Playing;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ import java.util.Iterator;
 public class BarManager {
     private Image[] pick_plantBar;
     private Image[] plantInCD;
-    private Image pickedPlant;
+    private Image framePlant;
     private MyButtons pickPlant[];
     private int plantPickedID;
     private int plantPickedByKeyBoard = 0;
@@ -48,7 +47,7 @@ public class BarManager {
             pick_plantBar[2] = t.getImage(getClass().getResource("/plantBar/PvZ_Wall-nut.jpg"));
             pick_plantBar[3] = t.getImage(getClass().getResource("/plantBar/PvZ_Snow_Pea.jpg"));
             pick_plantBar[4] = t.getImage(getClass().getResource("/plantBar/PvZ_Cherry_Bomb.jpg"));
-            pickedPlant = t.getImage(getClass().getResource("/plantBar/plantSelected.png"));
+            framePlant = t.getImage(getClass().getResource("/plantBar/plantSelected.png"));
         }catch (Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error - importImage()");
@@ -78,19 +77,19 @@ public class BarManager {
             g.drawImage(p, 350 + distance, 0, 90, 90, null);
             switch (plantPickedID){
                 case 0:
-                    g2d.drawImage(pickedPlant,350, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,350, 0, 90, 90, null);
                     break;
                 case 1:
-                    g2d.drawImage(pickedPlant,350 + 90, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,350 + 90, 0, 90, 90, null);
                     break;
                 case 2:
-                    g2d.drawImage(pickedPlant,350 + 180, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,350 + 180, 0, 90, 90, null);
                     break;
                 case 3:
-                    g2d.drawImage(pickedPlant,350 + 270, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,350 + 270, 0, 90, 90, null);
                     break;
                 case 4:
-                    g2d.drawImage(pickedPlant,350 + 360, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,350 + 360, 0, 90, 90, null);
                     break;
             }
             distance += 90;
@@ -210,7 +209,7 @@ public class BarManager {
         Graphics2D g2d = (Graphics2D) g;
         for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
             if(i == tile){
-                g2d.drawImage(pickedPlant,playing.getTileManager().getTiles()[i].getCurX(),playing.getTileManager().getTiles()[i].getCurY(),playing.getTileManager().getTiles()[i].getwTile(),playing.getTileManager().getTiles()[i].gethTile(),null);
+                g2d.drawImage(framePlant,playing.getTileManager().getTiles()[i].getCurX(),playing.getTileManager().getTiles()[i].getCurY(),playing.getTileManager().getTiles()[i].getwTile(),playing.getTileManager().getTiles()[i].gethTile(),null);
             }
         }
     }
