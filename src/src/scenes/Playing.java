@@ -175,7 +175,7 @@ public class Playing implements SceneMethods {
     }
 
     private boolean isTimeForNewZombie() {
-        if (waveManager.isTimeForNewZombie()) {
+        if (waveManager.isTime()) {
             if (waveManager.isThereMoreZombieInWave()) {
                 return true;
             }

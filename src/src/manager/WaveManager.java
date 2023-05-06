@@ -1,15 +1,17 @@
 package manager;
 
+import Timer.timeLogic;
 import event.Wave;
 import scenes.Playing;
 
-public class WaveManager {
+public class WaveManager extends timeLogic {
     private Playing playing;
     private Wave[] waves;
-    private int zombieSpawnTickLimit = 60;
-    private int zombieSpawnTick = zombieSpawnTickLimit;
+/*    private int zombieSpawnTickLimit = 60;
+    private int zombieSpawnTick = zombieSpawnTickLimit;*/
     private int curZom = 0, curWave = 0;
     public WaveManager(Playing playing) {
+        super(60*1);
         this.playing = playing;
         waves = new Wave[4];
         initWaves();
@@ -32,7 +34,8 @@ public class WaveManager {
     }
 
     public int getNextZombie() {
-        zombieSpawnTick = 0;
+//        zombieSpawnTick = 0;
+        resetTime();
         if (waves[curWave].amountType(curZom) > 0) {
             waves[curWave].recudeWave(curZom);
             if(waves[curWave].amountType(curZom) == 0) {
@@ -44,18 +47,17 @@ public class WaveManager {
         return -1;
     }
 
-    public boolean isTimeForNewZombie() {
+/*    public boolean isTimeForNewZombie() {
         return zombieSpawnTick >= zombieSpawnTickLimit;
-    }
+    }*/
 
     public boolean isThereMoreZombieInWave() {
 //        System.out.println("curWave:" +  curWave);
         return waves[curWave].amountType(curZom) > 0;
     }
 
+    @Override
     public void updates() {
-        if (zombieSpawnTick < zombieSpawnTickLimit) {
-            zombieSpawnTick++;
-        }
+        super.updates();
     }
 }
