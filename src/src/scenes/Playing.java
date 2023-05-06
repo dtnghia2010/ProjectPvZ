@@ -101,9 +101,11 @@ public class Playing implements SceneMethods {
         } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
             setGameScenes(LOSE);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
-            startWave = true;
-            startWaveForCD = true;
-            waveManager.readyNewWave();
+            if(!waveManager.isEndWaves()) {
+                startWave = true;
+                startWaveForCD = true;
+                waveManager.readyNewWave();
+            }
         }
         for (MyButtons b : barManager.getPickPlant()) {
             if (b.getBounds().contains(x, y)) {
@@ -152,22 +154,18 @@ public class Playing implements SceneMethods {
             if(zombieManager.allZombieDead()) {
                 startWave = false;
                 zombieManager.getZombies().clear();
-                createHorde();
                 System.out.println("Zombies cleared");
+                if(waveManager.isEndWaves()) {
+                    System.out.println("you win");
+                } else {
+                    waveManager.createHorde();
+                }
                 notifManager.setNotif(new PlayingNotif(0));
-            } else {
-                zombieAtk();
             }
         }
         waveManager.updates();
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();
-    }
-
-    private void zombieAtk() {
-        for(Zombie z: zombieManager.getZombies()) {
-            //TODO zombie attack plant
-        }
     }
 
     private void spawnZombie() {
@@ -189,9 +187,6 @@ public class Playing implements SceneMethods {
 
     public ZombieManager getZombieManager() {
         return zombieManager;
-    }
-    public void createHorde() {
-        zombieManager.createHorde(10);
     }
 }
 

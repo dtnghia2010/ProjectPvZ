@@ -1,34 +1,45 @@
 package manager;
 
+import Timer.timeLogic;
 import notification.NotifPattern;
 
 import java.awt.*;
 
-public class NotifManager {
+public class NotifManager extends timeLogic {
     private NotifPattern notif;
-    private int tickLimit;
     private boolean executed = false;
+    public NotifManager() {
+        super();
+    }
     public void setNotif(NotifPattern notif) {
         this.notif = notif;
-        tickLimit = notif.timeNotif() * 60;
+        setTickLimit(notif.timeNotif());
     }
 
+    @Override
     public void updates() {
-        if(tickLimit >= 0) {
+        if(getTickLimit() >= 0) {
             executed = false;
-            tickLimit--;
-            if(tickLimit <= 0) {
+            decreaseTickLimit();
+            if(getTickLimit() <= 0) {
                 executed = true;
             }
         }
     }
-    public boolean isTimeForNotif() {
-        return tickLimit > 0;
-    }
+
+    /*    public void updates() {
+            if(tickLimit >= 0) {
+                executed = false;
+                tickLimit--;
+                if(tickLimit <= 0) {
+                    executed = true;
+                }
+            }
+        }*/
     //draw
     public void showNotif(Graphics g) {
         updates();
-        if(isTimeForNotif() && !executed) {
+        if(isTime() && !executed) {
             stageClear(g);
         }
     }
