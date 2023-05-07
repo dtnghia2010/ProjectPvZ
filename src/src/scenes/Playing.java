@@ -70,6 +70,7 @@ public class Playing implements SceneMethods {
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
+        buttonManager.drawImg(g);
     }
 
     public PlantManager getPlantManager() {
