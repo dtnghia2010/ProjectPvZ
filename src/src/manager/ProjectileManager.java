@@ -101,7 +101,12 @@ public class ProjectileManager {
             Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
             while ((iterator.hasNext())){
                 Zombie zombie = iterator.next();
-                Rectangle r = new Rectangle((int) zombie.X(),(int) zombie.Y(),zombie.getWidth(),zombie.getHeight());
+                Rectangle r = new Rectangle();
+                if(zombie.getType() == 0 || zombie.getType() == 1){
+                    r.setBounds((int)zombie.getBound().getX()+25,(int)zombie.getBound().getY(),(int)zombie.getBound().getWidth(),(int)zombie.getBound().getHeight());
+                } else {
+                    r.setBounds((int) zombie.X(),(int) zombie.Y(),zombie.getWidth(),zombie.getHeight());
+                }
                 synchronized (listOfProjectile){
                     Iterator<Projectile> iterator2 = listOfProjectile.iterator();
                     while (iterator2.hasNext()){
@@ -117,7 +122,7 @@ public class ProjectileManager {
         }
     }
     public void projectileDealDamage(int distance,Rectangle r, Projectile projectile, Zombie zombie, Iterator iterator, Iterator iterator2){
-        if(r.contains(projectile.getX()+distance,projectile.getY())){
+        if(r.contains(projectile.getX()+distance,projectile.getY()) && zombie.isAlived()){
             Audio.splat();
             zombie.setHp(zombie.getHp()-projectile.getATK());
             if(projectile.getID() == 2 && !zombie.isSlowed()){
@@ -128,7 +133,7 @@ public class ProjectileManager {
             if(zombie.getHp() <= 0){
                 Audio.zombieDeath();
                 zombie.setDead(true);
-                iterator.remove();
+                zombie.dead();
             }
         }
     }

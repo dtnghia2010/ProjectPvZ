@@ -117,7 +117,7 @@ public class BarManager {
     public void shadowPea(){
         playing.getPlantManager().setIDhold(3);
         playing.getPlantManager().setHPhold(100);
-        playing.getPlantManager().setATKhold(50);
+        playing.getPlantManager().setATKhold(30);
         playing.getPlantManager().setFrameCountLimitHold(22);
         plantPickedID.add(3);
         if(!playing.isStartWaveForCD() && !isPlantInCD[3]){
