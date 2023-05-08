@@ -30,7 +30,7 @@ public class HouseOwnerManager {
 
     public HouseOwnerManager(Playing playing) {
         this.playing = playing;
-        houseOwner = new HouseOwner(100, random.nextInt(200) + 100, 100);
+        houseOwner = new HouseOwner(200, 470, 100);
         importImg();
     }
 
@@ -72,7 +72,8 @@ public class HouseOwnerManager {
     public void importImg() {
         zImages = new Image[1];
         try {
-            zImages[0] = ImageIO.read(getClass().getResource("/HouseOwner/HouseOwner.png"));
+            Image houseOwnerImg = ImageIO.read(getClass().getResource("/HouseOwner/HouseOwner.png"));
+            zImages[0] = houseOwnerImg.getScaledInstance(120, 150, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("ERROR-importImg()-HouseOwner");

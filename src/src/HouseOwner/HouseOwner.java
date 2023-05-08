@@ -3,7 +3,7 @@ import java.awt.*;
 import java.util.Iterator;
 public class HouseOwner {
     private int hp, dmg;
-    private final int width = 80, height = 140;
+    private final int width = 50, height = 100;
     private float spd = 0.8f;
     private boolean Collided = false;
     private double x, y;
