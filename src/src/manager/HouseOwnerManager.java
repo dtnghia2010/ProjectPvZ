@@ -4,6 +4,7 @@ import scenes.Playing;
 import HouseOwner.HouseOwner;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -98,7 +99,28 @@ public class HouseOwnerManager {
         }
         y -= speed;
     }
+    public void mouseClicked( int x, int y) {
+        int mouseX = getX();
+        int mouseY = getY();
+        int ownerX = (int) houseOwner.getX();
+        int ownerY = (int) houseOwner.getY();
+        int distanceX = mouseX - ownerX;
+        int distanceY = mouseY - ownerY;
+        int steps = 5;
+        for (int i = 0; i < steps; i++) {
+            int newX = ownerX + (distanceX * i / steps);
+            int newY = ownerY + (distanceY * i / steps);
+            houseOwner.move();
+        }
+    }
 
+
+    public int getX() {
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
 }
 
 
