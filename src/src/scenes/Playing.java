@@ -15,6 +15,7 @@ public class Playing implements SceneMethods {
     private PlantManager plantManager;
     private ButtonManager buttonManager;
     private ProjectileManager projectileManager;
+    private SunManager sunManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
     private boolean startWave = false;
@@ -39,12 +40,18 @@ public class Playing implements SceneMethods {
     public boolean isStartWaveForCD() {
         return startWaveForCD;
     }
+
+    public SunManager getSunManager() {
+        return sunManager;
+    }
+
     private void initComponents() {
         barManager = new BarManager(this);
         tileManager = new TileManager(this);
         buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
         projectileManager = new ProjectileManager();
+        sunManager = new SunManager();
     }
 
     public TileManager getTileManager() {
@@ -60,10 +67,12 @@ public class Playing implements SceneMethods {
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
+        sunManager.update();
     }
     @Override
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
+        sunManager.drawSun(g);
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
@@ -129,7 +138,7 @@ public class Playing implements SceneMethods {
                 }
             }
         }
-
+        sunManager.clickSun(x,y);
     }
 
 

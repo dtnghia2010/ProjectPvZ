@@ -123,7 +123,7 @@ public class ProjectileManager {
     }
     public void projectileDealDamage(int distance,Rectangle r, Projectile projectile, Zombie zombie, Iterator iterator, Iterator iterator2){
         if(r.contains(projectile.getX()+distance,projectile.getY()) && zombie.isAlived()){
-            Audio.splat();
+//            Audio.splat();
             zombie.setHp(zombie.getHp()-projectile.getATK());
             if(projectile.getID() == 2 && !zombie.isSlowed()){
                 zombie.setSpd(zombie.getSpd()/2);

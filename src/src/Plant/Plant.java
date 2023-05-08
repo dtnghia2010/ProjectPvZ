@@ -9,6 +9,7 @@ import java.util.Iterator;
 public class Plant {
     private double plantHP;
     private int plantATK;
+    private int sunCost;
     private int frameCountIdleLimit;
     private int frameCountAttackLimit;
     public int getFrameCountIdle() {
@@ -35,6 +36,10 @@ public class Plant {
     private int frameCountAttack = 0;
     private int frameCDIdle = 0;
     private int frameCDAttack = 0;
+
+    public int getSunCost() {
+        return sunCost;
+    }
 
     public int getFrameCountAttack() {
         if(frameCountAttack == frameCountAttackLimit){

@@ -83,6 +83,7 @@ public class BarManager {
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(0);
         playing.getPlantManager().setFrameCountLimitHold(25);
+        playing.getPlantManager().setSunCostHold(50);
         plantPickedID.add(0);
         if(!playing.isStartWaveForCD() && !isPlantInCD[0]){
             plantCD[0] = 60;
@@ -95,6 +96,7 @@ public class BarManager {
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(20);
         playing.getPlantManager().setFrameCountLimitHold(58);
+        playing.getPlantManager().setSunCostHold(100);
         plantPickedID.add(1);
         if(!playing.isStartWaveForCD() && !isPlantInCD[1]){
             plantCD[1] = 60;
@@ -107,6 +109,7 @@ public class BarManager {
         playing.getPlantManager().setHPhold(1000);
         playing.getPlantManager().setATKhold(0);
         playing.getPlantManager().setFrameCountLimitHold(81);
+        playing.getPlantManager().setSunCostHold(50);
         plantPickedID.add(2);
         if(!playing.isStartWaveForCD() && !isPlantInCD[2]){
             plantCD[2] = 60;
@@ -119,6 +122,7 @@ public class BarManager {
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(30);
         playing.getPlantManager().setFrameCountLimitHold(22);
+        playing.getPlantManager().setSunCostHold(250);
         plantPickedID.add(3);
         if(!playing.isStartWaveForCD() && !isPlantInCD[3]){
             plantCD[3] = 60;
@@ -131,6 +135,7 @@ public class BarManager {
         playing.getPlantManager().setHPhold(10000);
         playing.getPlantManager().setATKhold(1000);
         playing.getPlantManager().setFrameCountLimitHold(30);
+        playing.getPlantManager().setSunCostHold(150);
         plantPickedID.add(4);
         if(!playing.isStartWaveForCD() && !isPlantInCD[4]){
             plantCD[4] = 60;

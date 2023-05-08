@@ -27,6 +27,9 @@ public class Zombie {
     private int frameCountMove = 0;
     private double frameCDMove = 0;
     private int frameCountMoveLimit;
+    private int frameCountEat = 0;
+    private int frameCDEat = 0;
+    private int frameCountEatLimit;
     private boolean isAlived = true;
     private boolean isDead = false;
     private boolean isSlowed = false;
@@ -47,6 +50,7 @@ public class Zombie {
         setStatus(this.type);
         if(this.type == 0){
             frameCountMoveLimit = 51;
+            frameCountEatLimit = 23;
         } else if (this.type == 1) {
             frameCountMoveLimit = 65;
         }
@@ -117,7 +121,16 @@ public class Zombie {
             x -= spd;
         }
     }
-    public void updateFrameCount(){
+
+    public boolean isCollided() {
+        return isCollided;
+    }
+
+    public int getFrameCountEat() {
+        return frameCountEat;
+    }
+
+    public void updateFrameCountMove(){
         if(!isCollided){
             frameCDMove++;
             if(frameCDMove%2 == 0){
@@ -140,6 +153,20 @@ public class Zombie {
             }
         }
     }
+    public void updateFrameCountEat(){
+        if(isCollided){
+            frameCDEat++;
+            if(frameCDEat%3 == 0){
+                frameCountEat++;
+            }
+            if(frameCountEat == frameCountEatLimit){
+                frameCountEat = 0;
+            }
+        } else {
+            frameCountEat = 0;
+        }
+    }
+
 
     public int getFrameCountMove() {
         return frameCountMove;

@@ -14,6 +14,7 @@ public class ZombieManager {
     private ArrayList<Zombie> zombies;
     private Image[] zImages;
     private Image[] normalZombie_Move = new Image[52];
+    private Image[] normalZombie_Eat = new Image[25];
     private Image[] coneHead_Move = new Image[67];
     private Playing playing;
     private Toolkit t = Toolkit.getDefaultToolkit();
@@ -59,6 +60,9 @@ public class ZombieManager {
         for (int i = 0;i<normalZombie_Move.length;i++){
             normalZombie_Move[i] = t.getImage(getClass().getResource("/zombie - move/"+i+".png"));
         }
+        for(int i = 0;i<normalZombie_Eat.length;i++){
+            normalZombie_Eat[i] = t.getImage(getClass().getResource("/zombie - eat/"+i+".png"));
+        }
     }
     public void importConeHead(){
         for(int i = 0;i<coneHead_Move.length;i++){
@@ -84,10 +88,14 @@ public class ZombieManager {
                 for (Zombie z : zombies) {
                     if (z.isAlived()) {
                         if(z.getType() == 0){
-                            g.drawImage(normalZombie_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30, null);
+                            if(!z.isCollided()){
+                                g.drawImage(normalZombie_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30, null);
 //                            g.setColor(Color.RED);
 //                            g.drawRect((int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30);
-                            g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
+                                g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
+                            } else if(z.isCollided()) {
+                                g.drawImage(normalZombie_Eat[z.getFrameCountEat()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30, null);
+                            }
                         } else if (z.getType() == 1) {
                             g.drawImage(coneHead_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+10, null);
                             g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
@@ -107,7 +115,7 @@ public class ZombieManager {
             z.dead();
         } else {
             if(z.getType() == 0 || z.getType() == 1){
-                z.updateFrameCount();
+                z.updateFrameCountMove();
             } else {
                 z.move();
             }
@@ -173,6 +181,7 @@ public class ZombieManager {
                         Plant plant = iterator1.next();
                         if(r.contains(plant.getX()+plant.getWidth()-zombie.getWidth()+30,plant.getY()) && zombie.isAlived()){
                             zombie.setCollided(true);
+                            zombie.updateFrameCountEat();
                             if(realTimeCounter >= 30){
                                 Audio.zombieEat();
                                 zombie.attackPlant(plant);
