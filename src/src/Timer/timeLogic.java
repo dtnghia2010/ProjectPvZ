@@ -14,7 +14,6 @@ public abstract class timeLogic {
             tick++;
         }
     }
-
     public boolean isTime() {
         return tick >= tickLimit;
     }

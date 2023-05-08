@@ -19,7 +19,7 @@ public class Playing implements SceneMethods {
     private ZombieManager zombieManager;
     private WaveManager waveManager;
     private NotifManager notifManager;
-    private boolean startWave = false;
+    private boolean startWave = false, callHorde = false;
     private boolean startWaveForCD = false;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
@@ -74,14 +74,14 @@ public class Playing implements SceneMethods {
         tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
         barManager.drawPlantInCD(g);
-        zombieManager.draw(g);
         plantManager.drawPlant(g);
+        zombieManager.draw(g);
         projectileManager.drawProjectile(g);
         showNotifs(g);
     }
 
     private void showNotifs(Graphics g) {
-        if(zombieManager.allZombieDead() && !waveManager.isThereMoreZombieInWave()) {
+        if(!isStartWave()) {
 //            notifManager.setNotif(new PlayingNotif());
             notifManager.showNotif(g);
         }
@@ -101,8 +101,8 @@ public class Playing implements SceneMethods {
         } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
             setGameScenes(LOSE);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
-            if(!waveManager.isEndWaves()) {
-                startWave = true;
+            if(!startWave && zombieManager.allZombieDead()) {
+                startWave = true; callHorde = false;
                 startWaveForCD = true;
                 waveManager.readyNewWave();
             }
@@ -151,21 +151,21 @@ public class Playing implements SceneMethods {
             if (isTimeForNewZombie()) {
                 spawnZombie();
             }
-            if(zombieManager.allZombieDead()) {
+            if(waveManager.hordeDead() && callHorde == true) {
+                startWave = false;
+            }
+            if(zombieManager.allZombieDead() && !callHorde) {
                 zombieManager.getZombies().clear();
-                System.out.println("Zombies cleared");
                 if(waveManager.isEndWaves()) {
                     System.out.println("you win");
                 } else {
                     waveManager.createHorde();
+                    callHorde = true;
                 }
                 notifManager.setNotif(new PlayingNotif(0));
             }
-            if(waveManager.hordeDead()) {
-                startWave = false;
-            }
-        }
 
+        }
         waveManager.updates();
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();
