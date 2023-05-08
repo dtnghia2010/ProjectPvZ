@@ -15,7 +15,7 @@ public class SunManager {
     private Image sunImage = t.getImage(getClass().getResource("/Sun/sun.png"));;
     public List<Sun> listOfSun = new ArrayList<>();
     private int realTimeCounter = 0;
-    private int sunHold = 1000;
+    private int sunHold = 1500;
     private Random random = new Random();
     public void sunCreation(){
         int randx = random.nextInt(900)+400;
