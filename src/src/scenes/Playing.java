@@ -9,6 +9,7 @@ import HouseOwner.HouseOwner;
 import static scenes.GameScenes.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class Playing implements SceneMethods {
     private TileManager tileManager;
@@ -127,7 +128,7 @@ public class Playing implements SceneMethods {
 
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
-        houseOwnerManager.mouseClicked(x,y);
+        houseOwnerManager.mouseClicked(x, y);
     }
     public void keyBoardPress(KeyEvent e){
         barManager.keyBoardChoosePlant(e);
