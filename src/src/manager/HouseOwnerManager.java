@@ -28,6 +28,12 @@ public class HouseOwnerManager {
     //public static int getRealTimeCounter() {
     //return realTimeCounter;
 
+    public HouseOwnerManager(Playing playing) {
+        this.playing = playing;
+        houseOwner = new HouseOwner(100, random.nextInt(playing.getHeight() - 200) + 100, 100);
+        importImg();
+    }
+
     public HouseOwnerManager(String imageUrl, int x, int y, int speed){
             try {
                 URL url = new URL(imageUrl);
@@ -63,12 +69,6 @@ public class HouseOwnerManager {
         }
     }
 
-    public HouseOwnerManager(Playing playing) {
-        this.playing = playing;
-        houseOwner = new HouseOwner();
-        importImg();
-    }
-
     public void importImg() {
         zImages = new Image[0];
         try {
@@ -82,20 +82,22 @@ public class HouseOwnerManager {
 
     public void draw(Graphics g) {
         synchronized (houseOwner) {
-            if (houseOwner.size() > 0) {
-                        g.drawImage(zImages[houseOwner.getType()], (int) houseOwner.X(), (int) houseOwner.Y(), houseOwner.getWidth(),houseOwner.getHeight(), null);
-                        g.setColor(Color.RED);
-                        g.drawRect((int) houseOwner.X(), (int) houseOwner.Y(), houseOwner.getWidth(), houseOwner.getHeight());
-                    }
-    }
-
-    public void move(HouseOwner houseOwner) {
-        if (houseOwner.X() <= 100) {
-            houseOwner.dead();
-        } else {
-            houseOwner.move();
+            if (houseOwner.isAlived()) {
+                g.drawImage(houseOwnerImage, (int) houseOwner.getX(), (int) houseOwner.getY(), null);
+            }
         }
     }
+
+
+    public void move() {
+        if (y <= 0) {
+            y = houseOwner.getHeight() - 80;
+        } else if (y >= houseOwner.getHeight() - 80) {
+            y = 0;
+        }
+        y -= speed;
+    }
+
 }
 
 

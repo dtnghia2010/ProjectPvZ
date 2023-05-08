@@ -4,6 +4,7 @@ import Audio.Audio;
 import manager.*;
 import component.MyButtons;
 import zombie.Zombie;
+import HouseOwner.HouseOwner;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class Playing implements SceneMethods {
     private ProjectileManager projectileManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
+    private HouseOwnerManager houseOwnerManager;
     private boolean startWave = false;
     private boolean startWaveForCD = false;
     private World w;
@@ -45,6 +47,7 @@ public class Playing implements SceneMethods {
         buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
         projectileManager = new ProjectileManager();
+        houseOwnerManager = new HouseOwnerManager(this);
     }
 
     public TileManager getTileManager() {
@@ -70,6 +73,8 @@ public class Playing implements SceneMethods {
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
+        houseOwnerManager.draw(g);
+
     }
 
     public PlantManager getPlantManager() {
@@ -177,5 +182,6 @@ public class Playing implements SceneMethods {
     public void createHorde() {
         zombieManager.createHorde(100);
     }
+
 }
 

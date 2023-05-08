@@ -13,10 +13,11 @@ public class HouseOwner {
     private Rectangle bound;
 
     public HouseOwner(double x, double y, int hp) {
+        this.x = x;
+        this.y = y;
         this.hp = hp;
         this.bound = new Rectangle(new Dimension(width, height));
     }
-
     public void decreaseHealth(int damage) {
         hp -= damage;
     }
@@ -66,4 +67,19 @@ public class HouseOwner {
     public Rectangle getBound() {
         return bound;
     }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+    public int getHeight(){
+        return height;
+    }
+    public int getWidth(){
+        return width;
+    }
 }
+
