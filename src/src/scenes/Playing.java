@@ -61,22 +61,23 @@ public class Playing implements SceneMethods {
     public void update(){
         plantManager.alertPlant(tileManager,zombieManager);
         plantManager.calmPlant(tileManager,zombieManager);
+        plantManager.updateSunflower();
         plantManager.timeExplode();
 //        projectileManager.projectileCreated(plantManager);
         plantManager.plantAttack();
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
-        sunManager.update();
+        sunManager.update(this);
     }
     @Override
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
-        sunManager.drawSun(g);
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
         barManager.drawPlantInCD(g);
+        barManager.drawPlantNotEnoughSun(g);
         barManager.drawPlantSelectedByMouse(g);
         barManager.drawPlantSelectedByKeyBoard(g);
         tileManager.drawTileSelectedByKeyBoard(g);
@@ -85,6 +86,7 @@ public class Playing implements SceneMethods {
         plantManager.drawExplosion(g);
         zombieManager.draw(g);
         projectileManager.drawProjectile(g);
+        sunManager.drawSun(g);
     }
     public PlantManager getPlantManager() {
         return plantManager;

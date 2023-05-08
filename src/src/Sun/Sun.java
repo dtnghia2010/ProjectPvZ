@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class Sun {
     private double x, y;
+    private int boundaryDrop;
 
     public double getX() {
         return x;
@@ -37,15 +38,16 @@ public class Sun {
         isThere = there;
     }
 
-    public Sun(double x, double y, int width, int height){
+    public Sun(double x, double y, int width, int height, int boundaryDrop){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.boundaryDrop = boundaryDrop;
         this.bound = new Rectangle((int)x,(int)y,width,height);
     }
     public void move(){
-        if(y<400){
+        if(y<boundaryDrop){
             y++;
             bound.y = (int)y;
         }

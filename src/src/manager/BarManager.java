@@ -228,8 +228,10 @@ public class BarManager {
         }
     }
     public void returnToSelectPlantByMouse(){
-        playing.getPlantManager().setSelected(false);
-        playing.getPlantManager().setTimeToPlant(true);
+        if(playing.isStartWaveForCD()){
+            playing.getPlantManager().setSelected(false);
+            playing.getPlantManager().setTimeToPlant(true);
+        }
     }
     public void startGame(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
@@ -344,6 +346,24 @@ public class BarManager {
                 g2d.drawString(String.format("%d",cd),385 +distance,50);
             }
             distance += 90;
+        }
+    }
+    public void drawPlantNotEnoughSun(Graphics g){
+        if(playing.getSunManager().getSunHold() < 50){
+            g.drawImage(plantInCD[0],350,0, 90, 90, null);
+            g.drawImage(plantInCD[1],350+90,0, 90, 90, null);
+            g.drawImage(plantInCD[2],350+180,0, 90, 90, null);
+            g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
+            g.drawImage(plantInCD[4],350+360,0, 90, 90, null);
+        } else if(playing.getSunManager().getSunHold() < 100){
+            g.drawImage(plantInCD[1],350+90,0, 90, 90, null);
+            g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
+            g.drawImage(plantInCD[4],350+360,0, 90, 90, null);
+        } else if(playing.getSunManager().getSunHold() < 150){
+            g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
+            g.drawImage(plantInCD[4],350+360,0, 90, 90, null);
+        } else if(playing.getSunManager().getSunHold() < 250){
+            g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
         }
     }
     public MyButtons[] getPickPlant() {

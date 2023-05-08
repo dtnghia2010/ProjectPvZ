@@ -1,5 +1,6 @@
 package manager;
 
+import Plant.Plant;
 import Sun.Sun;
 import scenes.Playing;
 
@@ -16,9 +17,12 @@ public class SunManager {
     private int realTimeCounter = 0;
     private int sunHold = 1000;
     private Random random = new Random();
-    private void sunCreation(){
-        int randx = random.nextInt(1000)+200;
-        listOfSun.add(new Sun(randx,0,90,90));
+    public void sunCreation(){
+        int randx = random.nextInt(900)+400;
+        listOfSun.add(new Sun(randx,0,90,90,400));
+    }
+    public void sunCreatedBySunFlower(Plant plant){
+        listOfSun.add(new Sun(plant.getX(),plant.getY()-30,90,90,plant.getY()+30));
     }
     public int getSunHold() {
         return sunHold;
@@ -35,21 +39,27 @@ public class SunManager {
             while (iterator.hasNext()){
                 Sun sun = iterator.next();
                 Rectangle rSun = sun.getBounds();
-                if(rSun.contains(x,y) && sun.isThere()){
+                if(rSun.contains(x,y)){
                     sunHold += 50;
-                    sun.setThere(false);
-                    System.out.println("Current sun: "+sunHold);
+                    iterator.remove();
                 }
             }
         }
     }
-    public void drawSun(Graphics g){
+    public void drawSunHolder(Graphics g){
         Rectangle holder = new Rectangle(250,0,100,100);
         Graphics2D g2r = (Graphics2D) g;
         g2r.setColor(Color.PINK);
         g2r.fill(holder);
         Graphics2D g2s = (Graphics2D) g;
+        Graphics2D g2n = (Graphics2D) g;
         g2s.drawImage(sunImage,255,-10,90,90,null);
+        g2n.setFont(new Font("Arial",Font.BOLD,24));
+        g2n.setColor(Color.BLACK);
+        g2n.drawString(String.format("%d",sunHold),270,95);
+    }
+    public void drawSun(Graphics g){
+        drawSunHolder(g);
         Graphics2D g2d = (Graphics2D) g;
         synchronized (listOfSun){
             Iterator<Sun> iterator = listOfSun.iterator();
@@ -57,23 +67,25 @@ public class SunManager {
                 Sun sun = iterator.next();
                 if(sun.isThere()){
                     g2d.drawImage(sunImage,(int)sun.getX(),(int)sun.getY(),sun.getWidth(),sun.getHeight(),null);
-                    g.setColor(Color.RED);
-                    g.drawRect((int)sun.getBounds().getX(),(int)sun.getBounds().getY(),(int)sun.getBounds().getWidth(),(int)sun.getBounds().getHeight());
+//                    g.setColor(Color.RED);
+//                    g.drawRect((int)sun.getBounds().getX(),(int)sun.getBounds().getY(),(int)sun.getBounds().getWidth(),(int)sun.getBounds().getHeight());
                 }
             }
         }
     }
-    public void update(){
-        frameCount();
-        if(realTimeCounter == 450){
-            sunCreation();
-            realTimeCounter = 0;
-        }
-        synchronized (listOfSun){
-            Iterator<Sun> iterator= listOfSun.iterator();
-            while (iterator.hasNext()){
-                Sun sun = iterator.next();
-                sun.move();
+    public void update(Playing playing){
+        if(playing.isStartWaveForCD()){
+            frameCount();
+            if(realTimeCounter == 600){
+                sunCreation();
+                realTimeCounter = 0;
+            }
+            synchronized (listOfSun){
+                Iterator<Sun> iterator= listOfSun.iterator();
+                while (iterator.hasNext()){
+                    Sun sun = iterator.next();
+                    sun.move();
+                }
             }
         }
     }

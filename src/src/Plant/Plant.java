@@ -1,6 +1,7 @@
 package Plant;
 
 import component.Tile;
+import manager.SunManager;
 import manager.TileManager;
 
 import java.awt.*;
@@ -31,15 +32,12 @@ public class Plant {
         this.frameCDIdle = frameCDIdle;
     }
 
-    private  int plantID;
+    private int plantID;
     private int frameCountIdle = 0;
     private int frameCountAttack = 0;
+    private int frameCountSun = 0;
     private int frameCDIdle = 0;
     private int frameCDAttack = 0;
-
-    public int getSunCost() {
-        return sunCost;
-    }
 
     public int getFrameCountAttack() {
         if(frameCountAttack == frameCountAttackLimit){
@@ -47,6 +45,15 @@ public class Plant {
         }
         return frameCountAttack;
     }
+
+    public void sunCreatedBySunFlower(SunManager sunManager){
+        frameCountSun++;
+        if(frameCountSun == 600){
+            sunManager.sunCreatedBySunFlower(this);
+            frameCountSun = 0;
+        }
+    }
+
 
     public void setFrameCountAttack(int frameCountAttack) {
         this.frameCountAttack = frameCountAttack;

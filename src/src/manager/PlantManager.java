@@ -179,12 +179,14 @@ public class PlantManager {
                                 }
                             }
                             playing.getSunManager().sunConsumed(sunCostHold);
-                            System.out.println("Sun remaining: "+playing.getSunManager().getSunHold());
                         } else {
                             System.out.println("Not enough sun");
                         }
                     }
                 }
+            }
+            if(playing.isStartWave()){
+                selected = false;
             }
         }
     }
@@ -219,6 +221,19 @@ public class PlantManager {
 
     public void setSunCostHold(int sunCostHold) {
         this.sunCostHold = sunCostHold;
+    }
+    public void updateSunflower(){
+        if(playing.isStartWaveForCD()){
+            synchronized (plantList){
+                Iterator<Plant> iterator = plantList.iterator();
+                while (iterator.hasNext()){
+                    Plant plant = iterator.next();
+                    if(plant.getPlantID() == 0){
+                        plant.sunCreatedBySunFlower(playing.getSunManager());
+                    }
+                }
+            }
+        }
     }
 
     public void setPlantDangered(Tile tile){
