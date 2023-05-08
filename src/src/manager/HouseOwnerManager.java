@@ -2,7 +2,6 @@ package manager;
 
 import scenes.Playing;
 import HouseOwner.HouseOwner;
-import zombie.Zombie;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Iterator;
 import javax.imageio.ImageIO;
 
 public class HouseOwnerManager {
@@ -57,14 +55,6 @@ public class HouseOwnerManager {
         public void moveDown () {
             this.y += this.speed;
         }
-    public void move() {
-        if (y <= 0) {
-            y = houseOwner.getHeight() - 80;
-        } else if (y >= houseOwner.getHeight() - 80) {
-            y = 0;
-        }
-        y -= speed;
-    }
 
 
 //    public static void frameCount() {
@@ -101,48 +91,28 @@ public class HouseOwnerManager {
     }
 
 
-    public void mouseClicked(MouseEvent e) {
-        int mouseX = e.getX();
-        int mouseY = e.getY();
-        double ownerX = houseOwner.getX();
-        double ownerY = houseOwner.getY();
-        int distanceX = mouseX - (int) ownerX;
-        int distanceY = mouseY - (int) ownerY;
-        int steps = 20;
-        for (int i = 0; i < steps; i++) {
-            double newX = ownerX + (distanceX * (double)i / (double)steps);
-            double newY = ownerY + (distanceY * (double)i / (double)steps);
-            houseOwner.setCollided(false);
-            houseOwner.setX(newX);
-            houseOwner.setY(newY);
-            Iterator<Zombie> zombieIterator = playing.getZombieManager().getZombies().iterator();
-            while (zombieIterator.hasNext()) {
-                Zombie zombie = zombieIterator.next();
-                if (houseOwner.getBound().intersects(zombie.getBound())) {
-                    houseOwner.setCollided(true);
-                    break;
-                }
-            }
-            if (!houseOwner.isCollided()) {
-                houseOwner.render();
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            } else {
-                houseOwner.setX(ownerX);
-                houseOwner.setY(ownerY);
-                break;
-            }
+    public void move() {
+        if (y <= 0) {
+            y = houseOwner.getHeight() - 80;
+        } else if (y >= houseOwner.getHeight() - 80) {
+            y = 0;
         }
-        houseOwner.setX(mouseX);
-        houseOwner.setY(mouseY);
-        houseOwner.render();
+        y -= speed;
     }
-
-
-
+    public void mouseClicked( int x, int y) {
+        int mouseX = getX();
+        int mouseY = getY();
+        int ownerX = (int) houseOwner.getX();
+        int ownerY = (int) houseOwner.getY();
+        int distanceX = mouseX - ownerX;
+        int distanceY = mouseY - ownerY;
+        int steps = 7;
+        for (int i = 0; i < steps; i++) {
+            int newX = ownerX + (distanceX * i / steps);
+            int newY = ownerY + (distanceY * i / steps);
+            houseOwner.move();
+        }
+    }
     public int getX() {
         return x;
     }
