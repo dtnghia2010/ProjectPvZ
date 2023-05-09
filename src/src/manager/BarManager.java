@@ -91,45 +91,35 @@ public class BarManager {
     public void sunFlower(){
         playing.getPlantManager().setIDhold(0);
         plantPickedID.add(0);
-        if(!playing.isStartWaveForCD() && !isPlantInCD[0]){
-            plantCD[0] = 60;
-        } else if(playing.isStartWaveForCD() && !isPlantInCD[0]) {
+        if(playing.isStartWaveForCD() && !isPlantInCD[0]) {
             plantCD[0] = 240;
         }
     }
     public void peaShooter(){
         playing.getPlantManager().setIDhold(1);
         plantPickedID.add(1);
-        if(!playing.isStartWaveForCD() && !isPlantInCD[1]){
-            plantCD[1] = 60;
-        } else if(playing.isStartWaveForCD() && !isPlantInCD[1]) {
+        if(playing.isStartWaveForCD() && !isPlantInCD[1]) {
             plantCD[1] = 240;
         }
     }
     public void wall_nut(){
         playing.getPlantManager().setIDhold(2);
         plantPickedID.add(2);
-        if(!playing.isStartWaveForCD() && !isPlantInCD[2]){
-            plantCD[2] = 60;
-        } else if(playing.isStartWaveForCD() && !isPlantInCD[2]) {
+        if(playing.isStartWaveForCD() && !isPlantInCD[2]) {
             plantCD[2] = 600;
         }
     }
     public void shadowPea(){
         playing.getPlantManager().setIDhold(3);
         plantPickedID.add(3);
-        if(!playing.isStartWaveForCD() && !isPlantInCD[3]){
-            plantCD[3] = 60;
-        } else if (playing.isStartWaveForCD() && !isPlantInCD[3]){
+        if (playing.isStartWaveForCD() && !isPlantInCD[3]){
             plantCD[3] = 240;
         }
     }
     public void cherryBomb(){
         playing.getPlantManager().setIDhold(4);
         plantPickedID.add(4);
-        if(!playing.isStartWaveForCD() && !isPlantInCD[4]){
-            plantCD[4] = 60;
-        } else if(playing.isStartWaveForCD() && !isPlantInCD[4]) {
+        if(playing.isStartWaveForCD() && !isPlantInCD[4]) {
             plantCD[4] = 900;
         }
     }
@@ -299,9 +289,7 @@ public class BarManager {
         isCDReducing[4] = false;
     }
     public void resetCD(int index){
-        if(!playing.isStartWaveForCD()){
-            plantCD[index] = 60;
-        } else {
+        if(playing.isStartWaveForCD()) {
             switch (index){
                 case 0:
                     plantCD[index] = 240;
