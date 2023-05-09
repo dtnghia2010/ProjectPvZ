@@ -34,7 +34,6 @@ public class Playing implements SceneMethods {
 
     private void initNotifs() {
         notifManager = new NotifManager(this);
-        notifManager.setNotif(new PlayingNotif(0));
     }
 
     private void initEvents() {
@@ -167,6 +166,9 @@ public class Playing implements SceneMethods {
             }
 
         }
+//        if(waveManager.isTimeForNewWave()) {
+//            startWave = true;
+//        }
         waveManager.updates();
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();

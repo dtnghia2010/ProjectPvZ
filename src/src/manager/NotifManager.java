@@ -2,27 +2,35 @@ package manager;
 
 import Timer.timeLogic;
 import notification.NotifPattern;
+import notification.PlayingNotif;
 import scenes.Playing;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class NotifManager {
-    private NotifPattern notif;
+    private NotifPattern[] notifs;
     private boolean executed = false;
     private Playing playing;
     private timeLogic clearStageTime;
 
     public NotifManager(Playing playing) {
+        notifs = new NotifPattern[1];
         this.playing = playing;
+        notifs[0] = new PlayingNotif(0);
+//        setNotif(new PlayingNotif(0));
+//        setNotif(new PlayingNotif(1));
+
     }
 
-    public void setNotif(NotifPattern notif) {
+/*    public void setNotif(NotifPattern notif) {
         this.notif = notif;
         clearStageTime = new timeLogic(this.notif.timeNotif());
-    }
+    }*/
 
     public void updates() {
         if (clearStageTime.getTickLimit() >= clearStageTime.getTick()) {
+            //clearstagetime is null?? why?
             executed = false;
             clearStageTime.decreaseTick();
             if (clearStageTime.getTick() <= 0) {
@@ -34,18 +42,18 @@ public class NotifManager {
     //draw
     public void drawNotif(Graphics g) {
         if (!playing.isStartWave()) {
-
             if (!playing.getWaveManager().isThereMoreZombieInWave() && playing.getZombieManager().allZombieDead() && playing.isZombieApproaching()) {
                 updates();
                 if (!executed)
                     stageClear(g); //stage clear notif
             }
         }
+        /// TODO: draw count down wave
         stageCurrent(g); //wave current notif
     }
 
     public void stageClear(Graphics g) {
-        g.drawImage(notif.getImage(), 1024 / 2 - 200, 625 / 2 - 200, 400, 400, null);
+        g.drawImage(notifs[0].getImage(), 1024 / 2 - 200, 625 / 2 - 200, 400, 400, null);
     }
 
     public void stageCurrent(Graphics g) {

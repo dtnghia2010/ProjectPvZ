@@ -10,10 +10,13 @@ public class PlayingNotif implements NotifPattern {
     public PlayingNotif(int type) {
         switch (type) {
             case 0:
+                //clear stage notif
                 importImg(0);
                 time = 4;
                 break;
             case 1:
+                //count down wave notif
+                time = 4; //won't need time for NotifManager --> already have one in waveManager
                 break;
             case 2:
                 break;
