@@ -15,7 +15,7 @@ public class Playing implements SceneMethods {
     private PlantManager plantManager;
     private ButtonManager buttonManager;
     private ProjectileManager projectileManager;
-    private SunManager sunManager;
+    private manager.sunManager sunManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
     private boolean startWave = false;
@@ -41,7 +41,7 @@ public class Playing implements SceneMethods {
         return startWaveForCD;
     }
 
-    public SunManager getSunManager() {
+    public manager.sunManager getSunManager() {
         return sunManager;
     }
 
@@ -51,7 +51,7 @@ public class Playing implements SceneMethods {
         buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
         projectileManager = new ProjectileManager();
-        sunManager = new SunManager();
+        sunManager = new sunManager();
     }
 
     public TileManager getTileManager() {
@@ -61,6 +61,7 @@ public class Playing implements SceneMethods {
     public void update(){
         plantManager.alertPlant(tileManager,zombieManager);
         plantManager.calmPlant(tileManager,zombieManager);
+        plantManager.update();
         plantManager.updateSunflower();
         plantManager.timeExplode();
 //        projectileManager.projectileCreated(plantManager);
@@ -80,6 +81,7 @@ public class Playing implements SceneMethods {
         barManager.drawPlantNotEnoughSun(g);
         barManager.drawPlantSelectedByMouse(g);
         barManager.drawPlantSelectedByKeyBoard(g);
+        barManager.drawPlantNotAvailableFromStart(g);
         tileManager.drawTileSelectedByKeyBoard(g);
         tileManager.drawTileSelectedByMouse(g);
         plantManager.drawPlant(g);
@@ -116,7 +118,10 @@ public class Playing implements SceneMethods {
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             startWave = true;
             startWaveForCD = true;
+            barManager.setPlantLocked(false);
             waveManager.readyNewWave();
+            plantManager.setSelected(false);
+            plantManager.setTimeToPlant(true);
         }
         for (MyButtons b : barManager.getPickPlant()) {
             if (b.getBounds().contains(x, y)) {
@@ -127,17 +132,21 @@ public class Playing implements SceneMethods {
         for (MyButtons b2 : barManager.getPickPlant()) {
             if (b2.getBounds().contains(x, y)) {
                 plantManager.setSelected(true);
-                if (b2.getText().contains("Sunflower")) {
-                    barManager.sunFlower();
-                } else if (b2.getText().contains("Peashooter")) {
-                    barManager.peaShooter();
-                } else if (b2.getText().contains("Wall-nut")) {
-                    barManager.wall_nut();
-                } else if (b2.getText().contains("Snow Pea")) {
-                    barManager.shadowPea();
-                } else if (b2.getText().contains("Cherry Bomb")) {
-                    barManager.cherryBomb();
+                if(!barManager.isPlantLocked()){
+                    if (b2.getText().contains("Sunflower")) {
+                        barManager.sunFlower();
+                        plantManager.plantForbiddenFromStart();
+                    } else if (b2.getText().contains("Peashooter")) {
+                        barManager.peaShooter();
+                    } else if (b2.getText().contains("Wall-nut")) {
+                        barManager.wall_nut();
+                    } else if (b2.getText().contains("Snow Pea")) {
+                        barManager.shadowPea();
+                    } else if (b2.getText().contains("Cherry Bomb")) {
+                        barManager.cherryBomb();
+                    }
                 }
+                barManager.setPlantLocked(true);
             }
         }
         sunManager.clickSun(x,y);
@@ -221,7 +230,7 @@ public class Playing implements SceneMethods {
         return zombieManager;
     }
     public void createHorde() {
-        zombieManager.createHorde(50);
+        zombieManager.createHorde(30);
     }
 }
 

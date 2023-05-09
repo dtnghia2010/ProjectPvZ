@@ -20,6 +20,16 @@ public class BarManager {
     private int plantPickedByMouse = 0;
     private boolean[] isPlantInCD = new boolean[5];
     private boolean[] isCDReducing = new boolean[5];
+    private boolean isPlantLocked = false;
+
+    public boolean isPlantLocked() {
+        return isPlantLocked;
+    }
+
+    public void setPlantLocked(boolean plantLocked) {
+        isPlantLocked = plantLocked;
+    }
+
     private int[] plantCD = new int[5];
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Playing playing;
@@ -80,10 +90,6 @@ public class BarManager {
     }
     public void sunFlower(){
         playing.getPlantManager().setIDhold(0);
-        playing.getPlantManager().setHPhold(100);
-        playing.getPlantManager().setATKhold(0);
-        playing.getPlantManager().setFrameCountLimitHold(25);
-        playing.getPlantManager().setSunCostHold(50);
         plantPickedID.add(0);
         if(!playing.isStartWaveForCD() && !isPlantInCD[0]){
             plantCD[0] = 60;
@@ -93,10 +99,6 @@ public class BarManager {
     }
     public void peaShooter(){
         playing.getPlantManager().setIDhold(1);
-        playing.getPlantManager().setHPhold(100);
-        playing.getPlantManager().setATKhold(20);
-        playing.getPlantManager().setFrameCountLimitHold(58);
-        playing.getPlantManager().setSunCostHold(100);
         plantPickedID.add(1);
         if(!playing.isStartWaveForCD() && !isPlantInCD[1]){
             plantCD[1] = 60;
@@ -106,10 +108,6 @@ public class BarManager {
     }
     public void wall_nut(){
         playing.getPlantManager().setIDhold(2);
-        playing.getPlantManager().setHPhold(1000);
-        playing.getPlantManager().setATKhold(0);
-        playing.getPlantManager().setFrameCountLimitHold(81);
-        playing.getPlantManager().setSunCostHold(50);
         plantPickedID.add(2);
         if(!playing.isStartWaveForCD() && !isPlantInCD[2]){
             plantCD[2] = 60;
@@ -119,10 +117,6 @@ public class BarManager {
     }
     public void shadowPea(){
         playing.getPlantManager().setIDhold(3);
-        playing.getPlantManager().setHPhold(100);
-        playing.getPlantManager().setATKhold(30);
-        playing.getPlantManager().setFrameCountLimitHold(22);
-        playing.getPlantManager().setSunCostHold(250);
         plantPickedID.add(3);
         if(!playing.isStartWaveForCD() && !isPlantInCD[3]){
             plantCD[3] = 60;
@@ -132,10 +126,6 @@ public class BarManager {
     }
     public void cherryBomb(){
         playing.getPlantManager().setIDhold(4);
-        playing.getPlantManager().setHPhold(10000);
-        playing.getPlantManager().setATKhold(1000);
-        playing.getPlantManager().setFrameCountLimitHold(30);
-        playing.getPlantManager().setSunCostHold(150);
         plantPickedID.add(4);
         if(!playing.isStartWaveForCD() && !isPlantInCD[4]){
             plantCD[4] = 60;
@@ -146,7 +136,11 @@ public class BarManager {
     public void pickPlantByKeyBoard(){
         switch (plantPickedByKeyBoard){
             case 0:
-                sunFlower();
+                if(playing.isStartWaveForCD()){
+                    sunFlower();
+                } else {
+                    Audio.plantNotAvailable();
+                }
                 break;
             case 1:
                 peaShooter();
@@ -191,20 +185,19 @@ public class BarManager {
         g2d.drawImage(pickedPlant,(int)pickPlant[plantPickedByKeyBoard].getBounds().getX(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getY(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getWidth(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getHeight(),null);
     }
     public void mouseTrackPlantBar(int x, int y){
-        for(int i = 0;i<pickPlant.length;i++){
-            Rectangle r = pickPlant[i].getBounds();
-            if(r.contains(x,y)){
-                if(playing.getTileManager().isInTile()){
-                    playing.getTileManager().setInTile(false);
-                    playing.getPlantManager().setSelected(false);
+        if(!playing.getPlantManager().isSelected()){
+            for(int i = 0;i<pickPlant.length;i++){
+                Rectangle r = pickPlant[i].getBounds();
+                if(r.contains(x,y)){
+                    if(playing.getTileManager().isInTile()){
+                        playing.getTileManager().setInTile(false);
+                        playing.getPlantManager().setSelected(false);
+                    }
+                    plantPickedByMouse = i;
+                    plantPickedByKeyBoard = plantPickedByMouse;
                 }
-                plantPickedByMouse = i;
-                plantPickedByKeyBoard = plantPickedByMouse;
             }
         }
-//        if(!playing.getPlantManager().isSelected()){
-//
-//        }
     }
     public void drawPlantSelectedByMouse(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
@@ -222,15 +215,19 @@ public class BarManager {
     }
 
     public void returnToSelectPlantByKeyBoard(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_SHIFT){
-            playing.getPlantManager().setSelected(false);
-            playing.getPlantManager().setTimeToPlant(true);
+        if(!playing.isStartWaveForCD() && playing.getPlantManager().isSelected()){
+            if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+                playing.getPlantManager().setSelected(false);
+                playing.getPlantManager().setTimeToPlant(true);
+                isPlantLocked = false;
+            }
         }
     }
     public void returnToSelectPlantByMouse(){
-        if(playing.isStartWaveForCD()){
+        if(!playing.isStartWaveForCD() && playing.getPlantManager().isSelected()){
             playing.getPlantManager().setSelected(false);
             playing.getPlantManager().setTimeToPlant(true);
+            isPlantLocked = false;
         }
     }
     public void startGame(KeyEvent e){
@@ -238,6 +235,9 @@ public class BarManager {
             playing.setStartWave(true);
             playing.setStartWaveForCD(true);
             playing.getWaveManager().readyNewWave();
+            playing.getPlantManager().setSelected(false);
+            playing.getPlantManager().setTimeToPlant(true);
+            isPlantLocked = false;
         }
     }
     {
@@ -364,6 +364,11 @@ public class BarManager {
             g.drawImage(plantInCD[4],350+360,0, 90, 90, null);
         } else if(playing.getSunManager().getSunHold() < 250){
             g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
+        }
+    }
+    public void drawPlantNotAvailableFromStart(Graphics g){
+        if(!playing.isStartWaveForCD()){
+            g.drawImage(plantInCD[0],350,0, 90, 90, null);
         }
     }
     public MyButtons[] getPickPlant() {

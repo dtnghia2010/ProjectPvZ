@@ -92,18 +92,18 @@ public class ZombieManager {
                                 g.drawImage(normalZombie_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30, null);
 //                            g.setColor(Color.RED);
 //                            g.drawRect((int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30);
-                                g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
+//                                g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
                             } else if(z.isCollided()) {
                                 g.drawImage(normalZombie_Eat[z.getFrameCountEat()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30, null);
                             }
                         } else if (z.getType() == 1) {
                             g.drawImage(coneHead_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+10, null);
-                            g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
+//                            g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
                         } else {
                             g.drawImage(zImages[z.getType()], (int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight(), null);
                             g.setColor(Color.RED);
                             g.drawRect((int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight());
-                            g2d.fillRect((int) z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
+//                            g2d.fillRect((int) z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
                         }
                     }
                 }

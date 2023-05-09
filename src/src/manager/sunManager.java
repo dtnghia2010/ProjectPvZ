@@ -10,12 +10,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class SunManager {
+public class sunManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Image sunImage = t.getImage(getClass().getResource("/Sun/sun.png"));;
     public List<Sun> listOfSun = new ArrayList<>();
     private int realTimeCounter = 0;
-    private int sunHold = 1500;
+    private int sunHold = 2000;
     private Random random = new Random();
     public void sunCreation(){
         int randx = random.nextInt(900)+400;
@@ -39,8 +39,20 @@ public class SunManager {
             while (iterator.hasNext()){
                 Sun sun = iterator.next();
                 Rectangle rSun = sun.getBounds();
-                if(rSun.contains(x,y)){
+                if(rSun.contains(x,y) && !sun.isSunCLicked()){
+                    sun.setSunCLicked(true);
+                    sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
                     sunHold += 50;
+                }
+            }
+        }
+    }
+    public void removeSun(){
+        synchronized (listOfSun){
+            Iterator<Sun> iterator = listOfSun.iterator();
+            while (iterator.hasNext()){
+                Sun sun = iterator.next();
+                if(sun.getY() == 0 && sun.isSunCLicked()){
                     iterator.remove();
                 }
             }
@@ -56,7 +68,18 @@ public class SunManager {
         g2s.drawImage(sunImage,255,-10,90,90,null);
         g2n.setFont(new Font("Arial",Font.BOLD,24));
         g2n.setColor(Color.BLACK);
-        g2n.drawString(String.format("%d",sunHold),270,95);
+        g2n.drawString(String.format("%d",sunHold),getAlignment(),95);
+    }
+    public int getAlignment(){
+        if(sunHold == 0){
+            return 295;
+        } else if(sunHold < 100){
+            return 285;
+        } else if(sunHold < 1000){
+            return 280;
+        } else {
+            return 270;
+        }
     }
     public void drawSun(Graphics g){
         drawSunHolder(g);
@@ -85,8 +108,10 @@ public class SunManager {
                 while (iterator.hasNext()){
                     Sun sun = iterator.next();
                     sun.move();
+                    sun.moveToStorage();
                 }
             }
+            removeSun();
         }
     }
 }

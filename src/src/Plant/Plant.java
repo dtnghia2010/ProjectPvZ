@@ -1,7 +1,7 @@
 package Plant;
 
 import component.Tile;
-import manager.SunManager;
+import manager.*;
 import manager.TileManager;
 
 import java.awt.*;
@@ -14,9 +14,6 @@ public class Plant {
     private int frameCountIdleLimit;
     private int frameCountAttackLimit;
     public int getFrameCountIdle() {
-        if(frameCountIdle == frameCountIdleLimit){
-            frameCountIdle = 0;
-        }
         return frameCountIdle;
     }
 
@@ -33,48 +30,44 @@ public class Plant {
     }
 
     private int plantID;
-    private int frameCountIdle = 0;
-    private int frameCountAttack = 0;
+    private int frameCountIdle = 1;
+    private int frameCountAttack = 1;
     private int frameCountSun = 0;
     private int frameCDIdle = 0;
     private int frameCDAttack = 0;
 
     public int getFrameCountAttack() {
-        if(frameCountAttack == frameCountAttackLimit){
-            frameCountAttack = 0;
-        }
         return frameCountAttack;
     }
-
-    public void sunCreatedBySunFlower(SunManager sunManager){
+    public void sunCreatedBySunFlower(sunManager sunManager){
         frameCountSun++;
         if(frameCountSun == 600){
             sunManager.sunCreatedBySunFlower(this);
             frameCountSun = 0;
         }
     }
-
+    public void updateFrameCountIdle(){
+        frameCDIdle++;
+        if(frameCDIdle%3 == 0){
+            frameCountIdle++;
+            if(frameCountIdle == frameCountIdleLimit){
+                frameCountIdle = 0;
+            }
+        }
+    }
+    public void updateFrameCountAttack(){
+        frameCDAttack++;
+        if(frameCDAttack%4 == 0){
+            frameCountAttack++;
+            if (frameCountAttack == frameCountAttackLimit) {
+                frameCountAttack = 0;
+            }
+        }
+    }
 
     public void setFrameCountAttack(int frameCountAttack) {
         this.frameCountAttack = frameCountAttack;
     }
-
-    public int getFrameCDAttack() {
-        return frameCDAttack;
-    }
-
-    public void setFrameCDAttack(int frameCDAttack) {
-        this.frameCDAttack = frameCDAttack;
-    }
-
-    public int getExplodeCD() {
-        return explodeCD;
-    }
-
-    public void setExplodeCD(int explodeCD) {
-        this.explodeCD = explodeCD;
-    }
-
     private int explodeCD;
     private boolean isDangered = false;
 

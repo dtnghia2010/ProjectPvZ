@@ -10,7 +10,7 @@ public class Audio {
     private static Clip[] clips = new Clip[11];
     static {
         try {
-            for(int i = 0;i<9;i++){
+            for(int i = 0;i<10;i++){
                 clips[i] = AudioSystem.getClip();
             }
             InputStream InputStream1 = Audio.class.getResourceAsStream("/Audio/Roof.wav");
@@ -40,6 +40,9 @@ public class Audio {
             InputStream InputStream9 = Audio.class.getResourceAsStream("/Audio/Explode.wav");
             AudioInputStream audioInputStream9 = AudioSystem.getAudioInputStream(InputStream9);
             clips[8].open(audioInputStream9);
+            InputStream InputStream10 = Audio.class.getResourceAsStream("/Audio/plantNotAvailable.wav");
+            AudioInputStream audioInputStream10 = AudioSystem.getAudioInputStream(InputStream10);
+            clips[9].open(audioInputStream10);
         } catch(Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open audio!"); //show error dialog
@@ -89,5 +92,9 @@ public class Audio {
         clips[7].stop();
         clips[8].setFramePosition(0);
         clips[8].start();
+    }
+    public static void plantNotAvailable(){
+        clips[9].setFramePosition(0);
+        clips[9].start();
     }
 }
