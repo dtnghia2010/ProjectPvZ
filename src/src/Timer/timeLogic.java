@@ -13,6 +13,7 @@ public class timeLogic {
     public void updates() {
         if(tick < tickLimit) {
             tick++;
+//            System.out.println(tick);
         }
     }
     public boolean isTime() {

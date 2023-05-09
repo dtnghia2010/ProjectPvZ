@@ -7,16 +7,16 @@ public class PlayingNotif implements NotifPattern {
     private int time;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
-    public PlayingNotif(int type) {
+    public PlayingNotif(int type, int time) {
         switch (type) {
             case 0:
                 //clear stage notif
                 importImg(0);
-                time = 4;
+                this.time = time;
                 break;
             case 1:
                 //count down wave notif
-                time = 4; //won't need time for NotifManager --> already have one in waveManager
+                this.time = time; //won't need time for NotifManager --> already have one in waveManager
                 break;
             case 2:
                 break;

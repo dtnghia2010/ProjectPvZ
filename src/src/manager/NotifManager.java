@@ -10,27 +10,33 @@ import java.util.ArrayList;
 
 public class NotifManager {
     private NotifPattern[] notifs;
-    private boolean executed = false;
+    private boolean executed = false, endCDWave = false;
     private Playing playing;
-    private timeLogic clearStageTime;
+    private timeLogic clearStageTime, waveCDTime;
 
     public NotifManager(Playing playing) {
-        notifs = new NotifPattern[1];
+        notifs = new NotifPattern[2];
         this.playing = playing;
-        notifs[0] = new PlayingNotif(0);
+        setUpNotif();
 //        setNotif(new PlayingNotif(0));
 //        setNotif(new PlayingNotif(1));
 
     }
 
+    public void setUpNotif() {
+        notifs[0] = new PlayingNotif(0, 4);
+        clearStageTime = new timeLogic(this.notifs[0].timeNotif());
+        notifs[1] = new PlayingNotif(1, playing.getWaveManager().getCoolDownWave());
+        waveCDTime = new timeLogic(this.notifs[1].timeNotif());
+    }
 /*    public void setNotif(NotifPattern notif) {
         this.notif = notif;
         clearStageTime = new timeLogic(this.notif.timeNotif());
     }*/
 
     public void updates() {
+        waveCDTime.updates();
         if (clearStageTime.getTickLimit() >= clearStageTime.getTick()) {
-            //clearstagetime is null?? why?
             executed = false;
             clearStageTime.decreaseTick();
             if (clearStageTime.getTick() <= 0) {
@@ -44,6 +50,9 @@ public class NotifManager {
         if (!playing.isStartWave()) {
             if (!playing.getWaveManager().isThereMoreZombieInWave() && playing.getZombieManager().allZombieDead() && playing.isZombieApproaching()) {
                 updates();
+                if(waveCDTime.isTime()) {
+                    endCDWave = true;
+                }
                 if (!executed)
                     stageClear(g); //stage clear notif
             }
@@ -72,5 +81,12 @@ public class NotifManager {
     public void reset() {
         //stage clear notif
         clearStageTime.setTick(clearStageTime.getTickLimit());
+    }
+    public void resetEndCDWave() {
+        endCDWave = false;
+    }
+
+    public boolean isEndCDWave() {
+        return endCDWave;
     }
 }

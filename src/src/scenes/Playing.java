@@ -98,12 +98,13 @@ public class Playing implements SceneMethods {
             setGameScenes(LOSE);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             if (!startWave && zombieManager.allZombieDead()) {
-                startWave = true;
+                startGame();
+/*                startWave = true;
                 callHorde = false;
                 startWaveForCD = true;
                 System.out.println("click on start");
                 waveManager.readyNewWave();
-                notifManager.reset();
+                notifManager.reset();*/
             }
         }
         for (MyButtons b : barManager.getPickPlant()) {
@@ -146,6 +147,10 @@ public class Playing implements SceneMethods {
     }
 
     public void updates() {
+        if(getNotifManager().isEndCDWave()) {
+            startGame();
+            getNotifManager().resetEndCDWave();
+        }
         if (startWave) {
             if (isTimeForNewZombie()) {
                 spawnZombie();
@@ -187,12 +192,25 @@ public class Playing implements SceneMethods {
         return false;
     }
 
+    private void startGame() {
+        startWave = true;
+        callHorde = false;
+        startWaveForCD = true;
+        System.out.println("click on start");
+        waveManager.readyNewWave();
+        notifManager.reset();
+    }
+
     public WaveManager getWaveManager() {
         return waveManager;
     }
 
     public ZombieManager getZombieManager() {
         return zombieManager;
+    }
+
+    public NotifManager getNotifManager() {
+        return notifManager;
     }
 
     public boolean isStartWave() {
