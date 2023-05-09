@@ -3,6 +3,7 @@ package manager;
 import Audio.Audio;
 import Plant.Plant;
 import Plant.Projectile;
+import scenes.Playing;
 import zombie.Zombie;
 
 import java.awt.*;
@@ -13,6 +14,10 @@ import java.util.List;
 public class ProjectileManager {
     private List<Projectile> listOfProjectile = new ArrayList<>();
     private Toolkit t = Toolkit.getDefaultToolkit();
+    private Playing playing;
+    public ProjectileManager(Playing playing){
+        this.playing = playing;
+    }
 
     public List<Projectile> getListOfProjectile() {
         return listOfProjectile;
@@ -123,7 +128,9 @@ public class ProjectileManager {
     }
     public void projectileDealDamage(int distance,Rectangle r, Projectile projectile, Zombie zombie, Iterator iterator, Iterator iterator2){
         if(r.contains(projectile.getX()+distance,projectile.getY()) && zombie.isAlived()){
-            Audio.splat();
+            if(!playing.getPlantManager().isPlantTest()){
+                Audio.splat();
+            }
             zombie.setHp(zombie.getHp()-projectile.getATK());
             if(projectile.getID() == 2 && !zombie.isSlowed()){
                 zombie.setSpd(zombie.getSpd()/2);

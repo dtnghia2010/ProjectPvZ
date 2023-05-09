@@ -133,6 +133,20 @@ public class BarManager {
             plantCD[4] = 900;
         }
     }
+    public void setCDatStartOfGame(){
+        plantCD[1] = 95;
+        plantCD[2] = 95;
+        plantCD[3] = 95;
+        plantCD[4] = 95;
+        plantPickedID.add(1);
+        plantPickedID.add(2);
+        plantPickedID.add(3);
+        plantPickedID.add(4);
+        isPlantInCD[1] = true;
+        isPlantInCD[2] = true;
+        isPlantInCD[3] = true;
+        isPlantInCD[4] = true;
+    }
     public void pickPlantByKeyBoard(){
         switch (plantPickedByKeyBoard){
             case 0:
@@ -215,20 +229,16 @@ public class BarManager {
     }
 
     public void returnToSelectPlantByKeyBoard(KeyEvent e){
-        if(!playing.isStartWaveForCD() && playing.getPlantManager().isSelected()){
-            if(e.getKeyCode() == KeyEvent.VK_SHIFT){
-                playing.getPlantManager().setSelected(false);
-                playing.getPlantManager().setTimeToPlant(true);
-                isPlantLocked = false;
-            }
-        }
-    }
-    public void returnToSelectPlantByMouse(){
-        if(!playing.isStartWaveForCD() && playing.getPlantManager().isSelected()){
+        if(e.getKeyCode() == KeyEvent.VK_SHIFT){
             playing.getPlantManager().setSelected(false);
             playing.getPlantManager().setTimeToPlant(true);
             isPlantLocked = false;
         }
+    }
+    public void returnToSelectPlantByMouse(){
+        playing.getPlantManager().setSelected(false);
+        playing.getPlantManager().setTimeToPlant(true);
+        isPlantLocked = false;
     }
     public void startGame(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
@@ -248,47 +258,45 @@ public class BarManager {
         isCDReducing[4] = false;
     }
     public void update(){
-        if(playing.getPlantManager().getPlantList() != null){
-            for(int i = 0; i<plantPickedID.size();i++){
-                switch (plantPickedID.get(i)){
-                    case 0:
-                        if(!isCDReducing[0]){
-                            CDCount(0);
-                            isCDReducing[0] = true;
-                        }
-                        break;
-                    case 1:
-                        if(!isCDReducing[1]){
-                            CDCount(1);
-                            isCDReducing[1] = true;
-                        }
-                        break;
-                    case 2:
-                        if(!isCDReducing[2]){
-                            CDCount(2);
-                            isCDReducing[2] = true;
-                        }
-                        break;
-                    case 3:
-                        if(!isCDReducing[3]){
-                            CDCount(3);
-                            isCDReducing[3] = true;
-                        }
-                        break;
-                    case 4:
-                        if(!isCDReducing[4]){
-                            CDCount(4);
-                            isCDReducing[4] = true;
-                        }
-                        break;
-                }
+        for(int i = 0; i<plantPickedID.size();i++){
+            switch (plantPickedID.get(i)){
+                case 0:
+                    if(!isCDReducing[0]){
+                        CDCount(0);
+                        isCDReducing[0] = true;
+                    }
+                    break;
+                case 1:
+                    if(!isCDReducing[1]){
+                        CDCount(1);
+                        isCDReducing[1] = true;
+                    }
+                    break;
+                case 2:
+                    if(!isCDReducing[2]){
+                        CDCount(2);
+                        isCDReducing[2] = true;
+                    }
+                    break;
+                case 3:
+                    if(!isCDReducing[3]){
+                        CDCount(3);
+                        isCDReducing[3] = true;
+                    }
+                    break;
+                case 4:
+                    if(!isCDReducing[4]){
+                        CDCount(4);
+                        isCDReducing[4] = true;
+                    }
+                    break;
             }
-            isCDReducing[0] = false;
-            isCDReducing[1] = false;
-            isCDReducing[2] = false;
-            isCDReducing[3] = false;
-            isCDReducing[4] = false;
         }
+        isCDReducing[0] = false;
+        isCDReducing[1] = false;
+        isCDReducing[2] = false;
+        isCDReducing[3] = false;
+        isCDReducing[4] = false;
     }
     public void resetCD(int index){
         if(!playing.isStartWaveForCD()){
@@ -362,7 +370,7 @@ public class BarManager {
         } else if(playing.getSunManager().getSunHold() < 150){
             g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
             g.drawImage(plantInCD[4],350+360,0, 90, 90, null);
-        } else if(playing.getSunManager().getSunHold() < 250){
+        } else if(playing.getSunManager().getSunHold() < 200){
             g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
         }
     }

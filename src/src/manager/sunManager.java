@@ -19,11 +19,15 @@ public class sunManager {
     private int sunHold = 2000;
     private Random random = new Random();
     public void sunCreation(){
-        int randx = random.nextInt(900)+400;
-        listOfSun.add(new Sun(randx,0,90,90,400));
+        synchronized (listOfSun){
+            int randx = random.nextInt(700)+400;
+            listOfSun.add(new Sun(randx,0,90,90,400));
+        }
     }
     public void sunCreatedBySunFlower(Plant plant){
-        listOfSun.add(new Sun(plant.getX(),plant.getY()-30,90,90,plant.getY()+30));
+        synchronized (listOfSun){
+            listOfSun.add(new Sun(plant.getX(),plant.getY()-30,90,90,plant.getY()+30));
+        }
     }
     public int getSunHold() {
         return sunHold;
@@ -55,7 +59,7 @@ public class sunManager {
             while (iterator.hasNext()){
                 Sun sun = iterator.next();
                 if(sun.getY() == 0 && sun.isSunCLicked()){
-                    iterator.remove();
+                    sun.setThere(false);
                 }
             }
         }

@@ -50,7 +50,7 @@ public class Playing implements SceneMethods {
         tileManager = new TileManager(this);
         buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
-        projectileManager = new ProjectileManager();
+        projectileManager = new ProjectileManager(this);
         sunManager = new sunManager();
     }
 
@@ -134,8 +134,11 @@ public class Playing implements SceneMethods {
                 plantManager.setSelected(true);
                 if(!barManager.isPlantLocked()){
                     if (b2.getText().contains("Sunflower")) {
-                        barManager.sunFlower();
-                        plantManager.plantForbiddenFromStart();
+                        if(!isStartWaveForCD()){
+                            plantManager.plantForbiddenFromStart();
+                        } else {
+                            barManager.sunFlower();
+                        }
                     } else if (b2.getText().contains("Peashooter")) {
                         barManager.peaShooter();
                     } else if (b2.getText().contains("Wall-nut")) {

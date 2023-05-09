@@ -30,8 +30,8 @@ public class Plant {
     }
 
     private int plantID;
-    private int frameCountIdle = 1;
-    private int frameCountAttack = 1;
+    private int frameCountIdle = 0;
+    private int frameCountAttack = 0;
     private int frameCountSun = 0;
     private int frameCDIdle = 0;
     private int frameCDAttack = 0;
@@ -46,6 +46,11 @@ public class Plant {
             frameCountSun = 0;
         }
     }
+
+    public int getFrameCountIdleLimit() {
+        return frameCountIdleLimit;
+    }
+
     public void updateFrameCountIdle(){
         frameCDIdle++;
         if(frameCDIdle%3 == 0){
@@ -54,6 +59,24 @@ public class Plant {
                 frameCountIdle = 0;
             }
         }
+    }
+
+    public int getFrameCountAttackLimit() {
+        return frameCountAttackLimit;
+    }
+
+    public void updateFrameCountIdleForTesting(){
+        frameCDIdle++;
+        if(frameCDIdle%1 == 0){
+            frameCountIdle++;
+            if(frameCountIdle == frameCountIdleLimit){
+                frameCountIdle = 0;
+            }
+        }
+    }
+    public void loadAnimationForTheFirstTime(){
+        updateFrameCountAttackForTesting();
+        updateFrameCountIdleForTesting();
     }
     public void updateFrameCountAttack(){
         frameCDAttack++;
@@ -64,7 +87,11 @@ public class Plant {
             }
         }
     }
-
+    public void updateFrameCountAttackForTesting(){
+        if(frameCountAttack < frameCountAttackLimit-1){
+            frameCountAttack++;
+        }
+    }
     public void setFrameCountAttack(int frameCountAttack) {
         this.frameCountAttack = frameCountAttack;
     }
