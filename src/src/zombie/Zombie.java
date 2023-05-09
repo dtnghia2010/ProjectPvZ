@@ -117,6 +117,7 @@ public class Zombie {
 
     }
     public void attackPlant(Plant plant){
+        System.out.println("zombie attack");
         plant.setPlantHP(plant.getPlantHP() - dmg);
     }
     public void defeatPlant(Plant plant){

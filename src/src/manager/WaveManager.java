@@ -10,8 +10,8 @@ public class WaveManager extends timeLogic {
     private boolean endWaves = false, hordeActive = false;
 /*    private int zombieSpawnTickLimit = 60;
     private int zombieSpawnTick = zombieSpawnTickLimit;*/
-    private int curZom = 0, curWave = 0;
-    private int waveNum = 2, hordeNum = 10;
+    private int curZom = 0, curWave = -1;
+    private int waveNum = 4, hordeNum = 10;
     public WaveManager(Playing playing) {
         super();
         setTickLimit(1);
@@ -23,11 +23,14 @@ public class WaveManager extends timeLogic {
     private void initWaves() {
         waves[0] = new Wave(2,2,1);
         waves[1] = new Wave(4,3,2);
-/*        waves[2] = new Wave(6,4,3);
-        waves[3] = new Wave(5,5,6);*/
+        waves[2] = new Wave(6,4,3);
+        waves[3] = new Wave(5,5,6);
     }
 
     public void readyNewWave() {
+        if(curWave <= 0) {
+            curWave++;
+        }
         if(curWave < waves.length-1) {
             if(curZom > 2) {
                 curWave++;
@@ -58,7 +61,12 @@ public class WaveManager extends timeLogic {
 
     public boolean isThereMoreZombieInWave() {
 //        System.out.println("curWave:" +  curWave);
-        return waves[curWave].amountType(curZom) > 0;
+        if(curWave <= 0 || curWave >= waveNum) {
+
+        } else {
+            return waves[curWave].amountType(curZom) > 0;
+        }
+        return false;
     }
 
     @Override
@@ -80,5 +88,9 @@ public class WaveManager extends timeLogic {
         hordeActive = true;
         playing.getZombieManager().createHorde(hordeNum);
         hordeNum += 5;
+    }
+    public int getCurWave() {
+        System.out.println("curWave " + curWave);
+        return curWave;
     }
 }

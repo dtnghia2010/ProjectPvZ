@@ -33,7 +33,7 @@ public class Playing implements SceneMethods {
     }
 
     private void initNotifs() {
-        notifManager = new NotifManager();
+        notifManager = new NotifManager(this);
     }
 
     private void initEvents() {
