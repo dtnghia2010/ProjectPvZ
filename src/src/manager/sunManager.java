@@ -1,5 +1,6 @@
 package manager;
 
+import Audio.Audio;
 import Plant.Plant;
 import Sun.Sun;
 import scenes.Playing;
@@ -40,6 +41,7 @@ public class sunManager {
                 Sun sun = iterator.next();
                 Rectangle rSun = sun.getBounds();
                 if(rSun.contains(x,y) && !sun.isSunCLicked()){
+                    Audio.sunCollected();
                     sun.setSunCLicked(true);
                     sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
                     sunHold += 50;
