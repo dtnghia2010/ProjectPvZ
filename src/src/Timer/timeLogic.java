@@ -1,11 +1,12 @@
 package Timer;
 
-public abstract class timeLogic {
+public class timeLogic {
     private int tickLimit;
     private int tick;
-    public timeLogic() {
+    public timeLogic(int tickLimit) {
+        setTickLimit(tickLimit);
     }
-    public void setTickLimit(int tickLimit) {
+    private void setTickLimit(int tickLimit) {
         this.tickLimit = tickLimit*60;
         this.tick = this.tickLimit;
     }
@@ -23,10 +24,17 @@ public abstract class timeLogic {
     public int getTickLimit() {
         return tickLimit;
     }
+    public int getTick() {
+        return tick;
+    }
     public void decreaseTickLimit() {
         tickLimit--;
     }
     public void decreaseTick() {
         tick--;
+    }
+    public void increaseTick() {tick++;}
+    public void setTick(int newTick) {
+        this.tick = newTick;
     }
 }

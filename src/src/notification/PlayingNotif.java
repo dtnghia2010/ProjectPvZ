@@ -11,7 +11,7 @@ public class PlayingNotif implements NotifPattern {
         switch (type) {
             case 0:
                 importImg(0);
-                time = 5;
+                time = 4;
                 break;
             case 1:
                 break;
@@ -52,6 +52,6 @@ public class PlayingNotif implements NotifPattern {
 
     @Override
     public int timeNotif() {
-        return 5;
+        return time;
     }
 }

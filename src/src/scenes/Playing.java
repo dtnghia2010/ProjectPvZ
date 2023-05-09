@@ -4,9 +4,9 @@ import Audio.Audio;
 import manager.*;
 import component.MyButtons;
 import notification.PlayingNotif;
-import zombie.Zombie;
 
 import static scenes.GameScenes.*;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -19,7 +19,7 @@ public class Playing implements SceneMethods {
     private ZombieManager zombieManager;
     private WaveManager waveManager;
     private NotifManager notifManager;
-    private boolean startWave = false, callHorde = false;
+    private boolean startWave = false, callHorde = false, zombieApproaching = false;
     private boolean startWaveForCD = false;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
@@ -34,6 +34,7 @@ public class Playing implements SceneMethods {
 
     private void initNotifs() {
         notifManager = new NotifManager(this);
+        notifManager.setNotif(new PlayingNotif(0));
     }
 
     private void initEvents() {
@@ -43,9 +44,11 @@ public class Playing implements SceneMethods {
     private void initObjects() {
         zombieManager = new ZombieManager(this);
     }
+
     public boolean isStartWaveForCD() {
         return startWaveForCD;
     }
+
     private void initComponents() {
         barManager = new BarManager(this);
         tileManager = new TileManager(this);
@@ -58,15 +61,16 @@ public class Playing implements SceneMethods {
         return tileManager;
     }
 
-    public void update(){
-        plantManager.alertPlant(tileManager,zombieManager);
-        plantManager.calmPlant(tileManager,zombieManager);
+    public void update() {
+        plantManager.alertPlant(tileManager, zombieManager);
+        plantManager.calmPlant(tileManager, zombieManager);
 //        projectileManager.projectileCreated(plantManager);
         plantManager.plantAttack(projectileManager);
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
     }
+
     @Override
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
@@ -77,14 +81,7 @@ public class Playing implements SceneMethods {
         plantManager.drawPlant(g);
         zombieManager.draw(g);
         projectileManager.drawProjectile(g);
-        showNotifs(g);
-    }
-
-    private void showNotifs(Graphics g) {
-        if(!isStartWave()) {
-//            notifManager.setNotif(new PlayingNotif());
-            notifManager.showNotif(g);
-        }
+        notifManager.drawNotif(g);
     }
 
     public PlantManager getPlantManager() {
@@ -101,10 +98,13 @@ public class Playing implements SceneMethods {
         } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
             setGameScenes(LOSE);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
-            if(!startWave && zombieManager.allZombieDead()) {
-                startWave = true; callHorde = false;
+            if (!startWave && zombieManager.allZombieDead()) {
+                startWave = true;
+                callHorde = false;
                 startWaveForCD = true;
+                System.out.println("click on start");
                 waveManager.readyNewWave();
+                notifManager.reset();
             }
         }
         for (MyButtons b : barManager.getPickPlant()) {
@@ -132,7 +132,6 @@ public class Playing implements SceneMethods {
 
     }
 
-
     public void mousePressed(int x, int y) {
 
     }
@@ -140,29 +139,31 @@ public class Playing implements SceneMethods {
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
     }
-    public void keyBoardPress(KeyEvent e){
+
+    public void keyBoardPress(KeyEvent e) {
         barManager.keyBoardChoosePlant(e);
         barManager.keyBoardSelectPlant(e);
         barManager.tileSelectedByKeyBoard(e);
     }
 
     public void updates() {
-        if(startWave) {
+        if (startWave) {
             if (isTimeForNewZombie()) {
                 spawnZombie();
             }
-            if(waveManager.hordeDead() && callHorde == true) {
+            if (waveManager.hordeDead() && callHorde == true) {
                 startWave = false;
             }
-            if(zombieManager.allZombieDead() && !callHorde) {
+            if (zombieManager.allZombieDead() && !callHorde) {
                 zombieManager.getZombies().clear();
-                if(waveManager.isEndWaves()) {
+                if (waveManager.isEndWaves()) {
                     System.out.println("you win");
                 } else {
                     waveManager.createHorde();
                     callHorde = true;
+                    zombieApproaching = true;
                 }
-                notifManager.setNotif(new PlayingNotif(0));
+//                notifManager.setNotif(new PlayingNotif(0));
             }
 
         }
@@ -176,7 +177,7 @@ public class Playing implements SceneMethods {
     }
 
     private boolean isTimeForNewZombie() {
-        if (waveManager.isTime()) {
+        if (waveManager.isTimeForNewZombie()) {
             if (waveManager.isThereMoreZombieInWave()) {
                 return true;
             }
@@ -194,6 +195,10 @@ public class Playing implements SceneMethods {
 
     public boolean isStartWave() {
         return startWave;
+    }
+
+    public boolean isZombieApproaching() {
+        return zombieApproaching;
     }
 }
 
