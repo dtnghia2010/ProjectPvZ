@@ -14,6 +14,7 @@ public class BarManager {
     private Image[] pick_plantBar;
     private Image[] plantInCD;
     private Image framePlant;
+    private Image plantBar;
     private MyButtons pickPlant[];
     private int plantPickedID;
     private int plantPickedByKeyBoard = 0;
@@ -32,11 +33,11 @@ public class BarManager {
 
     private void initButtons() {
         pickPlant = new MyButtons[5];
-        pickPlant[0] = new MyButtons("Sunflower", 350, 0, 90, 90);
-        pickPlant[1] = new MyButtons("Peashooter", 440, 0, 90, 90);
-        pickPlant[2] = new MyButtons("Wall-nut", 530, 0, 90, 90);
-        pickPlant[3] = new MyButtons("Snow Pea", 620, 0, 90, 90);
-        pickPlant[4] = new MyButtons("Cherry Bomb", 710, 0, 90, 90);
+        pickPlant[0] = new MyButtons("Sunflower", 475, 5, 90, 90);
+        pickPlant[1] = new MyButtons("Peashooter", 565, 5, 90, 90);
+        pickPlant[2] = new MyButtons("Wall-nut", 655, 5, 90, 90);
+        pickPlant[3] = new MyButtons("Snow Pea", 745, 5, 90, 90);
+        pickPlant[4] = new MyButtons("Cherry Bomb", 835, 5, 90, 90);
     }
 
     private void importImg(){
@@ -48,6 +49,7 @@ public class BarManager {
             pick_plantBar[3] = t.getImage(getClass().getResource("/plantBar/PvZ_Snow_Pea.jpg"));
             pick_plantBar[4] = t.getImage(getClass().getResource("/plantBar/PvZ_Cherry_Bomb.jpg"));
             framePlant = t.getImage(getClass().getResource("/plantBar/plantSelected.png"));
+            plantBar = t.getImage(getClass().getResource("/plantBar/plantPanel.png"));
         }catch (Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error - importImage()");
@@ -68,28 +70,29 @@ public class BarManager {
 
     public void drawPlantbar(Graphics g){
         g.setColor(Color.black);
-        g.drawRect(350, 0,450,90);
+        g.drawRect(400, 0,535,100);
         g.setColor(Color.pink);
-        g.fillRect(350, 0, 450, 90);
+        g.fillRect(400, 0, 535, 100);
+        g.drawImage(plantBar, 400, 0, 535, 100, null);
         Graphics2D g2d = (Graphics2D) g;
         int distance = 0;
         for (Image p : pick_plantBar){
-            g.drawImage(p, 350 + distance, 0, 90, 90, null);
+            g.drawImage(p, 475 + distance, 5, 90, 90, null);
             switch (plantPickedID){
                 case 0:
-                    g2d.drawImage(framePlant,350, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,475, 5, 90, 90, null);
                     break;
                 case 1:
-                    g2d.drawImage(framePlant,350 + 90, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,475 + 90, 5, 90, 90, null);
                     break;
                 case 2:
-                    g2d.drawImage(framePlant,350 + 180, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,475 + 180, 5, 90, 90, null);
                     break;
                 case 3:
-                    g2d.drawImage(framePlant,350 + 270, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,475 + 270, 5, 90, 90, null);
                     break;
                 case 4:
-                    g2d.drawImage(framePlant,350 + 360, 0, 90, 90, null);
+                    g2d.drawImage(framePlant,475 + 360, 5, 90, 90, null);
                     break;
             }
             distance += 90;
@@ -337,11 +340,11 @@ public class BarManager {
         Graphics2D g2d = (Graphics2D) g;
         for(int i = 0;i<5;i++){
             if(isPlantInCD[i]){
-                g.drawImage(plantInCD[i], 350 + distance, 0, 90, 90, null);
-                int cd = (plantCD[i]+59)/60;
+                g.drawImage(plantInCD[i], 475 + distance, 5, 90, 90, null);
+                int cd = (plantCD[i]+40)/60;
                 g2d.setColor(Color.YELLOW);
                 g2d.setFont(new Font("Arial",Font.BOLD,30));
-                g2d.drawString(String.format("%d",cd),385 +distance,50);
+                g2d.drawString(String.format("%d",cd),510 + distance,55);
             }
             distance += 90;
         }

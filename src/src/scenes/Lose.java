@@ -19,7 +19,7 @@ public class Lose implements SceneMethods {
     }
 
     private void initButtons() {
-        bMenu = new MyButtons("Main menu", 435,530,165,80);
+        bMenu = new MyButtons("Main menu", 445,535,120,42);
     }
 
     private void importImg(){
@@ -33,7 +33,7 @@ public class Lose implements SceneMethods {
     }
 
     public void drawImg(Graphics g){
-        g.drawImage(buttonOfLose[0], 435,530,165,80, null );
+        g.drawImage(buttonOfLose[0], 445,535,120,42, null );
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class Menu implements SceneMethods {
     private World w;
-    private MyButtons bPlaying, bSetting, bQuit;
+    private MyButtons bPlaying, bQuit;
     private Image[] buttonOfMenu;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -19,17 +19,15 @@ public class Menu implements SceneMethods {
         this.w = w;
     }
     public void initButtons() {
-        bPlaying = new MyButtons("Play", 435, 350,160,90);
-        bSetting = new MyButtons("Setting", 430, 410, 160, 110);
-        bQuit = new MyButtons("Quit", 430, 491, 160, 90);
+        bPlaying = new MyButtons("Play", 437, 350,150,60);
+        bQuit = new MyButtons("Quit", 442, 440, 140, 55);
     }
 
     private void importImg(){
-        buttonOfMenu = new Image[3];
+        buttonOfMenu = new Image[2];
         try {
             buttonOfMenu[0] = t.getImage(getClass().getResource("/scene/PLAY.png"));
-            buttonOfMenu[1] = t.getImage(getClass().getResource("/scene/SETTINGS.png"));
-            buttonOfMenu[2] = t.getImage(getClass().getResource("/scene/EXIT.png"));
+            buttonOfMenu[1] = t.getImage(getClass().getResource("/scene/EXIT.png"));
         }catch (Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error - importImage()");
@@ -37,9 +35,8 @@ public class Menu implements SceneMethods {
     }
 
     public void drawImg(Graphics g){
-        g.drawImage(buttonOfMenu[0], 435, 350, 160, 90, null);
-        g.drawImage(buttonOfMenu[1], 430, 410, 160, 110, null);
-        g.drawImage(buttonOfMenu[2], 430, 491, 160, 90, null);
+        g.drawImage(buttonOfMenu[0], 437, 350, 150, 60, null);
+        g.drawImage(buttonOfMenu[1], 442, 440, 140, 55, null);
     }
 
     public void mouseClicked(int x, int y) {
@@ -49,9 +46,7 @@ public class Menu implements SceneMethods {
             setGameScenes(PLAYING);
         } else if (bQuit.getBounds().contains(x,y)) {
             setGameScenes(LOSE);
-        } else if (bSetting.getBounds().contains(x,y)) {
-//            setGameScenes(LOSE);
-            System.out.println("Setting");
+//            System.out.println("Setting");
         }
     }
 
@@ -67,7 +62,6 @@ public class Menu implements SceneMethods {
 
     public void drawButtons(Graphics g) {
         bPlaying.draw(g);
-        bSetting.draw(g);
         bQuit.draw(g);
     }
     @Override

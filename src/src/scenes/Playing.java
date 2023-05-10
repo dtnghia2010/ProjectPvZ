@@ -82,10 +82,8 @@ public class Playing implements SceneMethods {
     }
 
     public void mouseClicked(int x, int y) {
-        if (buttonManager.getbMenu().getBounds().contains(x, y)) {
-            setGameScenes(MENU);
-        } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
-            setGameScenes(LOSE);
+        if (buttonManager.getbPause().getBounds().contains(x, y)) {
+            setGameScenes(PAUSE);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             startWave = true;
             startWaveForCD = true;

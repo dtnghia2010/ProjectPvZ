@@ -2,10 +2,8 @@ package manager;
 
 import player.KeyBoardListener;
 import player.MyMouseListener;
-import scenes.GameScenes;
-import scenes.Lose;
+import scenes.*;
 import scenes.Menu;
-import scenes.Playing;
 import zombie.Zombie;
 
 
@@ -25,6 +23,7 @@ public class World extends JPanel implements Runnable {
     private Lose lose;
     private Menu menu;
     private Playing playing;
+    private Pause pause;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
     public void start() {
@@ -52,6 +51,10 @@ public class World extends JPanel implements Runnable {
         return playing;
     }
 
+    public Pause getPause() {
+        return pause;
+    }
+
     public void initInput() {
         myMouseListener = new MyMouseListener(this);
         keyBoardListener = new KeyBoardListener();
@@ -66,6 +69,7 @@ public class World extends JPanel implements Runnable {
         lose = new Lose(this);
         playing = new Playing(this);
         menu = new Menu(this);
+        pause = new Pause(this);
     }
     @Override
     protected void paintComponent(Graphics g) {
@@ -90,6 +94,9 @@ public class World extends JPanel implements Runnable {
             case LOSE:
                 lose.render(g, img.get(2));
                 break;
+            case PAUSE:
+                pause.render(g, img.get(3));
+                break;
         }
     }
     public void updates() {
@@ -103,6 +110,9 @@ public class World extends JPanel implements Runnable {
             case LOSE:
                 getLose().updates();
                 break;
+            case PAUSE:
+                getPause().updates();
+                break;
         }
     }
 
@@ -110,6 +120,7 @@ public class World extends JPanel implements Runnable {
         img.add(t.getImage(getClass().getResource("/scene/menu.jpg")));
         img.add(t.getImage(getClass().getResource("/scene/lawn.png")));
         img.add(t.getImage(getClass().getResource("/scene/lose.png")));
+        img.add(t.getImage(getClass().getResource("/scene/pause.png")));
 
     }
     @Override

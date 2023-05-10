@@ -29,6 +29,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 case LOSE:
                     w.getLose().mouseClicked(e.getX(), e.getY());
                     break;
+                case PAUSE:
+                    w.getPause().mouseClicked(e.getX(), e.getY());
+                    break;
             }
         }
     }
@@ -46,6 +49,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 case LOSE:
                     w.getLose().mousePressed(e.getX(), e.getY());
                     break;
+                case PAUSE:
+                    w.getPause().mouseClicked(e.getX(), e.getY());
+                    break;
             }
         }
     }
@@ -62,6 +68,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                     break;
                 case LOSE:
                     w.getLose().mouseReleased(e.getX(), e.getY());
+                    break;
+                case PAUSE:
+                    w.getPause().mouseClicked(e.getX(), e.getY());
                     break;
             }
         }
