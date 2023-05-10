@@ -6,9 +6,18 @@ public class Sun {
     private double x, y;
     private int boundaryDrop;
     private boolean isSunCLicked = false;
+    private boolean isCollected = false;
 
     public double getX() {
         return x;
+    }
+
+    public boolean isCollected() {
+        return isCollected;
+    }
+
+    public void setCollected(boolean collected) {
+        isCollected = collected;
     }
 
     public void setSunCLicked(boolean sunCLicked) {
@@ -58,7 +67,7 @@ public class Sun {
         }
     }
     public double calculateDistanceMoveToStorage(){
-        double width = x - 250;
+        double width = x - 260;
         double height = y;
         double ratio = width/height;
         return ratio;
@@ -79,8 +88,15 @@ public class Sun {
     public void moveToStorage(){
         if(isSunCLicked){
             if(y>0){
-                y--;
-                x = x-distanceTOMoveToStorage;
+                for(int i = 0;i<8;i++){
+                    if(distanceTOMoveToStorage> i && distanceTOMoveToStorage<i+1){
+                        for(int j = 0;j<8-i;j++){
+                            y--;
+                            x = (x-distanceTOMoveToStorage);
+                            //TODO need more make code clearer (maybe increase step instead of loop)
+                        }
+                    }
+                }
             }
         }
     }

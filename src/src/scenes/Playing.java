@@ -18,6 +18,8 @@ public class Playing implements SceneMethods {
     private manager.sunManager sunManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
+    private KeyBoardManager keyBoardManager;
+    private MouseMotionManager mouseMotionManager;
     private boolean startWave = false;
     private boolean startWaveForCD = false;
     private World w;
@@ -45,13 +47,23 @@ public class Playing implements SceneMethods {
         return sunManager;
     }
 
+    public KeyBoardManager getKeyBoardManager() {
+        return keyBoardManager;
+    }
+
+    public MouseMotionManager getMouseMotionManager() {
+        return mouseMotionManager;
+    }
+
     private void initComponents() {
         barManager = new BarManager(this);
         tileManager = new TileManager(this);
         buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
         projectileManager = new ProjectileManager(this);
-        sunManager = new sunManager();
+        sunManager = new sunManager(this);
+        keyBoardManager = new KeyBoardManager(this);
+        mouseMotionManager = new MouseMotionManager(this);
     }
 
     public TileManager getTileManager() {
@@ -79,8 +91,8 @@ public class Playing implements SceneMethods {
         barManager.drawPlantbar(g);
         barManager.drawPlantInCD(g);
         barManager.drawPlantNotEnoughSun(g);
-        barManager.drawPlantSelectedByMouse(g);
-        barManager.drawPlantSelectedByKeyBoard(g);
+        mouseMotionManager.drawPlantSelectedByMouse(g);
+        keyBoardManager.drawPlantSelectedByKeyBoard(g);
         barManager.drawPlantNotAvailableFromStart(g);
         tileManager.drawTileSelectedByKeyBoard(g);
         tileManager.drawTileSelectedByMouse(g);
@@ -121,7 +133,6 @@ public class Playing implements SceneMethods {
             barManager.setPlantLocked(false);
             waveManager.readyNewWave();
             plantManager.setSelected(false);
-            plantManager.setTimeToPlant(true);
         }
         for (MyButtons b : barManager.getPickPlant()) {
             if (b.getBounds().contains(x, y)) {
@@ -160,7 +171,7 @@ public class Playing implements SceneMethods {
 
     }
     public void MousePress(){
-        barManager.returnToSelectPlantByMouse();
+        mouseMotionManager.returnToSelectPlantByMouse();
     }
     public boolean isStartWave() {
         return startWave;
@@ -170,7 +181,8 @@ public class Playing implements SceneMethods {
         plantManager.mouse(x, y);
     }
     public void mouseMove(int x, int y){
-        barManager.mouseTrackPlantBar(x,y);
+        mouseMotionManager.changeStatusToMouse(x,y,w);
+        mouseMotionManager.mouseTrackPlantBar(x,y);
         tileManager.tileTrack(x,y);
     }
 
@@ -180,11 +192,12 @@ public class Playing implements SceneMethods {
     }
 
     public void keyBoardPress(KeyEvent e){
-        barManager.keyBoardChoosePlant(e);
-        barManager.keyBoardSelectPlant(e);
+        keyBoardManager.changeStatusToKeyBoard(e);
+        keyBoardManager.keyBoardChoosePlant(e);
+        keyBoardManager.keyBoardSelectPlant(e);
         tileManager.tileSelectedByKeyBoard(e);
-        barManager.returnToSelectPlantByKeyBoard(e);
-        barManager.startGame(e);
+        keyBoardManager.returnToSelectPlantByKeyBoard(e);
+        keyBoardManager.startGame(e);
     }
 
     public void updates() {

@@ -62,47 +62,46 @@ public class TileManager {
     }
 
     public void tileSelectedByKeyBoard(KeyEvent e){
+        playing.getMouseMotionManager().setControlledByMouse(false);
+        if(e.getKeyCode() == KeyEvent.VK_A){
+            tileSelectedByKeyBoard--;
+            tileSelectedByMouse = tileSelectedByKeyBoard;
+            isInTile = true;
+        } else if(e.getKeyCode() == KeyEvent.VK_D){
+            tileSelectedByKeyBoard++;
+            tileSelectedByMouse = tileSelectedByKeyBoard;
+            isInTile = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_W) {
+            tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
+            tileSelectedByMouse = tileSelectedByKeyBoard;
+            isInTile = true;
+        } else if(e.getKeyCode() == KeyEvent.VK_S){
+            tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
+            tileSelectedByMouse = tileSelectedByKeyBoard;
+            isInTile = true;
+        }
+        if(tileSelectedByKeyBoard <0){
+            tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
+            tileSelectedByMouse = tileSelectedByKeyBoard;
+        } else if(tileSelectedByKeyBoard > 44){
+            tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
+            tileSelectedByMouse = tileSelectedByKeyBoard;
+        }
         if(playing.getPlantManager().isSelected()){
-            if(e.getKeyCode() == KeyEvent.VK_A){
-                tileSelectedByKeyBoard--;
-                tileSelectedByMouse = tileSelectedByKeyBoard;
-                isInTile = true;
-            } else if(e.getKeyCode() == KeyEvent.VK_D){
-                tileSelectedByKeyBoard++;
-                tileSelectedByMouse = tileSelectedByKeyBoard;
-                isInTile = true;
-            } else if (e.getKeyCode() == KeyEvent.VK_W) {
-                tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
-                tileSelectedByMouse = tileSelectedByKeyBoard;
-                isInTile = true;
-            } else if(e.getKeyCode() == KeyEvent.VK_S){
-                tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
-                tileSelectedByMouse = tileSelectedByKeyBoard;
-                isInTile = true;
-            }
-            if(tileSelectedByKeyBoard <0){
-                tileSelectedByKeyBoard = tileSelectedByKeyBoard +9;
-                tileSelectedByMouse = tileSelectedByKeyBoard;
-            } else if(tileSelectedByKeyBoard > 44){
-                tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
-                tileSelectedByMouse = tileSelectedByKeyBoard;
-            }
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
                 if(playing.getPlantManager().isTimeToPlant()){
                     playing.getPlantManager().setTimeToPlant(false);
                 } else {
-                    playing.getPlantManager().plantCreateByKeyBoard();
+                    playing.getPlantManager().plantCreateByKeyBoard(tileSelectedByKeyBoard);
                 }
             }
         }
     }
     public void drawTileSelectedByKeyBoard(Graphics g){
-        if(playing.getPlantManager().isSelected()){
-            Graphics2D g2d = (Graphics2D) g;
-            for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
-                if(i == tileSelectedByKeyBoard){
-                    g2d.drawImage(playing.getBarManager().getPickedPlant(), (int)playing.getTileManager().getTiles()[i].getBound().getX(),(int)playing.getTileManager().getTiles()[i].getBound().getY(),playing.getTileManager().getTiles()[i].getwTile(),playing.getTileManager().getTiles()[i].gethTile(),null);
-                }
+        Graphics2D g2d = (Graphics2D) g;
+        for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
+            if(i == tileSelectedByKeyBoard){
+                g2d.drawImage(playing.getBarManager().getPickedPlant(), (int)playing.getTileManager().getTiles()[i].getBound().getX(),(int)playing.getTileManager().getTiles()[i].getBound().getY(),playing.getTileManager().getTiles()[i].getwTile(),playing.getTileManager().getTiles()[i].gethTile(),null);
             }
         }
     }
@@ -112,12 +111,15 @@ public class TileManager {
     }
 
     public void tileTrack(int x, int y){
-        for(int i = 0;i<tiles.length;i++){
-            Rectangle r = new Rectangle((int)tiles[i].getBound().getX(),(int)tiles[i].getBound().getY(),tiles[i].getwTile(),tiles[i].gethTile());
-            if(r.contains(x,y)){
-                isInTile = true;
-                tileSelectedByMouse = i;
-                tileSelectedByKeyBoard = tileSelectedByMouse;
+        playing.getMouseMotionManager().setControlledByMouse(true);
+        if(playing.getPlantManager().isSelected()){
+            for(int i = 0;i<tiles.length;i++){
+                Rectangle r = new Rectangle((int)tiles[i].getBound().getX(),(int)tiles[i].getBound().getY(),tiles[i].getwTile(),tiles[i].gethTile());
+                if(r.contains(x,y)){
+                    isInTile = true;
+                    tileSelectedByMouse = i;
+                    tileSelectedByKeyBoard = tileSelectedByMouse;
+                }
             }
         }
     }

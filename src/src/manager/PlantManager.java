@@ -32,12 +32,13 @@ public class PlantManager {
     public void setTimeToPlant(boolean timeToPlant) {
         isTimeToPlant = timeToPlant;
     }
-    private boolean isTimeToPlant = true;
+    private boolean isTimeToPlant = false;
     public boolean isSelected() {
         return selected;
     }
     private Playing playing;
-    private boolean selected = false;
+    private boolean selected = true;
+    private boolean isPlanted = false;
     private int IDhold, HPhold, ATKhold,sunCostHold, frameCountLimitHold;
 
     public PlantManager(Playing playing) {
@@ -129,7 +130,7 @@ public class PlantManager {
             }
         }
     }
-    public void initPlantTest(){
+    public void initPlantTest(){ //Trash plants
         initPlants(0,1,0,25);
         initPlants(1,1,0,58);
         initPlants(2,1,0,81);
@@ -236,33 +237,37 @@ public class PlantManager {
         playing.getBarManager().setPlantLocked(false);
         Audio.plantNotAvailable();
     }
+    public void plantOnTile(Tile tile, int x, int y,int i){
+        if(!tile.isOccupied()){
+            Rectangle r = new Rectangle((int)tile.getBound().getX(), (int)tile.getBound().getY(), (int)tile.getBound().getWidth(), (int)tile.getBound().getHeight());
+            if (r.contains(x, y)){
+                setPlantParameter();
+                if(playing.getSunManager().getSunHold() >= sunCostHold){
+                    Audio.tapGrass();
+                    tile.setOccupied(true);
+                    initPlants(IDhold,HPhold,ATKhold,frameCountLimitHold);
+                    playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1),true);
+                    for (int j = 0; j < plantList.size(); j++){
+                        plantList.get(plantList.size() - 1).setTileHold(i);
+                        if(!tile.isPlanted()){
+                            setPlantStatus(r);
+                            tile.setPlanted(true);
+                        }
+                    }
+                    isPlanted = true;
+                    playing.getSunManager().sunConsumed(sunCostHold);
+                } else {
+                    Audio.plantNotAvailable();
+                }
+            }
+        }
+    }
 
     public void mouse(int x, int y){
         isPlantTest = false;
         if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
             for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
-                if(!playing.getTileManager().getTiles()[i].isOccupied()){
-                    Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(), (int)playing.getTileManager().getTiles()[i].getBound().getY(), (int)playing.getTileManager().getTiles()[i].getBound().getWidth(), (int)playing.getTileManager().getTiles()[i].getBound().getHeight());
-                    if (r.contains(x, y)){
-                        setPlantParameter();
-                        if(playing.getSunManager().getSunHold() >= sunCostHold){
-                            Audio.tapGrass();
-                            playing.getTileManager().getTiles()[i].setOccupied(true);
-                            initPlants(IDhold,HPhold,ATKhold,frameCountLimitHold);
-                            playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1),true);
-                            for (int j = 0; j < plantList.size(); j++){
-                                plantList.get(plantList.size() - 1).setTileHold(i);
-                                if(!playing.getTileManager().getTiles()[i].isPlanted()){
-                                    setPlantStatus(r);
-                                    playing.getTileManager().getTiles()[i].setPlanted(true);
-                                }
-                            }
-                            playing.getSunManager().sunConsumed(sunCostHold);
-                        } else {
-                            Audio.plantNotAvailable();
-                        }
-                    }
-                }
+                plantOnTile(playing.getTileManager().getTiles()[i],x,y,i);
             }
             if(playing.isStartWaveForCD()){
                 selected = false;
@@ -277,32 +282,19 @@ public class PlantManager {
         isPlantTest = plantTest;
     }
 
-    public void plantCreateByKeyBoard(){
+    public void plantCreateByKeyBoard(int tileNum){
+        isPlantTest = false;
         if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
             for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
-                if(!playing.getTileManager().getTiles()[i].isOccupied() && i == playing.getTileManager().getTileSelectedByKeyBoard()){
-                    Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(), (int)playing.getTileManager().getTiles()[i].getBound().getY(), (int)playing.getTileManager().getTiles()[i].getBound().getWidth(), (int)playing.getTileManager().getTiles()[i].getBound().getHeight());
-                    Audio.tapGrass();
-                    playing.getTileManager().getTiles()[i].setOccupied(true);
-                    initPlants(IDhold,HPhold,ATKhold,frameCountLimitHold);
-                    playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1),true);
-                    for (int j = 0; j < playing.getPlantManager().getPlantList().size(); j++){
-                        playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setTileHold(i);
-                        if(!playing.getTileManager().getTiles()[i].isPlanted()){
-                            playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setX(r.x);
-                            playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setY(r.y);
-                            playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setWidth(r.width);
-                            playing.getPlantManager().getPlantList().get(playing.getPlantManager().getPlantList().size() - 1).setHeight(r.height);
-                            if(plantList.get(j).getPlantID() == 1){
-                                plantList.get(i).setFrameCountAttackLimit(59);
-                            } else if(plantList.get(i).getPlantID() == 3){
-                                plantList.get(i).setFrameCountAttackLimit(20);
-                            }
-                            playing.getTileManager().getTiles()[i].setPlanted(true);
-                        }
-                    }
-                }
+                plantOnTile(playing.getTileManager().getTiles()[i],(int)playing.getTileManager().getTiles()[tileNum].getBound().getX(),(int)playing.getTileManager().getTiles()[tileNum].getBound().getY(),i);
             }
+            if(playing.isStartWaveForCD() && isPlanted){
+                selected = false;
+                playing.getBarManager().setPlantLocked(false);
+                isPlanted = false;
+            }
+        } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
+            Audio.plantNotAvailable();
         }
     }
 
@@ -473,7 +465,7 @@ public class PlantManager {
         }
     }
     public void cherryExplode(int x, int y){
-        Rectangle explodeRange = new Rectangle(x-100,y-150,250,300);
+        Rectangle explodeRange = new Rectangle(x-120,y-130,300,330);
         explosionX = explodeRange.getX();
         explosionY = explodeRange.getY();
         explosionWidth = explodeRange.getWidth();
@@ -482,7 +474,7 @@ public class PlantManager {
             Iterator<Zombie> iterator = playing.getZombieManager().getZombies().iterator();
             while (iterator.hasNext()){
                 Zombie zombie = iterator.next();
-                if(explodeRange.contains(zombie.X(),zombie.Y()+70)){
+                if(explodeRange.contains(zombie.getBound().getX(),zombie.getBound().getY()+70)){
                     zombie.dead();
                 }
             }

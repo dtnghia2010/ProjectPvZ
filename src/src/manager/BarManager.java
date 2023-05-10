@@ -14,13 +14,17 @@ public class BarManager {
     private Image[] pick_plantBar;
     private Image[] plantInCD;
     private Image pickedPlant;
+
+    public void setPickPlant(MyButtons[] pickPlant) {
+        this.pickPlant = pickPlant;
+    }
+
     private MyButtons pickPlant[];
     private List<Integer> plantPickedID = new ArrayList<>();
-    private int plantPickedByKeyBoard = 0;
-    private int plantPickedByMouse = 0;
     private boolean[] isPlantInCD = new boolean[5];
     private boolean[] isCDReducing = new boolean[5];
     private boolean isPlantLocked = false;
+
 
     public boolean isPlantLocked() {
         return isPlantLocked;
@@ -137,108 +141,8 @@ public class BarManager {
         isPlantInCD[3] = true;
         isPlantInCD[4] = true;
     }
-    public void pickPlantByKeyBoard(){
-        switch (plantPickedByKeyBoard){
-            case 0:
-                if(playing.isStartWaveForCD()){
-                    sunFlower();
-                } else {
-                    Audio.plantNotAvailable();
-                }
-                break;
-            case 1:
-                peaShooter();
-                break;
-            case 2:
-                wall_nut();
-                break;
-            case 3:
-                shadowPea();
-                break;
-            case 4:
-                cherryBomb();
-                break;
-        }
-    }
-    public void keyBoardChoosePlant(KeyEvent e){
-        if(!playing.getPlantManager().isSelected()){
-            if(plantPickedByKeyBoard > 0 && plantPickedByKeyBoard <4){
-                if(e.getKeyCode() == KeyEvent.VK_A){
-                    plantPickedByKeyBoard--;
-                    plantPickedByMouse = plantPickedByKeyBoard;
-                } else if(e.getKeyCode() == KeyEvent.VK_D){
-                    plantPickedByKeyBoard++;
-                    plantPickedByMouse = plantPickedByKeyBoard;
-                }
-            } else if(plantPickedByKeyBoard==0){
-                if(e.getKeyCode() == KeyEvent.VK_D){
-                    plantPickedByKeyBoard++;
-                    plantPickedByMouse = plantPickedByKeyBoard;
-                }
-            } else if (plantPickedByKeyBoard==4) {
-                if(e.getKeyCode() == KeyEvent.VK_A){
-                    plantPickedByKeyBoard--;
-                    plantPickedByMouse = plantPickedByKeyBoard;
-                }
-            }
-            pickPlantByKeyBoard();
-        }
-    }
-    public void drawPlantSelectedByKeyBoard(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(pickedPlant,(int)pickPlant[plantPickedByKeyBoard].getBounds().getX(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getY(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getWidth(),(int)pickPlant[plantPickedByKeyBoard].getBounds().getHeight(),null);
-    }
-    public void mouseTrackPlantBar(int x, int y){
-        if(!playing.getPlantManager().isSelected()){
-            for(int i = 0;i<pickPlant.length;i++){
-                Rectangle r = pickPlant[i].getBounds();
-                if(r.contains(x,y)){
-                    if(playing.getTileManager().isInTile()){
-                        playing.getTileManager().setInTile(false);
-                        playing.getPlantManager().setSelected(false);
-                    }
-                    plantPickedByMouse = i;
-                    plantPickedByKeyBoard = plantPickedByMouse;
-                }
-            }
-        }
-    }
-    public void drawPlantSelectedByMouse(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(pickedPlant,(int)pickPlant[plantPickedByMouse].getBounds().getX(),(int)pickPlant[plantPickedByMouse].getBounds().getY(),(int)pickPlant[plantPickedByMouse].getBounds().getWidth(),(int)pickPlant[plantPickedByMouse].getBounds().getHeight(),null);
-    }
-    public void keyBoardSelectPlant(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            playing.getPlantManager().setSelected(true);
-            Audio.tapPlantBar();
-        }
-    }
-
     public Image getPickedPlant() {
         return pickedPlant;
-    }
-
-    public void returnToSelectPlantByKeyBoard(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_SHIFT){
-            playing.getPlantManager().setSelected(false);
-            playing.getPlantManager().setTimeToPlant(true);
-            isPlantLocked = false;
-        }
-    }
-    public void returnToSelectPlantByMouse(){
-        playing.getPlantManager().setSelected(false);
-        playing.getPlantManager().setTimeToPlant(true);
-        isPlantLocked = false;
-    }
-    public void startGame(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            playing.setStartWave(true);
-            playing.setStartWaveForCD(true);
-            playing.getWaveManager().readyNewWave();
-            playing.getPlantManager().setSelected(false);
-            playing.getPlantManager().setTimeToPlant(true);
-            isPlantLocked = false;
-        }
     }
     {
         isCDReducing[0] = false;

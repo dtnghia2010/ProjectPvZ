@@ -6,6 +6,7 @@ import Sun.Sun;
 import scenes.Playing;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,10 +15,14 @@ import java.util.Random;
 public class sunManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Image sunImage = t.getImage(getClass().getResource("/Sun/sun.png"));;
-    public List<Sun> listOfSun = new ArrayList<>();
+    private List<Sun> listOfSun = new ArrayList<>();
+    private Playing playing;
     private int realTimeCounter = 0;
     private int sunHold = 2000;
     private Random random = new Random();
+    public sunManager(Playing playing){
+        this.playing = playing;
+    }
     public void sunCreation(){
         synchronized (listOfSun){
             int randx = random.nextInt(700)+400;
@@ -53,13 +58,35 @@ public class sunManager {
             }
         }
     }
+    public void sunCollectedByKeyBoard(){
+        if(!playing.getMouseMotionManager().isControlledByMouse()){
+            synchronized (listOfSun){
+                Iterator<Sun> iterator = listOfSun.iterator();
+                while (iterator.hasNext()){
+                    Sun sun = iterator.next();
+                    Rectangle rSun = new Rectangle((int)sun.getBounds().getX()+15,(int)sun.getBounds().getY()-30,(int)sun.getBounds().getWidth()-30,(int)sun.getBounds().getHeight()-30);
+                    if(playing.getTileManager().getTiles()[playing.getTileManager().getTileSelectedByKeyBoard()].getBound().intersects(rSun)){
+                        if(!sun.isCollected()){
+                            Audio.sunCollected();
+                            sun.setSunCLicked(true);
+                            sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
+                            sunHold += 50;
+                            sun.setCollected(true);
+                        }
+                    }
+                }
+            }
+        }
+    }
     public void removeSun(){
         synchronized (listOfSun){
+            Rectangle holder = new Rectangle(185,-70,90,90);
             Iterator<Sun> iterator = listOfSun.iterator();
             while (iterator.hasNext()){
                 Sun sun = iterator.next();
-                if(sun.getY() == 0 && sun.isSunCLicked()){
-                    sun.setThere(false);
+                Rectangle rSun = new Rectangle((int)sun.getX(),(int)sun.getY(),sun.getWidth(),sun.getHeight());
+                if(holder.intersects(rSun) && sun.isSunCLicked()){
+                    iterator.remove();
                 }
             }
         }
@@ -97,7 +124,8 @@ public class sunManager {
                 if(sun.isThere()){
                     g2d.drawImage(sunImage,(int)sun.getX(),(int)sun.getY(),sun.getWidth(),sun.getHeight(),null);
 //                    g.setColor(Color.RED);
-//                    g.drawRect((int)sun.getBounds().getX(),(int)sun.getBounds().getY(),(int)sun.getBounds().getWidth(),(int)sun.getBounds().getHeight());
+//                    g.drawRect((int)sun.getBounds().getX()+15,(int)sun.getBounds().getY()-30,(int)sun.getBounds().getWidth()-30,(int)sun.getBounds().getHeight()-30);
+//                    g.drawRect((int)sun.getX(),(int)sun.getY(),sun.getWidth(),sun.getHeight());
                 }
             }
         }
@@ -109,6 +137,7 @@ public class sunManager {
                 sunCreation();
                 realTimeCounter = 0;
             }
+            sunCollectedByKeyBoard();
             synchronized (listOfSun){
                 Iterator<Sun> iterator= listOfSun.iterator();
                 while (iterator.hasNext()){
