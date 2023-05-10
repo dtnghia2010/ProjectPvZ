@@ -148,8 +148,8 @@ public class Playing implements SceneMethods {
 
     public void updates() {
         if(getNotifManager().isEndCDWave()) {
+            System.out.println("startGame");
             startGame();
-            getNotifManager().resetEndCDWave();
         }
         if (startWave) {
             if (isTimeForNewZombie()) {
@@ -199,6 +199,7 @@ public class Playing implements SceneMethods {
         System.out.println("click on start");
         waveManager.readyNewWave();
         notifManager.reset();
+        notifManager.resetEndCDWave();
     }
 
     public WaveManager getWaveManager() {

@@ -9,11 +9,11 @@ public class WaveManager {
     private Wave[] waves;
     private boolean endWaves = false, hordeActive = false;
     private int curZom = 0, curWave = -1;
-    private int waveNum = 4, hordeNum = 10, coolDownWave = 3;
+    private int waveNum = 4, hordeNum = 10, coolDownWave = 20;
     private timeLogic zomSpawnTime;
 
     public WaveManager(Playing playing) {
-        zomSpawnTime = new timeLogic(1);
+        zomSpawnTime = new timeLogic(1,0);
 //        waveTime = new timeLogic(10);
         this.playing = playing;
         waves = new Wave[waveNum];
@@ -72,7 +72,7 @@ public class WaveManager {
     }
 
     public void updates() {
-        zomSpawnTime.updates();
+        zomSpawnTime.refresh();
 /*        if(!playing.isStartWave()) {
             waveTime.updates();
         }*/
@@ -94,7 +94,7 @@ public class WaveManager {
         hordeNum += 5;
     }
     public int getCurWave() {
-        System.out.println("curWave " + curWave);
+//        System.out.println("curWave " + curWave);
         return curWave;
     }
     public int getCoolDownWave() {

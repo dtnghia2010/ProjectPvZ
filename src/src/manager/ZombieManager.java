@@ -1,5 +1,6 @@
 package manager;
 
+import Audio.Audio;
 import component.Plant;
 import scenes.Playing;
 import zombie.Zombie;
@@ -139,6 +140,7 @@ public class ZombieManager {
                         if (r.contains(plant.getX() + plant.getWidth(), plant.getY())) {
                             zombie.setCollided(true);
                             if (realTimeCounter >= 30) {
+                                Audio.zombieEat();
                                 zombie.attackPlant(plant);
                                 isReset = true;
                                 plant.removePlant(plant, iterator1, playing.getTileManager());

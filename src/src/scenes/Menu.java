@@ -20,7 +20,7 @@ public class Menu implements SceneMethods {
 
     public void mouseClicked(int x, int y) {
         if(bPlaying.getBounds().contains(x,y)) {
-            Audio.readySetPlant();
+//            Audio.readySetPlant();
             Audio.roofStage();
             setGameScenes(PLAYING);
         } else if (bQuit.getBounds().contains(x,y)) {

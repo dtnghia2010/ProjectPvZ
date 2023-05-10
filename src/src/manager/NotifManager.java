@@ -6,7 +6,6 @@ import notification.PlayingNotif;
 import scenes.Playing;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class NotifManager {
     private NotifPattern[] notifs;
@@ -25,9 +24,10 @@ public class NotifManager {
 
     public void setUpNotif() {
         notifs[0] = new PlayingNotif(0, 4);
-        clearStageTime = new timeLogic(this.notifs[0].timeNotif());
+        clearStageTime = new timeLogic(this.notifs[0].timeNotif(), 1);
         notifs[1] = new PlayingNotif(1, playing.getWaveManager().getCoolDownWave());
-        waveCDTime = new timeLogic(this.notifs[1].timeNotif());
+        waveCDTime = new timeLogic(this.notifs[1].timeNotif(), 1);
+        waveCDTime.resetTime();
     }
 /*    public void setNotif(NotifPattern notif) {
         this.notif = notif;
@@ -35,7 +35,6 @@ public class NotifManager {
     }*/
 
     public void updates() {
-        waveCDTime.updates();
         if (clearStageTime.getTickLimit() >= clearStageTime.getTick()) {
             executed = false;
             clearStageTime.decreaseTick();
@@ -50,9 +49,16 @@ public class NotifManager {
         if (!playing.isStartWave()) {
             if (!playing.getWaveManager().isThereMoreZombieInWave() && playing.getZombieManager().allZombieDead() && playing.isZombieApproaching()) {
                 updates();
+//                System.out.println("out stage");
                 if(waveCDTime.isTime()) {
                     endCDWave = true;
+//                    System.out.println("reset current secccc");
+//                    waveCDTime.resetCurrentSec();
+//                    resetEndCDWave();
+                } else {
+                    waveCDTime.refresh();
                 }
+                countWave(g);
                 if (!executed)
                     stageClear(g); //stage clear notif
             }
@@ -61,6 +67,13 @@ public class NotifManager {
         stageCurrent(g); //wave current notif
     }
 
+    public void countWave(Graphics g) {
+        Font font = new Font("Arial", Font.BOLD, 20);
+        g.setFont(font);
+        g.setColor(Color.RED);
+        int time = playing.getWaveManager().getCoolDownWave() - waveCDTime.getCurrentSec();
+        g.drawString("Count down: " + time, 100, 620);
+    }
     public void stageClear(Graphics g) {
         g.drawImage(notifs[0].getImage(), 1024 / 2 - 200, 625 / 2 - 200, 400, 400, null);
     }
@@ -84,6 +97,9 @@ public class NotifManager {
     }
     public void resetEndCDWave() {
         endCDWave = false;
+        waveCDTime.resetTime();
+//        waveCDTime.resetCurrentSec();
+        System.out.println("reset current second");
     }
 
     public boolean isEndCDWave() {

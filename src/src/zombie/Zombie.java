@@ -134,4 +134,8 @@ public class Zombie {
         return height;
     }
 
+    public boolean isWalking() {
+        return !isCollided;
+    }
+
 }

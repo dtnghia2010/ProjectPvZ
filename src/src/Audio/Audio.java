@@ -5,74 +5,77 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.io.InputStream;
+import java.net.URL;
 
 public class Audio {
-    private static Clip[] clips = new Clip[11];
+    private static Clip clip;
+    static URL soundURL[] = new URL[7];
     static {
         try {
-            for(int i = 0;i<7;i++){
-                clips[i] = AudioSystem.getClip();
-            }
-            InputStream InputStream1 = Audio.class.getResourceAsStream("/Audio/Roof.wav");
-            AudioInputStream audioInputStream1 = AudioSystem.getAudioInputStream(InputStream1);
-            clips[0].open(audioInputStream1);
-            InputStream InputStream2 = Audio.class.getResourceAsStream("/Audio/splat.wav");
-            AudioInputStream audioInputStream2 = AudioSystem.getAudioInputStream(InputStream2);
-            clips[1].open(audioInputStream2);
-            InputStream InputStream3 = Audio.class.getResourceAsStream("/Audio/tapPlantBar.wav");
-            AudioInputStream audioInputStream3 = AudioSystem.getAudioInputStream(InputStream3);
-            clips[2].open(audioInputStream3);
-            InputStream InputStream4 = Audio.class.getResourceAsStream("/Audio/tapGrass.wav");
-            AudioInputStream audioInputStream4 = AudioSystem.getAudioInputStream(InputStream4);
-            clips[3].open(audioInputStream4);
-            InputStream InputStream5 = Audio.class.getResourceAsStream("/Audio/readysetplant.wav");
-            AudioInputStream audioInputStream5 = AudioSystem.getAudioInputStream(InputStream5);
-            clips[4].open(audioInputStream5);
-            InputStream InputStream6 = Audio.class.getResourceAsStream("/Audio/ZombieEat.wav");
-            AudioInputStream audioInputStream6 = AudioSystem.getAudioInputStream(InputStream6);
-            clips[5].open(audioInputStream6);
-            InputStream InputStream7 = Audio.class.getResourceAsStream("/Audio/PlantDeath.wav");
-            AudioInputStream audioInputStream7 = AudioSystem.getAudioInputStream(InputStream7);
-            clips[6].open(audioInputStream7);
+            soundURL[0] = Audio.class.getResource("/Audio/music/Roof.wav");
+            soundURL[1] = Audio.class.getResource("/Audio/environment/splat.wav");
+            soundURL[2] = Audio.class.getResource("/Audio/environment/tapPlantBar.wav");
+            soundURL[3] = Audio.class.getResource("/Audio/environment/tapGrass.wav");
+            soundURL[4] = Audio.class.getResource("/Audio/plant/readysetplant.wav");
+            soundURL[5] = Audio.class.getResource("/Audio/zombie/ZombieEat.wav");
+            soundURL[6] = Audio.class.getResource("/Audio/plant/PlantDeath.wav");
+            soundURL[7] = Audio.class.getResource("Audio/zombie/Groaning.wav");
         } catch(Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open audio!"); //show error dialog
         }
     }
+    public static void inputAudio(int i){
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundURL[i]);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (Exception e){
+
+        }
+    }
     public static void roofStage(){
-        clips[0].start();
-        clips[0].loop(Clip.LOOP_CONTINUOUSLY);
+        inputAudio(0);
+        clip.start();
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
     public static void splat() {
-        if(clips[1] != null){
-            clips[1].stop();
-        }
-        clips[1].setFramePosition(0);
-        clips[1].start();
+        inputAudio(1);
+        clip.setFramePosition(0);
+        clip.start();
     }
     public static void tapPlantBar(){
-        clips[2].setFramePosition(0);
-        clips[2].start();
+        inputAudio(2);
+        clip.setFramePosition(0);
+        clip.start();
     }
     public static void tapGrass(){
-        clips[3].setFramePosition(0);
-        clips[3].start();
+        inputAudio(3);
+        clip.setFramePosition(0);
+        clip.start();
     }
     public static void readySetPlant(){
-        clips[4].setFramePosition(0);
-        clips[4].start();
+        inputAudio(4);
+        clip.setFramePosition(0);
+        clip.start();
     }
     public static void zombieEat(){
-        clips[5].start();
-        clips[5].loop(Clip.LOOP_CONTINUOUSLY);
+        inputAudio(5);
+        clip.setFramePosition(0);
+        clip.start();
     }
     public static void zombieDeath(){
-        clips[5].stop();
+
     }
     public static void plantDeath(){
-        clips[5].stop();
-        clips[5].setFramePosition(0);
-        clips[6].setFramePosition(0);
-        clips[6].start();
+        inputAudio(6);
+        clip.setFramePosition(0);
+        clip.start();
     }
+    public static void zombieGroaning() {
+        inputAudio(7);
+        clip.setFramePosition(0);
+        clip.start();
+    }
+
 }
