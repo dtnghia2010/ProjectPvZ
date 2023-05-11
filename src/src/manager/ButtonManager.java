@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ButtonManager {
-    private MyButtons bStart, bPause;
+    private MyButtons bStart, bSetting;
     private Image[] buttonOfPlaying;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -17,7 +17,7 @@ public class ButtonManager {
 
     private void initButtons() {
         bStart = new MyButtons("Start", 0, 0, 145, 45);
-        bPause = new MyButtons("Pause", 920, 585, 95, 35);
+        bSetting = new MyButtons("Setting", 920, 585, 95, 35);
     }
 
     public void importImg(){
@@ -38,14 +38,14 @@ public class ButtonManager {
 
     public void drawButtons(Graphics g) {
         bStart.draw(g);
-        bPause.draw(g);
+        bSetting.draw(g);
     }
 
     public MyButtons getbStart() {
         return bStart;
     }
 
-    public MyButtons getbPause() {
-        return bPause;
+    public MyButtons getbSetting() {
+        return bSetting;
     }
 }

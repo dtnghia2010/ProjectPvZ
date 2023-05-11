@@ -7,13 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 import static scenes.GameScenes.*;
 
-public class Pause implements SceneMethods{
+public class Setting implements SceneMethods{
     private World w;
     private MyButtons bMenu, bQuit, bPlaying;
     private Image[] buttonOfSetting;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
-    public Pause(World w){
+    public Setting(World w){
         this.w = w;
     }
 
