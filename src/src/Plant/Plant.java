@@ -6,6 +6,7 @@ import manager.TileManager;
 
 import java.awt.*;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Plant {
     private double plantHP;
@@ -33,17 +34,23 @@ public class Plant {
     private int frameCountIdle = 0;
     private int frameCountAttack = 0;
     private int frameCountSun = 0;
+    private int frameCountSunLimit = 600;
     private int frameCDIdle = 0;
     private int frameCDAttack = 0;
+    private Random random = new Random();
 
     public int getFrameCountAttack() {
         return frameCountAttack;
     }
     public void sunCreatedBySunFlower(sunManager sunManager){
         frameCountSun++;
-        if(frameCountSun == 600){
+        if(frameCountSun == frameCountSunLimit){
             sunManager.sunCreatedBySunFlower(this);
+            sunManager.setSunCreated(true);
+            frameCountSunLimit = random.nextInt(300)+600;
             frameCountSun = 0;
+        } else {
+            sunManager.setSunCreated(false);
         }
     }
 

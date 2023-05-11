@@ -81,6 +81,7 @@ public class Playing implements SceneMethods {
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
+        barManager.plantEnoughSun();
         sunManager.update(this);
     }
     @Override
@@ -96,6 +97,7 @@ public class Playing implements SceneMethods {
         barManager.drawPlantNotAvailableFromStart(g);
         tileManager.drawTileSelectedByKeyBoard(g);
         tileManager.drawTileSelectedByMouse(g);
+        tileManager.drawPlantPreparedToPlanted(g);
         plantManager.drawPlant(g);
         plantManager.drawExplosion(g);
         zombieManager.draw(g);
@@ -130,9 +132,8 @@ public class Playing implements SceneMethods {
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             startWave = true;
             startWaveForCD = true;
-            barManager.setPlantLocked(false);
             waveManager.readyNewWave();
-            plantManager.setSelected(false);
+            plantManager.setForbidden(false);
         }
         for (MyButtons b : barManager.getPickPlant()) {
             if (b.getBounds().contains(x, y)) {
@@ -148,6 +149,7 @@ public class Playing implements SceneMethods {
                         if(!isStartWaveForCD()){
                             plantManager.plantForbiddenFromStart();
                         } else {
+                            plantManager.setForbidden(false);
                             barManager.sunFlower();
                         }
                     } else if (b2.getText().contains("Peashooter")) {

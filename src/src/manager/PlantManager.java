@@ -39,6 +39,7 @@ public class PlantManager {
     private Playing playing;
     private boolean selected = true;
     private boolean isPlanted = false;
+    private boolean isForbidden = false;
     private int IDhold, HPhold, ATKhold,sunCostHold, frameCountLimitHold;
 
     public PlantManager(Playing playing) {
@@ -49,6 +50,7 @@ public class PlantManager {
         importWallNut();
         importShadowPea();
         initPlantTest();
+        plantForbiddenFromStart();
     }
 
     public void setFrameCountLimitHold(int frameCountLimitHold) {
@@ -231,11 +233,19 @@ public class PlantManager {
                 break;
         }
     }
+
+    public boolean isForbidden() {
+        return isForbidden;
+    }
+
+    public void setForbidden(boolean forbidden) {
+        isForbidden = forbidden;
+    }
+
     public void plantForbiddenFromStart(){
         IDhold = -1;
-        selected = false;
         playing.getBarManager().setPlantLocked(false);
-        Audio.plantNotAvailable();
+        isForbidden = true;
     }
     public void plantOnTile(Tile tile, int x, int y,int i){
         if(!tile.isOccupied()){
@@ -289,7 +299,7 @@ public class PlantManager {
                 plantOnTile(playing.getTileManager().getTiles()[i],(int)playing.getTileManager().getTiles()[tileNum].getBound().getX(),(int)playing.getTileManager().getTiles()[tileNum].getBound().getY(),i);
             }
             if(playing.isStartWaveForCD() && isPlanted){
-                selected = false;
+//                selected = false;
                 playing.getBarManager().setPlantLocked(false);
                 isPlanted = false;
             }

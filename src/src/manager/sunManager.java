@@ -6,7 +6,6 @@ import Sun.Sun;
 import scenes.Playing;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,19 +19,18 @@ public class sunManager {
     private int realTimeCounter = 0;
     private int sunHold = 2000;
     private Random random = new Random();
+    private int randomTimeSunDrop = 600;
+    private boolean isSunCreated = false;
+    private boolean isSunRemoved = false;
     public sunManager(Playing playing){
         this.playing = playing;
     }
     public void sunCreation(){
-        synchronized (listOfSun){
-            int randx = random.nextInt(700)+400;
-            listOfSun.add(new Sun(randx,0,90,90,400));
-        }
+        int randx = random.nextInt(700)+400;
+        listOfSun.add(new Sun(randx,0,90,90,400));
     }
     public void sunCreatedBySunFlower(Plant plant){
-        synchronized (listOfSun){
-            listOfSun.add(new Sun(plant.getX(),plant.getY()-30,90,90,plant.getY()+30));
-        }
+        listOfSun.add(new Sun(plant.getX(),plant.getY()-30,90,90,plant.getY()+30));
     }
     public int getSunHold() {
         return sunHold;
@@ -44,50 +42,47 @@ public class sunManager {
         realTimeCounter++;
     }
     public void clickSun(int x, int y){
-        synchronized (listOfSun){
-            Iterator<Sun> iterator = listOfSun.iterator();
-            while (iterator.hasNext()){
-                Sun sun = iterator.next();
-                Rectangle rSun = sun.getBounds();
-                if(rSun.contains(x,y) && !sun.isSunCLicked()){
-                    Audio.sunCollected();
-                    sun.setSunCLicked(true);
-                    sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
-                    sunHold += 50;
-                }
+        Iterator<Sun> iterator = listOfSun.iterator();
+        while (iterator.hasNext()){
+            Sun sun = iterator.next();
+            Rectangle rSun = sun.getBounds();
+            if(rSun.contains(x,y) && !sun.isSunCLicked()){
+                Audio.sunCollected();
+                sun.setSunCLicked(true);
+                sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
+                sunHold += 50;
             }
         }
     }
     public void sunCollectedByKeyBoard(){
         if(!playing.getMouseMotionManager().isControlledByMouse()){
-            synchronized (listOfSun){
-                Iterator<Sun> iterator = listOfSun.iterator();
-                while (iterator.hasNext()){
-                    Sun sun = iterator.next();
-                    Rectangle rSun = new Rectangle((int)sun.getBounds().getX()+15,(int)sun.getBounds().getY()-30,(int)sun.getBounds().getWidth()-30,(int)sun.getBounds().getHeight()-30);
-                    if(playing.getTileManager().getTiles()[playing.getTileManager().getTileSelectedByKeyBoard()].getBound().intersects(rSun)){
-                        if(!sun.isCollected()){
-                            Audio.sunCollected();
-                            sun.setSunCLicked(true);
-                            sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
-                            sunHold += 50;
-                            sun.setCollected(true);
-                        }
+            Iterator<Sun> iterator = listOfSun.iterator();
+            while (iterator.hasNext()){
+                Sun sun = iterator.next();
+                Rectangle rSun = new Rectangle((int)sun.getBounds().getX()+15,(int)sun.getBounds().getY()-30,(int)sun.getBounds().getWidth()-30,(int)sun.getBounds().getHeight()-30);
+                if(playing.getTileManager().getTiles()[playing.getTileManager().getTileSelectedByKeyBoard()].getBound().intersects(rSun)){
+                    if(!sun.isCollected()){
+                        Audio.sunCollected();
+                        sun.setSunCLicked(true);
+                        sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
+                        sunHold += 50;
+                        sun.setCollected(true);
                     }
                 }
             }
         }
     }
     public void removeSun(){
-        synchronized (listOfSun){
-            Rectangle holder = new Rectangle(185,-70,90,90);
-            Iterator<Sun> iterator = listOfSun.iterator();
-            while (iterator.hasNext()){
-                Sun sun = iterator.next();
-                Rectangle rSun = new Rectangle((int)sun.getX(),(int)sun.getY(),sun.getWidth(),sun.getHeight());
-                if(holder.intersects(rSun) && sun.isSunCLicked()){
-                    iterator.remove();
-                }
+        Rectangle holder = new Rectangle(185,-70,90,90);
+        Iterator<Sun> iterator = listOfSun.iterator();
+        while (iterator.hasNext()){
+            Sun sun = iterator.next();
+            Rectangle rSun = new Rectangle((int)sun.getX(),(int)sun.getY(),sun.getWidth(),sun.getHeight());
+            if(holder.intersects(rSun) && sun.isSunCLicked()){
+                isSunRemoved = true;
+                iterator.remove();
+            } else {
+                isSunRemoved = false;
             }
         }
     }
@@ -116,8 +111,8 @@ public class sunManager {
     }
     public void drawSun(Graphics g){
         drawSunHolder(g);
-        Graphics2D g2d = (Graphics2D) g;
-        synchronized (listOfSun){
+        if(!isSunRemoved && !isSunCreated){
+            Graphics2D g2d = (Graphics2D) g;
             Iterator<Sun> iterator = listOfSun.iterator();
             while (iterator.hasNext()){
                 Sun sun = iterator.next();
@@ -130,21 +125,28 @@ public class sunManager {
             }
         }
     }
+
+    public void setSunCreated(boolean sunCreated) {
+        isSunCreated = sunCreated;
+    }
+
     public void update(Playing playing){
         if(playing.isStartWaveForCD()){
             frameCount();
-            if(realTimeCounter == 600){
+            if(realTimeCounter == randomTimeSunDrop){
                 sunCreation();
                 realTimeCounter = 0;
+                isSunCreated = true;
+                randomTimeSunDrop = random.nextInt(300)+600;
+            } else {
+                isSunCreated = false;
             }
             sunCollectedByKeyBoard();
-            synchronized (listOfSun){
-                Iterator<Sun> iterator= listOfSun.iterator();
-                while (iterator.hasNext()){
-                    Sun sun = iterator.next();
-                    sun.move();
-                    sun.moveToStorage();
-                }
+            Iterator<Sun> iterator= listOfSun.iterator();
+            while (iterator.hasNext()){
+                Sun sun = iterator.next();
+                sun.move();
+                sun.moveToStorage();
             }
             removeSun();
         }

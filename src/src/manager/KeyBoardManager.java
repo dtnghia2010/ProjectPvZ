@@ -10,6 +10,16 @@ public class KeyBoardManager {
     private Playing playing;
     private int plantPickedByKeyBoard = 0;
     private boolean isKeyPressForTheFirstTime = true;
+    private boolean isPlantBeingForbidden = false;
+
+    public boolean isPlantBeingForbidden() {
+        return isPlantBeingForbidden;
+    }
+
+    public void setPlantBeingForbidden(boolean plantBeingForbidden) {
+        isPlantBeingForbidden = plantBeingForbidden;
+    }
+
     public KeyBoardManager(Playing playing){
         this.playing = playing;
     }
@@ -34,19 +44,26 @@ public class KeyBoardManager {
         switch (plantPickedByKeyBoard){
             case 0:
                 if(playing.isStartWaveForCD()){
+                    playing.getPlantManager().setForbidden(false);
                     playing.getBarManager().sunFlower();
+                } else {
+                    playing.getPlantManager().plantForbiddenFromStart();
                 }
                 break;
             case 1:
+                playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().peaShooter();
                 break;
             case 2:
+                playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().wall_nut();
                 break;
             case 3:
+                playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().shadowPea();
                 break;
             case 4:
+                playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().cherryBomb();
                 break;
         }
@@ -103,6 +120,7 @@ public class KeyBoardManager {
                 playing.setStartWave(true);
                 playing.setStartWaveForCD(true);
                 playing.getWaveManager().readyNewWave();
+                playing.getPlantManager().setForbidden(false);
             }
         }
     }

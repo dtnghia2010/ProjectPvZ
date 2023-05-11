@@ -23,8 +23,8 @@ public class BarManager {
     private List<Integer> plantPickedID = new ArrayList<>();
     private boolean[] isPlantInCD = new boolean[5];
     private boolean[] isCDReducing = new boolean[5];
+    private boolean[] isPlantEnoughSun = new boolean[5];
     private boolean isPlantLocked = false;
-
 
     public boolean isPlantLocked() {
         return isPlantLocked;
@@ -192,6 +192,11 @@ public class BarManager {
         isCDReducing[3] = false;
         isCDReducing[4] = false;
     }
+
+    public boolean[] getIsPlantEnoughSun() {
+        return isPlantEnoughSun;
+    }
+
     public void resetCD(int index){
         if(playing.isStartWaveForCD()) {
             switch (index){
@@ -246,6 +251,35 @@ public class BarManager {
                 g2d.drawString(String.format("%d",cd),385 +distance,50);
             }
             distance += 90;
+        }
+    }
+    public void plantEnoughSun(){
+        if(playing.getSunManager().getSunHold() < 50){
+            for(int i = 0;i<isPlantEnoughSun.length;i++){
+                isPlantEnoughSun[i] = false;
+            }
+        } else if(playing.getSunManager().getSunHold() < 100){
+            isPlantEnoughSun[1] = false;
+            isPlantEnoughSun[3] = false;
+            isPlantEnoughSun[4] = false;
+            isPlantEnoughSun[0] = true;
+            isPlantEnoughSun[2] = true;
+        } else if(playing.getSunManager().getSunHold() < 150){
+            for (int i = 0;i<3;i++){
+                isPlantEnoughSun[i] = true;
+            }
+            isPlantEnoughSun[3] = false;
+            isPlantEnoughSun[4] = false;
+        } else if(playing.getSunManager().getSunHold() < 200){
+            for (int i = 0;i<3;i++){
+                isPlantEnoughSun[i] = true;
+            }
+            isPlantEnoughSun[3] = false;
+            isPlantEnoughSun[4] = true;
+        } else {
+            for(int i = 0;i<isPlantEnoughSun.length;i++){
+                isPlantEnoughSun[i] = true;
+            }
         }
     }
     public void drawPlantNotEnoughSun(Graphics g){
