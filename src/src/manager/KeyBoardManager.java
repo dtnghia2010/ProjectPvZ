@@ -119,6 +119,7 @@ public class KeyBoardManager {
             if(e.getKeyCode() == KeyEvent.VK_SPACE){
                 playing.setStartWave(true);
                 playing.setStartWaveForCD(true);
+                pickPlantByKeyBoard();
                 playing.getWaveManager().readyNewWave();
                 playing.getPlantManager().setForbidden(false);
             }

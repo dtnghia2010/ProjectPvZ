@@ -47,7 +47,7 @@ public class Plant {
         if(frameCountSun == frameCountSunLimit){
             sunManager.sunCreatedBySunFlower(this);
             sunManager.setSunCreated(true);
-            frameCountSunLimit = random.nextInt(300)+600;
+            frameCountSunLimit = random.nextInt(600)+600;
             frameCountSun = 0;
         } else {
             sunManager.setSunCreated(false);

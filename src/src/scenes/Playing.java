@@ -132,6 +132,7 @@ public class Playing implements SceneMethods {
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             startWave = true;
             startWaveForCD = true;
+            keyBoardManager.pickPlantByKeyBoard();
             waveManager.readyNewWave();
             plantManager.setForbidden(false);
         }
