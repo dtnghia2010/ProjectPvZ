@@ -60,8 +60,12 @@ public class ZombieManager {
             System.out.println("a zombie created");
             if (!allZombieDead()) {
                 zombies.add(new Zombie(1044 + rnd(0, 1000), 90 + 95 * rnd(0, 5), type));
+                if(rnd(0,100) > 90) {
+                    Audio.zombieGroaning();
+                }
             } else {
                 zombies.add(new Zombie(1044, 90 + 95 * rnd(0, 5), type));
+
             }
         }
     }

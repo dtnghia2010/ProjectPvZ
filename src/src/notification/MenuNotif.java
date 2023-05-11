@@ -21,4 +21,37 @@ public class MenuNotif implements NotifPattern {
     public int timeNotif() {
         return 3;
     }
+
+/*    @Override
+    public void importAnimation(int type) {
+
+    }*/
+
+/*    @Override
+    public void refresh() {
+
+    }
+
+    public int getTransition() {
+        return 0;
+    }
+
+    public Image[] getAnimation() {
+        return new Image[0];
+    }
+
+    @Override
+    public Image currentAnimationFrame() {
+        return null;
+    }
+
+    @Override
+    public boolean isNotifTest() {
+        return false;
+    }
+
+    @Override
+    public void reset() {
+
+    }*/
 }

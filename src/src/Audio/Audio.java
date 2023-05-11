@@ -9,17 +9,17 @@ import java.net.URL;
 
 public class Audio {
     private static Clip clip;
-    static URL soundURL[] = new URL[7];
+    static URL soundURL[] = new URL[8];
     static {
         try {
-            soundURL[0] = Audio.class.getResource("/Audio/music/Roof.wav");
-            soundURL[1] = Audio.class.getResource("/Audio/environment/splat.wav");
-            soundURL[2] = Audio.class.getResource("/Audio/environment/tapPlantBar.wav");
+            soundURL[0] = Audio.class.getResource("/Audio/music/Roof.wav"); //v
+            soundURL[1] = Audio.class.getResource("/Audio/environment/splat.wav"); //v
+            soundURL[2] = Audio.class.getResource("/Audio/environment/tapPlantBar.wav"); //v
             soundURL[3] = Audio.class.getResource("/Audio/environment/tapGrass.wav");
             soundURL[4] = Audio.class.getResource("/Audio/plant/readysetplant.wav");
-            soundURL[5] = Audio.class.getResource("/Audio/zombie/ZombieEat.wav");
+            soundURL[5] = Audio.class.getResource("/Audio/zombie/ZombieEat.wav"); //v
             soundURL[6] = Audio.class.getResource("/Audio/plant/PlantDeath.wav");
-            soundURL[7] = Audio.class.getResource("Audio/zombie/Groaning.wav");
+            soundURL[7] = Audio.class.getResource("/Audio/zombie/Groaning.wav");
         } catch(Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open audio!"); //show error dialog

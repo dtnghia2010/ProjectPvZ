@@ -12,7 +12,6 @@ public class NotifManager {
     private boolean executed = false, endCDWave = false;
     private Playing playing;
     private timeLogic clearStageTime, waveCDTime;
-
     public NotifManager(Playing playing) {
         notifs = new NotifPattern[2];
         this.playing = playing;
@@ -29,12 +28,13 @@ public class NotifManager {
         waveCDTime = new timeLogic(this.notifs[1].timeNotif(), 1);
         waveCDTime.resetTime();
     }
+
 /*    public void setNotif(NotifPattern notif) {
         this.notif = notif;
         clearStageTime = new timeLogic(this.notif.timeNotif());
     }*/
 
-    public void updates() {
+    public void refresh() {
         if (clearStageTime.getTickLimit() >= clearStageTime.getTick()) {
             executed = false;
             clearStageTime.decreaseTick();
@@ -47,8 +47,9 @@ public class NotifManager {
     //draw
     public void drawNotif(Graphics g) {
         if (!playing.isStartWave()) {
+
             if (!playing.getWaveManager().isThereMoreZombieInWave() && playing.getZombieManager().allZombieDead() && playing.isZombieApproaching()) {
-                updates();
+                refresh();
 //                System.out.println("out stage");
                 if(waveCDTime.isTime()) {
                     endCDWave = true;

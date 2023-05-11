@@ -28,6 +28,8 @@ public class Zombie {
     private boolean isAlived = true;
     private boolean isDead = false;
     private boolean isSlowed = false;
+    private Rectangle bound;
+
     public boolean isDead() {
         return isDead;
     }
@@ -35,8 +37,6 @@ public class Zombie {
     public void setDead(boolean dead) {
         isDead = dead;
     }
-
-    private Rectangle bound;
     public Zombie(double x, double y, int type) {
         this.x = x;
         this.y = y;
