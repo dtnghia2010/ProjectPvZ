@@ -20,7 +20,6 @@ public class Playing implements SceneMethods {
     private WaveManager waveManager;
     private KeyBoardManager keyBoardManager;
     private MouseMotionManager mouseMotionManager;
-    private boolean startWave = false;
     private NotifManager notifManager;
     private boolean startWave = false, callHorde = false, zombieApproaching = false;
     private boolean startWaveForCD = false;
@@ -66,14 +65,11 @@ public class Playing implements SceneMethods {
         barManager = new BarManager(this);
         tileManager = new TileManager(this);
         buttonManager = new ButtonManager(this);
-        tileManager = new TileManager(this);
-        buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
         projectileManager = new ProjectileManager(this);
         sunManager = new sunManager(this);
         keyBoardManager = new KeyBoardManager(this);
         mouseMotionManager = new MouseMotionManager(this);
-        projectileManager = new ProjectileManager(this);
     }
 
     public TileManager getTileManager() {
@@ -87,7 +83,7 @@ public class Playing implements SceneMethods {
         plantManager.updateSunflower();
         plantManager.timeExplode();
 //        projectileManager.projectileCreated(plantManager);
-        plantManager.plantAttack(projectileManager);
+//        plantManager.plantAttack(projectileManager);
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
@@ -192,10 +188,6 @@ public class Playing implements SceneMethods {
     public void MousePress(){
         mouseMotionManager.returnToSelectPlantByMouse();
     }
-    public boolean isStartWave() {
-        return startWave;
-    }
-
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
     }

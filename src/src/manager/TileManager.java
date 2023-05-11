@@ -1,6 +1,5 @@
 package manager;
 
-import component.Plant;
 import component.Tile;
 import scenes.Playing;
 
@@ -20,14 +19,12 @@ public class TileManager {
     public boolean isInTile() {
         return isInTile;
     }
-
     public TileManager(Playing playing) {
         initTiles();
         importHardBlurPlant();
         importLightBlurPlant();
         this.playing = playing;
     }
-    private Playing playing;
     private boolean isInTile = false;
 
 

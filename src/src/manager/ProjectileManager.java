@@ -1,8 +1,8 @@
 package manager;
 
 import Audio.Audio;
-import component.Plant;
-import component.Projectile;
+import Plant.Plant;
+import Plant.Projectile;
 import scenes.Playing;
 import zombie.Zombie;
 
@@ -15,20 +15,16 @@ public class ProjectileManager {
     private List<Projectile> listOfProjectile = new ArrayList<>();
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Playing playing;
+    private Image[] projectileImage = new Image[2];
+    private static int realTimeCounter = 0;
+    private static boolean isReset = false;
+
     public ProjectileManager(Playing playing){
         this.playing = playing;
     }
 
     public List<Projectile> getListOfProjectile() {
         return listOfProjectile;
-    }
-
-    private Image[] projectileImage = new Image[2];
-    private static int realTimeCounter = 0;
-    private static boolean isReset = false;
-    private Playing playing;
-    public ProjectileManager(Playing playing) {
-        this.playing = playing;
     }
     public static int getRealTimeCounter() {
         return realTimeCounter;

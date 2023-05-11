@@ -1,10 +1,9 @@
 package zombie;
 
-import component.Plant;
-import manager.ZombieManager;
+import Audio.Audio;
+import Plant.Plant;
 
 import java.awt.*;
-import java.util.Iterator;
 
 public class Zombie {
     private int hp, dmg, type;
@@ -134,7 +133,7 @@ public class Zombie {
     public void updateFrameCountMove(){
         if(!isCollided){
             frameCDMove++;
-            if(frameCDMove%2 == 0){
+            if(frameCDMove%0.5 == 0){
                 frameCountMove++;
                 if(type == 0){
                     if(frameCountMove > 5 && frameCountMove <47)
