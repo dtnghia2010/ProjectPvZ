@@ -23,6 +23,7 @@ public class Menu implements SceneMethods {
 //            Audio.readySetPlant();
             Audio.roofStage();
             setGameScenes(PLAYING);
+            w.getPlaying().getBarManager().setCDatStartOfGame();
         } else if (bQuit.getBounds().contains(x,y)) {
             setGameScenes(LOSE);
         } else if (bSetting.getBounds().contains(x,y)) {
