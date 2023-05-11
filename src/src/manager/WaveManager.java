@@ -1,17 +1,22 @@
 package manager;
 
+import Timer.timeLogic;
 import event.Wave;
 import scenes.Playing;
 
 public class WaveManager {
     private Playing playing;
     private Wave[] waves;
-    private int zombieSpawnTickLimit = 60;
-    private int zombieSpawnTick = zombieSpawnTickLimit;
-    private int curZom = 0, curWave = 0;
+    private boolean endWaves = false, hordeActive = false;
+    private int curZom = 0, curWave = -1;
+    private int waveNum = 4, hordeNum = 10, coolDownWave = 20;
+    private timeLogic zomSpawnTime;
+
     public WaveManager(Playing playing) {
+        zomSpawnTime = new timeLogic(1,0);
+//        waveTime = new timeLogic(10);
         this.playing = playing;
-        waves = new Wave[4];
+        waves = new Wave[waveNum];
         initWaves();
     }
 
@@ -23,16 +28,22 @@ public class WaveManager {
     }
 
     public void readyNewWave() {
+        if(curWave <= 0) {
+            curWave++;
+        }
         if(curWave < waves.length-1) {
             if(curZom > 2) {
                 curWave++;
                 curZom = 0;
             }
+        } else {
+            endWaves = true;
         }
     }
 
     public int getNextZombie() {
-        zombieSpawnTick = 0;
+//        zombieSpawnTick = 0;
+        zomSpawnTime.resetTime();
         if (waves[curWave].amountType(curZom) > 0) {
             waves[curWave].recudeWave(curZom);
             if(waves[curWave].amountType(curZom) == 0) {
@@ -45,17 +56,48 @@ public class WaveManager {
     }
 
     public boolean isTimeForNewZombie() {
-        return zombieSpawnTick >= zombieSpawnTickLimit;
+        return zomSpawnTime.isTime();
     }
-
+/*    public boolean isTimeForNewWave() {
+        return waveTime.isTime();
+    }*/
     public boolean isThereMoreZombieInWave() {
 //        System.out.println("curWave:" +  curWave);
-        return waves[curWave].amountType(curZom) > 0;
+        if(curWave <= 0 || curWave >= waveNum) {
+
+        } else {
+            return waves[curWave].amountType(curZom) > 0;
+        }
+        return false;
     }
 
     public void updates() {
-        if (zombieSpawnTick < zombieSpawnTickLimit) {
-            zombieSpawnTick++;
+        zomSpawnTime.refresh();
+/*        if(!playing.isStartWave()) {
+            waveTime.updates();
+        }*/
+        if(playing.getZombieManager().allZombieDead() && !isThereMoreZombieInWave()) {
+            hordeActive = false;
         }
+    }
+    public boolean isEndWaves() {
+        return endWaves;
+    }
+
+    public boolean hordeDead() {
+        return !hordeActive;
+    }
+
+    public void createHorde() {
+        hordeActive = true;
+        playing.getZombieManager().createHorde(hordeNum);
+        hordeNum += 5;
+    }
+    public int getCurWave() {
+//        System.out.println("curWave " + curWave);
+        return curWave;
+    }
+    public int getCoolDownWave() {
+        return coolDownWave;
     }
 }

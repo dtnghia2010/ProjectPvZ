@@ -15,6 +15,10 @@ public class ProjectileManager {
     private List<Projectile> listOfProjectile = new ArrayList<>();
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Playing playing;
+    private Image[] projectileImage = new Image[2];
+    private static int realTimeCounter = 0;
+    private static boolean isReset = false;
+
     public ProjectileManager(Playing playing){
         this.playing = playing;
     }
@@ -22,11 +26,6 @@ public class ProjectileManager {
     public List<Projectile> getListOfProjectile() {
         return listOfProjectile;
     }
-
-    private Image[] projectileImage = new Image[2];
-    private static int realTimeCounter = 0;
-    private static boolean isReset = false;
-
     public static int getRealTimeCounter() {
         return realTimeCounter;
     }

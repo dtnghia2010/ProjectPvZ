@@ -76,17 +76,20 @@ public class ZombieManager {
     public void spawnZombie(int type) {
         synchronized (zombies) {
             System.out.println("a zombie created");
-            if(!allZombieDead()) {
-                zombies.add(new Zombie(1024+rnd(0,100), 60 + 95 * rnd(0,5), type));
+            if (!allZombieDead()) {
+                zombies.add(new Zombie(1044 + rnd(0, 1000), 60 + 95 * rnd(0, 5), type));
+                if(rnd(0,100) > 90) {
+                    Audio.zombieGroaning();
+                }
             } else {
-                zombies.add(new Zombie(1024, 60 + 95 * rnd(0,5), type));
+                zombies.add(new Zombie(1044, 60 + 95 * rnd(0, 5), type));
+
             }
         }
     }
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.BLACK);
         synchronized (zombies) {
             if (zombies.size() > 0) {
                 for (Zombie z : zombies) {
@@ -137,11 +140,7 @@ public class ZombieManager {
 
     public void createHorde(int count) {
         for (int i = 0; i < count; i++) {
-/*            int x = 1500 + rnd(0,1000);
-            int y = 60 + 95 * rnd(0,1000);
-            int type = rnd(0,2);
-            Zombie zombie = new Zombie(x, y, type);*/
-            spawnZombie(rnd(0,2));
+            spawnZombie(rnd(0, 2));
         }
     }
 
@@ -203,6 +202,7 @@ public class ZombieManager {
                 }
             }
             isResetTime();
+            counter++;
         }
     }
 

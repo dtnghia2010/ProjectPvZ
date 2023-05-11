@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 public class TileManager {
     private Tile[] tiles = new Tile[45];
     private int wTile = 70, hTile = 80;
+    private Playing playing;
     private Image[] plantLightBlur = new Image[5];
     private Image[] plantHardBlur = new Image[5];
     private Toolkit t = Toolkit.getDefaultToolkit();
@@ -18,16 +19,14 @@ public class TileManager {
     public boolean isInTile() {
         return isInTile;
     }
-
-    private Playing playing;
-    private boolean isInTile = false;
-
     public TileManager(Playing playing) {
         initTiles();
         importHardBlurPlant();
         importLightBlurPlant();
         this.playing = playing;
     }
+    private boolean isInTile = false;
+
 
     private void initTiles() {
         int curX = 250, curY = 120, rowCounter = 0;

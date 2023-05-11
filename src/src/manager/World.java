@@ -6,7 +6,6 @@ import scenes.GameScenes;
 import scenes.Lose;
 import scenes.Menu;
 import scenes.Playing;
-import zombie.Zombie;
 
 
 import javax.swing.*;
@@ -18,7 +17,7 @@ public class World extends JPanel implements Runnable {
     private int screenWidth = 1024, screenHeight = 625;
     private ArrayList<Image> img = new ArrayList<>();
     private Random random;
-    private double FPS_SET = 60.0;
+    private double FPS_SET = 200.0;
     private double UPS_SET = 60.0;
     private MyMouseListener myMouseListener;
     private KeyBoardListener keyBoardListener;
@@ -31,6 +30,7 @@ public class World extends JPanel implements Runnable {
         Thread thread = new Thread(this);
         thread.start();
     }
+
     public World() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         random = new Random();
@@ -67,18 +67,21 @@ public class World extends JPanel implements Runnable {
         playing = new Playing(this);
         menu = new Menu(this);
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         render(g);
     }
-    public void update(){
-        switch (GameScenes.gameScenes){
+
+    public void update() {
+        switch (GameScenes.gameScenes) {
             case PLAYING:
                 playing.update();
                 break;
         }
     }
+
     public void render(Graphics g) {
         switch (GameScenes.gameScenes) {
             case MENU:
@@ -92,6 +95,7 @@ public class World extends JPanel implements Runnable {
                 break;
         }
     }
+
     public void updates() {
         switch (GameScenes.gameScenes) {
             case MENU:
@@ -112,6 +116,7 @@ public class World extends JPanel implements Runnable {
         img.add(t.getImage(getClass().getResource("/scene/lose.png")));
 
     }
+
     @Override
     public void run() {
         double timePerFrame = 1000000000.0 / FPS_SET;

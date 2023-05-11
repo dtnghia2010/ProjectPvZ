@@ -32,15 +32,15 @@ public class Zombie {
     private int frameCountEatLimit;
     private boolean isAlived = true;
     private boolean isDead = false;
+    private Rectangle bound;
     private boolean isSlowed = false;
+
     public boolean isDead() {
         return isDead;
     }
-
     public void setDead(boolean dead) {
         isDead = dead;
     }
-    private Rectangle bound;
 
     public Zombie(double x, double y, int type) {
         this.x = x;
@@ -133,7 +133,7 @@ public class Zombie {
     public void updateFrameCountMove(){
         if(!isCollided){
             frameCDMove++;
-            if(frameCDMove%2 == 0){
+            if(frameCDMove%0.5 == 0){
                 frameCountMove++;
                 if(type == 0){
                     if(frameCountMove > 5 && frameCountMove <47)
@@ -203,6 +203,10 @@ public class Zombie {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean isWalking() {
+        return !isCollided;
     }
 
 }

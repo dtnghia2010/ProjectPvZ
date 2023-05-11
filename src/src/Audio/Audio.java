@@ -4,12 +4,12 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-import java.io.InputStream;
 import java.net.URL;
 
 public class Audio {
     private static Clip clip;
     static URL soundURL[] = new URL[12];
+
     static {
         try {
             soundURL[0] = Audio.class.getResource("/Audio/Roof.wav");
@@ -23,6 +23,7 @@ public class Audio {
             soundURL[8] = Audio.class.getResource("/Audio/Explode.wav");
             soundURL[9] = Audio.class.getResource("/Audio/plantNotAvailable.wav");
             soundURL[10] = Audio.class.getResource("/Audio/sunCollected.wav");
+            soundURL[11] = Audio.class.getResource("/Audio/Groaning.wav");
         } catch(Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open audio!"); //show error dialog
@@ -97,4 +98,10 @@ public class Audio {
         clip.setFramePosition(0);
         clip.start();
     }
+    public static void zombieGroaning() {
+        inputAudio(11);
+        clip.setFramePosition(0);
+        clip.start();
+    }
+
 }
