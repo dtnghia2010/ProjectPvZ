@@ -243,7 +243,7 @@ public class PlantManager {
     }
 
     public void plantForbiddenFromStart(){
-        IDhold = -1;
+        IDhold = 0;
         playing.getBarManager().setPlantLocked(false);
         isForbidden = true;
     }
@@ -275,16 +275,18 @@ public class PlantManager {
 
     public void mouse(int x, int y){
         isPlantTest = false;
-        if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
-            for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
-                plantOnTile(playing.getTileManager().getTiles()[i],x,y,i);
+        if(!isForbidden){
+            if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
+                for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
+                    plantOnTile(playing.getTileManager().getTiles()[i],x,y,i);
+                }
+                if(playing.isStartWaveForCD()){
+                    selected = false;
+                    playing.getBarManager().setPlantLocked(false);
+                }
+            } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
+                Audio.plantNotAvailable();
             }
-            if(playing.isStartWaveForCD()){
-                selected = false;
-                playing.getBarManager().setPlantLocked(false);
-            }
-        } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
-            Audio.plantNotAvailable();
         }
     }
 
@@ -294,17 +296,19 @@ public class PlantManager {
 
     public void plantCreateByKeyBoard(int tileNum){
         isPlantTest = false;
-        if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
-            for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
-                plantOnTile(playing.getTileManager().getTiles()[i],(int)playing.getTileManager().getTiles()[tileNum].getBound().getX(),(int)playing.getTileManager().getTiles()[tileNum].getBound().getY(),i);
-            }
-            if(playing.isStartWaveForCD() && isPlanted){
+        if(!isForbidden){
+            if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
+                for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
+                    plantOnTile(playing.getTileManager().getTiles()[i],(int)playing.getTileManager().getTiles()[tileNum].getBound().getX(),(int)playing.getTileManager().getTiles()[tileNum].getBound().getY(),i);
+                }
+                if(playing.isStartWaveForCD() && isPlanted){
 //                selected = false;
-                playing.getBarManager().setPlantLocked(false);
-                isPlanted = false;
+                    playing.getBarManager().setPlantLocked(false);
+                    isPlanted = false;
+                }
+            } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
+                Audio.plantNotAvailable();
             }
-        } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
-            Audio.plantNotAvailable();
         }
     }
 

@@ -128,7 +128,7 @@ public class TileManager {
         if(playing.getPlantManager().isSelected()){
             Rectangle r = new Rectangle((int)tiles[tileSelectedByKeyBoard].getBound().getX(),(int)tiles[tileSelectedByKeyBoard].getBound().getY(),tiles[tileSelectedByKeyBoard].getwTile(),tiles[tileSelectedByKeyBoard].gethTile());
             if(playing.getPlantManager().getIDhold() >= 0){
-                if(!playing.getBarManager().getIsPlantInCD()[playing.getPlantManager().getIDhold()] && playing.getBarManager().getIsPlantEnoughSun()[playing.getPlantManager().getIDhold()]){
+                if(!playing.getBarManager().getIsPlantInCD()[playing.getPlantManager().getIDhold()] && playing.getBarManager().getIsPlantEnoughSun()[playing.getPlantManager().getIDhold()] && !playing.getPlantManager().isForbidden()){
                     Graphics2D g2d = (Graphics2D) g;
                     if(playing.getPlantManager().getIDhold() != 3){
                         g2d.drawImage(plantLightBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY(),(int)r.getWidth(),(int)r.getHeight(),null);
@@ -143,10 +143,6 @@ public class TileManager {
                         g2n.drawImage(plantHardBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY()-10,(int)r.getWidth(),(int)r.getHeight()+10,null);
                     }
                 }
-            }
-            if(playing.getPlantManager().isForbidden()){
-                Graphics2D g2f = (Graphics2D) g;
-                g2f.drawImage(plantHardBlur[0],(int)r.getX(),(int)r.getY(),(int)r.getWidth(),(int)r.getHeight(),null);
             }
         }
     }

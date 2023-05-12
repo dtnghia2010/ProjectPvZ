@@ -17,7 +17,7 @@ public class sunManager {
     private List<Sun> listOfSun = new ArrayList<>();
     private Playing playing;
     private int realTimeCounter = 0;
-    private int sunHold = 2000;
+    private int sunHold = 1000;
     private Random random = new Random();
     private int randomTimeSunDrop = 600;
     private boolean isSunCreated = false;
