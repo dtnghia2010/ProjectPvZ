@@ -9,7 +9,7 @@ public class WaveManager {
     private Wave[] waves;
     private boolean endWaves = false, hordeActive = false;
     private int curZom = 0, curWave = -1;
-    private int waveNum = 4, hordeNum = 10, coolDownWave = 20;
+    private int waveNum = 4, hordeNum = 10, coolDownWave = 10;
     private timeLogic zomSpawnTime;
 
     public WaveManager(Playing playing) {

@@ -61,6 +61,7 @@ public class NotifManager {
                 }
                 countWave(g);
                 if (!executed)
+                    playing.setStartWaveForCD(false);
                     stageClear(g); //stage clear notif
             }
         }

@@ -16,62 +16,23 @@ public class ProjectileManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Playing playing;
     private Image[] projectileImage = new Image[2];
-    private static int realTimeCounter = 0;
-    private static boolean isReset = false;
 
     public ProjectileManager(Playing playing){
         this.playing = playing;
-    }
-
-    public List<Projectile> getListOfProjectile() {
-        return listOfProjectile;
-    }
-    public static int getRealTimeCounter() {
-        return realTimeCounter;
-    }
-
-    public static void frameCount(){
-        if(realTimeCounter<100){
-            realTimeCounter++;
-        }
-    }
-
-    public static void setRealTimeCounter(int realTimeCounter) {
-        ProjectileManager.realTimeCounter = realTimeCounter;
     }
 
     public void projectileCreated(Plant plant){
         synchronized (listOfProjectile){
             if(plant.getPlantID() == 1){
                 listOfProjectile.add(new Projectile(plant.getX()+plant.getWidth(),plant.getY()+8,plant.getATK(),1));
-                isReset = true;
             } else if(plant.getPlantID() == 3){
                 listOfProjectile.add(new Projectile(plant.getX()+plant.getWidth(),plant.getY()+8,plant.getATK(),2));
-                isReset = true;
             }
-        }
-//        synchronized (listOfProjectile){
-//            Iterator<Plant> iterator = plantManager.getPlantList().iterator();
-//            while ((iterator.hasNext())){
-//                Plant plant = iterator.next();
-//                if(plant.getID() == 1 || plant.getID() == 3){
-//                    if(realTimeCounter == 120){
-//                        listOfProjectile.add(new Projectile(plant.getX()+plant.getWidth(),plant.getY()+8,(int)plant.getATK()));
-//                        isReset = true;
-//                    }
-//                }
-//            }
-//        }
-    }
-    public static void isResetTime(){
-        if(isReset){
-            realTimeCounter = 0;
-            isReset = false;
         }
     }
 
+
     public void update(){
-        frameCount();
         synchronized (listOfProjectile){
             Iterator<Projectile> iterator = listOfProjectile.iterator();
             while ((iterator.hasNext())){
@@ -82,6 +43,7 @@ public class ProjectileManager {
                 }
             }
         }
+        projectileCollideZombie();
     }
     public void drawProjectile(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
@@ -100,9 +62,9 @@ public class ProjectileManager {
         }
     }
 
-    public void projectileCollideZombie(ZombieManager zombieManager){
-        synchronized (zombieManager.getZombies()){
-            Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
+    public void projectileCollideZombie(){
+        synchronized (playing.getZombieManager().getZombies()){
+            Iterator<Zombie> iterator = playing.getZombieManager().getZombies().iterator();
             while ((iterator.hasNext())){
                 Zombie zombie = iterator.next();
                 Rectangle r = new Rectangle();
@@ -116,16 +78,16 @@ public class ProjectileManager {
                     while (iterator2.hasNext()){
                         Projectile projectile = iterator2.next();
                         if(projectile.getID() == 1){
-                            projectileDealDamage(30,r,projectile,zombie,iterator,iterator2);
+                            projectileDealDamage(30,r,projectile,zombie,iterator2);
                         } else if(projectile.getID() == 2){
-                            projectileDealDamage(70,r,projectile,zombie,iterator,iterator2);
+                            projectileDealDamage(50,r,projectile,zombie,iterator2);
                         }
                     }
                 }
             }
         }
     }
-    public void projectileDealDamage(int distance,Rectangle r, Projectile projectile, Zombie zombie, Iterator iterator, Iterator iterator2){
+    public void projectileDealDamage(int distance,Rectangle r, Projectile projectile, Zombie zombie, Iterator iterator2){
         if(r.contains(projectile.getX()+distance,projectile.getY()) && zombie.isAlived()){
             if(!playing.getPlantManager().isPlantTest()){
                 Audio.splat();

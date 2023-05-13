@@ -191,6 +191,7 @@ public class BarManager {
         isCDReducing[2] = false;
         isCDReducing[3] = false;
         isCDReducing[4] = false;
+        plantEnoughSun();
     }
 
     public boolean[] getIsPlantEnoughSun() {

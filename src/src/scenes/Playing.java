@@ -15,7 +15,7 @@ public class Playing implements SceneMethods {
     private PlantManager plantManager;
     private ButtonManager buttonManager;
     private ProjectileManager projectileManager;
-    private manager.sunManager sunManager;
+    private sunManager sunManager;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
     private KeyBoardManager keyBoardManager;
@@ -75,26 +75,11 @@ public class Playing implements SceneMethods {
     public TileManager getTileManager() {
         return tileManager;
     }
-
-    public void update(){
-        plantManager.alertPlant(tileManager,zombieManager);
-        plantManager.calmPlant(tileManager,zombieManager);
-        plantManager.update();
-        plantManager.updateSunflower();
-        plantManager.timeExplode();
-//        projectileManager.projectileCreated(plantManager);
-        plantManager.plantAttack();
-        projectileManager.update();
-        projectileManager.projectileCollideZombie(zombieManager);
-        barManager.update();
-        barManager.plantEnoughSun();
-        sunManager.update(this);
-    }
     @Override
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
-        tileManager.drawTiles(g, plantManager);
+//        tileManager.drawTiles(g, plantManager);
         barManager.drawPlantbar(g);
         barManager.drawPlantInCD(g);
         barManager.drawPlantNotEnoughSun(g);
@@ -147,14 +132,14 @@ public class Playing implements SceneMethods {
                 notifManager.reset();*/
             }
         }
-        for (MyButtons b : barManager.getPickPlant()) {
-            if (b.getBounds().contains(x, y)) {
-                Audio.tapPlantBar();
-                System.out.println("You choose " + b.getText());
-            }
-        }
+        choosePlant(x,y);
+        sunManager.clickSun(x,y);
+    }
+    public void choosePlant(int x, int y){
         for (MyButtons b2 : barManager.getPickPlant()) {
             if (b2.getBounds().contains(x, y)) {
+                System.out.println("You choose " + b2.getText());
+                Audio.tapPlantBar();
                 plantManager.setSelected(true);
                 if(!barManager.isPlantLocked()){
                     if (b2.getText().contains("Sunflower")) {
@@ -178,9 +163,7 @@ public class Playing implements SceneMethods {
                 barManager.setPlantLocked(true);
             }
         }
-        sunManager.clickSun(x,y);
     }
-
 
     public void mousePressed(int x, int y) {
 
@@ -194,7 +177,7 @@ public class Playing implements SceneMethods {
     public void mouseMove(int x, int y){
         mouseMotionManager.changeStatusToMouse(x,y,w);
         mouseMotionManager.mouseTrackPlantBar(x,y);
-        tileManager.tileTrack(x,y);
+        mouseMotionManager.tileTrack(x,y);
     }
 
 
@@ -206,12 +189,11 @@ public class Playing implements SceneMethods {
         keyBoardManager.changeStatusToKeyBoard(e);
         keyBoardManager.keyBoardChoosePlant(e);
         keyBoardManager.keyBoardSelectPlant(e);
-        tileManager.tileSelectedByKeyBoard(e);
-        keyBoardManager.returnToSelectPlantByKeyBoard(e);
+        keyBoardManager.tileSelectedByKeyBoard(e);
+//        keyBoardManager.returnToSelectPlantByKeyBoard(e);
         keyBoardManager.startGame(e);
     }
-
-    public void updates() {
+    public void setupZombie(){
         if(getNotifManager().isEndCDWave()) {
             System.out.println("startGame");
             startGame();
@@ -235,6 +217,13 @@ public class Playing implements SceneMethods {
 //                notifManager.setNotif(new PlayingNotif(0));
             }
         }
+    }
+    public void updates() {
+        setupZombie();
+        plantManager.update();
+        projectileManager.update();
+        barManager.update();
+        sunManager.update(this);
         waveManager.updates();
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();

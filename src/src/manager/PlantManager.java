@@ -178,6 +178,11 @@ public class PlantManager {
                 }
             }
         }
+        alertPlant();
+        calmPlant();
+        updateSunflower();
+        timeExplode();
+        plantAttack();
     }
 
     public void setSelected(boolean selected) {
@@ -290,10 +295,6 @@ public class PlantManager {
         }
     }
 
-    public void setPlantTest(boolean plantTest) {
-        isPlantTest = plantTest;
-    }
-
     public void plantCreateByKeyBoard(int tileNum){
         isPlantTest = false;
         if(!isForbidden){
@@ -355,32 +356,32 @@ public class PlantManager {
         return plantList;
     }
 
-    public void alertPlant(TileManager tileManager, ZombieManager zombieManager){
-        for(int i = 0;i<tileManager.getTiles().length;i++){
-            Rectangle r = tileManager.getTiles()[i].getBound();
-            Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
+    public void alertPlant(){
+        for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
+            Rectangle r = playing.getTileManager().getTiles()[i].getBound();
+            Iterator<Zombie> iterator = playing.getZombieManager().getZombies().iterator();
             while (iterator.hasNext()){
                 Zombie zombie = iterator.next();
                 if(r.contains(zombie.X()+50,zombie.Y()+70) && zombie.isAlived()){
                     if(i>=0 && i<9){
                         for(int j = 0;j < 9;j++){
-                            setPlantDangered(tileManager.getTiles()[j]);
+                            setPlantDangered(playing.getTileManager().getTiles()[j]);
                         }
                     } else if(i >= 9 && i<18){
                         for(int j = 9;j < 18;j++){
-                            setPlantDangered(tileManager.getTiles()[j]);
+                            setPlantDangered(playing.getTileManager().getTiles()[j]);
                         }
                     } else if(i>=18 && i<27){
                         for(int j = 18;j < 27;j++){
-                            setPlantDangered(tileManager.getTiles()[j]);
+                            setPlantDangered(playing.getTileManager().getTiles()[j]);
                         }
                     } else if(i>=27 && i<36){
                         for(int j = 27;j < 36;j++){
-                            setPlantDangered(tileManager.getTiles()[j]);
+                            setPlantDangered(playing.getTileManager().getTiles()[j]);
                         }
                     } else if (i >= 36 && i<45) {
                         for(int j = 36;j < 45;j++){
-                            setPlantDangered(tileManager.getTiles()[j]);
+                            setPlantDangered(playing.getTileManager().getTiles()[j]);
                         }
                     }
                 }
@@ -411,25 +412,25 @@ public class PlantManager {
         return start;
     }
 
-    public void calmPlant(TileManager tileManager, ZombieManager zombieManager){
-        for (int i = isPlantAttack(0,9,tileManager,zombieManager); i < 9; i++) {
-            setPlantIdle(tileManager.getTiles()[i]);
+    public void calmPlant(){
+        for (int i = isPlantAttack(0,9,playing.getTileManager(),playing.getZombieManager()); i < 9; i++) {
+            setPlantIdle(playing.getTileManager().getTiles()[i]);
         }
 
-        for (int i = isPlantAttack(9,18,tileManager,zombieManager); i < 18; i++) {
-            setPlantIdle(tileManager.getTiles()[i]);
+        for (int i = isPlantAttack(9,18,playing.getTileManager(),playing.getZombieManager()); i < 18; i++) {
+            setPlantIdle(playing.getTileManager().getTiles()[i]);
         }
 
-        for (int i = isPlantAttack(18,27,tileManager,zombieManager); i < 27; i++) {
-            setPlantIdle(tileManager.getTiles()[i]);
+        for (int i = isPlantAttack(18,27,playing.getTileManager(),playing.getZombieManager()); i < 27; i++) {
+            setPlantIdle(playing.getTileManager().getTiles()[i]);
         }
 
-        for (int i = isPlantAttack(27,36,tileManager,zombieManager); i < 36; i++) {
-            setPlantIdle(tileManager.getTiles()[i]);
+        for (int i = isPlantAttack(27,36,playing.getTileManager(),playing.getZombieManager()); i < 36; i++) {
+            setPlantIdle(playing.getTileManager().getTiles()[i]);
         }
 
-        for (int i = isPlantAttack(36,45,tileManager,zombieManager); i < 45; i++) {
-            setPlantIdle(tileManager.getTiles()[i]);
+        for (int i = isPlantAttack(36,45,playing.getTileManager(),playing.getZombieManager()); i < 45; i++) {
+            setPlantIdle(playing.getTileManager().getTiles()[i]);
         }
     }
 

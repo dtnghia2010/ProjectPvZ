@@ -87,14 +87,12 @@ public class Sun {
     private double distanceTOMoveToStorage;
     public void moveToStorage(){
         if(isSunCLicked){
-            if(y>0){
-                for(int i = 0;i<8;i++){
-                    if(distanceTOMoveToStorage> i && distanceTOMoveToStorage<i+1){
-                        for(int j = 0;j<8-i;j++){
-                            y--;
-                            x = (x-distanceTOMoveToStorage);
-                            //TODO need more make code clearer (maybe increase step instead of loop)
-                        }
+            for(int i = 0;i<8;i++){
+                if(distanceTOMoveToStorage> i && distanceTOMoveToStorage<i+1){
+                    for(int j = 0;j<8-i;j++){
+                        y--;
+                        x = (x-distanceTOMoveToStorage);
+                        //TODO need more make code clearer (maybe increase step instead of loop)
                     }
                 }
             }

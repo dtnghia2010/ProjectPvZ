@@ -7,6 +7,7 @@ import java.awt.*;
 public class MouseMotionManager {
     private Playing playing;
     private int plantPickedByMouse = 0;
+    private int tileSelectedByMouse;
 
     public void setPlantPickedByMouse(int plantPickedByMouse) {
         this.plantPickedByMouse = plantPickedByMouse;
@@ -24,6 +25,15 @@ public class MouseMotionManager {
     public void setControlledByMouse(boolean controlledByMouse) {
         isControlledByMouse = controlledByMouse;
     }
+
+    public int getTileSelectedByMouse() {
+        return tileSelectedByMouse;
+    }
+
+    public void setTileSelectedByMouse(int tileSelectedByMouse) {
+        this.tileSelectedByMouse = tileSelectedByMouse;
+    }
+
     public void changeStatusToMouse(int x, int y, World w){
         Rectangle world = new Rectangle(w.getX(),w.getY(),w.getWidth(),w.getHeight());
         if(world.contains(x,y)){
@@ -58,5 +68,15 @@ public class MouseMotionManager {
         playing.getPlantManager().setSelected(false);
         playing.getPlantManager().setTimeToPlant(true);
         playing.getBarManager().setPlantLocked(false);
+    }
+    public void tileTrack(int x, int y){
+        for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
+            Rectangle r = new Rectangle((int)playing.getTileManager().getTiles()[i].getBound().getX(),(int)playing.getTileManager().getTiles()[i].getBound().getY(),playing.getTileManager().getTiles()[i].getwTile(),playing.getTileManager().getTiles()[i].gethTile());
+            if(r.contains(x,y)){
+                playing.getTileManager().setInTile(true);
+                tileSelectedByMouse = i;
+                playing.getKeyBoardManager().setTileSelectedByKeyBoard(tileSelectedByMouse);
+            }
+        }
     }
 }
