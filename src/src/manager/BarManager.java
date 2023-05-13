@@ -1,12 +1,10 @@
 package manager;
 
-import Audio.Audio;
 import component.MyButtons;
 import scenes.Playing;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -300,6 +298,12 @@ public class BarManager {
         } else if(playing.getSunManager().getSunHold() < 200){
             g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
         }
+    }
+    public void draw(Graphics g){
+        drawPlantbar(g);
+        drawPlantNotAvailableFromStart(g);
+        drawPlantInCD(g);
+        drawPlantNotEnoughSun(g);
     }
     public void drawPlantNotAvailableFromStart(Graphics g){
         if(!playing.isStartWaveForCD()){

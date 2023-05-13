@@ -3,7 +3,6 @@ package scenes;
 import Audio.Audio;
 import manager.*;
 import component.MyButtons;
-import notification.PlayingNotif;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
@@ -80,17 +79,11 @@ public class Playing implements SceneMethods {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
 //        tileManager.drawTiles(g, plantManager);
-        barManager.drawPlantbar(g);
-        barManager.drawPlantInCD(g);
-        barManager.drawPlantNotEnoughSun(g);
+        barManager.draw(g);
         mouseMotionManager.drawPlantSelectedByMouse(g);
         keyBoardManager.drawPlantSelectedByKeyBoard(g);
-        barManager.drawPlantNotAvailableFromStart(g);
-        tileManager.drawTileSelectedByKeyBoard(g);
-        tileManager.drawTileSelectedByMouse(g);
-        tileManager.drawPlantPreparedToPlanted(g);
-        plantManager.drawPlant(g);
-        plantManager.drawExplosion(g);
+        tileManager.draw(g);
+        plantManager.draw(g);
         zombieManager.draw(g);
         projectileManager.drawProjectile(g);
         sunManager.drawSun(g);
@@ -117,6 +110,11 @@ public class Playing implements SceneMethods {
     }
 
     public void mouseClicked(int x, int y) {
+        changeScene(x,y);
+        choosePlant(x,y);
+        sunManager.clickSun(x,y);
+    }
+    public void changeScene(int x, int y){
         if (buttonManager.getbMenu().getBounds().contains(x, y)) {
             setGameScenes(MENU);
         } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
@@ -132,8 +130,6 @@ public class Playing implements SceneMethods {
                 notifManager.reset();*/
             }
         }
-        choosePlant(x,y);
-        sunManager.clickSun(x,y);
     }
     public void choosePlant(int x, int y){
         for (MyButtons b2 : barManager.getPickPlant()) {

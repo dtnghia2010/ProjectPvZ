@@ -24,18 +24,7 @@ public class PlantManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private List<Plant> plantList = new ArrayList<>();
     private boolean isPlantTest = true;
-
-    public boolean isTimeToPlant() {
-        return isTimeToPlant;
-    }
-
-    public void setTimeToPlant(boolean timeToPlant) {
-        isTimeToPlant = timeToPlant;
-    }
     private boolean isTimeToPlant = false;
-    public boolean isSelected() {
-        return selected;
-    }
     private Playing playing;
     private boolean selected = true;
     private boolean isPlanted = false;
@@ -53,10 +42,6 @@ public class PlantManager {
         plantForbiddenFromStart();
     }
 
-    public void setFrameCountLimitHold(int frameCountLimitHold) {
-        this.frameCountLimitHold = frameCountLimitHold;
-    }
-
     public void initPlants(int plantID, int plantHP, int ATK, int frameCount) {
         plantList.add(new Plant(plantHP, plantID,ATK,frameCount));
     }
@@ -64,11 +49,15 @@ public class PlantManager {
     public void setIDhold(int IDhold) {
         this.IDhold = IDhold;
     }
-    public void setHPhold(int HPhold) {
-        this.HPhold = HPhold;
+    public boolean isTimeToPlant() {
+        return isTimeToPlant;
     }
-    public void setATKhold(int ATKhold) {
-        this.ATKhold = ATKhold;
+
+    public void setTimeToPlant(boolean timeToPlant) {
+        isTimeToPlant = timeToPlant;
+    }
+    public boolean isSelected() {
+        return selected;
     }
     public void importSunFlower(){
         for(int i = 0;i<sunFlower.length;i++){
@@ -277,7 +266,6 @@ public class PlantManager {
             }
         }
     }
-
     public void mouse(int x, int y){
         isPlantTest = false;
         if(!isForbidden){
@@ -294,7 +282,6 @@ public class PlantManager {
             }
         }
     }
-
     public void plantCreateByKeyBoard(int tileNum){
         isPlantTest = false;
         if(!isForbidden){
@@ -311,10 +298,6 @@ public class PlantManager {
                 Audio.plantNotAvailable();
             }
         }
-    }
-
-    public void setSunCostHold(int sunCostHold) {
-        this.sunCostHold = sunCostHold;
     }
     public void updateSunflower(){
         if(playing.isStartWaveForCD()){
@@ -513,5 +496,8 @@ public class PlantManager {
             explosionTime = 0;
         }
     }
-
+    public void draw(Graphics g){
+        drawPlant(g);
+        drawExplosion(g);
+    }
 }

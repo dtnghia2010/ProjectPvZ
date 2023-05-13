@@ -113,4 +113,9 @@ public class TileManager {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(playing.getBarManager().getPickedPlant(),(int)tiles[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().getX(),(int)tiles[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().getY(),tiles[playing.getMouseMotionManager().getTileSelectedByMouse()].getwTile(),tiles[playing.getMouseMotionManager().getTileSelectedByMouse()].gethTile(),null);
     }
+    public void draw(Graphics g){
+        drawPlantPreparedToPlanted(g);
+        drawTileSelectedByMouse(g);
+        drawTileSelectedByKeyBoard(g);
+    }
 }
