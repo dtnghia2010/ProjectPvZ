@@ -33,21 +33,21 @@ public class BarManager {
 
     private void initButtons() {
         pickPlant = new MyButtons[5];
-        pickPlant[0] = new MyButtons("Sunflower", 475, 5, 90, 90);
-        pickPlant[1] = new MyButtons("Peashooter", 565, 5, 90, 90);
-        pickPlant[2] = new MyButtons("Wall-nut", 655, 5, 90, 90);
-        pickPlant[3] = new MyButtons("Snow Pea", 745, 5, 90, 90);
-        pickPlant[4] = new MyButtons("Cherry Bomb", 835, 5, 90, 90);
+        pickPlant[0] = new MyButtons("Sunflower", 465, 20, 80, 70);
+        pickPlant[1] = new MyButtons("Peashooter", 560, 20, 80, 70);
+        pickPlant[2] = new MyButtons("Wall-nut", 655, 20, 80, 70);
+        pickPlant[3] = new MyButtons("Shadow peashooter", 750, 20, 80, 70);
+        pickPlant[4] = new MyButtons("Cherry Bomb", 845, 20, 80, 70);
     }
 
     private void importImg(){
         pick_plantBar = new Image[5];
         try {
-            pick_plantBar[0] = t.getImage(getClass().getResource("/plantBar/PvZ_Sunflower.jpg"));
-            pick_plantBar[1] = t.getImage(getClass().getResource("/plantBar/PvZ_Peashooter.jpg"));
-            pick_plantBar[2] = t.getImage(getClass().getResource("/plantBar/PvZ_Wall-nut.jpg"));
-            pick_plantBar[3] = t.getImage(getClass().getResource("/plantBar/PvZ_Snow_Pea.jpg"));
-            pick_plantBar[4] = t.getImage(getClass().getResource("/plantBar/PvZ_Cherry_Bomb.jpg"));
+            pick_plantBar[0] = t.getImage(getClass().getResource("/plantBar/Sunflower.png"));
+            pick_plantBar[1] = t.getImage(getClass().getResource("/plantBar/Peashooter.png"));
+            pick_plantBar[2] = t.getImage(getClass().getResource("/plantBar/Wall-nut.png"));
+            pick_plantBar[3] = t.getImage(getClass().getResource("/plantBar/Shadow_Peashooter.png"));
+            pick_plantBar[4] = t.getImage(getClass().getResource("/plantBar/Cherry_Bomb.png"));
             framePlant = t.getImage(getClass().getResource("/plantBar/plantSelected.png"));
             plantBar = t.getImage(getClass().getResource("/plantBar/plantPanel.png"));
         }catch (Exception e){
@@ -70,32 +70,32 @@ public class BarManager {
 
     public void drawPlantbar(Graphics g){
         g.setColor(Color.black);
-        g.drawRect(400, 0,535,100);
+        g.drawRect(370, 10,580,90);
         g.setColor(Color.pink);
-        g.fillRect(400, 0, 535, 100);
-        g.drawImage(plantBar, 400, 0, 535, 100, null);
+        g.fillRect(370, 10, 580, 90);
+        g.drawImage(plantBar, 370, 10, 580, 90, null);
         Graphics2D g2d = (Graphics2D) g;
         int distance = 0;
         for (Image p : pick_plantBar){
-            g.drawImage(p, 475 + distance, 5, 90, 90, null);
+            g.drawImage(p, 465 + distance, 20, 80, 70, null);
             switch (plantPickedID){
                 case 0:
-                    g2d.drawImage(framePlant,475, 5, 90, 90, null);
+                    g2d.drawImage(framePlant,465, 20, 80, 70, null);
                     break;
                 case 1:
-                    g2d.drawImage(framePlant,475 + 90, 5, 90, 90, null);
+                    g2d.drawImage(framePlant,465 + 95, 20, 80, 70, null);
                     break;
                 case 2:
-                    g2d.drawImage(framePlant,475 + 180, 5, 90, 90, null);
+                    g2d.drawImage(framePlant,465 + 190, 20, 80, 70, null);
                     break;
                 case 3:
-                    g2d.drawImage(framePlant,475 + 270, 5, 90, 90, null);
+                    g2d.drawImage(framePlant,465 + 285, 20, 80, 70, null);
                     break;
                 case 4:
-                    g2d.drawImage(framePlant,475 + 360, 5, 90, 90, null);
+                    g2d.drawImage(framePlant,465 + 380, 20, 80, 70, null);
                     break;
             }
-            distance += 90;
+            distance += 95;
         }
     }
     public void sunFlower(){
@@ -131,7 +131,7 @@ public class BarManager {
             plantCD[2] = 600;
         }
     }
-    public void snowPea(){
+    public void shadowPea(){
         playing.getPlantManager().setIDhold(3);
         playing.getPlantManager().setHPhold(100);
         playing.getPlantManager().setATKhold(20);
@@ -165,7 +165,7 @@ public class BarManager {
                 wall_nut();
                 break;
             case 3:
-                snowPea();
+                shadowPea();
                 break;
             case 4:
                 cherryBomb();
@@ -326,11 +326,11 @@ public class BarManager {
     public void initPlantInCD(){
         plantInCD = new Image[5];
         try {
-            plantInCD[0] = t.getImage(getClass().getResource("/plantInCD/sunFolwer.png"));
-            plantInCD[1] = t.getImage(getClass().getResource("/plantInCD/peaShooter.png"));
-            plantInCD[2] = t.getImage(getClass().getResource("/plantInCD/wallNut.png"));
-            plantInCD[3] = t.getImage(getClass().getResource("/plantInCD/snowPea.png"));
-            plantInCD[4] = t.getImage(getClass().getResource("/plantInCD/cherryBomb.png"));
+            plantInCD[0] = t.getImage(getClass().getResource("/plantInCD/Sunflower.png"));
+            plantInCD[1] = t.getImage(getClass().getResource("/plantInCD/Peashooter.png"));
+            plantInCD[2] = t.getImage(getClass().getResource("/plantInCD/Wall-nut.png"));
+            plantInCD[3] = t.getImage(getClass().getResource("/plantInCD/Shadow_Peashooter.png"));
+            plantInCD[4] = t.getImage(getClass().getResource("/plantInCD/Cherry_Bomb.png"));
         } catch (Exception e){
 
         }
@@ -340,13 +340,13 @@ public class BarManager {
         Graphics2D g2d = (Graphics2D) g;
         for(int i = 0;i<5;i++){
             if(isPlantInCD[i]){
-                g.drawImage(plantInCD[i], 475 + distance, 5, 90, 90, null);
-                int cd = (plantCD[i]+40)/60;
+                g.drawImage(plantInCD[i], 465 + distance, 20, 80, 70, null);
+                int cd = (plantCD[i]+59)/60;
                 g2d.setColor(Color.YELLOW);
                 g2d.setFont(new Font("Arial",Font.BOLD,30));
-                g2d.drawString(String.format("%d",cd),510 + distance,55);
+                g2d.drawString(String.format("%d",cd),495 + distance,65);
             }
-            distance += 90;
+            distance += 95;
         }
     }
     public MyButtons[] getPickPlant() {

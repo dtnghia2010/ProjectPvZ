@@ -104,8 +104,8 @@ public class Playing implements SceneMethods {
                     barManager.peaShooter();
                 } else if (b2.getText().contains("Wall-nut")) {
                     barManager.wall_nut();
-                } else if (b2.getText().contains("Snow Pea")) {
-                    barManager.snowPea();
+                } else if (b2.getText().contains("Shadow peashooter")) {
+                    barManager.shadowPea();
                 } else if (b2.getText().contains("Cherry Bomb")) {
                     barManager.cherryBomb();
                 }

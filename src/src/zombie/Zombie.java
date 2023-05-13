@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class Zombie {
     private int hp, dmg, type;
-    private final int width = 80, height = 140;
+    private final int width = 55, height = 110;
     private float spd = 0.8f;
     private boolean isCollided = false;
 

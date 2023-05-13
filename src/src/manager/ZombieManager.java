@@ -55,9 +55,9 @@ public class ZombieManager {
         synchronized (zombies) {
             System.out.println("a zombie created");
             if(!allZombieDead()) {
-                zombies.add(new Zombie(1024+rnd(0,1000), 60 + 95 * rnd(0,5), type));
+                zombies.add(new Zombie(1024+rnd(0,1000), 140 + 80 * rnd(0,5), type));
             } else {
-                zombies.add(new Zombie(1024, 60 + 95 * rnd(0,5), type));
+                zombies.add(new Zombie(1024, 140 + 78 * rnd(0,5), type));
             }
         }
     }

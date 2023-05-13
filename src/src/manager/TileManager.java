@@ -8,21 +8,21 @@ import java.awt.*;
 
 public class TileManager {
     private Tile[] tiles = new Tile[45];
-    private int wTile = 70, hTile = 80;
+    private int wTile = 60, hTile = 70;
 
     public TileManager() {
         initTiles();
     }
 
     private void initTiles() {
-        int curX = 250, curY = 120, rowCounter = 0;
+        int curX = 300, curY = 171, rowCounter = 0;
         for (int i = 0; i < 45; i++) {
             if (rowCounter >= 9) {
-                curY += hTile + 15;
-                curX = 250;
+                curY += hTile + 10;
+                curX = 300;
                 rowCounter = 0;
             }
-            curX += (wTile + 8);
+            curX += (wTile + 10);
             tiles[i] = new Tile(new Rectangle(curX, curY, wTile, hTile));
             rowCounter++;
         }
@@ -30,7 +30,7 @@ public class TileManager {
 
     public void drawTiles(Graphics g, PlantManager plantManager) {
         for (Tile t : tiles) {
-            Rectangle r = new Rectangle(t.getCurX(), t.getCurY(), t.getwTile(), t.gethTile());
+            Rectangle r = t.getBound();
 //            for (int i = 0; i < plantManager.getPlantList().size(); i++) {
 //                    if (plantManager.isLocated()) {
 //                        g.drawImage(plantManager.getPlantImages(plantManager.getPlantList().get(i).getPlantID()), r.x, r.y, r.width, r.height, null);
@@ -40,6 +40,8 @@ public class TileManager {
 //                } else if (plantManager.getPlantList().get(i).getPlantID() == 1) {
 //                    g.drawImage(plantManager.getPlantImages(1), r.x, r.y, r.width, r.height, null);
 //                }
+//            g.setColor(Color.white);
+//            g.fillRect(r.x, r.y, r.width, r.height);
         }
     }
 
