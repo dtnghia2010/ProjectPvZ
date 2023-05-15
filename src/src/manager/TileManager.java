@@ -88,16 +88,16 @@ public class TileManager {
                 if(!playing.getBarManager().getIsPlantInCD()[playing.getPlantManager().getIDhold()] && playing.getBarManager().getIsPlantEnoughSun()[playing.getPlantManager().getIDhold()] && !playing.getPlantManager().isForbidden()){
                     Graphics2D g2d = (Graphics2D) g;
                     if(playing.getPlantManager().getIDhold() != 3){
-                        g2d.drawImage(plantLightBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY(),(int)r.getWidth(),(int)r.getHeight(),null);
+                        g2d.drawImage(plantLightBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY()+5,(int)r.getWidth()-15,(int)r.getHeight()-15,null);
                     } else {
-                        g2d.drawImage(plantLightBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY()-10,(int)r.getWidth(),(int)r.getHeight()+10,null);
+                        g2d.drawImage(plantLightBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY()-25,(int)r.getWidth(),(int)r.getHeight()+15,null);
                     }
                 } else {
                     Graphics2D g2n = (Graphics2D) g;
                     if(playing.getPlantManager().getIDhold() != 3){
-                        g2n.drawImage(plantHardBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY(),(int)r.getWidth(),(int)r.getHeight(),null);
+                        g2n.drawImage(plantHardBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY()+5,(int)r.getWidth()-15,(int)r.getHeight()-15,null);
                     } else {
-                        g2n.drawImage(plantHardBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY()-10,(int)r.getWidth(),(int)r.getHeight()+10,null);
+                        g2n.drawImage(plantHardBlur[playing.getPlantManager().getIDhold()],(int)r.getX(),(int)r.getY()-25,(int)r.getWidth(),(int)r.getHeight()+15,null);
                     }
                 }
             }

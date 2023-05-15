@@ -10,15 +10,7 @@ public class KeyBoardManager {
     private Playing playing;
     private int plantPickedByKeyBoard = 0;
     private boolean isKeyPressForTheFirstTime = true;
-    private boolean isPlantBeingForbidden = false;
     private int tileSelectedByKeyBoard = 0;
-    public boolean isPlantBeingForbidden() {
-        return isPlantBeingForbidden;
-    }
-
-    public void setPlantBeingForbidden(boolean plantBeingForbidden) {
-        isPlantBeingForbidden = plantBeingForbidden;
-    }
 
     public KeyBoardManager(Playing playing){
         this.playing = playing;

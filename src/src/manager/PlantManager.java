@@ -200,30 +200,45 @@ public class PlantManager {
                 ATKhold = 0;
                 frameCountLimitHold = 25;
                 sunCostHold = 50;
+                if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[0]){
+                    playing.getBarManager().setPlantCD(0,240);
+                }
                 break;
             case 1:
                 HPhold = 100;
                 ATKhold = 20;
                 frameCountLimitHold = 58;
                 sunCostHold = 100;
+                if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[1]){
+                    playing.getBarManager().setPlantCD(1,240);
+                }
                 break;
             case 2:
                 HPhold = 1000;
                 ATKhold = 0;
                 frameCountLimitHold = 81;
                 sunCostHold = 50;
+                if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[2]){
+                    playing.getBarManager().setPlantCD(2,600);
+                }
                 break;
             case 3:
                 HPhold = 100;
                 ATKhold = 20;
                 frameCountLimitHold = 20;
-                sunCostHold = 200;
+                sunCostHold = 175;
+                if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[3]){
+                    playing.getBarManager().setPlantCD(3,240);
+                }
                 break;
             case 4:
                 HPhold = 10000;
                 ATKhold = 1000;
                 frameCountLimitHold = 30;
                 sunCostHold = 150;
+                if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[4]){
+                    playing.getBarManager().setPlantCD(4,900);
+                }
                 break;
         }
     }
@@ -279,6 +294,13 @@ public class PlantManager {
                 }
             } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
                 Audio.plantNotAvailable();
+            }
+        } else {
+            for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
+                Rectangle r = playing.getTileManager().getTiles()[i].getBound();
+                if(r.contains(x,y)){
+                    Audio.plantNotAvailable();
+                }
             }
         }
     }

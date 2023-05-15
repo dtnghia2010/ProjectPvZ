@@ -142,7 +142,6 @@ public class Playing implements SceneMethods {
                     if (b2.getText().contains("Sunflower")) {
                         if(!isStartWaveForCD()){
                             plantManager.plantForbiddenFromStart();
-                            plantManager.setSelected(false);
                         } else {
                             plantManager.setForbidden(false);
                             barManager.sunFlower();

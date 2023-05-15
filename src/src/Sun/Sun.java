@@ -67,7 +67,7 @@ public class Sun {
         }
     }
     public double calculateDistanceMoveToStorage(){
-        double width = x - 260;
+        double width = x - 375;
         double height = y;
         double ratio = width/height;
         return ratio;
@@ -87,7 +87,7 @@ public class Sun {
     private double distanceTOMoveToStorage;
     public void moveToStorage(){
         if(isSunCLicked){
-            for(int i = 0;i<8;i++){
+            for(int i = -1;i<8;i++){
                 if(distanceTOMoveToStorage> i && distanceTOMoveToStorage<i+1){
                     for(int j = 0;j<8-i;j++){
                         y--;

@@ -17,7 +17,7 @@ public class sunManager {
     private List<Sun> listOfSun = new ArrayList<>();
     private Playing playing;
     private int realTimeCounter = 0;
-    private int sunHold = 2000;
+    private int sunHold = 1500;
     private Random random = new Random();
     private int randomTimeSunDrop = 600;
     private boolean isSunCreated = false;
@@ -28,12 +28,12 @@ public class sunManager {
     public void sunCreation(){
         synchronized (listOfSun){
             int randx = random.nextInt(700)+400;
-            listOfSun.add(new Sun(randx,100,90,90,400));
+            listOfSun.add(new Sun(randx,100,70,70,400));
         }
     }
     public void sunCreatedBySunFlower(Plant plant){
         synchronized (listOfSun){
-            listOfSun.add(new Sun(plant.getX(),plant.getY()-30,90,90,plant.getY()+30));
+            listOfSun.add(new Sun(plant.getX(),plant.getY()-30,70,70,plant.getY()+30));
         }
     }
     public int getSunHold() {
@@ -77,7 +77,7 @@ public class sunManager {
         }
     }
     public void removeSun(){
-        Rectangle holder = new Rectangle(185,-70,90,90);
+        Rectangle holder = new Rectangle(355,-70,90,90);
         synchronized (listOfSun){
             Iterator<Sun> iterator = listOfSun.iterator();
             while (iterator.hasNext()){
@@ -93,26 +93,22 @@ public class sunManager {
         }
     }
     public void drawSunHolder(Graphics g){
-        Rectangle holder = new Rectangle(250,0,100,100);
-        Graphics2D g2r = (Graphics2D) g;
-        g2r.setColor(Color.PINK);
-        g2r.fill(holder);
-        Graphics2D g2s = (Graphics2D) g;
+//        Rectangle holder = new Rectangle(355,-70,90,90);
+//        g.drawRect((int)holder.getX(),(int)holder.getY(),(int)holder.getWidth(),(int)holder.getWidth());
         Graphics2D g2n = (Graphics2D) g;
-        g2s.drawImage(sunImage,255,-10,90,90,null);
-        g2n.setFont(new Font("Arial",Font.BOLD,24));
+        g2n.setFont(new Font("Arial",Font.BOLD,16));
         g2n.setColor(Color.BLACK);
         g2n.drawString(String.format("%d",sunHold),getAlignment(),95);
     }
     public int getAlignment(){
         if(sunHold == 0){
-            return 295;
+            return 405;
         } else if(sunHold < 100){
-            return 285;
+            return 400;
         } else if(sunHold < 1000){
-            return 280;
+            return 395;
         } else {
-            return 270;
+            return 390;
         }
     }
     public void drawSun(Graphics g){

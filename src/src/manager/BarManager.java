@@ -30,7 +30,6 @@ public class BarManager {
     }
 
     private int[] plantCD = new int[5];
-    private int tile = 0;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Playing playing;
     public BarManager(Playing playing) {
@@ -73,7 +72,11 @@ public class BarManager {
         return plantPickedID;
     }
 
-    public void setIsPlantInCD(int index,boolean isPlantInCD) {
+    public void setPlantCD(int index ,int plantCD) {
+        this.plantCD[index] = plantCD;
+    }
+
+    public void setIsPlantInCD(int index, boolean isPlantInCD) {
         this.isPlantInCD[index] = isPlantInCD;
     }
 
@@ -93,37 +96,22 @@ public class BarManager {
     public void sunFlower(){
         playing.getPlantManager().setIDhold(0);
         plantPickedID.add(0);
-        if(playing.isStartWaveForCD() && !isPlantInCD[0]) {
-            plantCD[0] = 240;
-        }
     }
     public void peaShooter(){
         playing.getPlantManager().setIDhold(1);
         plantPickedID.add(1);
-        if(playing.isStartWaveForCD() && !isPlantInCD[1]) {
-            plantCD[1] = 240;
-        }
     }
     public void wall_nut(){
         playing.getPlantManager().setIDhold(2);
         plantPickedID.add(2);
-        if(playing.isStartWaveForCD() && !isPlantInCD[2]) {
-            plantCD[2] = 600;
-        }
     }
     public void shadowPea(){
         playing.getPlantManager().setIDhold(3);
         plantPickedID.add(3);
-        if (playing.isStartWaveForCD() && !isPlantInCD[3]){
-            plantCD[3] = 240;
-        }
     }
     public void cherryBomb(){
         playing.getPlantManager().setIDhold(4);
         plantPickedID.add(4);
-        if(playing.isStartWaveForCD() && !isPlantInCD[4]) {
-            plantCD[4] = 900;
-        }
     }
     public void setCDatStartOfGame(){
         plantCD[1] = 95;
@@ -268,7 +256,7 @@ public class BarManager {
             }
             isPlantEnoughSun[3] = false;
             isPlantEnoughSun[4] = false;
-        } else if(playing.getSunManager().getSunHold() < 200){
+        } else if(playing.getSunManager().getSunHold() < 175){
             for (int i = 0;i<3;i++){
                 isPlantEnoughSun[i] = true;
             }
@@ -294,7 +282,7 @@ public class BarManager {
         } else if(playing.getSunManager().getSunHold() < 150){
             g.drawImage(plantInCD[3],465+285,20, 80, 70, null);
             g.drawImage(plantInCD[4],465+380,20, 80, 70, null);
-        } else if(playing.getSunManager().getSunHold() < 200){
+        } else if(playing.getSunManager().getSunHold() < 175){
             g.drawImage(plantInCD[3],465+285,20, 80, 70, null);
         }
     }

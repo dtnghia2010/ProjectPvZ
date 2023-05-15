@@ -61,7 +61,8 @@ public class Setting implements SceneMethods{
         if (bMenu.getBounds().contains(x, y)){
             setGameScenes(MENU);
         } else if (bQuit.getBounds().contains(x, y)){
-            setGameScenes(LOSE);
+            System.exit(0);
+//            setGameScenes(LOSE);
         } else if (bPlaying.getBounds().contains(x, y)){
             setGameScenes(PLAYING);
         }
