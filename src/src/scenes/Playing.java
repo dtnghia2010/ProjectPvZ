@@ -88,6 +88,7 @@ public class Playing implements SceneMethods {
         projectileManager.drawProjectile(g);
         sunManager.drawSun(g);
         notifManager.drawNotif(g);
+        buttonManager.drawImg(g);
     }
     public PlantManager getPlantManager() {
         return plantManager;
@@ -114,11 +115,11 @@ public class Playing implements SceneMethods {
         choosePlant(x,y);
         sunManager.clickSun(x,y);
     }
+
+
     public void changeScene(int x, int y){
-        if (buttonManager.getbMenu().getBounds().contains(x, y)) {
-            setGameScenes(MENU);
-        } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
-            setGameScenes(LOSE);
+        if (buttonManager.getbSetting().getBounds().contains(x, y)) {
+            setGameScenes(SETTING);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             if (!startWave && zombieManager.allZombieDead()) {
                 startGame();
@@ -141,6 +142,7 @@ public class Playing implements SceneMethods {
                     if (b2.getText().contains("Sunflower")) {
                         if(!isStartWaveForCD()){
                             plantManager.plantForbiddenFromStart();
+                            plantManager.setSelected(false);
                         } else {
                             plantManager.setForbidden(false);
                             barManager.sunFlower();
@@ -151,7 +153,7 @@ public class Playing implements SceneMethods {
                     } else if (b2.getText().contains("Wall-nut")) {
                         plantManager.setForbidden(false);
                         barManager.wall_nut();
-                    } else if (b2.getText().contains("Snow Pea")) {
+                    } else if (b2.getText().contains("Shadow peashooter")) {
                         plantManager.setForbidden(false);
                         barManager.shadowPea();
                     } else if (b2.getText().contains("Cherry Bomb")) {

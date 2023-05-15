@@ -2,8 +2,7 @@ package manager;
 
 import player.KeyBoardListener;
 import player.MyMouseListener;
-import scenes.GameScenes;
-import scenes.Lose;
+import scenes.*;
 import scenes.Menu;
 import scenes.Playing;
 
@@ -24,13 +23,13 @@ public class World extends JPanel implements Runnable {
     private Lose lose;
     private Menu menu;
     private Playing playing;
+    private Setting setting;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
     public void start() {
         Thread thread = new Thread(this);
         thread.start();
     }
-
     public World() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         random = new Random();
@@ -52,6 +51,10 @@ public class World extends JPanel implements Runnable {
         return playing;
     }
 
+    public Setting getSetting() {
+        return setting;
+    }
+
     public void initInput() {
         myMouseListener = new MyMouseListener(this);
         keyBoardListener = new KeyBoardListener(this);
@@ -66,8 +69,8 @@ public class World extends JPanel implements Runnable {
         lose = new Lose(this);
         playing = new Playing(this);
         menu = new Menu(this);
+        setting = new Setting(this);
     }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -85,9 +88,11 @@ public class World extends JPanel implements Runnable {
             case LOSE:
                 lose.render(g, img.get(2));
                 break;
+            case SETTING:
+                setting.render(g, img.get(3));
+                break;
         }
     }
-
     public void updates() {
         switch (GameScenes.gameScenes) {
             case MENU:
@@ -99,6 +104,9 @@ public class World extends JPanel implements Runnable {
             case LOSE:
                 getLose().updates();
                 break;
+            case SETTING:
+                getSetting().updates();
+                break;
         }
     }
 
@@ -106,9 +114,9 @@ public class World extends JPanel implements Runnable {
         img.add(t.getImage(getClass().getResource("/scene/menu.jpg")));
         img.add(t.getImage(getClass().getResource("/scene/lawn.png")));
         img.add(t.getImage(getClass().getResource("/scene/lose.png")));
+        img.add(t.getImage(getClass().getResource("/scene/pause.png")));
 
     }
-
     @Override
     public void run() {
         double timePerFrame = 1000000000.0 / FPS_SET;

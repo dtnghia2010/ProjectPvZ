@@ -24,15 +24,15 @@ public class MyButtons {
         return bounds;
     }
     public void draw(Graphics g) {
-        g.setColor(Color.GRAY);
-        g.fillRect(x,y,width,height);
-
-        g.setColor(Color.BLACK);
-        g.drawRect(x,y,width,height);
-
-        int w = g.getFontMetrics().stringWidth(text);
-        int h = g.getFontMetrics().getHeight();
-        g.drawString(text, x - w/2 + width/2,y + h/2 + height/2);
+//        g.setColor(Color.GRAY);
+//        g.fillRect(x,y,width,height);
+//
+//        g.setColor(Color.BLACK);
+//        g.drawRect(x,y,width,height);
+//
+//        int w = g.getFontMetrics().stringWidth(text);
+//        int h = g.getFontMetrics().getHeight();
+//        g.drawString(text, x - w/2 + width/2,y + h/2 + height/2);
     }
 
     public String getText() {
