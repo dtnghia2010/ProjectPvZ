@@ -133,4 +133,11 @@ public class Zombie {
         return height;
     }
 
+    public int getX() {
+        return (int) x;
+    }
+    public int getY(){
+        return (int) y;
+    }
+
 }

@@ -18,6 +18,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 public class HouseOwnerManager {
+    private ProjectileManager projectileManager;
     private HouseOwner houseOwner;
     private Image[] zImages;
     private Playing playing;
@@ -38,6 +39,7 @@ public class HouseOwnerManager {
         this.playing = playing;
         houseOwner = new HouseOwner(200, 470, 100);
         importImg();
+        projectileManager = new ProjectileManager();
     }
 
     public HouseOwnerManager(String imageUrl, int x, int y, int speed){
@@ -50,6 +52,7 @@ public class HouseOwnerManager {
             this.x = x;
             this.y = y;
             this.speed = speed;
+         projectileManager = new ProjectileManager();
         }
 
 
@@ -60,20 +63,6 @@ public class HouseOwnerManager {
         public void moveDown () {
             this.y += this.speed;
         }
-
-
-//    public static void frameCount() {
-//        if (realTimeCounter < 30) {
-//            realTimeCounter++;
-//        }
-//    }
-//
-//    public static void isResetTime() {
-//        if (isReset) {
-//            realTimeCounter = 0;
-//            isReset = false;
-//        }
-//    }
 
     public void importImg() {
         zImages = new Image[1];
@@ -94,7 +83,6 @@ public class HouseOwnerManager {
             }
         }
     }
-
 
     public void move() {
         if (y <= 0) {
@@ -125,7 +113,6 @@ public class HouseOwnerManager {
             }
         }
     }
-
     public void setHouseOwnerDangered(Tile tile){
         Rectangle HouseOwner = tile.getBound();
             if(HouseOwner.contains(houseOwner.getX(),houseOwner.getY())){
@@ -138,50 +125,96 @@ public class HouseOwnerManager {
                 houseOwner.setDangered(false);
             }
     }
+    public void houseOwnerAttack(ProjectileManager projectileManager, ZombieManager zombieManager) {
+        // Kiểm tra nếu đến thời điểm tấn công của HouseOwner
+        if (projectileManager.getRealTimeCounter() == 90) {
+            // Lấy tọa độ y của HouseOwner
+            int houseOwnerY = (int) houseOwner.getY();
 
-    public void alertPlant(TileManager tileManager, ZombieManager zombieManager){
-        for(int i = 0;i<tileManager.getTiles().length;i++){
+            // Lặp qua danh sách zombie để kiểm tra tọa độ y
+            synchronized (zombieManager.getZombies()) {
+                Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
+                while (iterator.hasNext()) {
+                    Zombie zombie = iterator.next();
+                    int zombieY = (int) zombie.getY();
+
+                    // Kiểm tra nếu tọa độ y của HouseOwner gần bằng tọa độ y của zombie
+                    if (Math.abs(houseOwnerY-zombieY) <= 30) {
+                        // Tạo một đạn mới và thêm vào ProjectileManager
+                        projectileManager.projectileCreated(houseOwner);
+                        break; // Nếu đã tìm thấy zombie thích hợp, thoát khỏi vòng lặp
+                    }
+                }
+            }
+        }
+        projectileManager.isResetTime();
+    }
+
+
+
+    public void alertHouseOwner(TileManager tileManager, ZombieManager zombieManager) {
+        int houseOwnerX = (int) houseOwner.getX();
+
+        for (int i = 0; i < tileManager.getTiles().length; i++) {
             Rectangle r = tileManager.getTiles()[i].getBound();
             Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
-            while (iterator.hasNext()){
+
+            while (iterator.hasNext()) {
                 Zombie zombie = iterator.next();
-                if(r.contains(zombie.X(),zombie.Y()+70)){
-                    if(i>=0 && i<9){
-                        for(int j = 0;j < 9;j++){
-                            setHouseOwnerDangered(tileManager.getTiles()[j]);
-                        }
-                    } else if(i >= 9 && i<18){
-                        for(int j = 9;j < 18;j++){
-                            setHouseOwnerDangered(tileManager.getTiles()[j]);
-                        }
-                    } else if(i>=18 && i<27){
-                        for(int j = 18;j < 27;j++){
-                            setHouseOwnerDangered(tileManager.getTiles()[j]);
-                        }
-                    } else if(i>=27 && i<36){
-                        for(int j = 27;j < 36;j++){
-                            setHouseOwnerDangered(tileManager.getTiles()[j]);
-                        }
-                    } else if (i >= 36 && i<45) {
-                        for(int j = 36;j < 45;j++){
-                            setHouseOwnerDangered(tileManager.getTiles()[j]);
-                        }
-                    }
+                int zombieX = zombie.getX();
+                int zombieY = zombie.getY();
+
+                if (Math.abs(zombieX - houseOwnerX) <= 10 && Math.abs(zombieY - houseOwner.getY()) <= 10 && r.contains(zombieX, zombieY + 70)) {
+                    setHouseOwnerDangered(tileManager.getTiles()[i]);
+                } else {
+                    setHouseOwnerIdle(tileManager.getTiles()[i]);
                 }
             }
         }
     }
-    public void HouseOwnerAttack(ProjectileManager projectileManager){
 
-        if(projectileManager.getRealTimeCounter() == 90){
-            synchronized (houseOwner){
-                    if(houseOwner.isDangered()){
-                        projectileManager.projectileCreated(HouseOwner);
-                    }
+    public void calmHouseOwner(TileManager tileManager, ZombieManager zombieManager){
+        if (!isHouseOwnerAttack(0,9,tileManager,zombieManager)){
+            for(int i = 0;i<9;i++){
+                setHouseOwnerIdle(tileManager.getTiles()[i]);
+            }
+        }
+        if (!isHouseOwnerAttack(9,18,tileManager,zombieManager)){
+            for(int i = 9;i<18;i++){
+                setHouseOwnerIdle(tileManager.getTiles()[i]);
+            }
+        }
+        if (!isHouseOwnerAttack(18,27,tileManager,zombieManager)){
+            for(int i = 18;i<27;i++){
+                setHouseOwnerIdle(tileManager.getTiles()[i]);
+            }
+        }
+        if (!isHouseOwnerAttack(27,36,tileManager,zombieManager)){
+            for(int i = 27;i<36;i++){
+                setHouseOwnerIdle(tileManager.getTiles()[i]);
+            }
+        }
+        if (!isHouseOwnerAttack(36,45,tileManager,zombieManager)){
+            for(int i = 36;i<45;i++){
+                setHouseOwnerIdle(tileManager.getTiles()[i]);
+            }
+        }
+    }
+
+    public boolean isHouseOwnerAttack(int start, int end, TileManager tileManager, ZombieManager zombieManager){
+        for(int i = start;i<end;i++){
+            Rectangle r = tileManager.getTiles()[i].getBound();
+            Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
+            while (iterator.hasNext()){
+                Zombie zombie = iterator.next();
+                Rectangle rZombie = new Rectangle((int)zombie.X(),(int)zombie.Y()+70,zombie.getWidth(),zombie.getHeight()-70);
+                if(r.intersects(rZombie)){
+                    return true;
                 }
             }
-            projectileManager.isResetTime();
         }
+        return false;
+    }
 
     public int getX() {
         return x;

@@ -1,6 +1,7 @@
 package manager;
 
 import Audio.Audio;
+import HouseOwner.HouseOwner;
 import component.Plant;
 import component.Projectile;
 import zombie.Zombie;
@@ -13,7 +14,7 @@ import java.util.List;
 public class ProjectileManager {
     private List<Projectile> listOfProjectile = new ArrayList<>();
     private Toolkit t = Toolkit.getDefaultToolkit();
-    private Image[] projectileImage = new Image[2];
+    private Image[] projectileImage = new Image[3];
     private static int realTimeCounter = 0;
     private static boolean isReset = false;
 
@@ -73,6 +74,7 @@ public class ProjectileManager {
         Graphics2D g2d = (Graphics2D) g;
         projectileImage[0] = t.getImage(getClass().getResource("/Projectile/Pea.png"));
         projectileImage[1] = t.getImage(getClass().getResource("/Projectile/SnowPea.png"));
+        projectileImage[2] = t.getImage(getClass().getResource("/Projectile/HouseOwner.png"));
         synchronized (listOfProjectile){
             Iterator<Projectile> iterator = listOfProjectile.iterator();
             while ((iterator.hasNext())) {
@@ -81,6 +83,9 @@ public class ProjectileManager {
                     g2d.drawImage(projectileImage[0],projectile.getX(),projectile.getY(),30,30,null);
                 } else if(projectile.getID() == 2){
                     g2d.drawImage(projectileImage[1],projectile.getX(),projectile.getY(),30,30,null);
+                }
+                  else if(projectile.getID()==3){
+                      g2d.drawImage(projectileImage[2],projectile.getX(),projectile.getY(),30,30,null);
                 }
             }
         }
@@ -115,4 +120,15 @@ public class ProjectileManager {
             }
         }
     }
+
+    public void projectileCreated(HouseOwner houseOwner) {
+        synchronized (listOfProjectile) {
+            int x = (int) houseOwner.getX();
+            int y = (int) houseOwner.getY();
+            listOfProjectile.add(new Projectile(x + houseOwner.getWidth()+20, y+30, houseOwner.getATK(), 3));
+            isReset = true;
+        }
+    }
+
+
 }

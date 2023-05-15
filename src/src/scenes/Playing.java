@@ -63,6 +63,9 @@ public class Playing implements SceneMethods {
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
+        houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
+        houseOwnerManager.calmHouseOwner(tileManager, zombieManager);
+        houseOwnerManager.houseOwnerAttack(projectileManager,zombieManager);
     }
     @Override
     public void render(Graphics g, Image img) {

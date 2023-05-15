@@ -3,6 +3,7 @@ import java.awt.*;
 import java.util.Iterator;
 public class HouseOwner {
     private int hp, dmg;
+    private final int atk =100;
     private final int width = 50, height = 100;
     private float spd = 0.8f;
     private boolean Collided = false;
@@ -95,5 +96,10 @@ public class HouseOwner {
         this.x = 200;
         this.y=newY;
     }
+
+    public int getATK() {
+        return atk;
+    }
+
 }
 
