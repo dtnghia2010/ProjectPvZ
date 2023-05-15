@@ -41,7 +41,6 @@ public class MouseMotionManager {
                 returnToSelectPlantByMouse();
                 isMouseMoveForFirstTime = false;
             }
-            playing.getPlantManager().setForbidden(false);
             isControlledByMouse = true;
         }
     }
