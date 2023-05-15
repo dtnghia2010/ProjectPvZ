@@ -11,6 +11,15 @@ public class HouseOwner {
     private boolean isDead = false;
 
     private Rectangle bound;
+    private boolean isDangered = false;
+
+    public boolean isDangered() {
+        return isDangered;
+    }
+
+    public void setDangered(boolean dangered) {
+        isDangered = dangered;
+    }
 
     public HouseOwner(double x, double y, int hp) {
         this.x = x;
@@ -80,6 +89,11 @@ public class HouseOwner {
     }
     public int getWidth(){
         return width;
+    }
+
+    public void setLocation(int newX, int newY) {
+        this.x = 200;
+        this.y=newY;
     }
 }
 

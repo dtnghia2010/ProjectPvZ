@@ -1,7 +1,10 @@
 package manager;
 
+import component.Plant;
+import component.Tile;
 import scenes.Playing;
 import HouseOwner.HouseOwner;
+import zombie.Zombie;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -9,6 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
@@ -121,6 +126,62 @@ public class HouseOwnerManager {
         }
     }
 
+    public void setHouseOwnerDangered(Tile tile){
+        Rectangle HouseOwner = tile.getBound();
+            if(HouseOwner.contains(houseOwner.getX(),houseOwner.getY())){
+                houseOwner.setDangered(true);
+            }
+    }
+    public void setHouseOwnerIdle(Tile tile){
+        Rectangle HouseOwner = tile.getBound();
+            if(HouseOwner.contains(houseOwner.getX(),houseOwner.getY())){
+                houseOwner.setDangered(false);
+            }
+    }
+
+    public void alertPlant(TileManager tileManager, ZombieManager zombieManager){
+        for(int i = 0;i<tileManager.getTiles().length;i++){
+            Rectangle r = tileManager.getTiles()[i].getBound();
+            Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
+            while (iterator.hasNext()){
+                Zombie zombie = iterator.next();
+                if(r.contains(zombie.X(),zombie.Y()+70)){
+                    if(i>=0 && i<9){
+                        for(int j = 0;j < 9;j++){
+                            setHouseOwnerDangered(tileManager.getTiles()[j]);
+                        }
+                    } else if(i >= 9 && i<18){
+                        for(int j = 9;j < 18;j++){
+                            setHouseOwnerDangered(tileManager.getTiles()[j]);
+                        }
+                    } else if(i>=18 && i<27){
+                        for(int j = 18;j < 27;j++){
+                            setHouseOwnerDangered(tileManager.getTiles()[j]);
+                        }
+                    } else if(i>=27 && i<36){
+                        for(int j = 27;j < 36;j++){
+                            setHouseOwnerDangered(tileManager.getTiles()[j]);
+                        }
+                    } else if (i >= 36 && i<45) {
+                        for(int j = 36;j < 45;j++){
+                            setHouseOwnerDangered(tileManager.getTiles()[j]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public void HouseOwnerAttack(ProjectileManager projectileManager){
+
+        if(projectileManager.getRealTimeCounter() == 90){
+            synchronized (houseOwner){
+                    if(houseOwner.isDangered()){
+                        projectileManager.projectileCreated(HouseOwner);
+                    }
+                }
+            }
+            projectileManager.isResetTime();
+        }
 
     public int getX() {
         return x;
