@@ -77,6 +77,7 @@ public class Playing implements SceneMethods {
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
+        tileManager.drawTiles(g, houseOwnerManager);
         houseOwnerManager.draw(g);
 
     }

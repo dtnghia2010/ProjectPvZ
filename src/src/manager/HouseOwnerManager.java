@@ -105,11 +105,11 @@ public class HouseOwnerManager {
                 int newX = ownerX + (distanceX * i / steps);
                 int newY = ownerY + (distanceY * i / steps);
                 houseOwner.setLocation(newX, newY);
-                try {
-                    Thread.sleep(50); // Tạm dừng trong một khoảng thời gian nhỏ để tạo hiệu ứng di chuyển
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(0); // Tạm dừng trong một khoảng thời gian nhỏ để tạo hiệu ứng di chuyển
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
         }
     }
@@ -141,6 +141,7 @@ public class HouseOwnerManager {
                     // Kiểm tra nếu tọa độ y của HouseOwner gần bằng tọa độ y của zombie
                     if (Math.abs(houseOwnerY-zombieY) <= 30) {
                         // Tạo một đạn mới và thêm vào ProjectileManager
+                        System.out.println("create projectile of HouseOwner");
                         projectileManager.projectileCreated(houseOwner);
                         break; // Nếu đã tìm thấy zombie thích hợp, thoát khỏi vòng lặp
                     }
