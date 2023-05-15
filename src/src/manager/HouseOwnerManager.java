@@ -99,20 +99,26 @@ public class HouseOwnerManager {
         }
         y -= speed;
     }
-    public void mouseClicked( int x, int y) {
-        int mouseX = getX();
-        int mouseY = getY();
+    public void mouseClicked(int x, int y) {
+        int mouseX = x;
+        int mouseY = y;
         int ownerX = (int) houseOwner.getX();
         int ownerY = (int) houseOwner.getY();
         int distanceX = mouseX - ownerX;
         int distanceY = mouseY - ownerY;
-        int steps = 7;
+        int steps = 5;
         for (int i = 0; i < steps; i++) {
             int newX = ownerX + (distanceX * i / steps);
             int newY = ownerY + (distanceY * i / steps);
-            houseOwner.move();
+            houseOwner.setLocation(newX, newY);
+            try {
+                Thread.sleep(50); // Tạm dừng trong một khoảng thời gian nhỏ để tạo hiệu ứng di chuyển
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
+
     public int getX() {
         return x;
     }

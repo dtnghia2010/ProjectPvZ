@@ -22,11 +22,11 @@ public class HouseOwner {
         hp -= damage;
     }
 
-//    public void move() {
-//        if(!Collided){
-//            y -= spd;
-//        }
-//    }
+    public void move() {
+        if(!Collided){
+            y -= spd;
+        }
+    }
 
     public int getHealth() {
         return hp;
@@ -80,14 +80,6 @@ public class HouseOwner {
     }
     public int getWidth(){
         return width;
-    }
-
-    public void setX(double newX) {
-        this.x=newX;
-    }
-
-    public void setY(double newY) {
-        this.y=newY;
     }
 }
 
