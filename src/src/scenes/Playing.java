@@ -141,18 +141,21 @@ public class Playing implements SceneMethods {
                     if (b2.getText().contains("Sunflower")) {
                         if(!isStartWaveForCD()){
                             plantManager.plantForbiddenFromStart();
-                            plantManager.setSelected(false);
                         } else {
                             plantManager.setForbidden(false);
                             barManager.sunFlower();
                         }
                     } else if (b2.getText().contains("Peashooter")) {
+                        plantManager.setForbidden(false);
                         barManager.peaShooter();
                     } else if (b2.getText().contains("Wall-nut")) {
+                        plantManager.setForbidden(false);
                         barManager.wall_nut();
                     } else if (b2.getText().contains("Snow Pea")) {
+                        plantManager.setForbidden(false);
                         barManager.shadowPea();
                     } else if (b2.getText().contains("Cherry Bomb")) {
+                        plantManager.setForbidden(false);
                         barManager.cherryBomb();
                     }
                 }
@@ -242,6 +245,7 @@ public class Playing implements SceneMethods {
         startWave = true;
         callHorde = false;
         startWaveForCD = true;
+        plantManager.setForbidden(false);
         System.out.println("click on start");
         waveManager.readyNewWave();
         notifManager.reset();
