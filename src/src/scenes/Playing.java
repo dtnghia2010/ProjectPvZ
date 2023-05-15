@@ -116,6 +116,12 @@ public class Playing implements SceneMethods {
         choosePlant(x,y);
         sunManager.clickSun(x,y);
     }
+
+    @Override
+    public void mousePressed(int x, int y) {
+
+    }
+
     public void changeScene(int x, int y){
         if (buttonManager.getbSetting().getBounds().contains(x, y)) {
             setGameScenes(SETTING);

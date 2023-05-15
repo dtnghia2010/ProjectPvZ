@@ -139,7 +139,6 @@ public class World extends JPanel implements Runnable {
             if (now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
-                update();
                 updates();
             }
             //check FPS & UPS

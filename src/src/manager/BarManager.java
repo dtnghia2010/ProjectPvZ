@@ -1,9 +1,7 @@
 package manager;
 
-import Audio.Audio;
+
 import component.MyButtons;
-import component.Plant;
-import component.Tile;
 import scenes.Playing;
 
 import javax.swing.*;
@@ -54,12 +52,13 @@ public class BarManager {
     private void importImg(){
         pick_plantBar = new Image[5];
         try {
-            pick_plantBar[0] = t.getImage(getClass().getResource("/plantBar/PvZ_Sunflower.jpg"));
-            pick_plantBar[1] = t.getImage(getClass().getResource("/plantBar/PvZ_Peashooter.jpg"));
-            pick_plantBar[2] = t.getImage(getClass().getResource("/plantBar/PvZ_Wall-nut.jpg"));
-            pick_plantBar[3] = t.getImage(getClass().getResource("/plantBar/PvZ_Snow_Pea.jpg"));
-            pick_plantBar[4] = t.getImage(getClass().getResource("/plantBar/PvZ_Cherry_Bomb.jpg"));
+            pick_plantBar[0] = t.getImage(getClass().getResource("/plantBar/Sunflower.png"));
+            pick_plantBar[1] = t.getImage(getClass().getResource("/plantBar/Peashooter.png"));
+            pick_plantBar[2] = t.getImage(getClass().getResource("/plantBar/Wall-nut.png"));
+            pick_plantBar[3] = t.getImage(getClass().getResource("/plantBar/Shadow_Peashooter.png"));
+            pick_plantBar[4] = t.getImage(getClass().getResource("/plantBar/Cherry_Bomb.png"));
             pickedPlant = t.getImage(getClass().getResource("/plantBar/plantSelected.png"));
+            plantBar = t.getImage(getClass().getResource("/plantBar/plantPanel.png"));
         }catch (Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error - importImage()");
@@ -87,8 +86,8 @@ public class BarManager {
         Graphics2D g2d = (Graphics2D) g;
         int distance = 0;
         for (Image p : pick_plantBar){
-            g.drawImage(p, 350 + distance, 0, 90, 90, null);
-            distance += 90;
+            g.drawImage(p, 465 + distance, 20, 80, 70, null);
+            distance += 95;
         }
     }
     public void sunFlower(){
@@ -283,20 +282,20 @@ public class BarManager {
     }
     public void drawPlantNotEnoughSun(Graphics g){
         if(playing.getSunManager().getSunHold() < 50){
-            g.drawImage(plantInCD[0],350,0, 90, 90, null);
-            g.drawImage(plantInCD[1],350+90,0, 90, 90, null);
-            g.drawImage(plantInCD[2],350+180,0, 90, 90, null);
-            g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
-            g.drawImage(plantInCD[4],350+360,0, 90, 90, null);
+            g.drawImage(plantInCD[0],465,20, 80, 70, null);
+            g.drawImage(plantInCD[1],465+95,20, 80, 70, null);
+            g.drawImage(plantInCD[2],465+190,20, 80, 70, null);
+            g.drawImage(plantInCD[3],465+285,20, 80, 70, null);
+            g.drawImage(plantInCD[4],465+380,20, 80, 70, null);
         } else if(playing.getSunManager().getSunHold() < 100){
-            g.drawImage(plantInCD[1],350+90,0, 90, 90, null);
-            g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
-            g.drawImage(plantInCD[4],350+360,0, 90, 90, null);
+            g.drawImage(plantInCD[1],465+95,20, 80, 70, null);
+            g.drawImage(plantInCD[3],465+286,20, 80, 70, null);
+            g.drawImage(plantInCD[4],465+380,20, 80, 70, null);
         } else if(playing.getSunManager().getSunHold() < 150){
-            g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
-            g.drawImage(plantInCD[4],350+360,0, 90, 90, null);
+            g.drawImage(plantInCD[3],465+285,20, 80, 70, null);
+            g.drawImage(plantInCD[4],465+380,20, 80, 70, null);
         } else if(playing.getSunManager().getSunHold() < 200){
-            g.drawImage(plantInCD[3],350+270,0, 90, 90, null);
+            g.drawImage(plantInCD[3],465+285,20, 80, 70, null);
         }
     }
     public void draw(Graphics g){
@@ -307,7 +306,7 @@ public class BarManager {
     }
     public void drawPlantNotAvailableFromStart(Graphics g){
         if(!playing.isStartWaveForCD()){
-            g.drawImage(plantInCD[0],350,0, 90, 90, null);
+            g.drawImage(plantInCD[0],465,20, 80, 70, null);
         }
     }
     public MyButtons[] getPickPlant() {

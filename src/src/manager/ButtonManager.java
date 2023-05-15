@@ -2,7 +2,6 @@ package manager;
 
 import component.MyButtons;
 import scenes.Playing;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +9,7 @@ public class ButtonManager {
     private MyButtons bStart, bSetting;
     private Image[] buttonOfPlaying;
     private Toolkit t = Toolkit.getDefaultToolkit();
+    private Playing playing;
 
     public ButtonManager(Playing playing) {
         this.playing = playing;
@@ -54,5 +54,4 @@ public class ButtonManager {
     public MyButtons getbSetting() {
         return bSetting;
     }
-    public MyButtons getbStart() {return bStart;}
 }
