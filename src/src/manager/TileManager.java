@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 
 public class TileManager {
     private Tile[] tiles = new Tile[45];
-    private int wTile = 70, hTile = 80;
+    private int wTile = 60, hTile = 70;
     private Playing playing;
     private Image[] plantLightBlur = new Image[5];
     private Image[] plantHardBlur = new Image[5];
@@ -27,14 +27,14 @@ public class TileManager {
 
 
     private void initTiles() {
-        int curX = 250, curY = 120, rowCounter = 0;
+        int curX = 300, curY = 171, rowCounter = 0;
         for (int i = 0; i < 45; i++) {
             if (rowCounter >= 9) {
-                curY += hTile + 15;
-                curX = 250;
+                curY += hTile + 10;
+                curX = 300;
                 rowCounter = 0;
             }
-            curX += (wTile + 8);
+            curX += (wTile + 10);
             tiles[i] = new Tile(new Rectangle(curX, curY, wTile, hTile));
             rowCounter++;
         }

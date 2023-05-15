@@ -1,6 +1,9 @@
 package manager;
 
+import Audio.Audio;
 import component.MyButtons;
+import component.Plant;
+import component.Tile;
 import scenes.Playing;
 
 import javax.swing.*;
@@ -12,11 +15,7 @@ public class BarManager {
     private Image[] pick_plantBar;
     private Image[] plantInCD;
     private Image pickedPlant;
-
-    public void setPickPlant(MyButtons[] pickPlant) {
-        this.pickPlant = pickPlant;
-    }
-
+    private Image plantBar;
     private MyButtons pickPlant[];
     private List<Integer> plantPickedID = new ArrayList<>();
     private boolean[] isPlantInCD = new boolean[5];
@@ -33,6 +32,7 @@ public class BarManager {
     }
 
     private int[] plantCD = new int[5];
+    private int tile = 0;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Playing playing;
     public BarManager(Playing playing) {
@@ -44,11 +44,11 @@ public class BarManager {
 
     private void initButtons() {
         pickPlant = new MyButtons[5];
-        pickPlant[0] = new MyButtons("Sunflower", 350, 0, 90, 90);
-        pickPlant[1] = new MyButtons("Peashooter", 440, 0, 90, 90);
-        pickPlant[2] = new MyButtons("Wall-nut", 530, 0, 90, 90);
-        pickPlant[3] = new MyButtons("Snow Pea", 620, 0, 90, 90);
-        pickPlant[4] = new MyButtons("Cherry Bomb", 710, 0, 90, 90);
+        pickPlant[0] = new MyButtons("Sunflower", 465, 20, 80, 70);
+        pickPlant[1] = new MyButtons("Peashooter", 560, 20, 80, 70);
+        pickPlant[2] = new MyButtons("Wall-nut", 655, 20, 80, 70);
+        pickPlant[3] = new MyButtons("Shadow peashooter", 750, 20, 80, 70);
+        pickPlant[4] = new MyButtons("Cherry Bomb", 845, 20, 80, 70);
     }
 
     private void importImg(){
@@ -80,9 +80,10 @@ public class BarManager {
 
     public void drawPlantbar(Graphics g){
         g.setColor(Color.black);
-        g.drawRect(350, 0,450,90);
+        g.drawRect(370, 10,580,90);
         g.setColor(Color.pink);
-        g.fillRect(350, 0, 450, 90);
+        g.fillRect(370, 10, 580, 90);
+        g.drawImage(plantBar, 370, 10, 580, 90, null);
         Graphics2D g2d = (Graphics2D) g;
         int distance = 0;
         for (Image p : pick_plantBar){
@@ -195,7 +196,6 @@ public class BarManager {
     public boolean[] getIsPlantEnoughSun() {
         return isPlantEnoughSun;
     }
-
     public void resetCD(int index){
         if(playing.isStartWaveForCD()) {
             switch (index){
@@ -229,11 +229,11 @@ public class BarManager {
     public void initPlantInCD(){
         plantInCD = new Image[5];
         try {
-            plantInCD[0] = t.getImage(getClass().getResource("/plantInCD/sunFolwer.png"));
-            plantInCD[1] = t.getImage(getClass().getResource("/plantInCD/peaShooter.png"));
-            plantInCD[2] = t.getImage(getClass().getResource("/plantInCD/wallNut.png"));
-            plantInCD[3] = t.getImage(getClass().getResource("/plantInCD/snowPea.png"));
-            plantInCD[4] = t.getImage(getClass().getResource("/plantInCD/cherryBomb.png"));
+            plantInCD[0] = t.getImage(getClass().getResource("/plantInCD/Sunflower.png"));
+            plantInCD[1] = t.getImage(getClass().getResource("/plantInCD/Peashooter.png"));
+            plantInCD[2] = t.getImage(getClass().getResource("/plantInCD/Wall-nut.png"));
+            plantInCD[3] = t.getImage(getClass().getResource("/plantInCD/Shadow_Peashooter.png"));
+            plantInCD[4] = t.getImage(getClass().getResource("/plantInCD/Cherry_Bomb.png"));
         } catch (Exception e){
 
         }
@@ -243,13 +243,13 @@ public class BarManager {
         Graphics2D g2d = (Graphics2D) g;
         for(int i = 0;i<5;i++){
             if(isPlantInCD[i]){
-                g.drawImage(plantInCD[i], 350 + distance, 0, 90, 90, null);
+                g.drawImage(plantInCD[i], 465 + distance, 20, 80, 70, null);
                 int cd = (plantCD[i]+59)/60;
                 g2d.setColor(Color.YELLOW);
                 g2d.setFont(new Font("Arial",Font.BOLD,30));
-                g2d.drawString(String.format("%d",cd),385 +distance,50);
+                g2d.drawString(String.format("%d",cd),495 + distance,65);
             }
-            distance += 90;
+            distance += 95;
         }
     }
     public void plantEnoughSun(){

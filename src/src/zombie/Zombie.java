@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class Zombie {
     private int hp, dmg, type;
-    private final int width = 80, height = 140;
-    private float spd = 1f;
+    private final int width = 55, height = 110;
+    private float spd = 0.8f;
     private boolean isCollided = false;
 
     public boolean isSlowed() {
