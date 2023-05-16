@@ -43,14 +43,16 @@ public class Plant {
         return frameCountAttack;
     }
     public void sunCreatedBySunFlower(sunManager sunManager){
-        frameCountSun++;
-        if(frameCountSun == frameCountSunLimit){
-            sunManager.setSunCreated(true);
-            sunManager.sunCreatedBySunFlower(this);
-            frameCountSunLimit = random.nextInt(600)+600;
-            frameCountSun = 0;
-        } else {
-            sunManager.setSunCreated(false);
+        if(x > 0 && y > 0){
+            frameCountSun++;
+            if(frameCountSun == frameCountSunLimit){
+                sunManager.setSunCreated(true);
+                sunManager.sunCreatedBySunFlower(this);
+                frameCountSunLimit = random.nextInt(600)+600;
+                frameCountSun = 0;
+            } else {
+                sunManager.setSunCreated(false);
+            }
         }
     }
 

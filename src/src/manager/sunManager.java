@@ -27,7 +27,7 @@ public class sunManager {
     }
     public void sunCreation(){
         synchronized (listOfSun){
-            int randx = random.nextInt(700)+400;
+            int randx = random.nextInt(300)+400;
             listOfSun.add(new Sun(randx,100,70,70,400));
         }
     }

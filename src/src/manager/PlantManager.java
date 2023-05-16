@@ -161,8 +161,8 @@ public class PlantManager {
                     Plant plant = iterator.next();
                     setPlantDangeredForTesting();
                     plant.loadAnimationForTheFirstTime();
-//                    if(plant.getFrameCountIdle() == plant.getFrameCountIdleLimit()-1){
-//                        iterator.remove();
+//                    if(plantList.get(2).getFrameCountIdle()  == plantList.get(2).getFrameCountIdleLimit()-1){
+//
 //                    }
                 }
             }
@@ -350,8 +350,10 @@ public class PlantManager {
             while (iterator.hasNext()){
                 Plant plant = iterator.next();
                 if(rPlant.contains(plant.getX(),plant.getY())){
-                    plant.setFrameCountAttack(0);
-                    plant.setDangered(false);
+                    if(plant.isDangered() && plant.getFrameCountAttack() == plant.getFrameCountAttackLimit()-1){
+                        plant.setDangered(false);
+                        plant.setFrameCountAttack(0);
+                    }
                 }
             }
         }
