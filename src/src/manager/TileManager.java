@@ -13,7 +13,7 @@ public class TileManager {
     private Image[] plantLightBlur = new Image[5];
     private Image[] plantHardBlur = new Image[5];
     private Toolkit t = Toolkit.getDefaultToolkit();
-
+    private Image shovelSprite = t.getImage(getClass().getResource("/shovel/shovel-sprite.png"));
     public boolean isInTile() {
         return isInTile;
     }
@@ -103,6 +103,15 @@ public class TileManager {
             }
         }
     }
+    public void drawShovelSprite(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        if(playing.getKeyBoardManager().getPlantPickedByKeyBoard() == 5){
+            if(playing.getPlantManager().isShoveled()){
+                Rectangle r = new Rectangle((int)tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().getX(),(int)tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().getY(),tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getwTile(),tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].gethTile());
+                g2d.drawImage(shovelSprite,(int)r.getX(),(int)r.getY()+5,(int)r.getWidth()+10,(int)r.getHeight()+10,null);
+            }
+        }
+    }
 
     public void setInTile(boolean inTile) {
         isInTile = inTile;
@@ -117,5 +126,6 @@ public class TileManager {
         drawPlantPreparedToPlanted(g);
         drawTileSelectedByMouse(g);
         drawTileSelectedByKeyBoard(g);
+        drawShovelSprite(g);
     }
 }

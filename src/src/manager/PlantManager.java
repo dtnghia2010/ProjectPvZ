@@ -10,6 +10,7 @@ import zombie.Zombie;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class PlantManager {
     private final Image[] shadowPea_Attack = new Image[21];
     private final Image[] cherryBombGif = new Image[49];
     private Toolkit t = Toolkit.getDefaultToolkit();
+
     private List<Plant> plantList = new ArrayList<>();
     private boolean isPlantTest = true;
     private boolean isTimeToPlant = false;
@@ -29,6 +31,7 @@ public class PlantManager {
     private boolean selected = true;
     private boolean isPlanted = false;
     private boolean isForbidden = false;
+    private boolean isShoveled = false;
     private int IDhold, HPhold, ATKhold,sunCostHold, frameCountLimitHold;
 
     public PlantManager(Playing playing) {
@@ -523,5 +526,42 @@ public class PlantManager {
     public void draw(Graphics g){
         drawPlant(g);
         drawExplosion(g);
+    }
+    public void shovelClicked(int x, int y){
+        Rectangle shovel = new Rectangle(280,0,90,90);
+        if(shovel.contains(x,y)){
+            selected = false;
+            isShoveled = true;
+        }
+    }
+
+    public boolean isShoveled() {
+        return isShoveled;
+    }
+
+    public void setShoveled(boolean shoveled) {
+        isShoveled = shoveled;
+    }
+
+    public void removePlantByShovel(int x, int y){
+        synchronized (plantList){
+            for(int i = 0;i < playing.getTileManager().getTiles().length;i++){
+                if(isShoveled){
+                    if(playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(x,y)){
+                        Iterator<Plant> iterator = plantList.iterator();
+                        while (iterator.hasNext()){
+                            Plant plant = iterator.next();
+                            Rectangle plantRect = new Rectangle(plant.getX(),plant.getY(),plant.getWidth(),plant.getHeight());
+                            if(playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].isOccupied() && playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(plant.getX(),plant.getY())){
+                                playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].setOccupied(false);
+                                playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].setPlanted(false);
+                                iterator.remove();
+                                isShoveled = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

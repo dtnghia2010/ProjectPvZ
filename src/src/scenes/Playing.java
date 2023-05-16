@@ -173,6 +173,8 @@ public class Playing implements SceneMethods {
     }
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
+        plantManager.shovelClicked(x,y);
+        plantManager.removePlantByShovel(x,y);
     }
     public void mouseMove(int x, int y){
         mouseMotionManager.changeStatusToMouse(x,y,w);
@@ -191,6 +193,7 @@ public class Playing implements SceneMethods {
         keyBoardManager.keyBoardSelectPlant(e);
         keyBoardManager.tileSelectedByKeyBoard(e);
         keyBoardManager.plant(e);
+        keyBoardManager.removePlantUsingKeyBoard(e);
 //        keyBoardManager.returnToSelectPlantByKeyBoard(e);
         keyBoardManager.startGame(e);
     }

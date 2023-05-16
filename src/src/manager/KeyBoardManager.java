@@ -1,10 +1,12 @@
 package manager;
 
 import Audio.Audio;
+import Plant.Plant;
 import scenes.Playing;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 
 public class KeyBoardManager {
     private Playing playing;
@@ -30,6 +32,10 @@ public class KeyBoardManager {
             playing.getPlantManager().setTimeToPlant(false);
         }
         playing.getMouseMotionManager().setControlledByMouse(false);
+    }
+
+    public int getPlantPickedByKeyBoard() {
+        return plantPickedByKeyBoard;
     }
 
     public void pickPlantByKeyBoard(){
@@ -58,10 +64,13 @@ public class KeyBoardManager {
                 playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().cherryBomb();
                 break;
+            case 5:
+                playing.getPlantManager().setShoveled(true);
+                break;
         }
     }
     public void keyBoardChoosePlant(KeyEvent e){
-        if(plantPickedByKeyBoard > 0 && plantPickedByKeyBoard <4){
+        if(plantPickedByKeyBoard > 0 && plantPickedByKeyBoard <5){
             if(e.getKeyCode() == KeyEvent.VK_LEFT){
                 plantPickedByKeyBoard--;
                 playing.getMouseMotionManager().setPlantPickedByMouse(plantPickedByKeyBoard);
@@ -77,7 +86,7 @@ public class KeyBoardManager {
                 plantPickedByKeyBoard++;
                 playing.getMouseMotionManager().setPlantPickedByMouse(plantPickedByKeyBoard);
             }
-        } else if (plantPickedByKeyBoard==4) {
+        } else if (plantPickedByKeyBoard==5) {
             if(e.getKeyCode() == KeyEvent.VK_RIGHT){
                 plantPickedByKeyBoard = 0;
                 playing.getMouseMotionManager().setPlantPickedByMouse(plantPickedByKeyBoard);
@@ -143,6 +152,25 @@ public class KeyBoardManager {
                 playing.getPlantManager().setTimeToPlant(false);
             } else {
                 playing.getPlantManager().plantCreateByKeyBoard(tileSelectedByKeyBoard);
+            }
+        }
+    }
+    public void removePlantUsingKeyBoard(KeyEvent e){
+        if(playing.getPlantManager().isShoveled()){
+            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                synchronized (playing.getPlantManager().getPlantList()){
+                    Iterator<Plant> iterator = playing.getPlantManager().getPlantList().iterator();
+                    while (iterator.hasNext()){
+                        Plant plant = iterator.next();
+                        Rectangle plantRect = new Rectangle(plant.getX(),plant.getY(),plant.getWidth(),plant.getHeight());
+                        if(playing.getTileManager().getTiles()[tileSelectedByKeyBoard].isOccupied() && playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(plant.getX(),plant.getY())){
+                            playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setOccupied(false);
+                            playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setPlanted(false);
+                            iterator.remove();
+                            playing.getPlantManager().setShoveled(false);
+                        }
+                    }
+                }
             }
         }
     }

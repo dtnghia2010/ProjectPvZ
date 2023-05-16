@@ -12,6 +12,7 @@ import java.util.List;
 public class BarManager {
     private Image[] pick_plantBar;
     private Image[] plantInCD;
+    private Image shovel;
     private Image pickedPlant;
     private Image plantBar;
     private MyButtons pickPlant[];
@@ -40,22 +41,24 @@ public class BarManager {
     }
 
     private void initButtons() {
-        pickPlant = new MyButtons[5];
+        pickPlant = new MyButtons[6];
         pickPlant[0] = new MyButtons("Sunflower", 465, 20, 80, 70);
         pickPlant[1] = new MyButtons("Peashooter", 560, 20, 80, 70);
         pickPlant[2] = new MyButtons("Wall-nut", 655, 20, 80, 70);
         pickPlant[3] = new MyButtons("Shadow peashooter", 750, 20, 80, 70);
         pickPlant[4] = new MyButtons("Cherry Bomb", 845, 20, 80, 70);
+        pickPlant[5] = new MyButtons("Shovel",940,20,80,70);
     }
 
     private void importImg(){
-        pick_plantBar = new Image[5];
+        pick_plantBar = new Image[6];
         try {
             pick_plantBar[0] = t.getImage(getClass().getResource("/plantBar/Sunflower.png"));
             pick_plantBar[1] = t.getImage(getClass().getResource("/plantBar/Peashooter.png"));
             pick_plantBar[2] = t.getImage(getClass().getResource("/plantBar/Wall-nut.png"));
             pick_plantBar[3] = t.getImage(getClass().getResource("/plantBar/Shadow_Peashooter.png"));
             pick_plantBar[4] = t.getImage(getClass().getResource("/plantBar/Cherry_Bomb.png"));
+            pick_plantBar[5] = t.getImage(getClass().getResource("/shovel/shovel.png"));
             pickedPlant = t.getImage(getClass().getResource("/plantBar/plantSelected.png"));
             plantBar = t.getImage(getClass().getResource("/plantBar/plantPanel.png"));
         }catch (Exception e){
