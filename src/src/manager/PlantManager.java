@@ -307,7 +307,7 @@ public class PlantManager {
     public void plantCreateByKeyBoard(int tileNum){
         isPlantTest = false;
         if(!isForbidden){
-            if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
+            if(!playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
                 for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
                     plantOnTile(playing.getTileManager().getTiles()[i],(int)playing.getTileManager().getTiles()[tileNum].getBound().getX(),(int)playing.getTileManager().getTiles()[tileNum].getBound().getY(),i);
                 }

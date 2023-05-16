@@ -99,6 +99,8 @@ public class Plant {
     public void updateFrameCountAttackForTesting(){
         if(frameCountAttack < frameCountAttackLimit-1){
             frameCountAttack++;
+        } else {
+            frameCountAttack = 0;
         }
     }
     public void setFrameCountAttack(int frameCountAttack) {

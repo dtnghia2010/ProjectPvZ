@@ -43,6 +43,10 @@ public class Audio {
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
+    public static void stopAudio(){
+        inputAudio(0);
+        clip.stop();
+    }
     public static void splat() {
         inputAudio(1);
         clip.setFramePosition(0);

@@ -13,7 +13,7 @@ public class timeLogic {
                 time = 60;
                 break;
             case 1:
-                time = 200;
+                time = 60;
                 break;
         }
         setTickLimit(tickLimit);

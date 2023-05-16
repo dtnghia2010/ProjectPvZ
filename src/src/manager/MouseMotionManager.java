@@ -45,17 +45,16 @@ public class MouseMotionManager {
         }
     }
     public void mouseTrackPlantBar(int x, int y){
-        if(!playing.getPlantManager().isSelected()){
-            for(int i = 0;i<playing.getBarManager().getPickPlant().length;i++){
-                Rectangle r = playing.getBarManager().getPickPlant()[i].getBounds();
-                if(r.contains(x,y)){
-                    if(playing.getTileManager().isInTile()){
-                        playing.getTileManager().setInTile(false);
-                        playing.getPlantManager().setSelected(false);
-                    }
-                    plantPickedByMouse = i;
-                    playing.getKeyBoardManager().setPlantPickedByKeyBoard(plantPickedByMouse);
+        for(int i = 0;i<playing.getBarManager().getPickPlant().length;i++){
+            Rectangle r = playing.getBarManager().getPickPlant()[i].getBounds();
+            if(r.contains(x,y)){
+                if(playing.getTileManager().isInTile()){
+                    playing.getTileManager().setInTile(false);
+                    playing.getPlantManager().setSelected(false);
+                    playing.getBarManager().setPlantLocked(false);
                 }
+                plantPickedByMouse = i;
+                playing.getKeyBoardManager().setPlantPickedByKeyBoard(plantPickedByMouse);
             }
         }
     }

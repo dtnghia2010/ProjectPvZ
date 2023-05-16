@@ -190,6 +190,7 @@ public class Playing implements SceneMethods {
         keyBoardManager.keyBoardChoosePlant(e);
         keyBoardManager.keyBoardSelectPlant(e);
         keyBoardManager.tileSelectedByKeyBoard(e);
+        keyBoardManager.plant(e);
 //        keyBoardManager.returnToSelectPlantByKeyBoard(e);
         keyBoardManager.startGame(e);
     }
@@ -246,6 +247,7 @@ public class Playing implements SceneMethods {
         startWave = true;
         callHorde = false;
         startWaveForCD = true;
+        plantManager.setSelected(false);
         plantManager.setForbidden(false);
         System.out.println("click on start");
         waveManager.readyNewWave();

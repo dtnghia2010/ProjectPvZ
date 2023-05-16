@@ -1,5 +1,6 @@
 package scenes;
 
+import Audio.Audio;
 import component.MyButtons;
 import manager.World;
 
@@ -64,6 +65,7 @@ public class Setting implements SceneMethods{
             System.exit(0);
 //            setGameScenes(LOSE);
         } else if (bPlaying.getBounds().contains(x, y)){
+            Audio.stopAudio();
             setGameScenes(PLAYING);
         }
     }

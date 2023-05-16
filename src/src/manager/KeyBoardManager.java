@@ -136,9 +136,6 @@ public class KeyBoardManager {
             tileSelectedByKeyBoard = tileSelectedByKeyBoard -9;
             playing.getMouseMotionManager().setTileSelectedByMouse(tileSelectedByKeyBoard);
         }
-        if(playing.getPlantManager().isSelected()){
-            plant(e);
-        }
     }
     public void plant(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
@@ -154,6 +151,7 @@ public class KeyBoardManager {
             if(e.getKeyCode() == KeyEvent.VK_SPACE){
                 playing.setStartWave(true);
                 playing.setStartWaveForCD(true);
+                playing.getPlantManager().setSelected(false);
                 pickPlantByKeyBoard();
                 playing.getWaveManager().readyNewWave();
                 playing.getPlantManager().setForbidden(false);
