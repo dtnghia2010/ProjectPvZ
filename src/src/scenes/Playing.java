@@ -158,6 +158,9 @@ public class Playing implements SceneMethods {
                     } else if (b2.getText().contains("Cherry Bomb")) {
                         plantManager.setForbidden(false);
                         barManager.cherryBomb();
+                    } else if(b2.getText().contains("Shovel")){
+                        plantManager.setSelected(false);
+                        plantManager.setShoveled(true);
                     }
                 }
                 barManager.setPlantLocked(true);
@@ -173,7 +176,6 @@ public class Playing implements SceneMethods {
     }
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
-        plantManager.shovelClicked(x,y);
         plantManager.removePlantByShovel(x,y);
     }
     public void mouseMove(int x, int y){

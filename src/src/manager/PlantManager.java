@@ -268,6 +268,7 @@ public class PlantManager {
                     Audio.tapGrass();
                     tile.setOccupied(true);
                     initPlants(IDhold,HPhold,ATKhold,frameCountLimitHold);
+                    System.out.println(plantList.size());
                     playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1),true);
                     for (int j = 0; j < plantList.size(); j++){
                         plantList.get(plantList.size() - 1).setTileHold(i);
@@ -526,13 +527,6 @@ public class PlantManager {
     public void draw(Graphics g){
         drawPlant(g);
         drawExplosion(g);
-    }
-    public void shovelClicked(int x, int y){
-        Rectangle shovel = new Rectangle(280,0,90,90);
-        if(shovel.contains(x,y)){
-            selected = false;
-            isShoveled = true;
-        }
     }
 
     public boolean isShoveled() {

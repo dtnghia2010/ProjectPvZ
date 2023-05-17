@@ -44,23 +44,29 @@ public class KeyBoardManager {
                 if(playing.isStartWaveForCD()){
                     playing.getPlantManager().setForbidden(false);
                     playing.getBarManager().sunFlower();
+                    playing.getPlantManager().setShoveled(false);
                 } else {
+                    playing.getPlantManager().setShoveled(false);
                     playing.getPlantManager().plantForbiddenFromStart();
                 }
                 break;
             case 1:
+                playing.getPlantManager().setShoveled(false);
                 playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().peaShooter();
                 break;
             case 2:
+                playing.getPlantManager().setShoveled(false);
                 playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().wall_nut();
                 break;
             case 3:
+                playing.getPlantManager().setShoveled(false);
                 playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().shadowPea();
                 break;
             case 4:
+                playing.getPlantManager().setShoveled(false);
                 playing.getPlantManager().setForbidden(false);
                 playing.getBarManager().cherryBomb();
                 break;
@@ -147,11 +153,13 @@ public class KeyBoardManager {
         }
     }
     public void plant(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            if(playing.getPlantManager().isTimeToPlant()){
-                playing.getPlantManager().setTimeToPlant(false);
-            } else {
-                playing.getPlantManager().plantCreateByKeyBoard(tileSelectedByKeyBoard);
+        if(plantPickedByKeyBoard != 5){
+            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                if(playing.getPlantManager().isTimeToPlant()){
+                    playing.getPlantManager().setTimeToPlant(false);
+                } else {
+                    playing.getPlantManager().plantCreateByKeyBoard(tileSelectedByKeyBoard);
+                }
             }
         }
     }

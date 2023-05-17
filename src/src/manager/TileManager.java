@@ -84,7 +84,7 @@ public class TileManager {
     public void drawPlantPreparedToPlanted(Graphics g){
         if((playing.getPlantManager().isSelected() && playing.getMouseMotionManager().isControlledByMouse()) || !playing.getMouseMotionManager().isControlledByMouse()){
             Rectangle r = new Rectangle((int)tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().getX(),(int)tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().getY(),tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getwTile(),tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].gethTile());
-            if(playing.getPlantManager().getIDhold() >= 0){
+            if(playing.getPlantManager().getIDhold() >= 0 && playing.getKeyBoardManager().getPlantPickedByKeyBoard() < 5){
                 if(!playing.getBarManager().getIsPlantInCD()[playing.getPlantManager().getIDhold()] && playing.getBarManager().getIsPlantEnoughSun()[playing.getPlantManager().getIDhold()] && !playing.getPlantManager().isForbidden()){
                     Graphics2D g2d = (Graphics2D) g;
                     if(playing.getPlantManager().getIDhold() != 3){
@@ -108,7 +108,7 @@ public class TileManager {
         if(playing.getKeyBoardManager().getPlantPickedByKeyBoard() == 5){
             if(playing.getPlantManager().isShoveled()){
                 Rectangle r = new Rectangle((int)tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().getX(),(int)tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().getY(),tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getwTile(),tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].gethTile());
-                g2d.drawImage(shovelSprite,(int)r.getX(),(int)r.getY()+5,(int)r.getWidth()+10,(int)r.getHeight()+10,null);
+                g2d.drawImage(shovelSprite,(int)r.getX()-10,(int)r.getY()-5,(int)r.getWidth()+20,(int)r.getHeight()+20,null);
             }
         }
     }
