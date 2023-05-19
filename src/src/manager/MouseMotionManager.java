@@ -52,6 +52,7 @@ public class MouseMotionManager {
                     playing.getTileManager().setInTile(false);
                     playing.getPlantManager().setSelected(false);
                     playing.getBarManager().setPlantLocked(false);
+                    playing.getPlantManager().setShoveled(false);
                 }
                 plantPickedByMouse = i;
                 playing.getKeyBoardManager().setPlantPickedByKeyBoard(plantPickedByMouse);

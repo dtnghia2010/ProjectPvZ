@@ -204,7 +204,7 @@ public class PlantManager {
                 frameCountLimitHold = 25;
                 sunCostHold = 50;
                 if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[0]){
-                    playing.getBarManager().setPlantCD(0,240);
+                    playing.getBarManager().setPlantCD(0,360);
                 }
                 break;
             case 1:
@@ -213,7 +213,7 @@ public class PlantManager {
                 frameCountLimitHold = 58;
                 sunCostHold = 100;
                 if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[1]){
-                    playing.getBarManager().setPlantCD(1,240);
+                    playing.getBarManager().setPlantCD(1,360);
                 }
                 break;
             case 2:
@@ -231,7 +231,7 @@ public class PlantManager {
                 frameCountLimitHold = 20;
                 sunCostHold = 175;
                 if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[3]){
-                    playing.getBarManager().setPlantCD(3,240);
+                    playing.getBarManager().setPlantCD(3,360);
                 }
                 break;
             case 4:
@@ -268,7 +268,6 @@ public class PlantManager {
                     Audio.tapGrass();
                     tile.setOccupied(true);
                     initPlants(IDhold,HPhold,ATKhold,frameCountLimitHold);
-                    System.out.println(plantList.size());
                     playing.getBarManager().setIsPlantInCD(playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1),true);
                     for (int j = 0; j < plantList.size(); j++){
                         plantList.get(plantList.size() - 1).setTileHold(i);
@@ -357,6 +356,7 @@ public class PlantManager {
                     if(plant.isDangered() && plant.getFrameCountAttack() == plant.getFrameCountAttackLimit()-1){
                         plant.setDangered(false);
                         plant.setFrameCountAttack(0);
+                        System.out.println("plant ID "+plant.getPlantID()+" frame: "+plant.getFrameCountAttack());
                     }
                 }
             }

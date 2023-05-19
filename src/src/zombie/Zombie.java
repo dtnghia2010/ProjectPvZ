@@ -136,7 +136,7 @@ public class Zombie {
             if(frameCDMove%0.5 == 0){
                 frameCountMove++;
                 if(type == 0){
-                    if(frameCountMove > 5 && frameCountMove <47)
+                    if(frameCountMove > 5 && frameCountMove <48)
                         bound.x--;
                     if(frameCountMove == frameCountMoveLimit-1){
                         x = x-frameCountMove-1+8;

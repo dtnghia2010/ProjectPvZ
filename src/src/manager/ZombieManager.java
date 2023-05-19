@@ -77,7 +77,7 @@ public class ZombieManager {
         synchronized (zombies) {
             System.out.println("a zombie created");
             if(!allZombieDead()) {
-                zombies.add(new Zombie(1024+rnd(0,1000), 140 + 80 * rnd(0,5), type));
+                zombies.add(new Zombie(1024+100, 140 + 80 * rnd(0,5), type));
                 if(rnd(0,100) > 90) {
                     Audio.zombieGroaning();
                 }
@@ -97,13 +97,14 @@ public class ZombieManager {
                             if(!z.isCollided()){
                                 g.drawImage(normalZombie_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30, null);
 //                            g.setColor(Color.RED);
-//                            g.drawRect((int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30);
-//                                g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
+//                            g2d.drawRect((int)z.X()-50,(int)z.Y(),z.getWidth()+100,z.getHeight());
                             } else if(z.isCollided()) {
                                 g.drawImage(normalZombie_Eat[z.getFrameCountEat()],(int) z.X(), (int) z.Y()+20, z.getWidth(), z.getHeight()-20, null);
                             }
                         } else if (z.getType() == 1) {
                             g.drawImage(coneHead_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+10, null);
+//                            g.setColor(Color.RED);
+//                            g2d.drawRect((int)z.X()-50,(int)z.Y(),z.getWidth()+100,z.getHeight());
 //                            g2d.drawRect((int)z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
                         } else {
                             g.drawImage(zImages[z.getType()], (int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight(), null);
@@ -189,9 +190,10 @@ public class ZombieManager {
                                 zombie.attackPlant(plant);
                                 isReset = true;
                                 plant.removePlant(plant,iterator1,playing.getTileManager());
+                                zombie.defeatPlant(plant);
                             }
                             for(Zombie zombie1:zombies){
-                                Rectangle rZombie = new Rectangle((int)zombie1.X(),(int)zombie1.Y(),zombie1.getWidth(),zombie1.getHeight());
+                                Rectangle rZombie = new Rectangle((int)zombie1.X()-50,(int)zombie1.Y(),zombie1.getWidth()+100,zombie1.getHeight());
                                 if(r.intersects(rZombie)){
                                     zombie1.defeatPlant(plant);
                                 }
