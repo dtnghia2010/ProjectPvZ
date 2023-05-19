@@ -200,6 +200,9 @@ public class Playing implements SceneMethods {
         keyBoardManager.startGame(e);
     }
     public void setupZombie(){
+        if(zombieManager.iszReachedEnd()) {
+            setGameScenes(LOSE);
+        }
         if(getNotifManager().isEndCDWave()) {
             System.out.println("startGame");
             startGame();

@@ -19,7 +19,7 @@ public class ButtonManager {
 
     private void initButtons() {
         bStart = new MyButtons("Start", 10, 10, 140, 45);
-        bSetting = new MyButtons("Setting", 910, 580, 98, 35);
+        bSetting = new MyButtons("Setting", 250, 15, 98, 35);
     }
 
     public void importImg(){
@@ -35,7 +35,7 @@ public class ButtonManager {
 
     public void drawImg(Graphics g){
         g.drawImage(buttonOfPlaying[0], 10,10,140,45, null);
-        g.drawImage(buttonOfPlaying[1], 910,580,98,35, null);
+        g.drawImage(buttonOfPlaying[1], 250,15,98,35, null);
     }
 
     public void drawButtons(Graphics g) {

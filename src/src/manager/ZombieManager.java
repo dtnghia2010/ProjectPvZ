@@ -21,6 +21,7 @@ public class ZombieManager {
     private Random random = new Random();
     private static int realTimeCounter = 0;
     private static boolean isReset = false;
+    private static boolean zReachedEnd = false;
     private int counter = 0;
     public static int getRealTimeCounter() {
         return realTimeCounter;
@@ -77,7 +78,7 @@ public class ZombieManager {
         synchronized (zombies) {
             System.out.println("a zombie created");
             if(!allZombieDead()) {
-                zombies.add(new Zombie(1024+100, 140 + 80 * rnd(0,5), type));
+                zombies.add(new Zombie(1024+rnd(0,1000), 140 + 80 * rnd(0,5), type));
                 if(rnd(0,100) > 90) {
                     Audio.zombieGroaning();
                 }
@@ -118,14 +119,20 @@ public class ZombieManager {
         }
     }
     public void move(Zombie z) {
-        if (z.X() <= 100) {
+/*        if (z.X() <= 100) {
             z.dead();
+            zReachedEnd = true;
         } else {
             if(z.getType() == 0 || z.getType() == 1){
                 z.updateFrameCountMove();
             } else {
                 z.move();
             }
+        }*/
+        if(z.getType() == 0 || z.getType() == 1){
+            z.updateFrameCountMove();
+        } else {
+            z.move();
         }
     }
 
@@ -149,7 +156,12 @@ public class ZombieManager {
         for (Zombie z : zombies) {
             if (z.isAlived()) {
                 // Cập nhật tọa độ di chuyển cho zombie còn sống
-                move(z);
+                if (z.X() <= 100) {
+                    z.dead();
+                    zReachedEnd = true;
+                } else {
+                    move(z);
+                }
             }
         }
     }
@@ -167,6 +179,11 @@ public class ZombieManager {
     public ArrayList<Zombie> getZombies() {
         return zombies;
     }
+
+    public static boolean iszReachedEnd() {
+        return zReachedEnd;
+    }
+
     public void ZombieCollidePlant(){
         synchronized (zombies){
             Iterator<Zombie> iterator = zombies.iterator();

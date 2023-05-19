@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class Zombie {
     private int hp, dmg, type;
-    private final int width = 55, height = 110;
+    private int width = 55, height = 110;
     private float spd = 0.8f;
     private boolean isCollided = false;
 
@@ -53,6 +53,9 @@ public class Zombie {
             frameCountEatLimit = 23;
         } else if (this.type == 1) {
             frameCountMoveLimit = 65;
+            width += 10;
+            height += 20;
+            this.y -= 20;
         }
     }
 
@@ -60,7 +63,7 @@ public class Zombie {
         switch (type) {
             case 0:
                 hp = 70;
-                dmg = 30;
+                dmg = 20;
                 break;
             case 1:
                 hp = 130;
