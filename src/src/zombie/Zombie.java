@@ -133,7 +133,8 @@ public class Zombie {
     public void updateFrameCountMove(){
         if(!isCollided){
             frameCDMove++;
-            if(frameCDMove%0.5 == 0){
+            System.out.println("frame: "+frameCDMove+" "+frameCDMove%0.4);
+            if(frameCDMove%0.4 <0.5){
                 frameCountMove++;
                 if(type == 0){
                     if(frameCountMove > 5 && frameCountMove <48)
