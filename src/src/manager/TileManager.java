@@ -14,14 +14,24 @@ public class TileManager {
     private Image[] plantHardBlur = new Image[5];
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Image shovelSprite = t.getImage(getClass().getResource("/shovel/shovel-sprite.png"));
+    private static TileManager instance = null;
     public boolean isInTile() {
         return isInTile;
     }
-    public TileManager(Playing playing) {
+    private TileManager(Playing playing) {
         initTiles();
         importHardBlurPlant();
         importLightBlurPlant();
         this.playing = playing;
+    }
+
+    public static TileManager createTileManager(Playing playing) {
+        if(instance == null) {
+            instance = new TileManager(playing);
+        } else {
+            System.out.println("Cannot create another TileManager");
+        }
+        return instance;
     }
     private boolean isInTile = false;
 

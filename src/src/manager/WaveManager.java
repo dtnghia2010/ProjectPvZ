@@ -12,13 +12,23 @@ public class WaveManager {
     private int curZom = 0, curWave = -1;
     private int waveNum = 4, hordeNum = 10, coolDownWave = 10;
     private timeZombie zomSpawnTime;
+    private static WaveManager instance = null;
 
-    public WaveManager(Playing playing) {
+    private WaveManager(Playing playing) {
         zomSpawnTime = new timeZombie(1,0);
-//        waveTime = new timeLogic(10);
         this.playing = playing;
         waves = new Wave[waveNum];
         initWaves();
+    }
+
+    public static WaveManager createWaveManager(Playing playing) {
+        if(instance == null) {
+            instance = new WaveManager(playing);
+            System.out.println("You've created a WaveManager");
+        } else {
+            System.out.println("Cannot create another WaveManager");
+        }
+        return instance;
     }
 
     private void initWaves() {

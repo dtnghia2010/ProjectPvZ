@@ -23,6 +23,7 @@ public class ZombieManager {
     private static boolean isReset = false;
     private static boolean zReachedEnd = false;
     private int counter = 0;
+    private static ZombieManager instance = null;
     public static int getRealTimeCounter() {
         return realTimeCounter;
     }
@@ -38,13 +39,22 @@ public class ZombieManager {
             isReset = false;
         }
     }
-    public ZombieManager(Playing playing) {
+    private ZombieManager(Playing playing) {
         this.playing = playing;
         zombies = new ArrayList<>();
         importImg();
         importNormalZombie();
         importConeHead();
 //        initZombieTest();
+    }
+
+    public static ZombieManager createZombieManager(Playing playing) {
+        if(instance == null) {
+            instance = new ZombieManager(playing);
+        } else {
+            System.out.println("Cannot create another ZombieManager");
+        }
+        return instance;
     }
 
     public void importImg() {
@@ -152,7 +162,7 @@ public class ZombieManager {
     }
 
     public void updates() {
-//        frameCount();
+        frameCount();
         for (Zombie z : zombies) {
             if (z.isAlived()) {
                 // Cập nhật tọa độ di chuyển cho zombie còn sống
@@ -203,6 +213,7 @@ public class ZombieManager {
                             zombie.setCollided(true);
                             zombie.updateFrameCountEat();
                             if(realTimeCounter >= 30){
+                                System.out.println("Zombie eating");
                                 Audio.zombieEat();
                                 zombie.attackPlant(plant);
                                 isReset = true;

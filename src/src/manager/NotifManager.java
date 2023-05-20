@@ -11,25 +11,30 @@ import java.awt.*;
 
 public class NotifManager {
     private NotifPattern[] notifs;
-    private boolean executed = false, endCDWave = false;
     private Playing playing;
     private timeStage clearStageTime;
     private timeCDWave waveCDTime;
-    public NotifManager(Playing playing) {
+    private static NotifManager instance = null;
+    private NotifManager(Playing playing) {
         notifs = new NotifPattern[2];
         this.playing = playing;
         setUpNotif();
-//        setNotif(new PlayingNotif(0));
-//        setNotif(new PlayingNotif(1));
+    }
 
+    public static NotifManager createNotifManager(Playing playing) {
+        if(instance == null) {
+            instance = new NotifManager(playing);
+        } else {
+            System.out.println("Cannot create another NotifManager");
+        }
+        return instance;
     }
 
     public void setUpNotif() {
         notifs[0] = new PlayingNotif(0, 4);
         clearStageTime = new timeStage(this.notifs[0].timeNotif(), 1);
         notifs[1] = new PlayingNotif(1, playing.getWaveManager().getCoolDownWave());
-        waveCDTime = new timeCDWave(this.notifs[1].timeNotif(), 1) {
-        };
+        waveCDTime = new timeCDWave(this.notifs[1].timeNotif(), 1);
         waveCDTime.resetTime();
     }
 
@@ -40,7 +45,6 @@ public class NotifManager {
     //draw
     public void drawNotif(Graphics g) {
         if (!playing.isStartWave()) {
-
             if (!playing.getWaveManager().isThereMoreZombieInWave() && playing.getZombieManager().allZombieDead() && playing.isZombieApproaching()) {
                 refresh();
                 if(waveCDTime.isTime()) {
@@ -55,7 +59,6 @@ public class NotifManager {
                 }
             }
         }
-        /// TODO: draw count down wave
         stageCurrent(g); //wave current notif
     }
 

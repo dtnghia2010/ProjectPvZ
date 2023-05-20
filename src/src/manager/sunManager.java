@@ -22,8 +22,19 @@ public class sunManager {
     private int randomTimeSunDrop = 600;
     private boolean isSunCreated = false;
     private boolean isSunRemoved = false;
-    public sunManager(Playing playing){
+    private static sunManager instance = null;
+    private sunManager(Playing playing){
         this.playing = playing;
+    }
+
+    public static sunManager createSunManager(Playing playing) {
+        if(instance == null) {
+            instance = new sunManager(playing);
+            System.out.println("You've created a SunManager");
+        } else {
+            System.out.println("Cannot create another SunManager");
+        }
+        return instance;
     }
     public void sunCreation(){
         synchronized (listOfSun){

@@ -1,6 +1,7 @@
 package manager;
 
 
+import component.Bar;
 import component.MyButtons;
 import scenes.Playing;
 
@@ -12,7 +13,6 @@ import java.util.List;
 public class BarManager {
     private Image[] pick_plantBar;
     private Image[] plantInCD;
-    private Image shovel;
     private Image pickedPlant;
     private Image plantBar;
     private MyButtons pickPlant[];
@@ -21,6 +21,7 @@ public class BarManager {
     private boolean[] isCDReducing = new boolean[5];
     private boolean[] isPlantEnoughSun = new boolean[5];
     private boolean isPlantLocked = false;
+    private static BarManager instance = null;
 
     public boolean isPlantLocked() {
         return isPlantLocked;
@@ -32,12 +33,21 @@ public class BarManager {
 
     private int[] plantCD = new int[5];
     private Toolkit t = Toolkit.getDefaultToolkit();
-    private Playing playing;
-    public BarManager(Playing playing) {
+    private static Playing playing;
+    private BarManager(Playing playing) {
         initButtons();
         importImg();
         initPlantInCD();
         this.playing = playing;
+    }
+
+    public static BarManager createBar(Playing playing) {
+        if(instance == null) {
+            instance = new BarManager(playing);
+        } else {
+            System.out.println("Cannot create another BarManager");
+        }
+        return instance;
     }
 
     private void initButtons() {

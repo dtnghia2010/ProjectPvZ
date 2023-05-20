@@ -23,7 +23,6 @@ public class PlantManager {
     private final Image[] shadowPea_Attack = new Image[21];
     private final Image[] cherryBombGif = new Image[49];
     private Toolkit t = Toolkit.getDefaultToolkit();
-
     private List<Plant> plantList = new ArrayList<>();
     private boolean isPlantTest = true;
     private boolean isTimeToPlant = false;
@@ -33,8 +32,9 @@ public class PlantManager {
     private boolean isForbidden = false;
     private boolean isShoveled = false;
     private int IDhold, HPhold, ATKhold,sunCostHold, frameCountLimitHold;
+    private static PlantManager instance;
 
-    public PlantManager(Playing playing) {
+    private PlantManager(Playing playing) {
         this.playing = playing;
         importCherryBombGif();
         importPeaShooter();
@@ -43,6 +43,14 @@ public class PlantManager {
         importShadowPea();
         initPlantTest();
         plantForbiddenFromStart();
+    }
+    public static PlantManager createPlantManager(Playing playing) {
+        if(instance == null) {
+            instance = new PlantManager(playing);
+        } else {
+            System.out.println("Cannot create another PlantManager");
+        }
+        return instance;
     }
 
     public void initPlants(int plantID, int plantHP, int ATK, int frameCount) {

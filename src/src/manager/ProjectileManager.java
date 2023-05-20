@@ -16,11 +16,19 @@ public class ProjectileManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Playing playing;
     private Image[] projectileImage = new Image[2];
-
-    public ProjectileManager(Playing playing){
+    private static ProjectileManager instance;
+    private ProjectileManager(Playing playing){
         this.playing = playing;
     }
-
+    public static ProjectileManager createProjectileManager(Playing playing) {
+        if(instance == null) {
+            instance = new ProjectileManager(playing);
+            System.out.println("You've created a ProjectileManager");
+        } else {
+            System.out.println("Cannot create another ProjectileManager");
+        }
+        return instance;
+    }
     public void projectileCreated(Plant plant){
         synchronized (listOfProjectile){
             if(plant.getPlantID() == 1){

@@ -27,22 +27,22 @@ public class Playing implements SceneMethods {
 
     public Playing(World w) {
         this.w = w;
-        initComponents();
-        initObjects();
-        initEvents();
-        initNotifs();
+        initManagers();
     }
 
-    private void initNotifs() {
-        notifManager = new NotifManager(this);
-    }
-
-    private void initEvents() {
-        waveManager = new WaveManager(this);
-    }
-
-    private void initObjects() {
-        zombieManager = new ZombieManager(this);
+    private void initManagers() {
+        buttonManager = new ButtonManager(this);
+        mouseMotionManager = new MouseMotionManager(this);
+        //singleton application
+        waveManager = WaveManager.createWaveManager(this);
+        notifManager = NotifManager.createNotifManager(this);
+        zombieManager = ZombieManager.createZombieManager(this);
+        barManager = BarManager.createBar(this);
+        tileManager = TileManager.createTileManager(this);
+        plantManager = PlantManager.createPlantManager(this);
+        projectileManager = ProjectileManager.createProjectileManager(this);
+        sunManager = manager.sunManager.createSunManager(this);
+        keyBoardManager = KeyBoardManager.createKeyBoardManager(this);
     }
     public boolean isStartWaveForCD() {
         return startWaveForCD;
@@ -58,17 +58,6 @@ public class Playing implements SceneMethods {
 
     public MouseMotionManager getMouseMotionManager() {
         return mouseMotionManager;
-    }
-
-    private void initComponents() {
-        barManager = new BarManager(this);
-        tileManager = new TileManager(this);
-        buttonManager = new ButtonManager(this);
-        plantManager = new PlantManager(this);
-        projectileManager = new ProjectileManager(this);
-        sunManager = new sunManager(this);
-        keyBoardManager = new KeyBoardManager(this);
-        mouseMotionManager = new MouseMotionManager(this);
     }
 
     public TileManager getTileManager() {
