@@ -201,9 +201,9 @@ public class Playing implements SceneMethods {
     }
     public void setupZombie(){
         if(zombieManager.iszReachedEnd()) {
-            setGameScenes(LOSE);
+//            setGameScenes(LOSE);
         }
-        if(getNotifManager().isEndCDWave()) {
+        if(getNotifManager().getWaveCDTime().isEndCDWave()) {
             System.out.println("startGame");
             startGame();
         }
@@ -260,7 +260,7 @@ public class Playing implements SceneMethods {
         System.out.println("click on start");
         waveManager.readyNewWave();
         notifManager.reset();
-        notifManager.resetEndCDWave();
+//        notifManager.resetEndCDWave();
     }
 
     public WaveManager getWaveManager() {

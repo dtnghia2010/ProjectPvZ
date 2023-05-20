@@ -1,6 +1,8 @@
 package manager;
 
+import Timer.timeCDWave;
 import Timer.timeLogic;
+import Timer.timeStage;
 import notification.NotifPattern;
 import notification.PlayingNotif;
 import scenes.Playing;
@@ -11,7 +13,8 @@ public class NotifManager {
     private NotifPattern[] notifs;
     private boolean executed = false, endCDWave = false;
     private Playing playing;
-    private timeLogic clearStageTime, waveCDTime;
+    private timeStage clearStageTime;
+    private timeCDWave waveCDTime;
     public NotifManager(Playing playing) {
         notifs = new NotifPattern[2];
         this.playing = playing;
@@ -23,25 +26,15 @@ public class NotifManager {
 
     public void setUpNotif() {
         notifs[0] = new PlayingNotif(0, 4);
-        clearStageTime = new timeLogic(this.notifs[0].timeNotif(), 1);
+        clearStageTime = new timeStage(this.notifs[0].timeNotif(), 1);
         notifs[1] = new PlayingNotif(1, playing.getWaveManager().getCoolDownWave());
-        waveCDTime = new timeLogic(this.notifs[1].timeNotif(), 1);
+        waveCDTime = new timeCDWave(this.notifs[1].timeNotif(), 1) {
+        };
         waveCDTime.resetTime();
     }
 
-/*    public void setNotif(NotifPattern notif) {
-        this.notif = notif;
-        clearStageTime = new timeLogic(this.notif.timeNotif());
-    }*/
-
     public void refresh() {
-        if (clearStageTime.getTickLimit() >= clearStageTime.getTick()) {
-            executed = false;
-            clearStageTime.decreaseTick();
-            if (clearStageTime.getTick() <= 0) {
-                executed = true;
-            }
-        }
+        clearStageTime.refresh();
     }
 
     //draw
@@ -50,19 +43,16 @@ public class NotifManager {
 
             if (!playing.getWaveManager().isThereMoreZombieInWave() && playing.getZombieManager().allZombieDead() && playing.isZombieApproaching()) {
                 refresh();
-//                System.out.println("out stage");
                 if(waveCDTime.isTime()) {
-                    endCDWave = true;
-//                    System.out.println("reset current secccc");
-//                    waveCDTime.resetCurrentSec();
-//                    resetEndCDWave();
+                    waveCDTime.setEndCDWave(true);
                 } else {
                     waveCDTime.refresh();
                 }
                 countWave(g);
-                if (!executed)
-//                    playing.setStartWaveForCD(false);
+                if (!clearStageTime.isExecuted()) {
+                    playing.setStartWaveForCD(false);
                     stageClear(g); //stage clear notif
+                }
             }
         }
         /// TODO: draw count down wave
@@ -94,17 +84,11 @@ public class NotifManager {
     }
 
     public void reset() {
-        //stage clear notif
-        clearStageTime.setTick(clearStageTime.getTickLimit());
-    }
-    public void resetEndCDWave() {
-        endCDWave = false;
+        clearStageTime.resetTime();
         waveCDTime.resetTime();
-//        waveCDTime.resetCurrentSec();
-        System.out.println("reset current second");
     }
 
-    public boolean isEndCDWave() {
-        return endCDWave;
+    public timeCDWave getWaveCDTime() {
+        return waveCDTime;
     }
 }

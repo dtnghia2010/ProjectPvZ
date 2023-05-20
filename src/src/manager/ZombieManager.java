@@ -83,7 +83,7 @@ public class ZombieManager {
                     Audio.zombieGroaning();
                 }
             } else {
-                zombies.add(new Zombie(1024, 140 + 78 * rnd(0,5), type));
+                zombies.add(new Zombie(1024, 140 + 80 * rnd(0,5), type));
             }
         }
     }
@@ -152,7 +152,7 @@ public class ZombieManager {
     }
 
     public void updates() {
-        frameCount();
+//        frameCount();
         for (Zombie z : zombies) {
             if (z.isAlived()) {
                 // Cập nhật tọa độ di chuyển cho zombie còn sống

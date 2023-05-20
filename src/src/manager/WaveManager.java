@@ -1,6 +1,7 @@
 package manager;
 
 import Timer.timeLogic;
+import Timer.timeZombie;
 import event.Wave;
 import scenes.Playing;
 
@@ -10,10 +11,10 @@ public class WaveManager {
     private boolean endWaves = false, hordeActive = false;
     private int curZom = 0, curWave = -1;
     private int waveNum = 4, hordeNum = 10, coolDownWave = 10;
-    private timeLogic zomSpawnTime;
+    private timeZombie zomSpawnTime;
 
     public WaveManager(Playing playing) {
-        zomSpawnTime = new timeLogic(1,0);
+        zomSpawnTime = new timeZombie(1,0);
 //        waveTime = new timeLogic(10);
         this.playing = playing;
         waves = new Wave[waveNum];
@@ -73,9 +74,6 @@ public class WaveManager {
 
     public void updates() {
         zomSpawnTime.refresh();
-/*        if(!playing.isStartWave()) {
-            waveTime.updates();
-        }*/
         if(playing.getZombieManager().allZombieDead() && !isThereMoreZombieInWave()) {
             hordeActive = false;
         }
