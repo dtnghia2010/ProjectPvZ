@@ -46,7 +46,9 @@ public class PlantManager {
     }
 
     public void initPlants(int plantID, int plantHP, int ATK, int frameCount) {
-        plantList.add(new Plant(plantHP, plantID,ATK,frameCount));
+        synchronized (plantList){
+            plantList.add(new Plant(plantHP, plantID,ATK,frameCount));
+        }
     }
 
     public void setIDhold(int IDhold) {
@@ -356,7 +358,6 @@ public class PlantManager {
                     if(plant.isDangered() && plant.getFrameCountAttack() == plant.getFrameCountAttackLimit()-1){
                         plant.setDangered(false);
                         plant.setFrameCountAttack(0);
-                        System.out.println("plant ID "+plant.getPlantID()+" frame: "+plant.getFrameCountAttack());
                     }
                 }
             }
