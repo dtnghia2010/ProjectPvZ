@@ -53,7 +53,7 @@ public class TileManager {
         plantHardBlur[3] = t.getImage(getClass().getResource("/Blur_Plants/ShadowPea/ShadowPea (hard - blur).png"));
         plantHardBlur[4] = t.getImage(getClass().getResource("/Blur_Plants/CherryBomb/cherrybomb (hard - blur).png"));
     }
-    public void drawTiles(Graphics g, PlantManager plantManager) {
+    public void drawTiles(Graphics g) {
         for (Tile t : tiles) {
             Rectangle r = new Rectangle(t.getCurX(), t.getCurY(), t.getwTile(), t.gethTile());
 //            for (int i = 0; i < plantManager.getPlantList().size(); i++) {
@@ -65,6 +65,8 @@ public class TileManager {
 //                } else if (plantManager.getPlantList().get(i).getPlantID() == 1) {
 //                    g.drawImage(plantManager.getPlantImages(1), r.x, r.y, r.width, r.height, null);
 //                }
+//        g.setColor(Color.black);
+//        g.fillRect(r.x, r.y, r.width, r.height);
         }
     }
 
@@ -117,5 +119,6 @@ public class TileManager {
         drawPlantPreparedToPlanted(g);
         drawTileSelectedByMouse(g);
         drawTileSelectedByKeyBoard(g);
+//        drawTiles(g);
     }
 }

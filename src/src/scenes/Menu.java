@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class Menu implements SceneMethods {
     private World w;
-    private MyButtons bPlaying, bQuit;
+    private MyButtons bPlaying, bQuit, bWin;
     private Image[] buttonOfMenu;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -21,6 +21,7 @@ public class Menu implements SceneMethods {
     public void initButtons() {
         bPlaying = new MyButtons("Play", 437, 350,150,60);
         bQuit = new MyButtons("Quit", 442, 440, 140, 55);
+        bWin = new MyButtons("Win", 0, 0, 140, 55);
     }
 
     private void importImg(){
@@ -46,8 +47,12 @@ public class Menu implements SceneMethods {
             setGameScenes(PLAYING);
             w.getPlaying().getBarManager().setCDatStartOfGame();
         } else if (bQuit.getBounds().contains(x,y)) {
+            Audio.lose();
             setGameScenes(LOSE);
 //            System.out.println("Setting");
+        } else if (bWin.getBounds().contains(x, y)){
+            Audio.win();
+            setGameScenes(WIN);
         }
     }
 
@@ -64,6 +69,7 @@ public class Menu implements SceneMethods {
     public void drawButtons(Graphics g) {
         bPlaying.draw(g);
         bQuit.draw(g);
+        bWin.draw(g);
     }
     @Override
     public void render(Graphics g, Image img) {

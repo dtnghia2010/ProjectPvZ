@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class Audio {
     private static Clip clip;
-    static URL soundURL[] = new URL[12];
+    static URL soundURL[] = new URL[14];
 
     static {
         try {
@@ -24,6 +24,8 @@ public class Audio {
             soundURL[9] = Audio.class.getResource("/Audio/plantNotAvailable.wav");
             soundURL[10] = Audio.class.getResource("/Audio/sunCollected.wav");
             soundURL[11] = Audio.class.getResource("/Audio/Groaning.wav");
+            soundURL[12] = Audio.class.getResource("/Audio/Win.wav");
+            soundURL[13] = Audio.class.getResource("/Audio/Lose.wav");
         } catch(Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open audio!"); //show error dialog
@@ -102,6 +104,23 @@ public class Audio {
         inputAudio(11);
         clip.setFramePosition(0);
         clip.start();
+    }
+
+    public static void win(){
+        inputAudio(12);
+        clip.setFramePosition(0);
+        clip.start();
+    }
+
+    public static void lose(){
+        inputAudio(13);
+        clip.setFramePosition(0);
+        clip.start();
+    }
+
+    public static void stopMusic(){
+        inputAudio(0);
+        clip.stop();
     }
 
 }

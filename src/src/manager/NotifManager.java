@@ -12,6 +12,8 @@ public class NotifManager {
     private boolean executed = false, endCDWave = false;
     private Playing playing;
     private timeLogic clearStageTime, waveCDTime;
+    private Toolkit t = Toolkit.getDefaultToolkit();
+    private Image noticeImg = t.getImage(getClass().getResource("/scene/NOTICE.png"));
     public NotifManager(Playing playing) {
         notifs = new NotifPattern[2];
         this.playing = playing;
@@ -70,27 +72,33 @@ public class NotifManager {
     }
 
     public void countWave(Graphics g) {
-        Font font = new Font("Arial", Font.BOLD, 20);
+//        g.setColor(Color.BLUE);
+//        g.fillRect(77,580,167,35);
+        g.drawImage(noticeImg, 77, 580, 156, 35, null);
+        Font font = new Font("PvZ2 Regular", Font.BOLD, 22);
         g.setFont(font);
-        g.setColor(Color.RED);
+        g.setColor(Color.WHITE);
         int time = playing.getWaveManager().getCoolDownWave() - waveCDTime.getCurrentSec();
-        g.drawString("Count down: " + time, 100, 620);
+        g.drawString("Count down: " + time, 100, 604);
     }
     public void stageClear(Graphics g) {
         g.drawImage(notifs[0].getImage(), 1024 / 2 - 200, 625 / 2 - 200, 400, 400, null);
     }
 
     public void stageCurrent(Graphics g) {
-        Font font = new Font("Arial", Font.BOLD, 20);
+//        g.setColor(Color.BLUE);
+//        g.fillRect(873,580,120,35);
+        g.drawImage(noticeImg, 873, 580, 120, 35, null);
+        Font font = new Font("PvZ2 Regular", Font.BOLD, 22);
         g.setFont(font);
-        g.setColor(Color.RED);
+        g.setColor(Color.WHITE);
         int currentWave = playing.getWaveManager().getCurWave() + 1;
-        String currWave = "0";
+        int currWave = 0;
         Integer.toString(currentWave);
         if (currentWave < 10 && currentWave > 0) {
             currWave += currentWave;
         }
-        g.drawString("Wave " + currWave, 900, 620);
+        g.drawString("Wave " + currWave, 907, 604);
     }
 
     public void reset() {
