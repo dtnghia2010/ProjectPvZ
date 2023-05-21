@@ -60,9 +60,10 @@ public class NotifManager {
                     waveCDTime.refresh();
                 }
                 countWave(g);
-                if (!executed)
+                if (!executed) {
                     playing.setStartWaveForCD(false);
                     stageClear(g); //stage clear notif
+                }
             }
         }
         /// TODO: draw count down wave

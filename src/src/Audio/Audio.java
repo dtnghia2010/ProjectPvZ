@@ -42,10 +42,12 @@ public class Audio {
         inputAudio(0);
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+
     }
     public static void stopAudio(){
-        inputAudio(0);
-        clip.stop();
+        if(clip.isRunning()){
+            clip.stop();
+        }
     }
     public static void splat() {
         inputAudio(1);

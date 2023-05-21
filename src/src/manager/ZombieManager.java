@@ -77,7 +77,7 @@ public class ZombieManager {
         synchronized (zombies) {
             System.out.println("a zombie created");
             if(!allZombieDead()) {
-                zombies.add(new Zombie(1024+100, 140 + 80 * rnd(0,5), type));
+                zombies.add(new Zombie(1024+rnd(0,1000), 140 + 80 * rnd(0,5), type));
                 if(rnd(0,100) > 90) {
                     Audio.zombieGroaning();
                 }
@@ -189,7 +189,7 @@ public class ZombieManager {
                                 Audio.zombieEat();
                                 zombie.attackPlant(plant);
                                 isReset = true;
-                                plant.removePlant(plant,iterator1,playing.getTileManager());
+                                plant.removePlant(plant,iterator1,playing.getTileManager(),playing.getPlantManager());
                                 zombie.defeatPlant(plant);
                             }
                             for(Zombie zombie1:zombies){

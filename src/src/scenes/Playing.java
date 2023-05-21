@@ -197,7 +197,7 @@ public class Playing implements SceneMethods {
         keyBoardManager.plant(e);
         keyBoardManager.removePlantUsingKeyBoard(e);
 //        keyBoardManager.returnToSelectPlantByKeyBoard(e);
-        keyBoardManager.startGame(e);
+//        keyBoardManager.startGame(e);
     }
     public void setupZombie(){
         if(getNotifManager().isEndCDWave()) {

@@ -10,12 +10,10 @@ import scenes.Playing;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class World extends JPanel implements Runnable {
     private int screenWidth = 1024, screenHeight = 625;
     private ArrayList<Image> img = new ArrayList<>();
-    private Random random;
     private double FPS_SET = 60.0;
     private double UPS_SET = 60.0;
     private MyMouseListener myMouseListener;
@@ -32,7 +30,6 @@ public class World extends JPanel implements Runnable {
     }
     public World() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
-        random = new Random();
         initInput();
         initClasses();
         importImg();

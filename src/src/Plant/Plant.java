@@ -43,16 +43,21 @@ public class Plant {
         return frameCountAttack;
     }
     public void sunCreatedBySunFlower(sunManager sunManager){
-        if(x > 0 && y > 0){
-            frameCountSun++;
-            if(frameCountSun == frameCountSunLimit){
-                sunManager.setSunCreated(true);
-                sunManager.sunCreatedBySunFlower(this);
-                frameCountSunLimit = random.nextInt(600)+600;
-                frameCountSun = 0;
-            } else {
-                sunManager.setSunCreated(false);
+        if(!sunManager.isSunCreated() && !sunManager.isSunRemoved()){
+            if(x > 0 && y > 0){
+                frameCountSun++;
+                if(frameCountSun == frameCountSunLimit){
+                    sunManager.sunCreatedBySunFlower(this);
+                    sunManager.setSunCreated(true);
+                    frameCountSunLimit = random.nextInt(600)+600;
+                    frameCountSun = 0;
+                } else {
+                    sunManager.setSunCreated(false);
+                }
             }
+        } else {
+            sunManager.setSunRemoved(false);
+            sunManager.setSunCreated(false);
         }
     }
 
@@ -198,16 +203,22 @@ public class Plant {
     public void setPlantHP(double plantHP) {
         this.plantHP = plantHP;
     }
-    public void removePlant(Plant plant, Iterator<Plant> iterator, TileManager tileManager){
-        if(plant.getPlantHP() <= 0){
-            for(Tile tile:tileManager.getTiles()){
-                Rectangle r = tile.getBound();
-                if(r.contains(plant.getX()+1,plant.getY()+1)){
-                    tile.setOccupied(false);
-                    tile.setPlanted(false);
+    public void removePlant(Plant plant, Iterator<Plant> iterator, TileManager tileManager,PlantManager plantManager){
+        if(!plantManager.isPlantPlanted() && !plantManager.isPlantRemoved()){
+            if(plant.getPlantHP() <= 0){
+                for(Tile tile:tileManager.getTiles()){
+                    Rectangle r = tile.getBound();
+                    if(r.contains(plant.getX()+1,plant.getY()+1)){
+                        tile.setOccupied(false);
+                        tile.setPlanted(false);
+                    }
                 }
+                plantManager.setPlantRemoved(true);
+                iterator.remove();
             }
-            iterator.remove();
+        } else {
+            plantManager.setPlantPlanted(false);
+            plantManager.setPlantRemoved(false);
         }
     }
 }
