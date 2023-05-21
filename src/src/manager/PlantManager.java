@@ -123,28 +123,30 @@ public class PlantManager {
         }
     }
     public void drawPlant(Graphics g){
-        synchronized (plantList){
-            Iterator<Plant> iterator = plantList.iterator();
-            while (iterator.hasNext()){
-                Plant pl = iterator.next();
-                if (pl.getPlantID() == 0){
-                    g.drawImage(sunFlower[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
-                } else if (pl.getPlantID() == 1){
-                    if(!pl.isDangered()){
-                        g.drawImage(peaShooter_idle[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
-                    } else {
-                        g.drawImage(peaShooter_attack[pl.getFrameCountAttack()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
+        if(!isPlantPlanted && !isPlantRemoved){
+            synchronized (plantList){
+                Iterator<Plant> iterator = plantList.iterator();
+                while (iterator.hasNext()){
+                    Plant pl = iterator.next();
+                    if (pl.getPlantID() == 0){
+                        g.drawImage(sunFlower[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
+                    } else if (pl.getPlantID() == 1){
+                        if(!pl.isDangered()){
+                            g.drawImage(peaShooter_idle[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
+                        } else {
+                            g.drawImage(peaShooter_attack[pl.getFrameCountAttack()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
+                        }
+                    } else if (pl.getPlantID() == 2){
+                        g.drawImage(wall_nut[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
+                    } else if (pl.getPlantID() == 3){
+                        if(!pl.isDangered()){
+                            g.drawImage(shadowPea_Idle[pl.getFrameCountIdle()], pl.getX()-10, pl.getY()-30, pl.getWidth()+30, pl.getHeight()+30, null);
+                        } else {
+                            g.drawImage(shadowPea_Attack[pl.getFrameCountAttack()], pl.getX()-10, pl.getY()-30, pl.getWidth()+30, pl.getHeight()+30, null);
+                        }
+                    } else if (pl.getPlantID() == 4){
+                        g.drawImage(cherryBombGif[pl.getFrameCountIdle()],pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
                     }
-                } else if (pl.getPlantID() == 2){
-                    g.drawImage(wall_nut[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
-                } else if (pl.getPlantID() == 3){
-                    if(!pl.isDangered()){
-                        g.drawImage(shadowPea_Idle[pl.getFrameCountIdle()], pl.getX()-10, pl.getY()-30, pl.getWidth()+30, pl.getHeight()+30, null);
-                    } else {
-                        g.drawImage(shadowPea_Attack[pl.getFrameCountAttack()], pl.getX()-10, pl.getY()-30, pl.getWidth()+30, pl.getHeight()+30, null);
-                    }
-                } else if (pl.getPlantID() == 4){
-                    g.drawImage(cherryBombGif[pl.getFrameCountIdle()],pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
                 }
             }
         }

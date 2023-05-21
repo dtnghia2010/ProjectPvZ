@@ -22,6 +22,7 @@ public class Playing implements SceneMethods {
     private NotifManager notifManager;
     private boolean startWave = false, callHorde = false, zombieApproaching = false;
     private boolean startWaveForCD = false;
+    private int frameCount = 0;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -76,6 +77,7 @@ public class Playing implements SceneMethods {
     }
     @Override
     public void render(Graphics g, Image img) {
+//        System.out.println("2");
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
 //        tileManager.drawTiles(g, plantManager);
@@ -225,6 +227,7 @@ public class Playing implements SceneMethods {
         }
     }
     public void updates() {
+//        System.out.println("1");
         setupZombie();
         plantManager.update();
         projectileManager.update();
@@ -233,6 +236,7 @@ public class Playing implements SceneMethods {
         waveManager.updates();
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();
+
     }
 
     private void spawnZombie() {

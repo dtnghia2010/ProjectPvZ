@@ -23,6 +23,9 @@ public class World extends JPanel implements Runnable {
     private Playing playing;
     private Setting setting;
     private Toolkit t = Toolkit.getDefaultToolkit();
+    private int frameCount = 0;
+    private boolean FPSstop = false;
+    private boolean UPSstop = false;
 
     public void start() {
         Thread thread = new Thread(this);
@@ -124,19 +127,30 @@ public class World extends JPanel implements Runnable {
         int frames = 0;
         long lastTimeCheck = System.currentTimeMillis();
         long now;
+        int FPScount = 0;
+        int UPScount = 0;
         while (true) {
             now = System.nanoTime();
             //repaint game
-            if (now - lastFrame >= timePerFrame) {
+            if (now - lastUpdate >= timePerFrame) {
                 lastFrame = now;
                 frames++;
                 repaint();
+//                FPScount++;
+//                System.out.println(FPScount);
             }
             //update game
             if (now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
                 updates();
+//                if(!UPSstop){
+//                    for(int i = 0;i<11 ;i++){
+//                        System.out.println("UPS: "+ UPScount);
+//                        UPScount++;
+//                    }
+//                    UPSstop = true;
+//                }
             }
             //check FPS & UPS
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
