@@ -57,6 +57,12 @@ public class sunManager {
     public void frameCount(){
         realTimeCounter++;
     }
+    private void collectSun(Sun sun){
+        sun.setSunCLicked(true);
+        sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
+        sunHold += 50;
+        sun.setCollected(true);
+    }
     public void clickSun(int x, int y){
         Iterator<Sun> iterator = listOfSun.iterator();
         while (iterator.hasNext()){
@@ -64,9 +70,7 @@ public class sunManager {
             Rectangle rSun = sun.getBounds();
             if(rSun.contains(x,y) && !sun.isSunCLicked() && sun.isThere()){
                 Audio.sunCollected();
-                sun.setSunCLicked(true);
-                sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
-                sunHold += 50;
+                collectSun(sun);
             }
         }
     }
@@ -80,10 +84,7 @@ public class sunManager {
                 if(playing.getTileManager().getTiles()[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().intersects(rSun)){
                     if(!sun.isCollected() && sun.isThere()){
                         Audio.sunCollected();
-                        sun.setSunCLicked(true);
-                        sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
-                        sunHold += 50;
-                        sun.setCollected(true);
+                        collectSun(sun);
                     }
                 }
             }
@@ -139,11 +140,8 @@ public class sunManager {
         while (iterator.hasNext()){
             Sun sun = iterator.next();
             if(!sun.isCollected() && sun.isThere()){
-                sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
-                sunHold += 50;
                 Audio.sunCollected();
-                sun.setCollected(true);
-                sun.setSunCLicked(true);
+                collectSun(sun);
             }
             sun.moveToStorage();
         }
