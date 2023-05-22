@@ -69,14 +69,9 @@ public class PlantManager {
         importSunFlower();
         importWallNut();
         importShadowPea();
-        initPlantTest();
         plantForbiddenFromStart();
         initStorage();
         setNumPlant();
-    }
-
-    public void initPlantsTest(int plantID, int plantHP, int ATK, int frameCount) {
-        plantListTest.add(new Plant(plantHP, plantID,ATK,frameCount));
     }
 
     public void setSunCostHold(int sunCostHold) {
@@ -188,103 +183,28 @@ public class PlantManager {
             }
         }
     }
-    public void drawPlantTest(Graphics g){
-        Iterator<Plant> iterator = plantListTest.iterator();
-        while (iterator.hasNext()){
-            Plant pl = iterator.next();
-            if (pl.getPlantID() == 0){
-                g.drawImage(sunFlower[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
-            } else if (pl.getPlantID() == 1){
-                if(!pl.isDangered()){
-                    g.drawImage(peaShooter_idle[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
-                } else {
-                    g.drawImage(peaShooter_attack[pl.getFrameCountAttack()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
-                }
-            } else if (pl.getPlantID() == 2){
-                g.drawImage(wall_nut[pl.getFrameCountIdle()], pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
-            } else if (pl.getPlantID() == 3){
-                if(!pl.isDangered()){
-                    g.drawImage(shadowPea_Idle[pl.getFrameCountIdle()], pl.getX()-10, pl.getY()-30, pl.getWidth()+30, pl.getHeight()+30, null);
-                } else {
-                    g.drawImage(shadowPea_Attack[pl.getFrameCountAttack()], pl.getX()-10, pl.getY()-30, pl.getWidth()+30, pl.getHeight()+30, null);
-                }
-            } else if (pl.getPlantID() == 4){
-                g.drawImage(cherryBombGif[pl.getFrameCountIdle()],pl.getX(), pl.getY(), pl.getWidth(), pl.getHeight(), null);
-            }
-        }
-    }
-    public void initPlantTest(){ //Trash plants
-        initPlantsTest(0,1,0,25);
-        initPlantsTest(1,1,0,58);
-        initPlantsTest(2,1,0,81);
-        initPlantsTest(3,1,0,20);
-        initPlantsTest(4,1,0,30);
-        initPlantsTest(1,1,0,58);
-        initPlantsTest(3,1,0,20);
-        for(int i = 0;i<plantListTest.size();i++){
-            plantListTest.get(i).setX(-999);
-            plantListTest.get(i).setY(-999);
-            plantListTest.get(i).setWidth(100);
-            plantListTest.get(i).setHeight(100);
-            if(plantListTest.get(i).getPlantID() == 1){
-                plantListTest.get(i).setFrameCountAttackLimit(59);
-            } else if(plantListTest.get(i).getPlantID() == 3){
-                plantListTest.get(i).setFrameCountAttackLimit(21);
-            }
-        }
-    }
     public void update(){
-        if(!isPlantPlanted && !isPlantRemoved){
-            if(!isPlantTest){
-                synchronized (plantList){
-                    Iterator<Plant> iterator = plantList.iterator();
-                    while (iterator.hasNext()){
-                        Plant plant = iterator.next();
-                        plant.updateFrameCountIdle();
-                        if(plant.getPlantID() == 1 || plant.getPlantID() == 3){
-                            plant.updateFrameCountAttack();
-                        }
+        if(!isPlantTest){
+            Iterator<Plant> iterator = plantList.iterator();
+            while (iterator.hasNext()){
+                Plant plant = iterator.next();
+                plant.updateFrameCountIdle();
+                if(plant.isAlived()){
+                    if(plant.getPlantID() == 1 || plant.getPlantID() == 3){
+                        plant.updateFrameCountAttack();
                     }
                 }
             }
-            if(isPlantTest){
-                synchronized (plantList){
-                    Iterator<Plant> iterator = plantListTest.iterator();
-                    while (iterator.hasNext()){
-                        Plant plant = iterator.next();
-                        setPlantDangeredForTesting();
-                        plant.loadAnimationForTheFirstTime();
-//                    if(plantList.get(2).getFrameCountIdle()  == plantList.get(2).getFrameCountIdleLimit()-1){
-//
-//                    }
-                    }
-                }
-            }
-            alertPlant();
-            calmPlant();
-            updateSunflower();
-            timeExplode();
-            explodeTest();
-            plantAttack();
-        } else {
-            isPlantRemoved = false;
-            isPlantPlanted = false;
         }
+        alertPlant();
+        calmPlant();
+        updateSunflower();
+        timeExplode();
+        plantAttack();
     }
 
     public void setSelected(boolean selected) {
         this.selected = selected;
-    }
-    public void setPlantStatus(Rectangle r){
-        plantList.get(plantList.size() - 1).setX(r.x);
-        plantList.get(plantList.size() - 1).setY(r.y);
-        plantList.get(plantList.size() - 1).setWidth(r.width);
-        plantList.get(plantList.size() - 1).setHeight(r.height);
-        if(plantList.get(plantList.size()-1).getPlantID() == 1){
-            plantList.get(plantList.size()-1).setFrameCountAttackLimit(59);
-        } else if(plantList.get(plantList.size()-1).getPlantID() == 3){
-            plantList.get(plantList.size()-1).setFrameCountAttackLimit(20);
-        }
     }
 
     public int getIDhold() {
@@ -328,53 +248,41 @@ public class PlantManager {
         }
     }
     public void mouse(int x, int y){
-        isPlantTest = false;
-        if(!isPlantPlanted && !isPlantRemoved){
-            if(!isForbidden){
-                if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
-                    for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
-                        plantOnTile(playing.getTileManager().getTiles()[i],x,y,i);
-                    }
-                    if(playing.isStartWaveForCD()){
-                        selected = false;
-                        playing.getBarManager().setPlantLocked(false);
-                    }
-                } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
-                    Audio.plantNotAvailable();
-                }
-            } else {
+        if(!isForbidden){
+            if(selected && !playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
                 for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
-                    Rectangle r = playing.getTileManager().getTiles()[i].getBound();
-                    if(r.contains(x,y)){
-                        Audio.plantNotAvailable();
-                    }
+                    plantOnTile(playing.getTileManager().getTiles()[i],x,y,i);
                 }
+                if(playing.isStartWaveForCD()){
+                    selected = false;
+                    playing.getBarManager().setPlantLocked(false);
+                }
+            } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
+                Audio.plantNotAvailable();
             }
         } else {
-            isPlantRemoved = false;
-            isPlantPlanted = false;
+            for (int i = 0; i < playing.getTileManager().getTiles().length; i++){
+                Rectangle r = playing.getTileManager().getTiles()[i].getBound();
+                if(r.contains(x,y)){
+                    Audio.plantNotAvailable();
+                }
+            }
         }
     }
     public void plantCreateByKeyBoard(int tileNum){
-        isPlantTest = false;
-        if(!isPlantPlanted && !isPlantRemoved){
-            if(!isForbidden){
-                if(!playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
-                    for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
-                        plantOnTile(playing.getTileManager().getTiles()[i],(int)playing.getTileManager().getTiles()[tileNum].getBound().getX(),(int)playing.getTileManager().getTiles()[tileNum].getBound().getY(),i);
-                    }
-                    if(playing.isStartWaveForCD() && isPlanted){
-//                selected = false;
-                        playing.getBarManager().setPlantLocked(false);
-                        isPlanted = false;
-                    }
-                } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
-                    Audio.plantNotAvailable();
+        if(!isForbidden){
+            if(!playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]){
+                for(int i = 0;i<playing.getTileManager().getTiles().length;i++){
+                    plantOnTile(playing.getTileManager().getTiles()[i],(int)playing.getTileManager().getTiles()[tileNum].getBound().getX(),(int)playing.getTileManager().getTiles()[tileNum].getBound().getY(),i);
                 }
+                if(playing.isStartWaveForCD() && isPlanted){
+//                selected = false;
+                    playing.getBarManager().setPlantLocked(false);
+                    isPlanted = false;
+                }
+            } else if(selected && playing.getBarManager().getIsPlantInCD()[playing.getBarManager().getPlantPickedID().get(playing.getBarManager().getPlantPickedID().size()-1)]) {
+                Audio.plantNotAvailable();
             }
-        } else {
-            isPlantRemoved = false;
-            isPlantPlanted = false;
         }
     }
     public void updateSunflower(){
@@ -455,13 +363,7 @@ public class PlantManager {
             }
         }
     }
-    public void setPlantDangeredForTesting(){
-        if(isPlantTest){
-            for(int i = 4;i<=5;i++){
-                plantList.get(i).setDangered(true);
-            }
-        }
-    }
+
     public int isPlantAttack(int start, int end, TileManager tileManager, ZombieManager zombieManager){
         int tileStart;
         for(int i = start;i<end;i++){
@@ -526,26 +428,6 @@ public class PlantManager {
             }
         }
     }
-    public void explodeTest(){
-        Iterator<Plant> iterator = plantListTest.iterator();
-        while (iterator.hasNext()){
-            Plant plant = iterator.next();
-            if(plant.getPlantID() == 4){
-                if(plant.getFrameCountIdle() == 29){
-                    if(!isPlantTest){
-                        Audio.Explode();
-                    }
-                    plant.setPlantHP(0);
-                    cherryExplode(plant.getX(),plant.getY());
-                    plant.removePlant(plant,iterator,playing.getTileManager(),this);
-                    plant.setFrameCountIdle(0);
-                    plant.setFrameCDIdle(0);
-                } else if(plant.getFrameCountIdle() == 0){
-                    Audio.prepareToExplode();
-                }
-            }
-        }
-    }
     public void timeExplode(){
         Iterator<Plant> iterator = plantList.iterator();
         while (iterator.hasNext()){
@@ -606,7 +488,6 @@ public class PlantManager {
     }
     public void draw(Graphics g){
         drawPlant(g);
-        drawPlantTest(g);
         drawExplosion(g);
     }
 
