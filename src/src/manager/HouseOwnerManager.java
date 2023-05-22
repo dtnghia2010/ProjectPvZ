@@ -147,9 +147,10 @@ public class HouseOwnerManager {
                 while (iterator.hasNext()) {
                     Zombie zombie = iterator.next();
                     int zombieY = (int) zombie.getY();
+                    int zombieX = (int) zombie.getX();
 
                     // Kiểm tra nếu tọa độ y của HouseOwner gần bằng tọa độ y của zombie
-                    if (Math.abs(houseOwnerY-zombieY) <= 30) {
+                    if (Math.abs(houseOwnerY-zombieY) <= 30 && zombieX <=1024) {
                         // Tạo một đạn mới và thêm vào ProjectileManager
                         System.out.println("create projectile of HouseOwner");
                         projectileOfHouseOwner.projectileCreated(houseOwner);
