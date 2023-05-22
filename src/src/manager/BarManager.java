@@ -122,10 +122,10 @@ public class BarManager {
         playing.getPlantManager().setSunCostHold(150);
     }
     public void setCDatStartOfGame(){
-        plantCD[1] = 95;
-        plantCD[2] = 95;
-        plantCD[3] = 95;
-        plantCD[4] = 95;
+        plantCD[1] = 205;
+        plantCD[2] = 205;
+        plantCD[3] = 205;
+        plantCD[4] = 205;
         plantPickedID.add(1);
         plantPickedID.add(2);
         plantPickedID.add(3);

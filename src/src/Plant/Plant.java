@@ -63,10 +63,6 @@ public class Plant {
         }
     }
 
-    public int getFrameCountIdleLimit() {
-        return frameCountIdleLimit;
-    }
-
     public void updateFrameCountIdle(){
         frameCDIdle++;
         if(frameCDIdle%3 == 0){
@@ -81,19 +77,6 @@ public class Plant {
         return frameCountAttackLimit;
     }
 
-    public void updateFrameCountIdleForTesting(){
-        frameCDIdle++;
-        if(frameCDIdle%1 == 0){
-            frameCountIdle++;
-            if(frameCountIdle == frameCountIdleLimit){
-                frameCountIdle = 0;
-            }
-        }
-    }
-    public void loadAnimationForTheFirstTime(){
-        updateFrameCountAttackForTesting();
-        updateFrameCountIdleForTesting();
-    }
     public void updateFrameCountAttack(){
         frameCDAttack++;
         if(frameCDAttack%4 == 0){
@@ -101,13 +84,6 @@ public class Plant {
             if (frameCountAttack == frameCountAttackLimit) {
                 frameCountAttack = 0;
             }
-        }
-    }
-    public void updateFrameCountAttackForTesting(){
-        if(frameCountAttack < frameCountAttackLimit-1){
-            frameCountAttack++;
-        } else {
-            frameCountAttack = 0;
         }
     }
     public void setFrameCountAttack(int frameCountAttack) {
@@ -124,17 +100,10 @@ public class Plant {
         isDangered = dangered;
     }
 
-    public int getPlantATK() {
-        return plantATK;
-    }
-
     public int getATK() {
         return plantATK;
     }
 
-    public void setPlantATK(int plantATK) {
-        this.plantATK = plantATK;
-    }
 
     private int tileHold;
     private int x, y;
@@ -168,19 +137,20 @@ public class Plant {
         return y;
     }
 
-    public void setFrameCountAttackLimit(int frameCountAttackLimit) {
-        this.frameCountAttackLimit = frameCountAttackLimit;
-    }
-
     public void setY(int y) {
         this.y = y;
     }
 
-    public Plant(double plantHP, int plantID, int ATK, int frameCountIdleLimit){
+    public Plant(double plantHP, int plantID, int ATK, int frameCountIdleLimit,int frameCountAttackLimit,int x, int y,int width, int height){
         this.frameCountIdleLimit = frameCountIdleLimit;
+        this.frameCountAttackLimit = frameCountAttackLimit;
         this.plantHP = plantHP;
         this.plantID = plantID;
         this.plantATK = ATK;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
     public void setTileHold(int tileHold) {
         this.tileHold = tileHold;
@@ -206,21 +176,15 @@ public class Plant {
         this.plantHP = plantHP;
     }
     public void removePlant(Plant plant, Iterator<Plant> iterator, TileManager tileManager,PlantManager plantManager){
-        if(!plantManager.isPlantPlanted() && !plantManager.isPlantRemoved()){
-            if(plant.getPlantHP() <= 0){
-                for(Tile tile:tileManager.getTiles()){
-                    Rectangle r = tile.getBound();
-                    if(r.contains(plant.getX()+1,plant.getY()+1)){
-                        tile.setOccupied(false);
-                        tile.setPlanted(false);
-                    }
+        if(plant.getPlantHP() <= 0){
+            for(Tile tile:tileManager.getTiles()){
+                Rectangle r = tile.getBound();
+                if(r.contains(plant.getX()+1,plant.getY()+1)){
+                    tile.setOccupied(false);
+                    tile.setPlanted(false);
                 }
-                plantManager.setPlantRemoved(true);
-                iterator.remove();
             }
-        } else {
-            plantManager.setPlantPlanted(false);
-            plantManager.setPlantRemoved(false);
+            isAlived = false;
         }
     }
 }
