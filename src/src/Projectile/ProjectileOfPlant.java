@@ -44,7 +44,7 @@ public class ProjectileOfPlant extends ProjectileLogic {
                 Projectile projectile = iterator.next();
                 if (projectile.getID() == 1) {
                     g2d.drawImage(projectileImage[0], projectile.getX(), projectile.getY(), 30, 30, null);
-                } else if (projectile.getID() == 2) {
+                } else if (projectile.getID() == 3) {
                     g2d.drawImage(projectileImage[1], projectile.getX(), projectile.getY(), 30, 30, null);
                 }
             }
