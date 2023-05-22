@@ -1,14 +1,16 @@
 package HouseOwner;
+import Projectile.Shooter;
+
 import java.awt.*;
 import java.util.Iterator;
-public class HouseOwner {
+public class HouseOwner implements Shooter {
     private int hp, dmg;
     private final int atk =100;
     private static final int width = 40, height = 60;
     private float spd = 0.8f;
     private boolean Collided = false;
-    private double x;
-    private double y;
+    private int x;
+    private int y;
     private boolean isAlived = true;
     private boolean isDead = false;
 
@@ -23,7 +25,7 @@ public class HouseOwner {
         isDangered = dangered;
     }
 
-    public HouseOwner(double x, double y, int hp) {
+    public HouseOwner(int x, int y, int hp) {
         this.x = x;
         this.y = y;
         this.hp = hp;
@@ -79,11 +81,11 @@ public class HouseOwner {
         return bound;
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
     public int getHeight(){
@@ -100,6 +102,11 @@ public class HouseOwner {
 
     public int getATK() {
         return atk;
+    }
+
+    @Override
+    public int getID() {
+        return 0;
     }
 
 }

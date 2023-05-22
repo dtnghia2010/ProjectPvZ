@@ -3,7 +3,6 @@ package manager;
 import Audio.Audio;
 import component.MyButtons;
 import component.Plant;
-import component.Tile;
 import scenes.Playing;
 
 import javax.swing.*;
@@ -249,7 +248,7 @@ public class BarManager {
             Iterator<Plant> iterator = playing.getPlantManager().getPlantList().iterator();
             while (iterator.hasNext()){
                 Plant plant = iterator.next();
-                switch (plant.getPlantID()){
+                switch (plant.getID()){
                     case 0:
                         if(!isCDReducing[0]){
                             CDCount(0);

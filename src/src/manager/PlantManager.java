@@ -2,6 +2,8 @@ package manager;
 
 
 import Audio.Audio;
+import Projectile.ProjectileLogic;
+import Projectile.ProjectileOfPlant;
 import component.Plant;
 import component.Tile;
 import scenes.Playing;
@@ -84,15 +86,15 @@ public class PlantManager {
             Iterator<Plant> iterator = plantList.iterator();
             while (iterator.hasNext()){
                 Plant pl = iterator.next();
-                if (pl.getPlantID() == 0){
+                if (pl.getID() == 0){
                     g.drawImage(plantImages[0], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
-                } else if (pl.getPlantID() == 1){
+                } else if (pl.getID() == 1){
                     g.drawImage(plantImages[1], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
-                } else if (pl.getPlantID() == 2){
+                } else if (pl.getID() == 2){
                     g.drawImage(plantImages[2], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
-                } else if (pl.getPlantID() == 3){
+                } else if (pl.getID() == 3){
                     g.drawImage(plantImages[3], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
-                } else if (pl.getPlantID() == 4){
+                } else if (pl.getID() == 4){
                     g.drawImage(plantImages[4], (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getX(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getY(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getWidth(), (int)playing.getTileManager().getTiles()[pl.getTileHold()].getBound().getHeight(), null);
                 }
             }
@@ -242,21 +244,21 @@ public class PlantManager {
             }
         }
     }
-    public void plantAttack(ProjectileManager projectileManager){
+    public void plantAttack(ProjectileOfPlant projectileOfPlant){
 //        for (int i = 0;i<plantList.size();i++){
 //            if(plantList.get(i).isDangered()){
 //                projectileManager.projectileCreated(plantList.get(i));
 //            }
 //        }
-        if(projectileManager.getRealTimeCounter() == 90){
+        if(projectileOfPlant.getRealTimeCounter() == 90){
             synchronized (plantList){
                 for(Plant plant:plantList){
                     if(plant.isDangered()){
-                        projectileManager.projectileCreated(plant);
+                        projectileOfPlant.projectileCreated(plant);
                     }
                 }
             }
-            projectileManager.isResetTime();
+            projectileOfPlant.isResetTime();
         }
     }
 }

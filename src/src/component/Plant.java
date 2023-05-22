@@ -1,11 +1,12 @@
 package component;
 
+import Projectile.Shooter;
 import manager.TileManager;
 
 import java.awt.*;
 import java.util.Iterator;
 
-public class Plant {
+public class Plant implements Shooter {
     private double plantHP;
     private int plantATK;
     private  int plantID;
@@ -80,7 +81,7 @@ public class Plant {
         return tileHold;
     }
 
-    public int getPlantID() {
+    public int getID() {
         return plantID;
     }
 

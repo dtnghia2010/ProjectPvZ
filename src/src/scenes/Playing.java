@@ -1,22 +1,24 @@
 package scenes;
 
 import Audio.Audio;
+import Projectile.ProjectileLogic;
+import Projectile.ProjectileOfHouseOwner;
+import Projectile.ProjectileOfPlant;
 import manager.*;
 import component.MyButtons;
 import zombie.Zombie;
-import HouseOwner.HouseOwner;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 public class Playing implements SceneMethods {
     private TileManager tileManager;
     private BarManager barManager;
     private PlantManager plantManager;
     private ButtonManager buttonManager;
-    private ProjectileManager projectileManager;
+    private ProjectileOfPlant projectileOfPlant;
+    private ProjectileOfHouseOwner projectileOfHouseOwner;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
     private HouseOwnerManager houseOwnerManager;
@@ -47,7 +49,9 @@ public class Playing implements SceneMethods {
         tileManager = new TileManager();
         buttonManager = new ButtonManager();
         plantManager = new PlantManager(this);
-        projectileManager = new ProjectileManager();
+//        projectileManager = new ProjectileLogic();
+        projectileOfHouseOwner = new ProjectileOfHouseOwner();
+        projectileOfPlant = new ProjectileOfPlant();
         houseOwnerManager = new HouseOwnerManager(this);
     }
 
@@ -59,12 +63,14 @@ public class Playing implements SceneMethods {
         plantManager.alertPlant(tileManager,zombieManager);
         plantManager.calmPlant(tileManager,zombieManager);
 //      projectileManager.projectileCreated(plantManager);
-        plantManager.plantAttack(projectileManager);
-        projectileManager.update();
-        projectileManager.projectileCollideZombie(zombieManager);
+        plantManager.plantAttack(projectileOfPlant);
+        projectileOfPlant.update();
+        projectileOfHouseOwner.update();
+        projectileOfHouseOwner.projectileCollideZombie(zombieManager);
+        projectileOfPlant.projectileCollideZombie(zombieManager);
         barManager.update();
         houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
-        houseOwnerManager.houseOwnerAttack(projectileManager,zombieManager);
+        houseOwnerManager.houseOwnerAttack(projectileOfHouseOwner,zombieManager);
     }
     @Override
     public void render(Graphics g, Image img) {
@@ -76,7 +82,9 @@ public class Playing implements SceneMethods {
         barManager.drawPlantInCD(g);
         zombieManager.draw(g);
         plantManager.drawPlant(g);
-        projectileManager.drawProjectile(g);
+//        projectileManager.drawProjectile(g);
+        projectileOfPlant.drawProjectile(g);
+        projectileOfHouseOwner.drawProjectile(g);
         houseOwnerManager.draw(g);
 
     }

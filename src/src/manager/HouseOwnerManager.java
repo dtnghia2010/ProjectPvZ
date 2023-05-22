@@ -1,28 +1,22 @@
 package manager;
 
-import Audio.Audio;
-import component.Plant;
+import Projectile.ProjectileLogic;
+import Projectile.ProjectileOfHouseOwner;
 import component.Tile;
 import scenes.Playing;
 import HouseOwner.HouseOwner;
 import zombie.Zombie;
-import manager.TileManager;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 import javax.imageio.ImageIO;
 
-import static HouseOwner.HouseOwner.*;
-
 public class HouseOwnerManager {
-    private ProjectileManager projectileManager;
+    private ProjectileOfHouseOwner projectileOfHouseOwner;
     private HouseOwner houseOwner;
     private  TileManager tileManager;
     private Image[] zImages;
@@ -44,7 +38,7 @@ public class HouseOwnerManager {
         this.playing = playing;
         houseOwner = new HouseOwner(200, 470, 100);
         importImg();
-        projectileManager = new ProjectileManager();
+        projectileOfHouseOwner = new ProjectileOfHouseOwner();
     }
 
     public HouseOwnerManager(String imageUrl, int x, int y, int speed){
@@ -57,7 +51,7 @@ public class HouseOwnerManager {
             this.x = x;
             this.y = y;
             this.speed = speed;
-         projectileManager = new ProjectileManager();
+//         projectileManager = new ProjectileLogic();
         }
 
 
@@ -141,9 +135,9 @@ public class HouseOwnerManager {
                 houseOwner.setDangered(false);
             }
     }
-    public void houseOwnerAttack(ProjectileManager projectileManager, ZombieManager zombieManager) {
+    public void houseOwnerAttack(ProjectileOfHouseOwner projectileOfHouseOwner, ZombieManager zombieManager) {
         // Kiểm tra nếu đến thời điểm tấn công của HouseOwner
-        if (projectileManager.getRealTimeCounter() == 90) {
+        if (projectileOfHouseOwner.getRealTimeCounter() == 90) {
             // Lấy tọa độ y của HouseOwner
             int houseOwnerY = (int) houseOwner.getY();
 
@@ -158,13 +152,13 @@ public class HouseOwnerManager {
                     if (Math.abs(houseOwnerY-zombieY) <= 30) {
                         // Tạo một đạn mới và thêm vào ProjectileManager
                         System.out.println("create projectile of HouseOwner");
-                        projectileManager.projectileCreated(houseOwner);
+                        projectileOfHouseOwner.projectileCreated(houseOwner);
                         break; // Nếu đã tìm thấy zombie thích hợp, thoát khỏi vòng lặp
                     }
                 }
             }
         }
-        projectileManager.isResetTime();
+        projectileOfHouseOwner.isResetTime();
     }
 
     public void alertHouseOwner(TileManager tileManager, ZombieManager zombieManager) {
