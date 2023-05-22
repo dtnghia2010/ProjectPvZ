@@ -237,7 +237,7 @@ public class PlantManager {
         if(!isPlantPlanted && !isPlantRemoved){
             if(!isPlantTest){
                 synchronized (plantList){
-                    Iterator<Plant> iterator = plantListTest.iterator();
+                    Iterator<Plant> iterator = plantList.iterator();
                     while (iterator.hasNext()){
                         Plant plant = iterator.next();
                         plant.updateFrameCountIdle();
@@ -249,7 +249,7 @@ public class PlantManager {
             }
             if(isPlantTest){
                 synchronized (plantList){
-                    Iterator<Plant> iterator = plantList.iterator();
+                    Iterator<Plant> iterator = plantListTest.iterator();
                     while (iterator.hasNext()){
                         Plant plant = iterator.next();
                         setPlantDangeredForTesting();
