@@ -37,6 +37,16 @@ public class Plant {
     private int frameCountSunLimit = 600;
     private int frameCDIdle = 0;
     private int frameCDAttack = 0;
+
+    public boolean isAlived() {
+        return isAlived;
+    }
+
+    public void setAlived(boolean alived) {
+        isAlived = alived;
+    }
+
+    private boolean isAlived = false;
     private Random random = new Random();
 
     public int getFrameCountAttack() {

@@ -99,22 +99,27 @@ public class BarManager {
     public void sunFlower(){
         playing.getPlantManager().setIDhold(0);
         plantPickedID.add(0);
+        playing.getPlantManager().setSunCostHold(50);
     }
     public void peaShooter(){
         playing.getPlantManager().setIDhold(1);
         plantPickedID.add(1);
+        playing.getPlantManager().setSunCostHold(100);
     }
     public void wall_nut(){
         playing.getPlantManager().setIDhold(2);
         plantPickedID.add(2);
+        playing.getPlantManager().setSunCostHold(50);
     }
     public void shadowPea(){
         playing.getPlantManager().setIDhold(3);
         plantPickedID.add(3);
+        playing.getPlantManager().setSunCostHold(175);
     }
     public void cherryBomb(){
         playing.getPlantManager().setIDhold(4);
         plantPickedID.add(4);
+        playing.getPlantManager().setSunCostHold(150);
     }
     public void setCDatStartOfGame(){
         plantCD[1] = 95;
