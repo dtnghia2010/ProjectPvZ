@@ -68,5 +68,9 @@ public class Tile {
     public int getHTileOfHouseOwner() {
         return hTileOfHouseOwner;
     }
+
+    public Rectangle getBounds() {
+        return bound;
+    }
 }
 

@@ -4,10 +4,11 @@ import java.util.Iterator;
 public class HouseOwner {
     private int hp, dmg;
     private final int atk =100;
-    private final int width = 50, height = 100;
+    private static final int width = 40, height = 60;
     private float spd = 0.8f;
     private boolean Collided = false;
-    private double x, y;
+    private double x;
+    private double y;
     private boolean isAlived = true;
     private boolean isDead = false;
 
@@ -92,9 +93,9 @@ public class HouseOwner {
         return width;
     }
 
-    public void setLocation(int newX, int newY) {
-        this.x = 200;
-        this.y=newY;
+    public void setLocation(int x, int y){
+//        this.x = 200;
+        this.y = y;
     }
 
     public int getATK() {

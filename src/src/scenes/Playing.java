@@ -64,7 +64,7 @@ public class Playing implements SceneMethods {
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
         houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
-        houseOwnerManager.calmHouseOwner(tileManager, zombieManager);
+        //houseOwnerManager.calmHouseOwner(tileManager, zombieManager);
         houseOwnerManager.houseOwnerAttack(projectileManager,zombieManager);
     }
     @Override
@@ -72,12 +72,13 @@ public class Playing implements SceneMethods {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g, plantManager);
+        tileManager.drawTiles(g, houseOwnerManager);
+        tileManager.drawTiles(g, houseOwnerManager);
         barManager.drawPlantbar(g);
         barManager.drawPlantInCD(g);
         zombieManager.draw(g);
         plantManager.drawPlant(g);
         projectileManager.drawProjectile(g);
-        tileManager.drawTiles(g, houseOwnerManager);
         houseOwnerManager.draw(g);
 
     }
@@ -132,7 +133,7 @@ public class Playing implements SceneMethods {
 
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
-        houseOwnerManager.mouseClicked(x, y);
+        houseOwnerManager.mouseClicked(x,y);
     }
     public void keyBoardPress(KeyEvent e){
         barManager.keyBoardChoosePlant(e);
@@ -188,6 +189,7 @@ public class Playing implements SceneMethods {
     public void createHorde() {
         zombieManager.createHorde(10);
     }
+
 
 }
 
