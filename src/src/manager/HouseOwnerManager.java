@@ -99,23 +99,6 @@ public class HouseOwnerManager {
         }
         y -= speed;
     }
-//    public void mouseClicked(int x, int y) {
-//        if ((x <= 310) &&(x>=150)) {
-//            int mouseX = x;
-//            int mouseY = y;
-//            int ownerX = (int) houseOwner.getX();
-//            int ownerY = (int) houseOwner.getY();
-//            int distanceX = mouseX - ownerX;
-//            int distanceY = mouseY - ownerY;
-//            int steps = 5;
-//            for (int i = 0; i < steps; i++) {
-//                int newX = ownerX + (distanceX * i / steps);
-//                int newY = ownerY + (distanceY * i / steps);
-//                houseOwner.setLocation(newX, newY);
-//
-//            }
-//        }
-//    }
 
     public void mouseClicked(int x, int y) {
         if (x >= 150 && x <= 310) {
@@ -205,39 +188,6 @@ public class HouseOwnerManager {
             }
         }
     }
-
-
-
-
-
-//    public void calmHouseOwner(TileManager tileManager, ZombieManager zombieManager){
-//        if (!isHouseOwnerAttack(0,9,tileManager,zombieManager)){
-//            for(int i = 0;i<9;i++){
-//                setHouseOwnerIdle(tileManager.getTiles()[i]);
-//            }
-//        }
-//        if (!isHouseOwnerAttack(9,18,tileManager,zombieManager)){
-//            for(int i = 9;i<18;i++){
-//                setHouseOwnerIdle(tileManager.getTiles()[i]);
-//            }
-//        }
-//        if (!isHouseOwnerAttack(18,27,tileManager,zombieManager)){
-//            for(int i = 18;i<27;i++){
-//                setHouseOwnerIdle(tileManager.getTiles()[i]);
-//            }
-//        }
-//        if (!isHouseOwnerAttack(27,36,tileManager,zombieManager)){
-//            for(int i = 27;i<36;i++){
-//                setHouseOwnerIdle(tileManager.getTiles()[i]);
-//            }
-//        }
-//        if (!isHouseOwnerAttack(36,45,tileManager,zombieManager)){
-//            for(int i = 36;i<45;i++){
-//                setHouseOwnerIdle(tileManager.getTiles()[i]);
-//            }
-//        }
-//    }
-
     public boolean isHouseOwnerAttack(int start, int end, TileManager tileManager, ZombieManager zombieManager){
         for(int i = start;i<end;i++){
             Rectangle r = tileManager.getTilesOfHouseOwner()[i].getBound();

@@ -33,6 +33,12 @@ public class TileManager {
         }
     }
 
+    public void drawTiles(Graphics g, PlantManager plantManager) {
+        for (Tile t : tiles) {
+            Rectangle r = new Rectangle(t.getCurX(), t.getCurY(), t.getwTile(), t.gethTile());
+        }
+    }
+
     private void initTilesOfHouseOwner() {
         int curX = 150;
         int curY = 100;
@@ -41,8 +47,8 @@ public class TileManager {
         for (int i = 0; i < 5; i++) {
             if (rowCounter >= 1) {
                 // Nếu đã đủ số lượng tile trong một hàng, thì di chuyển xuống hàng mới
+                curX = 150;
                 curY += hTileOfHouseOwner + 15; // Khoảng cách giữa các hàng
-                curX = 150; // Đặt lại tọa độ x ban đầu của tile
                 rowCounter = 0; // Đặt lại số lượng tile trong một hàng
             }
             // Tạo mới tile và đặt tọa độ và kích thước cho tile
@@ -54,63 +60,19 @@ public class TileManager {
         }
     }
 
+    public void drawTiles(Graphics g, HouseOwnerManager houseOwnerManager) {
+        int curX = 150; // Tọa độ x ban đầu
+        int curY = 100; // Tọa độ y ban đầu
 
-    public void drawTiles(Graphics g, PlantManager plantManager) {
-        for (Tile t : tiles) {
-            Rectangle r = new Rectangle(t.getCurX(), t.getCurY(), t.getwTile(), t.gethTile());
-//            for (int i = 0; i < plantManager.getPlantList().size(); i++) {
-//                    if (plantManager.isLocated()) {
-//                        g.drawImage(plantManager.getPlantImages(plantManager.getPlantList().get(i).getPlantID()), r.x, r.y, r.width, r.height, null);
-//                    }
-//                if (plantManager.getPlantList().get(i).getPlantID() == 0) {
-//                    g.drawImage(plantManager.getPlantImages(0), );
-//                } else if (plantManager.getPlantList().get(i).getPlantID() == 1) {
-//                    g.drawImage(plantManager.getPlantImages(1), r.x, r.y, r.width, r.height, null);
-//                }
-        }
-    }
+        for (Tile t: tilesOfHouseOwner) {
+             Rectangle r = new Rectangle((int)t.getBound().getX(),(int)t.getBound().getY(), t.getWTileOfHouseOwner(), t.getHTileOfHouseOwner());
 
-//    public void drawTiles(Graphics g, HouseOwnerManager houseOwnerManager) {
-//        int curX = 150; // Tọa độ x ban đầu
-//        int curY = 100; // Tọa độ y ban đầu
-//        int rowCounter = 0; // Biến đếm số hàng
-//
-//        for (Tile t : tilesOfHouseOwner) {
-//            Rectangle r = new Rectangle(t.getCurX(), t.getCurY(),t.getWTileOfHouseOwner(), t.getHTileOfHouseOwner());
-//
-//            // Vẽ ô màu cho Tile
-//            g.setColor(Color.pink);
-//            g.fillRect(r.x, r.y, r.width, r.height);
-//
-//             //Cập nhật tọa độ x và y cho ô tiếp theo
-//            curY += t.getwTile() + 30; // 15 là khoảng cách giữa các hàng
-//            rowCounter++;
-//
-//            // Kiểm tra nếu đã vẽ đủ số hàng, di chuyển sang cột tiếp theo
-//            if (rowCounter >= 5) {
-//                curY = 100; // Đặt lại tọa độ y
-//                curX += t.getwTile() + 8; // 8 là khoảng cách giữa các ô
-//                rowCounter = 0; // Đặt lại số hàng
-//            }
-//        }
-//    }
-public void drawTiles(Graphics g, HouseOwnerManager houseOwnerManager) {
-    int curX = 150; // Tọa độ x ban đầu
-    int curY = 100; // Tọa độ y ban đầu
+             g.setColor(Color.pink);
+             g.fillRect(r.x, r.y, r.width, r.height);
 
-    for (Tile t: tilesOfHouseOwner) {
-        Rectangle r = new Rectangle(curX, curY, t.getWTileOfHouseOwner(), t.getHTileOfHouseOwner());
-
-        // Vẽ ô màu cho Tile
-        g.setColor(Color.pink);
-        g.fillRect(r.x, r.y, r.width, r.height);
-
-        curY += t.getHTileOfHouseOwner() + 15; // Khoảng cách giữa các hàng
+             curY += t.getHTileOfHouseOwner() + 15; // Khoảng cách giữa các hàng
     }
 }
-
-
-
 
     public Tile[] getTiles() {
         return tiles;

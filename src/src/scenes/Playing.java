@@ -58,13 +58,12 @@ public class Playing implements SceneMethods {
     public void update(){
         plantManager.alertPlant(tileManager,zombieManager);
         plantManager.calmPlant(tileManager,zombieManager);
-//        projectileManager.projectileCreated(plantManager);
+//      projectileManager.projectileCreated(plantManager);
         plantManager.plantAttack(projectileManager);
         projectileManager.update();
         projectileManager.projectileCollideZombie(zombieManager);
         barManager.update();
         houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
-        //houseOwnerManager.calmHouseOwner(tileManager, zombieManager);
         houseOwnerManager.houseOwnerAttack(projectileManager,zombieManager);
     }
     @Override
@@ -72,7 +71,6 @@ public class Playing implements SceneMethods {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
         tileManager.drawTiles(g, plantManager);
-        tileManager.drawTiles(g, houseOwnerManager);
         tileManager.drawTiles(g, houseOwnerManager);
         barManager.drawPlantbar(g);
         barManager.drawPlantInCD(g);

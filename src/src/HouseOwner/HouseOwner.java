@@ -94,7 +94,7 @@ public class HouseOwner {
     }
 
     public void setLocation(int x, int y){
-//        this.x = 200;
+        this.x = x;
         this.y = y;
     }
 
