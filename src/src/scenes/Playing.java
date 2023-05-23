@@ -93,17 +93,18 @@ public class Playing implements SceneMethods {
         mouseMotionManager.drawPlantSelectedByMouse(g);
         keyBoardManager.drawPlantSelectedByKeyBoard(g);
         tileManager.draw(g);
+        //tileManager.drawTiles(g, houseOwnerManager);
         plantManager.draw(g);
         zombieManager.draw(g);
         sunManager.drawSun(g);
         notifManager.drawNotif(g);
         buttonManager.drawImg(g);
         projectileOfPlant.drawProjectile(g);
-        projectileOfHouseOwner.drawProjectile(g);
         houseOwnerManager.draw(g);
+        projectileOfHouseOwner.drawProjectile(g);
         projectileOfPlant.drawProjectile(g);
-        projectileOfHouseOwner.drawProjectile(g);
-        houseOwnerManager.draw(g);
+
+
     }
     public PlantManager getPlantManager() {
         return plantManager;

@@ -36,7 +36,7 @@ public class HouseOwnerManager {
 
     public HouseOwnerManager(Playing playing) {
         this.playing = playing;
-        houseOwner = new HouseOwner(200, 470, 100);
+        houseOwner = new HouseOwner(260, 470, 100);
         importImg();
         projectileOfHouseOwner = new ProjectileOfHouseOwner();
     }
@@ -95,7 +95,7 @@ public class HouseOwnerManager {
     }
 
     public void mouseClicked(int x, int y) {
-        if (x >= 150 && x <= 310) {
+        if (x >= 200 && x <= 360) {
             for (int i = 0; i < playing.getTileManager().getTilesOfHouseOwner().length; i++) {
                 Tile tileOfHouseOwner = playing.getTileManager().getTilesOfHouseOwner()[i];
 
@@ -107,7 +107,7 @@ public class HouseOwnerManager {
                 );
 
                 if (r.contains(x, y)) {
-                    int newX = (int) tileOfHouseOwner.getBound().getX() + 50;
+                    int newX = (int) tileOfHouseOwner.getBound().getX() + 30;
                     int newY = (int) tileOfHouseOwner.getBound().getY() + (int) (tileOfHouseOwner.getBound().getHeight() / 2) - (int) (houseOwner.getHeight() / 2 +20);
                     houseOwner.setLocation(newX, newY); // Gán vị trí mới cho HouseOwner
                     System.out.println("MoveHouseOwner");
@@ -150,7 +150,7 @@ public class HouseOwnerManager {
                     int zombieX = (int) zombie.X();
 
                     // Kiểm tra nếu tọa độ y của HouseOwner gần bằng tọa độ y của zombie
-                    if (Math.abs(houseOwnerY-zombieY) <= 30 && zombieX <=1024) {
+                    if (Math.abs(houseOwnerY-zombieY) <= 30 && zombieX <=950) {
                         // Tạo một đạn mới và thêm vào ProjectileManager
                         System.out.println("create projectile of HouseOwner");
                         projectileOfHouseOwner.projectileCreated(houseOwner);

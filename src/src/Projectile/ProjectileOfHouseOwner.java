@@ -37,7 +37,7 @@ public class ProjectileOfHouseOwner extends ProjectileLogic {
             while ((iterator.hasNext())) {
                 Projectile projectile = iterator.next();
                 if (projectile.getID() == 3) {
-                    g2d.drawImage(projectileImage[0], projectile.getX(), projectile.getY(), 30, 30, null);
+                    g2d.drawImage(projectileImage[0], projectile.getX(), projectile.getY(), 35, 25, null);
                 }
             }
         }

@@ -15,8 +15,8 @@ public class TileManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Image shovelSprite = t.getImage(getClass().getResource("/shovel/shovel-sprite.png"));
     private Tile[] tilesOfHouseOwner = new Tile[5];
-    public int wTileOfHouseOwner = 160;
-    public int hTileOfHouseOwner = 80;
+    public int wTileOfHouseOwner = 125;
+    public int hTileOfHouseOwner = 70;
     public boolean isInTile() {
         return isInTile;
     }
@@ -72,15 +72,15 @@ public class TileManager {
     }
 
     private void initTilesOfHouseOwner() {
-        int curX = 150;
-        int curY = 100;
+        int curX = 230;
+        int curY = 171;
         int rowCounter = 0;
 
         for (int i = 0; i < 5; i++) {
             if (rowCounter >= 1) {
                 // Nếu đã đủ số lượng tile trong một hàng, thì di chuyển xuống hàng mới
-                curX = 150;
-                curY += hTileOfHouseOwner + 15; // Khoảng cách giữa các hàng
+                curX = 230;
+                curY += hTileOfHouseOwner + 10; // Khoảng cách giữa các hàng
                 rowCounter = 0; // Đặt lại số lượng tile trong một hàng
             }
             // Tạo mới tile và đặt tọa độ và kích thước cho tile
@@ -93,8 +93,8 @@ public class TileManager {
     }
 
     public void drawTiles(Graphics g, HouseOwnerManager houseOwnerManager) {
-        int curX = 150; // Tọa độ x ban đầu
-        int curY = 100; // Tọa độ y ban đầu
+        int curX = 200; // Tọa độ x ban đầu
+        int curY = 171; // Tọa độ y ban đầu
 
         for (Tile t: tilesOfHouseOwner) {
              Rectangle r = new Rectangle((int)t.getBound().getX(),(int)t.getBound().getY(), t.getWTileOfHouseOwner(), t.getHTileOfHouseOwner());
@@ -102,7 +102,7 @@ public class TileManager {
              g.setColor(Color.pink);
              g.fillRect(r.x, r.y, r.width, r.height);
 
-             curY += t.getHTileOfHouseOwner() + 15; // Khoảng cách giữa các hàng
+             curY += t.getHTileOfHouseOwner() + 10; // Khoảng cách giữa các hàng
     }
 }
 
