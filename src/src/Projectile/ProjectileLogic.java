@@ -73,6 +73,8 @@ public abstract class ProjectileLogic {
                             projectileDealDamage(30,r,projectile,zombie,iterator2);
                         } else if(projectile.getID() == 2){
                             projectileDealDamage(50,r,projectile,zombie,iterator2);
+                        } else if(projectile.getID() == 3){
+                            projectileDealDamage(40,r,projectile,zombie,iterator2);
                         }
                     }
                 }
