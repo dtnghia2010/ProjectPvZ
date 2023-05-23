@@ -1,6 +1,9 @@
 package scenes;
 
 import Audio.Audio;
+import Projectile.ProjectileLogic;
+import Projectile.ProjectileOfHouseOwner;
+import Projectile.ProjectileOfPlant;
 import manager.*;
 import component.MyButtons;
 
@@ -13,16 +16,17 @@ public class Playing implements SceneMethods {
     private BarManager barManager;
     private PlantManager plantManager;
     private ButtonManager buttonManager;
-    private ProjectileManager projectileManager;
     private sunManager sunManager;
+    private ProjectileOfPlant projectileOfPlant;
+    private ProjectileOfHouseOwner projectileOfHouseOwner;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
     private KeyBoardManager keyBoardManager;
     private MouseMotionManager mouseMotionManager;
     private NotifManager notifManager;
     private boolean startWave = false, callHorde = false, zombieApproaching = false;
+    private HouseOwnerManager houseOwnerManager;
     private boolean startWaveForCD = false;
-    private int frameCount = 0;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
@@ -66,10 +70,15 @@ public class Playing implements SceneMethods {
         tileManager = new TileManager(this);
         buttonManager = new ButtonManager(this);
         plantManager = new PlantManager(this);
-        projectileManager = new ProjectileManager(this);
         sunManager = new sunManager(this);
         keyBoardManager = new KeyBoardManager(this);
         mouseMotionManager = new MouseMotionManager(this);
+        projectileOfHouseOwner = new ProjectileOfHouseOwner();
+        projectileOfPlant = new ProjectileOfPlant();
+        houseOwnerManager = new HouseOwnerManager(this);
+    }
+    public ProjectileOfPlant getProjectileOfPlant() {
+        return projectileOfPlant;
     }
 
     public TileManager getTileManager() {
@@ -77,7 +86,6 @@ public class Playing implements SceneMethods {
     }
     @Override
     public void render(Graphics g, Image img) {
-//        System.out.println("2");
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
 //        tileManager.drawTiles(g, plantManager);
@@ -87,10 +95,15 @@ public class Playing implements SceneMethods {
         tileManager.draw(g);
         plantManager.draw(g);
         zombieManager.draw(g);
-        projectileManager.drawProjectile(g);
         sunManager.drawSun(g);
         notifManager.drawNotif(g);
         buttonManager.drawImg(g);
+        projectileOfPlant.drawProjectile(g);
+        projectileOfHouseOwner.drawProjectile(g);
+        houseOwnerManager.draw(g);
+        projectileOfPlant.drawProjectile(g);
+        projectileOfHouseOwner.drawProjectile(g);
+        houseOwnerManager.draw(g);
     }
     public PlantManager getPlantManager() {
         return plantManager;
@@ -106,10 +119,6 @@ public class Playing implements SceneMethods {
 
     public void setStartWaveForCD(boolean startWaveForCD) {
         this.startWaveForCD = startWaveForCD;
-    }
-
-    public ProjectileManager getProjectileManager() {
-        return projectileManager;
     }
 
     public void mouseClicked(int x, int y) {
@@ -178,6 +187,7 @@ public class Playing implements SceneMethods {
     }
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
+        houseOwnerManager.mouseClicked(x,y);
         plantManager.removePlantByShovel(x,y);
     }
     public void mouseMove(int x, int y){
@@ -230,13 +240,13 @@ public class Playing implements SceneMethods {
 //        System.out.println("1");
         setupZombie();
         plantManager.update();
-        projectileManager.update();
         barManager.update();
         sunManager.update(this);
         waveManager.updates();
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();
-
+        projectileOfPlant.update(this);
+        projectileOfHouseOwner.update(this);
     }
 
     private void spawnZombie() {

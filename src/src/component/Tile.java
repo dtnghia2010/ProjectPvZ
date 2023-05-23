@@ -11,6 +11,7 @@ public class Tile {
     private Rectangle bound;
     private Boolean occupied = false;
     private int curX, curY;
+    private int wTileOfHouseOwner = 160, hTileOfHouseOwner = 90;
 
     public boolean isPlanted() {
         return isPlanted;
@@ -58,6 +59,18 @@ public class Tile {
 
     public void setCurY(int curY) {
         this.curY = curY;
+    }
+
+    public int getWTileOfHouseOwner() {
+        return wTileOfHouseOwner;
+    }
+
+    public int getHTileOfHouseOwner() {
+        return hTileOfHouseOwner;
+    }
+
+    public Rectangle getBounds() {
+        return bound;
     }
 }
 

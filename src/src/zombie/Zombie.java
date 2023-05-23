@@ -34,14 +34,12 @@ public class Zombie {
     private boolean isDead = false;
     private Rectangle bound;
     private boolean isSlowed = false;
-
     public boolean isDead() {
         return isDead;
     }
     public void setDead(boolean dead) {
         isDead = dead;
     }
-
     public Zombie(double x, double y, int type) {
         this.x = x;
         this.y = y;

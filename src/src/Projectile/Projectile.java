@@ -1,4 +1,4 @@
-package Plant;
+package Projectile;
 
 public class Projectile {
     private int x, y;

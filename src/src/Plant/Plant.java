@@ -1,5 +1,6 @@
 package Plant;
 
+import Projectile.Shooter;
 import component.Tile;
 import manager.*;
 import manager.TileManager;
@@ -8,7 +9,7 @@ import java.awt.*;
 import java.util.Iterator;
 import java.util.Random;
 
-public class Plant {
+public class Plant implements Shooter {
     private double plantHP;
     private int plantATK;
     private int frameCountIdleLimit;
@@ -97,6 +98,11 @@ public class Plant {
 
     public int getATK() {
         return plantATK;
+    }
+
+    @Override
+    public int getID() {
+        return plantID;
     }
 
 

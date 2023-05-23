@@ -3,10 +3,12 @@ package manager;
 
 import Audio.Audio;
 import Plant.Plant;
+import Projectile.Shooter;
 import component.Tile;
 import scenes.Playing;
 import zombie.Zombie;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -391,12 +393,12 @@ public class PlantManager {
                 if(plant.isDangered()){
                     if(plant.getPlantID() == 1){
                         if(plant.getFrameCountAttack() == 31){
-                            playing.getProjectileManager().projectileCreated(plant);
+                            playing.getProjectileOfPlant().projectileCreated((Shooter) plant);
                             plant.setFrameCountAttack(plant.getFrameCountAttack()+1);
                         }
                     } else if(plant.getPlantID() == 3){
                         if(plant.getFrameCountAttack() == 8){
-                            playing.getProjectileManager().projectileCreated(plant);
+                            playing.getProjectileOfPlant().projectileCreated((Shooter) plant);
                             plant.setFrameCountAttack(plant.getFrameCountAttack()+1);
                         }
                     }

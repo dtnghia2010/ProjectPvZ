@@ -14,6 +14,9 @@ public class TileManager {
     private Image[] plantHardBlur = new Image[5];
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Image shovelSprite = t.getImage(getClass().getResource("/shovel/shovel-sprite.png"));
+    private Tile[] tilesOfHouseOwner = new Tile[5];
+    public int wTileOfHouseOwner = 160;
+    public int hTileOfHouseOwner = 80;
     public boolean isInTile() {
         return isInTile;
     }
@@ -21,6 +24,7 @@ public class TileManager {
         initTiles();
         importHardBlurPlant();
         importLightBlurPlant();
+        initTilesOfHouseOwner();
         this.playing = playing;
     }
     private boolean isInTile = false;
@@ -66,6 +70,41 @@ public class TileManager {
 //                }
         }
     }
+
+    private void initTilesOfHouseOwner() {
+        int curX = 150;
+        int curY = 100;
+        int rowCounter = 0;
+
+        for (int i = 0; i < 5; i++) {
+            if (rowCounter >= 1) {
+                // Nếu đã đủ số lượng tile trong một hàng, thì di chuyển xuống hàng mới
+                curX = 150;
+                curY += hTileOfHouseOwner + 15; // Khoảng cách giữa các hàng
+                rowCounter = 0; // Đặt lại số lượng tile trong một hàng
+            }
+            // Tạo mới tile và đặt tọa độ và kích thước cho tile
+            tilesOfHouseOwner[i] = new Tile(new Rectangle(curX, curY, wTileOfHouseOwner, hTileOfHouseOwner));
+
+            // Cập nhật tọa độ y cho tile tiếp theo trong cùng một hàng
+
+            rowCounter++; // Tăng số lượng tile trong một hàng
+        }
+    }
+
+    public void drawTiles(Graphics g, HouseOwnerManager houseOwnerManager) {
+        int curX = 150; // Tọa độ x ban đầu
+        int curY = 100; // Tọa độ y ban đầu
+
+        for (Tile t: tilesOfHouseOwner) {
+             Rectangle r = new Rectangle((int)t.getBound().getX(),(int)t.getBound().getY(), t.getWTileOfHouseOwner(), t.getHTileOfHouseOwner());
+
+             g.setColor(Color.pink);
+             g.fillRect(r.x, r.y, r.width, r.height);
+
+             curY += t.getHTileOfHouseOwner() + 15; // Khoảng cách giữa các hàng
+    }
+}
 
     public Tile[] getTiles() {
         return tiles;
@@ -127,4 +166,15 @@ public class TileManager {
         drawTileSelectedByKeyBoard(g);
         drawShovelSprite(g);
     }
+    public Tile[] getTilesOfHouseOwner() {
+        return tilesOfHouseOwner;
+    }
+    public int getWTileOfHouseOwner() {
+        return wTileOfHouseOwner;
+    }
+
+    public int getHTileOfHouseOwner() {
+        return hTileOfHouseOwner;
+    }
 }
+
