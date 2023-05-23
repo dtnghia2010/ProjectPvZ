@@ -124,6 +124,9 @@ public class Playing implements SceneMethods {
 
     public void changeScene(int x, int y){
         if (buttonManager.getbSetting().getBounds().contains(x, y)) {
+            Audio.setting();
+            Audio.stopRoof();
+            Audio.stopReadySetPlant();
             setGameScenes(SETTING);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             if (!startWave && zombieManager.allZombieDead()) {

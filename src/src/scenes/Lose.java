@@ -48,6 +48,8 @@ public class Lose implements SceneMethods {
 
     public void mouseClicked(int x, int y) {
         if(bMenu.getBounds().contains(x,y)) {
+            Audio.menu();
+            Audio.stopLose();
             setGameScenes(MENU);
         }
     }

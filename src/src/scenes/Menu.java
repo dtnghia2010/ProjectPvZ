@@ -17,6 +17,7 @@ public class Menu implements SceneMethods {
 
     public Menu(World w) {
         this.w = w;
+        Audio.menu();
     }
     public void initButtons() {
         bPlaying = new MyButtons("Play", 437, 350,150,60);
@@ -44,14 +45,17 @@ public class Menu implements SceneMethods {
         if(bPlaying.getBounds().contains(x,y)) {
             Audio.readySetPlant();
             Audio.roofStage();
+            Audio.stopMenu();
             setGameScenes(PLAYING);
             w.getPlaying().getBarManager().setCDatStartOfGame();
         } else if (bQuit.getBounds().contains(x,y)) {
             Audio.lose();
+            Audio.stopMenu();
             setGameScenes(LOSE);
 //            System.out.println("Setting");
         } else if (bWin.getBounds().contains(x, y)){
             Audio.win();
+            Audio.stopMenu();
             setGameScenes(WIN);
         }
     }

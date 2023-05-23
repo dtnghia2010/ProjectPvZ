@@ -1,5 +1,6 @@
 package scenes;
 
+import Audio.Audio;
 import component.MyButtons;
 import manager.World;
 
@@ -49,6 +50,8 @@ public class Win implements SceneMethods{
     @Override
     public void mouseClicked(int x, int y) {
         if(bMenu.getBounds().contains(x,y)) {
+            Audio.menu();
+            Audio.stopWin();
             setGameScenes(MENU);
         }
     }
