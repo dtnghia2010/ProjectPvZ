@@ -75,10 +75,6 @@ public class BarManager {
         return plantPickedID;
     }
 
-    public void setPlantCD(int index ,int plantCD) {
-        this.plantCD[index] = plantCD;
-    }
-
     public void setIsPlantInCD(int index, boolean isPlantInCD) {
         this.isPlantInCD[index] = isPlantInCD;
     }

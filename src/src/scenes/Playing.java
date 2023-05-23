@@ -199,7 +199,7 @@ public class Playing implements SceneMethods {
         keyBoardManager.plant(e);
         keyBoardManager.removePlantUsingKeyBoard(e);
 //        keyBoardManager.returnToSelectPlantByKeyBoard(e);
-//        keyBoardManager.startGame(e);
+        keyBoardManager.startGame(e);
     }
     public void setupZombie(){
         if(getNotifManager().isEndCDWave()) {
@@ -262,6 +262,10 @@ public class Playing implements SceneMethods {
         waveManager.readyNewWave();
         notifManager.reset();
         notifManager.resetEndCDWave();
+    }
+
+    public void setCallHorde(boolean callHorde) {
+        this.callHorde = callHorde;
     }
 
     public WaveManager getWaveManager() {

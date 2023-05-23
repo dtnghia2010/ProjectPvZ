@@ -25,7 +25,6 @@ public class TileManager {
     }
     private boolean isInTile = false;
 
-
     private void initTiles() {
         int curX = 300, curY = 171, rowCounter = 0;
         for (int i = 0; i < 45; i++) {

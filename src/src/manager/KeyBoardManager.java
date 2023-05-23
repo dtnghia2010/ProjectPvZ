@@ -185,10 +185,17 @@ public class KeyBoardManager {
             if(e.getKeyCode() == KeyEvent.VK_SPACE){
                 playing.setStartWave(true);
                 playing.setStartWaveForCD(true);
+                playing.setCallHorde(false);
                 playing.getPlantManager().setSelected(false);
                 pickPlantByKeyBoard();
                 playing.getWaveManager().readyNewWave();
                 playing.getPlantManager().setForbidden(false);
+                playing.getPlantManager().setSelected(false);
+                playing.getPlantManager().setForbidden(false);
+                System.out.println("click on start");
+                playing.getWaveManager().readyNewWave();
+                playing.getNotifManager().reset();
+                playing.getNotifManager().resetEndCDWave();
             }
         }
     }

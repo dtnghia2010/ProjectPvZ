@@ -11,7 +11,6 @@ import java.util.Random;
 public class Plant {
     private double plantHP;
     private int plantATK;
-    private int sunCost;
     private int frameCountIdleLimit;
     private int frameCountAttackLimit;
     public int getFrameCountIdle() {
@@ -20,10 +19,6 @@ public class Plant {
 
     public void setFrameCountIdle(int frameCountIdle) {
         this.frameCountIdle = frameCountIdle;
-    }
-
-    public int getFrameCDIdle() {
-        return frameCDIdle;
     }
 
     public void setFrameCDIdle(int frameCDIdle) {
@@ -57,7 +52,7 @@ public class Plant {
             frameCountSun++;
             if(frameCountSun == frameCountSunLimit){
                 sunManager.sunCreatedBySunFlower(this);
-                frameCountSunLimit = random.nextInt(600)+600;
+                frameCountSunLimit = random.nextInt(600)+900;
                 frameCountSun = 0;
             }
         }

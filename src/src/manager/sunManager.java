@@ -17,7 +17,7 @@ public class sunManager {
     private List<Sun> listOfSun = new ArrayList<>();
     private Playing playing;
     private int realTimeCounter = 0;
-    private int sunHold = 2500;
+    private int sunHold = 25000;
     private Random random = new Random();
     private int randomTimeSunDrop = 600;
     private int fakeSize = 6000;
@@ -153,7 +153,7 @@ public class sunManager {
             if(realTimeCounter == randomTimeSunDrop){
                 sunCreation();
                 realTimeCounter = 0;
-                randomTimeSunDrop = random.nextInt(300)+600;
+                randomTimeSunDrop = random.nextInt(300)+900;
             }
             sunCollectedByKeyBoard();
             Iterator<Sun> iterator= listOfSun.iterator();

@@ -34,7 +34,8 @@ public class PlantManager {
     private int sunCostHold;
     private int[] numPlant = new int[5];
     private int waitingTime = 0;
-    private int plantSize;
+    private int plantSize = 49;
+    private int listAdded = 0;
     public void setNumPlant(){
         numPlant[0] = 0;
         numPlant[1] = 1;
@@ -72,17 +73,23 @@ public class PlantManager {
                 break;
             }
         }
-        plantSize--;
+        reCreateStorage();
+    }
+    public void reCreateStorage(){
+        if(plantSize <= 0 || numPlant[IDhold]>44+listAdded){
+            initStorage();
+            plantSize += 50;
+            listAdded += 50;
+        }
     }
     public void initStorage(){
-        for(int i = 0; i<200;i++){
+        for(int i = 0; i<10;i++){
             plantList.add(new Plant(100,0,0,25,0,0,-999,60,70));
             plantList.add(new Plant(100,1,20,58,59,0,-999,60,70));
             plantList.add(new Plant(1000,2,0,81,0,0,-999,60,70));
             plantList.add(new Plant(100,3,20,20,20,0,-999,60,70));
             plantList.add(new Plant(10000,4,1000,30,0,0,-999,60,70));
         }
-        plantSize = 999;
     }
 
     public void setIDhold(int IDhold) {
@@ -329,7 +336,7 @@ public class PlantManager {
                         for(int j = 27;j < 36;j++){
                             setPlantDangered(playing.getTileManager().getTiles()[j]);
                         }
-                    } else if (i >= 36 && i<45) {
+                    } else if(i >= 36 && i<45) {
                         for(int j = 36;j < 45;j++){
                             setPlantDangered(playing.getTileManager().getTiles()[j]);
                         }
