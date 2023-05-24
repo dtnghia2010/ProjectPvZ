@@ -148,8 +148,6 @@ public class HouseOwnerManager {
                     Zombie zombie = iterator.next();
                     int zombieY = (int) zombie.Y();
                     int zombieX = (int) zombie.X();
-                    System.out.println("zombie y: " + zombieY);
-                    System.out.println("houseOwner Y: " + houseOwnerY);
 
                     // Kiểm tra nếu tọa độ y của HouseOwner gần bằng tọa độ y của zombie
                     // và tọa độ x của zombie đó < 1024

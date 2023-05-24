@@ -164,4 +164,19 @@ public abstract class ProjectileLogic {
 /*    public Image[] getProjectileImage() {
         return projectileImage;
     }*/
+
+    public void update1 (Playing playing) {
+        frameCount();
+        synchronized (listOfProjectile) {
+            Iterator<Projectile> iterator = listOfProjectile.iterator();
+            while ((iterator.hasNext())) {
+                Projectile projectile = iterator.next();
+                projectile.move();
+                if (projectile.getX() >= 1024) {
+                    iterator.remove();
+                }
+            }
+        }
+       // projectileCollideZombie(playing);
+    }
 }

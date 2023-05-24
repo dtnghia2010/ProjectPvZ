@@ -247,10 +247,10 @@ public class Playing implements SceneMethods {
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();
         projectileOfPlant.update(this);
-        projectileOfHouseOwner.update(this);
+        projectileOfHouseOwner.update1(this);
         projectileOfHouseOwner.projectileCollideZombie(this);
         projectileOfPlant.projectileCollideZombie(this);
-        houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
+//        houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
         houseOwnerManager.houseOwnerAttack(projectileOfHouseOwner,zombieManager);
     }
 
