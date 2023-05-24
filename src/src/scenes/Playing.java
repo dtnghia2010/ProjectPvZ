@@ -45,7 +45,6 @@ public class Playing implements SceneMethods {
         barManager = BarManager.createBar(this);
         tileManager = TileManager.createTileManager(this);
         plantManager = PlantManager.createPlantManager(this);
-        projectileManager = ProjectileManager.createProjectileManager(this);
         sunManager = manager.sunManager.createSunManager(this);
         keyBoardManager = KeyBoardManager.createKeyBoardManager(this);
 
@@ -273,7 +272,6 @@ public class Playing implements SceneMethods {
         System.out.println("click on start");
         waveManager.readyNewWave();
         notifManager.reset();
-        notifManager.resetEndCDWave();
     }
 
     public void setCallHorde(boolean callHorde) {

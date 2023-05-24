@@ -203,7 +203,6 @@ public class KeyBoardManager {
                 System.out.println("click on start");
                 playing.getWaveManager().readyNewWave();
                 playing.getNotifManager().reset();
-                playing.getNotifManager().resetEndCDWave();
             }
         }
     }
