@@ -13,8 +13,8 @@ public class TileManager {
     private Image[] plantLightBlur = new Image[5];
     private Image[] plantHardBlur = new Image[5];
     private Toolkit t = Toolkit.getDefaultToolkit();
-    private Image shovelSprite = t.getImage(getClass().getResource("/shovel/shovel-sprite.png"));
-    private static TileManager instance = null;
+    private static TileManager instance;
+
     public boolean isInTile() {
         return isInTile;
     }
@@ -75,6 +75,8 @@ public class TileManager {
 //                } else if (plantManager.getPlantList().get(i).getPlantID() == 1) {
 //                    g.drawImage(plantManager.getPlantImages(1), r.x, r.y, r.width, r.height, null);
 //                }
+//        g.setColor(Color.black);
+//        g.fillRect(r.x, r.y, r.width, r.height);
         }
     }
 
@@ -118,7 +120,7 @@ public class TileManager {
         if(playing.getKeyBoardManager().getPlantPickedByKeyBoard() == 5){
             if(playing.getPlantManager().isShoveled()){
                 Rectangle r = new Rectangle((int)tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().getX(),(int)tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getBound().getY(),tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].getwTile(),tiles[playing.getKeyBoardManager().getTileSelectedByKeyBoard()].gethTile());
-                g2d.drawImage(shovelSprite,(int)r.getX()-10,(int)r.getY()-5,(int)r.getWidth()+20,(int)r.getHeight()+20,null);
+//                g2d.drawImage(shovelSprite,(int)r.getX()-10,(int)r.getY()-5,(int)r.getWidth()+20,(int)r.getHeight()+20,null);
             }
         }
     }

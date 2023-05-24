@@ -32,6 +32,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 case SETTING:
                     w.getSetting().mouseClicked(e.getX(), e.getY());
                     break;
+                case WIN:
+                    w.getWin().mouseClicked(e.getX(), e.getY());
+                    break;
             }
         }
     }
@@ -50,7 +53,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                     w.getLose().mousePressed(e.getX(), e.getY());
                     break;
                 case SETTING:
-                    w.getSetting().mouseClicked(e.getX(), e.getY());
+                    w.getSetting().mousePressed(e.getX(), e.getY());
+                    break;
+                case WIN:
+                    w.getWin().mousePressed(e.getX(), e.getY());
                     break;
             }
         } else if (e.getButton() == MouseEvent.BUTTON3) {
@@ -76,7 +82,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                     w.getLose().mouseReleased(e.getX(), e.getY());
                     break;
                 case SETTING:
-                    w.getSetting().mouseClicked(e.getX(), e.getY());
+                    w.getSetting().mouseReleased(e.getX(), e.getY());
+                    break;
+                case WIN:
+                    w.getWin().mouseReleased(e.getX(), e.getY());
                     break;
             }
         }

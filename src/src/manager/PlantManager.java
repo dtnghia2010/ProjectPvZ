@@ -212,7 +212,7 @@ public class PlantManager {
                 frameCountLimitHold = 25;
                 sunCostHold = 50;
                 if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[0]){
-                    playing.getBarManager().setPlantCD(0,360);
+                    playing.getBarManager().setIsPlantInCD(0,true);
                 }
                 break;
             case 1:
@@ -221,7 +221,7 @@ public class PlantManager {
                 frameCountLimitHold = 58;
                 sunCostHold = 100;
                 if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[1]){
-                    playing.getBarManager().setPlantCD(1,360);
+                    playing.getBarManager().setIsPlantInCD(1,true);
                 }
                 break;
             case 2:
@@ -230,7 +230,7 @@ public class PlantManager {
                 frameCountLimitHold = 81;
                 sunCostHold = 50;
                 if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[2]){
-                    playing.getBarManager().setPlantCD(2,600);
+                    playing.getBarManager().setIsPlantInCD(2,true);
                 }
                 break;
             case 3:
@@ -239,7 +239,7 @@ public class PlantManager {
                 frameCountLimitHold = 20;
                 sunCostHold = 175;
                 if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[3]){
-                    playing.getBarManager().setPlantCD(3,360);
+                    playing.getBarManager().setIsPlantInCD(3,true);
                 }
                 break;
             case 4:
@@ -248,7 +248,7 @@ public class PlantManager {
                 frameCountLimitHold = 30;
                 sunCostHold = 150;
                 if(playing.isStartWaveForCD() && !playing.getBarManager().getIsPlantInCD()[4]){
-                    playing.getBarManager().setPlantCD(4,900);
+                    playing.getBarManager().setIsPlantInCD(4,true);
                 }
                 break;
         }

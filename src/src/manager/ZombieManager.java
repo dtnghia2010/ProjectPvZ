@@ -88,7 +88,7 @@ public class ZombieManager {
         synchronized (zombies) {
             System.out.println("a zombie created");
             if(!allZombieDead()) {
-                zombies.add(new Zombie(1024+rnd(0,1000), 140 + 80 * rnd(0,5), type));
+                zombies.add(new Zombie(1024+rnd(0,1000), 133 + 80 * rnd(0,5), type));
                 if(rnd(0,100) > 90) {
                     Audio.zombieGroaning();
                 }
@@ -106,11 +106,11 @@ public class ZombieManager {
                     if (z.isAlived()) {
                         if(z.getType() == 0){
                             if(!z.isCollided()){
-                                g.drawImage(normalZombie_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30, null);
+                                g.drawImage(normalZombie_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+25, null);
 //                            g.setColor(Color.RED);
 //                            g2d.drawRect((int)z.X()-50,(int)z.Y(),z.getWidth()+100,z.getHeight());
                             } else if(z.isCollided()) {
-                                g.drawImage(normalZombie_Eat[z.getFrameCountEat()],(int) z.X(), (int) z.Y()+20, z.getWidth(), z.getHeight()-20, null);
+                                g.drawImage(normalZombie_Eat[z.getFrameCountEat()],(int) z.X(), (int) z.Y()+8, z.getWidth()+18, z.getHeight(), null);
                             }
                         } else if (z.getType() == 1) {
                             g.drawImage(coneHead_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+10, null);

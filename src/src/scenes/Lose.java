@@ -1,5 +1,6 @@
 package scenes;
 
+import Audio.Audio;
 import manager.World;
 import component.MyButtons;
 
@@ -47,6 +48,8 @@ public class Lose implements SceneMethods {
 
     public void mouseClicked(int x, int y) {
         if(bMenu.getBounds().contains(x,y)) {
+            Audio.menu();
+            Audio.stopLose();
             setGameScenes(MENU);
         }
     }

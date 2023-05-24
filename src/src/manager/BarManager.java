@@ -32,6 +32,7 @@ public class BarManager {
     }
 
     private int[] plantCD = new int[5];
+    private int tile = 0;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private static Playing playing;
     private BarManager(Playing playing) {
@@ -52,11 +53,11 @@ public class BarManager {
 
     private void initButtons() {
         pickPlant = new MyButtons[6];
-        pickPlant[0] = new MyButtons("Sunflower", 465, 20, 80, 70);
-        pickPlant[1] = new MyButtons("Peashooter", 560, 20, 80, 70);
-        pickPlant[2] = new MyButtons("Wall-nut", 655, 20, 80, 70);
-        pickPlant[3] = new MyButtons("Shadow peashooter", 750, 20, 80, 70);
-        pickPlant[4] = new MyButtons("Cherry Bomb", 845, 20, 80, 70);
+        pickPlant[0] = new MyButtons("Sunflower", 458, 20, 80, 70);
+        pickPlant[1] = new MyButtons("Peashooter", 553, 20, 80, 70);
+        pickPlant[2] = new MyButtons("Wall-nut", 648, 20, 80, 70);
+        pickPlant[3] = new MyButtons("Shadow peashooter", 743, 20, 80, 70);
+        pickPlant[4] = new MyButtons("Cherry Bomb", 838, 20, 80, 70);
         pickPlant[5] = new MyButtons("Shovel",940,20,80,70);
     }
 
@@ -85,24 +86,20 @@ public class BarManager {
         return plantPickedID;
     }
 
-    public void setPlantCD(int index ,int plantCD) {
-        this.plantCD[index] = plantCD;
-    }
-
-    public void setIsPlantInCD(int index, boolean isPlantInCD) {
+    public void setIsPlantInCD(int index,boolean isPlantInCD) {
         this.isPlantInCD[index] = isPlantInCD;
     }
 
     public void drawPlantbar(Graphics g){
         g.setColor(Color.black);
-        g.drawRect(370, 10,580,90);
+        g.drawRect(365, 10,575,90);
         g.setColor(Color.pink);
-        g.fillRect(370, 10, 580, 90);
-        g.drawImage(plantBar, 370, 10, 580, 90, null);
+        g.fillRect(365, 10, 575, 90);
+        g.drawImage(plantBar, 365, 10, 575, 90, null);
         Graphics2D g2d = (Graphics2D) g;
         int distance = 0;
         for (Image p : pick_plantBar){
-            g.drawImage(p, 465 + distance, 20, 80, 70, null);
+            g.drawImage(p, 458 + distance, 20, 80, 70, null);
             distance += 95;
         }
     }
@@ -243,11 +240,11 @@ public class BarManager {
         Graphics2D g2d = (Graphics2D) g;
         for(int i = 0;i<5;i++){
             if(isPlantInCD[i]){
-                g.drawImage(plantInCD[i], 465 + distance, 20, 80, 70, null);
+                g.drawImage(plantInCD[i], 458 + distance, 20, 80, 70, null);
                 int cd = (plantCD[i]+59)/60;
                 g2d.setColor(Color.YELLOW);
                 g2d.setFont(new Font("Arial",Font.BOLD,30));
-                g2d.drawString(String.format("%d",cd),495 + distance,65);
+                g2d.drawString(String.format("%d",cd),483 + distance,65);
             }
             distance += 95;
         }
@@ -269,7 +266,7 @@ public class BarManager {
             }
             isPlantEnoughSun[3] = false;
             isPlantEnoughSun[4] = false;
-        } else if(playing.getSunManager().getSunHold() < 175){
+        } else if(playing.getSunManager().getSunHold() < 200){
             for (int i = 0;i<3;i++){
                 isPlantEnoughSun[i] = true;
             }
@@ -283,20 +280,20 @@ public class BarManager {
     }
     public void drawPlantNotEnoughSun(Graphics g){
         if(playing.getSunManager().getSunHold() < 50){
-            g.drawImage(plantInCD[0],465,20, 80, 70, null);
-            g.drawImage(plantInCD[1],465+95,20, 80, 70, null);
-            g.drawImage(plantInCD[2],465+190,20, 80, 70, null);
-            g.drawImage(plantInCD[3],465+285,20, 80, 70, null);
-            g.drawImage(plantInCD[4],465+380,20, 80, 70, null);
+            g.drawImage(plantInCD[0],458,20, 80, 70, null);
+            g.drawImage(plantInCD[1],458+95,20, 80, 70, null);
+            g.drawImage(plantInCD[2],458+190,20, 80, 70, null);
+            g.drawImage(plantInCD[3],458+285,20, 80, 70, null);
+            g.drawImage(plantInCD[4],458+380,20, 80, 70, null);
         } else if(playing.getSunManager().getSunHold() < 100){
-            g.drawImage(plantInCD[1],465+95,20, 80, 70, null);
-            g.drawImage(plantInCD[3],465+286,20, 80, 70, null);
-            g.drawImage(plantInCD[4],465+380,20, 80, 70, null);
+            g.drawImage(plantInCD[1],458+95,20, 80, 70, null);
+            g.drawImage(plantInCD[3],458+286,20, 80, 70, null);
+            g.drawImage(plantInCD[4],458+380,20, 80, 70, null);
         } else if(playing.getSunManager().getSunHold() < 150){
-            g.drawImage(plantInCD[3],465+285,20, 80, 70, null);
-            g.drawImage(plantInCD[4],465+380,20, 80, 70, null);
-        } else if(playing.getSunManager().getSunHold() < 175){
-            g.drawImage(plantInCD[3],465+285,20, 80, 70, null);
+            g.drawImage(plantInCD[3],458+285,20, 80, 70, null);
+            g.drawImage(plantInCD[4],458+380,20, 80, 70, null);
+        } else if(playing.getSunManager().getSunHold() < 200){
+            g.drawImage(plantInCD[3],458+285,20, 80, 70, null);
         }
     }
     public void draw(Graphics g){
@@ -307,7 +304,7 @@ public class BarManager {
     }
     public void drawPlantNotAvailableFromStart(Graphics g){
         if(!playing.isStartWaveForCD()){
-            g.drawImage(plantInCD[0],465,20, 80, 70, null);
+            g.drawImage(plantInCD[0],458,20, 80, 70, null);
         }
     }
     public MyButtons[] getPickPlant() {
