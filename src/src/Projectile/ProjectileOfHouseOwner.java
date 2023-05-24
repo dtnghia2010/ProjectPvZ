@@ -22,7 +22,7 @@ public class ProjectileOfHouseOwner extends ProjectileLogic {
         synchronized (getListOfProjectile()) {
             int x = (int) shooter.getX();
             int y = (int) shooter.getY();
-            getListOfProjectile().add(new Projectile(x + shooter.getWidth() + 20, y + 30, shooter.getATK(), 3));
+            getListOfProjectile().add(new Projectile(x + shooter.getWidth() + 20, y + 50, shooter.getATK(), 3));
 //            isReset = true;
             setIsReset(true);
         }
@@ -37,7 +37,7 @@ public class ProjectileOfHouseOwner extends ProjectileLogic {
             while ((iterator.hasNext())) {
                 Projectile projectile = iterator.next();
                 if (projectile.getID() == 3) {
-                    g2d.drawImage(projectileImage[0], projectile.getX(), projectile.getY(), 35, 25, null);
+                    g2d.drawImage(projectileImage[0], projectile.getX(), projectile.getY(), 30, 20, null);
                 }
             }
         }

@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class HouseOwner implements Shooter {
     private int hp, dmg;
     private final int atk =100;
-    private static final int width = 40, height = 60;
+    private static final int width = 70, height = 100;
     private float spd = 0.8f;
     private boolean Collided = false;
     private int x;
