@@ -7,12 +7,15 @@ import scenes.Playing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BarManager {
     private Image[] pick_plantBar;
     private Image[] plantInCD;
+    private Image shovel;
     private Image pickedPlant;
     private Image plantBar;
     private MyButtons pickPlant[];
@@ -106,28 +109,33 @@ public class BarManager {
     public void sunFlower(){
         playing.getPlantManager().setIDhold(0);
         plantPickedID.add(0);
+        playing.getPlantManager().setSunCostHold(50);
     }
     public void peaShooter(){
         playing.getPlantManager().setIDhold(1);
         plantPickedID.add(1);
+        playing.getPlantManager().setSunCostHold(100);
     }
     public void wall_nut(){
         playing.getPlantManager().setIDhold(2);
         plantPickedID.add(2);
+        playing.getPlantManager().setSunCostHold(50);
     }
     public void shadowPea(){
         playing.getPlantManager().setIDhold(3);
         plantPickedID.add(3);
+        playing.getPlantManager().setSunCostHold(175);
     }
     public void cherryBomb(){
         playing.getPlantManager().setIDhold(4);
         plantPickedID.add(4);
+        playing.getPlantManager().setSunCostHold(150);
     }
     public void setCDatStartOfGame(){
-        plantCD[1] = 95;
-        plantCD[2] = 95;
-        plantCD[3] = 95;
-        plantCD[4] = 95;
+        plantCD[1] = 205;
+        plantCD[2] = 205;
+        plantCD[3] = 205;
+        plantCD[4] = 205;
         plantPickedID.add(1);
         plantPickedID.add(2);
         plantPickedID.add(3);
@@ -266,7 +274,7 @@ public class BarManager {
             }
             isPlantEnoughSun[3] = false;
             isPlantEnoughSun[4] = false;
-        } else if(playing.getSunManager().getSunHold() < 200){
+        } else if(playing.getSunManager().getSunHold() < 175){
             for (int i = 0;i<3;i++){
                 isPlantEnoughSun[i] = true;
             }

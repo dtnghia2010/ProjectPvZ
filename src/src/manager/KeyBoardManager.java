@@ -174,17 +174,15 @@ public class KeyBoardManager {
     public void removePlantUsingKeyBoard(KeyEvent e){
         if(playing.getPlantManager().isShoveled()){
             if(e.getKeyCode() == KeyEvent.VK_ENTER){
-                synchronized (playing.getPlantManager().getPlantList()){
-                    Iterator<Plant> iterator = playing.getPlantManager().getPlantList().iterator();
-                    while (iterator.hasNext()){
-                        Plant plant = iterator.next();
-                        Rectangle plantRect = new Rectangle(plant.getX(),plant.getY(),plant.getWidth(),plant.getHeight());
-                        if(playing.getTileManager().getTiles()[tileSelectedByKeyBoard].isOccupied() && playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(plant.getX(),plant.getY())){
-                            playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setOccupied(false);
-                            playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setPlanted(false);
-                            iterator.remove();
-                            playing.getPlantManager().setShoveled(false);
-                        }
+                Iterator<Plant> iterator = playing.getPlantManager().getPlantList().iterator();
+                while (iterator.hasNext()){
+                    Plant plant = iterator.next();
+                    Rectangle plantRect = new Rectangle(plant.getX(),plant.getY(),plant.getWidth(),plant.getHeight());
+                    if(playing.getTileManager().getTiles()[tileSelectedByKeyBoard].isOccupied() && playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(plant.getX(),plant.getY())){
+                        playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setOccupied(false);
+                        playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setPlanted(false);
+                        plant.setAlived(false);
+                        playing.getPlantManager().setShoveled(false);
                     }
                 }
             }
@@ -195,10 +193,17 @@ public class KeyBoardManager {
             if(e.getKeyCode() == KeyEvent.VK_SPACE){
                 playing.setStartWave(true);
                 playing.setStartWaveForCD(true);
+                playing.setCallHorde(false);
                 playing.getPlantManager().setSelected(false);
                 pickPlantByKeyBoard();
                 playing.getWaveManager().readyNewWave();
                 playing.getPlantManager().setForbidden(false);
+                playing.getPlantManager().setSelected(false);
+                playing.getPlantManager().setForbidden(false);
+                System.out.println("click on start");
+                playing.getWaveManager().readyNewWave();
+                playing.getNotifManager().reset();
+                playing.getNotifManager().resetEndCDWave();
             }
         }
     }

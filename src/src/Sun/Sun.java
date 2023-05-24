@@ -38,7 +38,7 @@ public class Sun {
 
     private int width, height;
     private Rectangle bound;
-    private boolean isThere = true;
+    private boolean isThere = false;
 
     public boolean isThere() {
         return isThere;
@@ -85,6 +85,23 @@ public class Sun {
         return isSunCLicked;
     }
     private double distanceTOMoveToStorage;
+
+    public void setBound(Rectangle bound) {
+        this.bound = bound;
+    }
+
+    public void setBoundaryDrop(int boundaryDrop) {
+        this.boundaryDrop = boundaryDrop;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
     public void moveToStorage(){
         if(isSunCLicked){
             for(int i = -1;i<8;i++){

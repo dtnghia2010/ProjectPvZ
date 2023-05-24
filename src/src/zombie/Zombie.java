@@ -34,14 +34,12 @@ public class Zombie {
     private boolean isDead = false;
     private Rectangle bound;
     private boolean isSlowed = false;
-
     public boolean isDead() {
         return isDead;
     }
     public void setDead(boolean dead) {
         isDead = dead;
     }
-
     public Zombie(double x, double y, int type) {
         this.x = x;
         this.y = y;
@@ -136,7 +134,6 @@ public class Zombie {
     public void updateFrameCountMove(){
         if(!isCollided){
             frameCDMove++;
-//            System.out.println("frame: "+frameCDMove+" "+frameCDMove%0.4);
             if(frameCDMove%0.4 <0.5){
                 frameCountMove++;
                 if(type == 0){

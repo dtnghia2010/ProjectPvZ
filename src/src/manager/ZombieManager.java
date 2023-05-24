@@ -209,21 +209,22 @@ public class ZombieManager {
                     Iterator<Plant> iterator1 = playing.getPlantManager().getPlantList().iterator();
                     while (iterator1.hasNext()){
                         Plant plant = iterator1.next();
-                        if(r.contains(plant.getX()+plant.getWidth()-zombie.getWidth()+30,plant.getY()) && zombie.isAlived()){
-                            zombie.setCollided(true);
-                            zombie.updateFrameCountEat();
-                            if(realTimeCounter >= 30){
-                                System.out.println("Zombie eating");
-                                Audio.zombieEat();
-                                zombie.attackPlant(plant);
-                                isReset = true;
-                                plant.removePlant(plant,iterator1,playing.getTileManager());
-                                zombie.defeatPlant(plant);
-                            }
-                            for(Zombie zombie1:zombies){
-                                Rectangle rZombie = new Rectangle((int)zombie1.X()-50,(int)zombie1.Y(),zombie1.getWidth()+100,zombie1.getHeight());
-                                if(r.intersects(rZombie)){
-                                    zombie1.defeatPlant(plant);
+                        if(plant.isAlived()){
+                            if(r.contains(plant.getX()+plant.getWidth()-zombie.getWidth()+30,plant.getY()) && zombie.isAlived()){
+                                zombie.setCollided(true);
+                                zombie.updateFrameCountEat();
+                                if(realTimeCounter >= 30){
+                                    Audio.zombieEat();
+                                    zombie.attackPlant(plant);
+                                    isReset = true;
+                                    plant.removePlant(plant,iterator1,playing.getTileManager(),playing.getPlantManager());
+                                    zombie.defeatPlant(plant);
+                                }
+                                for(Zombie zombie1:zombies){
+                                    Rectangle rZombie = new Rectangle((int)zombie1.X()-50,(int)zombie1.Y(),zombie1.getWidth()+100,zombie1.getHeight());
+                                    if(r.intersects(rZombie)){
+                                        zombie1.defeatPlant(plant);
+                                    }
                                 }
                             }
                         }
