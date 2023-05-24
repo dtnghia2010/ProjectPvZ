@@ -151,7 +151,9 @@ public class HouseOwnerManager {
 
                     // Kiểm tra nếu tọa độ y của HouseOwner gần bằng tọa độ y của zombie
                     // và tọa độ x của zombie đó < 1024
-                    if (Math.abs(houseOwnerY - zombieY) <= 20 && zombieX < 1024) {
+                    if (Math.abs(houseOwnerY - zombieY) <= 20 && zombieX < 1024 && zombie.isAlived()) {
+                        System.out.println("houseOwner: "+houseOwnerY);
+                        System.out.println("zombie: "+zombieY);
                         // Tạo một đạn mới và thêm vào ProjectileManager
                         System.out.println("create projectile of HouseOwner");
                         projectileOfHouseOwner.projectileCreated(houseOwner);
