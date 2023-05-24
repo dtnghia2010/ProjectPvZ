@@ -74,12 +74,12 @@ public class NotifManager {
     public void countWave(Graphics g) {
 //        g.setColor(Color.BLUE);
 //        g.fillRect(77,580,167,35);
-        g.drawImage(noticeImg, 77, 580, 156, 35, null);
-        Font font = new Font("PvZ2 Regular", Font.BOLD, 22);
+        g.drawImage(noticeImg, 77, 580, 190, 35, null);
+        Font font = new Font("Arial", Font.BOLD, 22);
         g.setFont(font);
         g.setColor(Color.WHITE);
         int time = playing.getWaveManager().getCoolDownWave() - waveCDTime.getCurrentSec();
-        g.drawString("Count down: " + time, 100, 604);
+        g.drawString("Count down: " + time, 90, 604);
     }
     public void stageClear(Graphics g) {
         g.drawImage(notifs[0].getImage(), 1024 / 2 - 200, 625 / 2 - 200, 400, 400, null);
@@ -89,7 +89,7 @@ public class NotifManager {
 //        g.setColor(Color.BLUE);
 //        g.fillRect(873,580,120,35);
         g.drawImage(noticeImg, 873, 580, 120, 35, null);
-        Font font = new Font("PvZ2 Regular", Font.BOLD, 22);
+        Font font = new Font("Arial", Font.BOLD, 22);
         g.setFont(font);
         g.setColor(Color.WHITE);
         int currentWave = playing.getWaveManager().getCurWave() + 1;
@@ -98,7 +98,7 @@ public class NotifManager {
         if (currentWave < 10 && currentWave > 0) {
             currWave += currentWave;
         }
-        g.drawString("Wave " + currWave, 907, 604);
+        g.drawString("Wave " + currWave, 897, 604);
     }
 
     public void reset() {

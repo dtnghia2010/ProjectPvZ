@@ -100,7 +100,7 @@ public class sunManager {
         Graphics2D g2s = (Graphics2D) g;
         Graphics2D g2n = (Graphics2D) g;
         g2s.drawImage(sunImage,255,-10,90,90,null);
-        g2n.setFont(new Font("PvZ2 Regular",Font.BOLD,24));
+        g2n.setFont(new Font("Arial",Font.BOLD,24));
         g2n.setColor(Color.BLACK);
         g2n.drawString(String.format("%d",sunHold),getAlignment(),95);
     }
@@ -108,11 +108,11 @@ public class sunManager {
         if(sunHold == 0){
             return 295;
         } else if(sunHold < 100){
-            return 290;
-        } else if(sunHold < 1000){
             return 285;
-        } else {
+        } else if(sunHold < 1000){
             return 280;
+        } else {
+            return 275;
         }
     }
     public void drawSun(Graphics g){
