@@ -41,6 +41,7 @@ public class HouseOwnerManager {
         projectileOfHouseOwner = new ProjectileOfHouseOwner();
     }
 
+/*
     public HouseOwnerManager(String imageUrl, int x, int y, int speed){
         try {
             URL url = new URL(imageUrl);
@@ -53,6 +54,7 @@ public class HouseOwnerManager {
         this.speed = speed;
 //         projectileManager = new ProjectileLogic();
     }
+*/
 
 
     public void moveUp () {
@@ -151,7 +153,9 @@ public class HouseOwnerManager {
 
                     // Kiểm tra nếu tọa độ y của HouseOwner gần bằng tọa độ y của zombie
                     // và tọa độ x của zombie đó < 1024
-                    if (Math.abs(houseOwnerY - zombieY) <= 20 && zombieX < 1024 && zombie.isAlived()) {
+       /*             System.out.println("Zombie Y: " + zombieY);
+                    System.out.println("HouseOwnerY: " + houseOwnerY);*/
+                    if (Math.abs(houseOwnerY - zombieY) <= 30 && zombieX < 700 && zombie.isAlived()){ //) {
                         // Tạo một đạn mới và thêm vào ProjectileManager
                         System.out.println("create projectile of HouseOwner");
                         projectileOfHouseOwner.projectileCreated(houseOwner);
