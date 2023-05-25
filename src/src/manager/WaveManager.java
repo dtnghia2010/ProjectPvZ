@@ -10,7 +10,7 @@ public class WaveManager {
     private Wave[] waves;
     private boolean endWaves = false, hordeActive = false;
     private int curZom = 0, curWave = -1;
-    private int waveNum = 4, hordeNum = 10, coolDownWave = 10;
+    private int waveNum = 4, hordeNum = 30, coolDownWave = 10;
     private timeZombie zomSpawnTime;
     private static WaveManager instance = null;
 
@@ -32,10 +32,10 @@ public class WaveManager {
     }
 
     private void initWaves() {
-        waves[0] = new Wave(2,2,1);
-        waves[1] = new Wave(4,3,2);
-        waves[2] = new Wave(6,4,3);
-        waves[3] = new Wave(5,5,6);
+        waves[0] = new Wave(5,5,5);
+        waves[1] = new Wave(10,10,10);
+        waves[2] = new Wave(15,15,15);
+        waves[3] = new Wave(20,20,20);
     }
 
     public void readyNewWave() {
@@ -99,7 +99,7 @@ public class WaveManager {
     public void createHorde() {
         hordeActive = true;
         playing.getZombieManager().createHorde(hordeNum);
-        hordeNum += 5;
+        hordeNum += 20;
     }
     public int getCurWave() {
 //        System.out.println("curWave " + curWave);
