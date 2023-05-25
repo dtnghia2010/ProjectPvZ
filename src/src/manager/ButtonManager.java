@@ -44,7 +44,6 @@ public class ButtonManager {
         if(!playing.isStartWave()) {
             bStart.draw(g);
         }
-
     }
 
     public MyButtons getbStart() {

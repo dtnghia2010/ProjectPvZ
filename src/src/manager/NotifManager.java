@@ -85,7 +85,7 @@ public class NotifManager {
         Font font = new Font("Arial", Font.BOLD, 22);
         g.setFont(font);
         g.setColor(Color.WHITE);
-        int currentWave = playing.getWaveManager().getCurWave() + 1;
+        int currentWave = playing.getWaveManager().getCurWave();
         int currWave = 0;
         Integer.toString(currentWave);
         if (currentWave < 10 && currentWave > 0) {
