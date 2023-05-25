@@ -1,9 +1,11 @@
 package scenes;
 
 import Audio.Audio;
+import Projectile.ProjectileLogic;
+import Projectile.ProjectileOfHouseOwner;
+import Projectile.ProjectileOfPlant;
 import manager.*;
 import component.MyButtons;
-import zombie.Zombie;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
@@ -14,64 +16,87 @@ public class Playing implements SceneMethods {
     private BarManager barManager;
     private PlantManager plantManager;
     private ButtonManager buttonManager;
-    private ProjectileManager projectileManager;
+    private sunManager sunManager;
+    private ProjectileOfPlant projectileOfPlant;
+    private ProjectileOfHouseOwner projectileOfHouseOwner;
     private ZombieManager zombieManager;
     private WaveManager waveManager;
-    private boolean startWave = false;
+    private KeyBoardManager keyBoardManager;
+    private MouseMotionManager mouseMotionManager;
+    private NotifManager notifManager;
+    private boolean startWave = false, callHorde = false, zombieApproaching = false;
+    private HouseOwnerManager houseOwnerManager;
     private boolean startWaveForCD = false;
     private World w;
     private Toolkit t = Toolkit.getDefaultToolkit();
 
     public Playing(World w) {
         this.w = w;
-        initComponents();
-        initObjects();
-        initEvents();
+        initManagers();
     }
 
-    private void initEvents() {
-        waveManager = new WaveManager(this);
-    }
+    private void initManagers() {
+        buttonManager = new ButtonManager(this);
+        mouseMotionManager = new MouseMotionManager(this);
+        //singleton application
+        waveManager = WaveManager.createWaveManager(this);
+        notifManager = NotifManager.createNotifManager(this);
+        zombieManager = ZombieManager.createZombieManager(this);
+        barManager = BarManager.createBar(this);
+        tileManager = TileManager.createTileManager(this);
+        plantManager = PlantManager.createPlantManager(this);
+        sunManager = manager.sunManager.createSunManager(this);
+        keyBoardManager = KeyBoardManager.createKeyBoardManager(this);
 
-    private void initObjects() {
-        zombieManager = new ZombieManager(this);
+        projectileOfHouseOwner = new ProjectileOfHouseOwner();
+        projectileOfPlant = new ProjectileOfPlant();
+        houseOwnerManager = new HouseOwnerManager(this);
     }
     public boolean isStartWaveForCD() {
         return startWaveForCD;
     }
-    private void initComponents() {
-        barManager = new BarManager(this);
-        tileManager = new TileManager();
-        buttonManager = new ButtonManager();
-        plantManager = new PlantManager(this);
-        projectileManager = new ProjectileManager();
+
+    public manager.sunManager getSunManager() {
+        return sunManager;
     }
+
+    public KeyBoardManager getKeyBoardManager() {
+        return keyBoardManager;
+    }
+
+    public MouseMotionManager getMouseMotionManager() {
+        return mouseMotionManager;
+    }
+
+    public ProjectileOfPlant getProjectileOfPlant() {
+        return projectileOfPlant;
+    }
+
 
     public TileManager getTileManager() {
         return tileManager;
-    }
-
-    public void update(){
-        plantManager.alertPlant(tileManager,zombieManager);
-        plantManager.calmPlant(tileManager,zombieManager);
-//        projectileManager.projectileCreated(plantManager);
-        plantManager.plantAttack(projectileManager);
-        projectileManager.update();
-        projectileManager.projectileCollideZombie(zombieManager);
-        barManager.update();
     }
     @Override
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
         buttonManager.drawButtons(g);
-        tileManager.drawTiles(g, plantManager);
-        barManager.drawPlantbar(g);
-        barManager.drawPlantInCD(g);
+//        tileManager.drawTiles(g, plantManager);
+        barManager.draw(g);
+        mouseMotionManager.drawPlantSelectedByMouse(g);
+        keyBoardManager.drawPlantSelectedByKeyBoard(g);
+        tileManager.draw(g);
+        plantManager.draw(g);
         zombieManager.draw(g);
-        plantManager.drawPlant(g);
-        projectileManager.drawProjectile(g);
-    }
+        sunManager.drawSun(g);
+        notifManager.drawNotif(g);
+        buttonManager.drawImg(g);
+        projectileOfPlant.drawProjectile(g);
+        houseOwnerManager.draw(g);
+        projectileOfHouseOwner.drawProjectile(g);
+        projectileOfPlant.drawProjectile(g);
 
+
+    }
     public PlantManager getPlantManager() {
         return plantManager;
     }
@@ -80,78 +105,149 @@ public class Playing implements SceneMethods {
         return barManager;
     }
 
-    public void mouseClicked(int x, int y) {
-        if (buttonManager.getbMenu().getBounds().contains(x, y)) {
-            setGameScenes(MENU);
-        } else if (buttonManager.getbQuit().getBounds().contains(x, y)) {
-            setGameScenes(LOSE);
-        } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
-            startWave = true;
-            startWaveForCD = true;
-            waveManager.readyNewWave();
-        }
-        for (MyButtons b : barManager.getPickPlant()) {
-            if (b.getBounds().contains(x, y)) {
-                Audio.tapPlantBar();
-                System.out.println("You choose " + b.getText());
-            }
-        }
-        for (MyButtons b2 : barManager.getPickPlant()) {
-            if (b2.getBounds().contains(x, y)) {
-                plantManager.setSelected(true);
-                if (b2.getText().contains("Sunflower")) {
-                    barManager.sunFlower();
-                } else if (b2.getText().contains("Peashooter")) {
-                    barManager.peaShooter();
-                } else if (b2.getText().contains("Wall-nut")) {
-                    barManager.wall_nut();
-                } else if (b2.getText().contains("Snow Pea")) {
-                    barManager.snowPea();
-                } else if (b2.getText().contains("Cherry Bomb")) {
-                    barManager.cherryBomb();
-                }
-            }
-        }
-
+    public void setWaveManager(WaveManager waveManager) {
+        this.waveManager = waveManager;
     }
 
+    public void setStartWaveForCD(boolean startWaveForCD) {
+        this.startWaveForCD = startWaveForCD;
+    }
+
+    public void mouseClicked(int x, int y) {
+        changeScene(x,y);
+        choosePlant(x,y);
+        sunManager.clickSun(x,y);
+    }
+
+
+    public void changeScene(int x, int y){
+        if (buttonManager.getbSetting().getBounds().contains(x, y)) {
+            Audio.setting();
+            Audio.stopRoof();
+            Audio.stopReadySetPlant();
+            setGameScenes(SETTING);
+        } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
+            if (!startWave && zombieManager.allZombieDead()) {
+                startGame();
+/*                startWave = true;
+                callHorde = false;
+                startWaveForCD = true;
+                System.out.println("click on start");
+                waveManager.readyNewWave();
+                notifManager.reset();*/
+            }
+        }
+    }
+    public void choosePlant(int x, int y){
+        for (MyButtons b2 : barManager.getPickPlant()) {
+            if (b2.getBounds().contains(x, y)) {
+                System.out.println("You choose " + b2.getText());
+                Audio.tapPlantBar();
+                plantManager.setSelected(true);
+                if(!barManager.isPlantLocked()){
+                    if (b2.getText().contains("Sunflower")) {
+                        if(!isStartWaveForCD()){
+                            plantManager.plantForbiddenFromStart();
+                        } else {
+                            plantManager.setForbidden(false);
+                            barManager.sunFlower();
+                        }
+                    } else if (b2.getText().contains("Peashooter")) {
+                        plantManager.setForbidden(false);
+                        barManager.peaShooter();
+                    } else if (b2.getText().contains("Wall-nut")) {
+                        plantManager.setForbidden(false);
+                        barManager.wall_nut();
+                    } else if (b2.getText().contains("Shadow peashooter")) {
+                        plantManager.setForbidden(false);
+                        barManager.shadowPea();
+                    } else if (b2.getText().contains("Cherry Bomb")) {
+                        plantManager.setForbidden(false);
+                        barManager.cherryBomb();
+                    } else if(b2.getText().contains("Shovel")){
+                        plantManager.setSelected(false);
+                        plantManager.setShoveled(true);
+                    }
+                }
+                barManager.setPlantLocked(true);
+            }
+        }
+    }
 
     public void mousePressed(int x, int y) {
 
     }
-
+    public void MousePress(){
+        mouseMotionManager.returnToSelectPlantByMouse();
+    }
     public void mouseReleased(int x, int y) {
         plantManager.mouse(x, y);
+        houseOwnerManager.mouseClicked(x,y);
+        plantManager.removePlantByShovel(x,y);
     }
-    public void keyBoardPress(KeyEvent e){
-        barManager.keyBoardChoosePlant(e);
-        barManager.keyBoardSelectPlant(e);
-        barManager.tileSelectedByKeyBoard(e);
+    public void mouseMove(int x, int y){
+        mouseMotionManager.changeStatusToMouse(x,y,w);
+        mouseMotionManager.mouseTrackPlantBar(x,y);
+        mouseMotionManager.tileTrack(x,y);
     }
 
-    public void updates() {
-        if(startWave) {
+
+    public void setStartWave(boolean startWave) {
+        this.startWave = startWave;
+    }
+
+    public void keyBoardPress(KeyEvent e){
+        keyBoardManager.changeStatusToKeyBoard(e);
+        keyBoardManager.keyBoardChoosePlant(e);
+        keyBoardManager.keyBoardSelectPlant(e);
+        keyBoardManager.tileSelectedByKeyBoard(e);
+        keyBoardManager.plant(e);
+        keyBoardManager.removePlantUsingKeyBoard(e);
+//        keyBoardManager.returnToSelectPlantByKeyBoard(e);
+        keyBoardManager.startGame(e);
+    }
+    public void setupZombie(){
+        if(zombieManager.iszReachedEnd()) {
+//            setGameScenes(LOSE);
+        }
+        if(getNotifManager().getWaveCDTime().isEndCDWave()) {
+            System.out.println("startGame");
+            startGame();
+        }
+        if (startWave) {
             if (isTimeForNewZombie()) {
                 spawnZombie();
             }
-            if(zombieManager.allZombieDead()) {
+            if (waveManager.hordeDead() && callHorde == true) {
                 startWave = false;
+            }
+            if (zombieManager.allZombieDead() && !callHorde) {
                 zombieManager.getZombies().clear();
-                createHorde();
-                System.out.println("Zombies cleared");
-            } else {
-                zombieAtk();
+                if (waveManager.isEndWaves()) {
+                    System.out.println("you win");
+                } else {
+                    waveManager.createHorde();
+                    callHorde = true;
+                    zombieApproaching = true;
+                }
+//                notifManager.setNotif(new PlayingNotif(0));
             }
         }
+    }
+    public void updates() {
+        setupZombie();
+        plantManager.update();
+        barManager.update();
+        sunManager.update(this);
         waveManager.updates();
         zombieManager.updates();
         zombieManager.ZombieCollidePlant();
-    }
-
-    private void zombieAtk() {
-        for(Zombie z: zombieManager.getZombies()) {
-            //TODO zombie attack plant
-        }
+        projectileOfPlant.update(this);
+        projectileOfHouseOwner.update(this);
+        projectileOfHouseOwner.projectileCollideZombie(this);
+        projectileOfPlant.projectileCollideZombie(this);
+//        houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
+        houseOwnerManager.houseOwnerAttack(projectileOfHouseOwner,zombieManager);
     }
 
     private void spawnZombie() {
@@ -167,6 +263,21 @@ public class Playing implements SceneMethods {
         return false;
     }
 
+    private void startGame() {
+        startWave = true;
+        callHorde = false;
+        startWaveForCD = true;
+        plantManager.setSelected(false);
+        plantManager.setForbidden(false);
+        System.out.println("click on start");
+        waveManager.readyNewWave();
+        notifManager.reset();
+    }
+
+    public void setCallHorde(boolean callHorde) {
+        this.callHorde = callHorde;
+    }
+
     public WaveManager getWaveManager() {
         return waveManager;
     }
@@ -174,8 +285,17 @@ public class Playing implements SceneMethods {
     public ZombieManager getZombieManager() {
         return zombieManager;
     }
-    public void createHorde() {
-        zombieManager.createHorde(45);
+
+    public NotifManager getNotifManager() {
+        return notifManager;
+    }
+
+    public boolean isStartWave() {
+        return startWave;
+    }
+
+    public boolean isZombieApproaching() {
+        return zombieApproaching;
     }
 }
 

@@ -1,14 +1,13 @@
 package zombie;
 
-import component.Plant;
-import manager.ZombieManager;
+import Audio.Audio;
+import Plant.Plant;
 
 import java.awt.*;
-import java.util.Iterator;
 
 public class Zombie {
     private int hp, dmg, type;
-    private final int width = 80, height = 140;
+    private int width = 55, height = 110;
     private float spd = 0.8f;
     private boolean isCollided = false;
 
@@ -25,31 +24,44 @@ public class Zombie {
     }
 
     private double x, y;
+    private int frameCountMove = 0;
+    private double frameCDMove = 0;
+    private int frameCountMoveLimit;
+    private int frameCountEat = 0;
+    private int frameCDEat = 0;
+    private int frameCountEatLimit;
     private boolean isAlived = true;
     private boolean isDead = false;
+    private Rectangle bound;
     private boolean isSlowed = false;
     public boolean isDead() {
         return isDead;
     }
-
     public void setDead(boolean dead) {
         isDead = dead;
     }
-
-    private Rectangle bound;
     public Zombie(double x, double y, int type) {
         this.x = x;
         this.y = y;
         this.type = type;
-        this.bound = new Rectangle(new Dimension(width, height));
+        this.bound = new Rectangle((int)this.x+20,(int)this.y,width-20,height);
         setStatus(this.type);
+        if(this.type == 0){
+            frameCountMoveLimit = 51;
+            frameCountEatLimit = 23;
+        } else if (this.type == 1) {
+            frameCountMoveLimit = 65;
+            width += 10;
+            height += 20;
+            this.y -= 20;
+        }
     }
 
     private void setStatus(int type) {
         switch (type) {
             case 0:
                 hp = 70;
-                dmg = 30;
+                dmg = 20;
                 break;
             case 1:
                 hp = 130;
@@ -110,7 +122,67 @@ public class Zombie {
             x -= spd;
         }
     }
-//    public void bite(FakePlant fakePlant) {
+
+    public boolean isCollided() {
+        return isCollided;
+    }
+
+    public int getFrameCountEat() {
+        return frameCountEat;
+    }
+
+    public void updateFrameCountMove(){
+        if(!isCollided){
+            frameCDMove++;
+            if(frameCDMove%0.4 <0.5){
+                frameCountMove++;
+                if(type == 0){
+                    if(frameCountMove > 5 && frameCountMove <48)
+                        bound.x--;
+                    if(frameCountMove == frameCountMoveLimit-1){
+                        x = x-frameCountMove-1+8;
+                        frameCountMove = 0;
+                    }
+                } else if (type == 1){
+                    if(frameCountMove > 15 && frameCountMove <60)
+                        bound.x--;
+                    if(frameCountMove == frameCountMoveLimit-1){
+                        x = x-frameCountMove-1+18;
+                        frameCountMove = 0;
+                    }
+                }
+            }
+        }
+    }
+    public void updateFrameCountEat(){
+        if(isCollided){
+            frameCDEat++;
+            if(frameCDEat%3 == 0){
+                frameCountEat++;
+            }
+            if(frameCountEat == frameCountEatLimit){
+                frameCountEat = 0;
+            }
+        } else {
+            frameCountEat = 0;
+        }
+    }
+
+
+    public int getFrameCountMove() {
+        return frameCountMove;
+    }
+
+    public void setFrameCountMove(int frameCountMove) {
+        this.frameCountMove = frameCountMove;
+    }
+
+
+    public void setFrameCDMove(int frameCDMove) {
+        this.frameCDMove = frameCDMove;
+    }
+
+    //    public void bite(FakePlant fakePlant) {
 //
 //    }
     public void hurt() {
@@ -121,6 +193,7 @@ public class Zombie {
     }
     public void defeatPlant(Plant plant){
         if(plant.getPlantHP() <= 0){
+            Audio.plantDeath();
             isCollided = false;
         }
     }
@@ -131,6 +204,10 @@ public class Zombie {
 
     public int getHeight() {
         return height;
+    }
+
+    public boolean isWalking() {
+        return !isCollided;
     }
 
 }
