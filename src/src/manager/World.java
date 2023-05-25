@@ -2,30 +2,31 @@ package manager;
 
 import player.KeyBoardListener;
 import player.MyMouseListener;
-import scenes.GameScenes;
-import scenes.Lose;
+import scenes.*;
 import scenes.Menu;
 import scenes.Playing;
-import zombie.Zombie;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class World extends JPanel implements Runnable {
     private int screenWidth = 1024, screenHeight = 625;
     private ArrayList<Image> img = new ArrayList<>();
-    private Random random;
-    private double FPS_SET = 200.0;
+    private double FPS_SET = 60.0;
     private double UPS_SET = 60.0;
     private MyMouseListener myMouseListener;
     private KeyBoardListener keyBoardListener;
     private Lose lose;
     private Menu menu;
     private Playing playing;
+    private Setting setting;
+    private Win win;
     private Toolkit t = Toolkit.getDefaultToolkit();
+    private int frameCount = 0;
+    private boolean FPSstop = false;
+    private boolean UPSstop = false;
 
     public void start() {
         Thread thread = new Thread(this);
@@ -33,7 +34,6 @@ public class World extends JPanel implements Runnable {
     }
     public World() {
         setPreferredSize(new Dimension(screenWidth, screenHeight));
-        random = new Random();
         initInput();
         initClasses();
         importImg();
@@ -52,9 +52,17 @@ public class World extends JPanel implements Runnable {
         return playing;
     }
 
+    public Setting getSetting() {
+        return setting;
+    }
+
+    public Win getWin() {
+        return win;
+    }
+
     public void initInput() {
         myMouseListener = new MyMouseListener(this);
-        keyBoardListener = new KeyBoardListener();
+        keyBoardListener = new KeyBoardListener(this);
         addMouseListener(myMouseListener);
         addMouseMotionListener(myMouseListener);
         addKeyListener(keyBoardListener);
@@ -66,19 +74,15 @@ public class World extends JPanel implements Runnable {
         lose = new Lose(this);
         playing = new Playing(this);
         menu = new Menu(this);
+        setting = new Setting(this);
+        win = new Win(this);
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         render(g);
     }
-    public void update(){
-        switch (GameScenes.gameScenes){
-            case PLAYING:
-                playing.update();
-                break;
-        }
-    }
+
     public void render(Graphics g) {
         switch (GameScenes.gameScenes) {
             case MENU:
@@ -90,6 +94,11 @@ public class World extends JPanel implements Runnable {
             case LOSE:
                 lose.render(g, img.get(2));
                 break;
+            case SETTING:
+                setting.render(g, img.get(3));
+                break;
+            case WIN:
+                win.render(g,img.get(4));
         }
     }
     public void updates() {
@@ -103,6 +112,11 @@ public class World extends JPanel implements Runnable {
             case LOSE:
                 getLose().updates();
                 break;
+            case SETTING:
+                getSetting().updates();
+                break;
+            case WIN:
+                getWin().updates();
         }
     }
 
@@ -110,7 +124,8 @@ public class World extends JPanel implements Runnable {
         img.add(t.getImage(getClass().getResource("/scene/menu.jpg")));
         img.add(t.getImage(getClass().getResource("/scene/lawn.png")));
         img.add(t.getImage(getClass().getResource("/scene/lose.png")));
-
+        img.add(t.getImage(getClass().getResource("/scene/pause.png")));
+        img.add(t.getImage(getClass().getResource("/scene/win.png")));
     }
     @Override
     public void run() {
@@ -122,20 +137,30 @@ public class World extends JPanel implements Runnable {
         int frames = 0;
         long lastTimeCheck = System.currentTimeMillis();
         long now;
+        int FPScount = 0;
+        int UPScount = 0;
         while (true) {
             now = System.nanoTime();
             //repaint game
-            if (now - lastFrame >= timePerFrame) {
+            if (now - lastUpdate >= timePerFrame) {
                 lastFrame = now;
                 frames++;
                 repaint();
+//                FPScount++;
+//                System.out.println(FPScount);
             }
             //update game
             if (now - lastUpdate >= timePerUpdate) {
                 lastUpdate = now;
                 updates++;
-                update();
                 updates();
+//                if(!UPSstop){
+//                    for(int i = 0;i<11 ;i++){
+//                        System.out.println("UPS: "+ UPScount);
+//                        UPScount++;
+//                    }
+//                    UPSstop = true;
+//                }
             }
             //check FPS & UPS
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {

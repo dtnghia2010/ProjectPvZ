@@ -1,11 +1,12 @@
 package component;
 
+import Projectile.Shooter;
 import manager.TileManager;
 
 import java.awt.*;
 import java.util.Iterator;
 
-public class Plant {
+public class Plant implements Shooter {
     private double plantHP;
     private int plantATK;
     private  int plantID;
@@ -25,6 +26,11 @@ public class Plant {
 
     public int getATK() {
         return plantATK;
+    }
+
+    @Override
+    public int getID() {
+        return 0;
     }
 
     public void setPlantATK(int plantATK) {
