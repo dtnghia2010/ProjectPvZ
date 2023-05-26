@@ -37,7 +37,7 @@ public class sunManager {
     }
     private void sunInit(){
         for(int i = 0;i< 6000;i++){
-            int randx = random.nextInt(300)+650;
+            int randx = random.nextInt(300)+550;
             listOfSun.add(new Sun(randx,-300,70,70,400));
         }
     }
