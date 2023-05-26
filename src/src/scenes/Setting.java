@@ -52,7 +52,7 @@ public class Setting implements SceneMethods{
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0,0, w.getWidth(), w.getHeight(),null);
         initButtons();
-        drawButtons(g);
+//        drawButtons(g);
         importImg();
         drawImg(g);
     }

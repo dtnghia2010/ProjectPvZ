@@ -79,7 +79,7 @@ public class Playing implements SceneMethods {
     @Override
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
-        buttonManager.drawButtons(g);
+//        buttonManager.drawButtons(g);
 //        tileManager.drawTiles(g, plantManager);
         barManager.draw(g);
         mouseMotionManager.drawPlantSelectedByMouse(g);
@@ -207,7 +207,10 @@ public class Playing implements SceneMethods {
     }
     public void setupZombie(){
         if(zombieManager.iszReachedEnd()) {
-//            setGameScenes(LOSE);
+            setGameScenes(LOSE);
+            Audio.lose();
+            Audio.stopRoof();
+            Audio.stopReadySetPlant();
         }
         if(getNotifManager().getWaveCDTime().isEndCDWave()) {
             System.out.println("startGame");
@@ -223,7 +226,10 @@ public class Playing implements SceneMethods {
             if (zombieManager.allZombieDead() && !callHorde) {
                 zombieManager.getZombies().clear();
                 if (waveManager.isEndWaves()) {
-                    System.out.println("you win");
+                    setGameScenes(WIN);
+                    Audio.stopRoof();
+                    Audio.stopReadySetPlant();
+                    Audio.win();
                 } else {
                     waveManager.createHorde();
                     callHorde = true;

@@ -53,11 +53,12 @@ public class Menu implements SceneMethods {
             Audio.stopMenu();
             setGameScenes(LOSE);
 //            System.out.println("Setting");
-        } else if (bWin.getBounds().contains(x, y)){
+        }
+/*        else if (bWin.getBounds().contains(x, y)){
             Audio.win();
             Audio.stopMenu();
             setGameScenes(WIN);
-        }
+        }*/
     }
 
     @Override
@@ -79,7 +80,7 @@ public class Menu implements SceneMethods {
     public void render(Graphics g, Image img) {
         g.drawImage(img,0,0, w.getWidth(), w.getHeight(), null);
         initButtons();
-        drawButtons(g);
+//        drawButtons(g);
         importImg();
         drawImg(g);
     }
