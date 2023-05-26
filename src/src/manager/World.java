@@ -22,6 +22,7 @@ public class World extends JPanel implements Runnable {
     private Menu menu;
     private Playing playing;
     private Setting setting;
+    private Win win;
     private Toolkit t = Toolkit.getDefaultToolkit();
     private int frameCount = 0;
     private boolean FPSstop = false;
@@ -55,6 +56,10 @@ public class World extends JPanel implements Runnable {
         return setting;
     }
 
+    public Win getWin() {
+        return win;
+    }
+
     public void initInput() {
         myMouseListener = new MyMouseListener(this);
         keyBoardListener = new KeyBoardListener(this);
@@ -70,6 +75,7 @@ public class World extends JPanel implements Runnable {
         playing = new Playing(this);
         menu = new Menu(this);
         setting = new Setting(this);
+        win = new Win(this);
     }
     @Override
     protected void paintComponent(Graphics g) {
@@ -91,6 +97,8 @@ public class World extends JPanel implements Runnable {
             case SETTING:
                 setting.render(g, img.get(3));
                 break;
+            case WIN:
+                win.render(g,img.get(4));
         }
     }
     public void updates() {
@@ -107,6 +115,8 @@ public class World extends JPanel implements Runnable {
             case SETTING:
                 getSetting().updates();
                 break;
+            case WIN:
+                getWin().updates();
         }
     }
 
@@ -115,7 +125,7 @@ public class World extends JPanel implements Runnable {
         img.add(t.getImage(getClass().getResource("/scene/lawn.png")));
         img.add(t.getImage(getClass().getResource("/scene/lose.png")));
         img.add(t.getImage(getClass().getResource("/scene/pause.png")));
-
+        img.add(t.getImage(getClass().getResource("/scene/win.png")));
     }
     @Override
     public void run() {

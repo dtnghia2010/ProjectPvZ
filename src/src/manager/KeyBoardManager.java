@@ -13,9 +13,17 @@ public class KeyBoardManager {
     private int plantPickedByKeyBoard = 0;
     private boolean isKeyPressForTheFirstTime = true;
     private int tileSelectedByKeyBoard = 0;
-
-    public KeyBoardManager(Playing playing){
+    private static KeyBoardManager instance = null;
+    private KeyBoardManager(Playing playing){
         this.playing = playing;
+    }
+    public static KeyBoardManager createKeyBoardManager(Playing playing) {
+        if(instance == null) {
+            instance = new KeyBoardManager(playing);
+        } else {
+            System.out.println("Cannot create another KeyBoardManager");
+        }
+        return instance;
     }
 
     public void setPlantPickedByKeyBoard(int plantPickedByKeyBoard) {
@@ -197,7 +205,6 @@ public class KeyBoardManager {
                 System.out.println("click on start");
                 playing.getWaveManager().readyNewWave();
                 playing.getNotifManager().reset();
-                playing.getNotifManager().resetEndCDWave();
             }
         }
     }

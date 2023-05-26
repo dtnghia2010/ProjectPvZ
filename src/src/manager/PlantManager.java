@@ -24,7 +24,6 @@ public class PlantManager {
     private final Image[] shadowPea_Attack = new Image[21];
     private final Image[] cherryBombGif = new Image[49];
     private Toolkit t = Toolkit.getDefaultToolkit();
-
     private List<Plant> plantList = new ArrayList<>();
     private boolean isTimeToPlant = false;
     private Playing playing;
@@ -34,6 +33,7 @@ public class PlantManager {
     private boolean isShoveled = false;
     private int IDhold;
     private int sunCostHold;
+    private static PlantManager instance;
     private int[] numPlant = new int[5];
     private int waitingTime = 0;
     private int plantSize = 49;
@@ -45,7 +45,7 @@ public class PlantManager {
         numPlant[3] = 3;
         numPlant[4] = 4;
     }
-    public PlantManager(Playing playing) {
+    private PlantManager(Playing playing) {
         this.playing = playing;
         importCherryBombGif();
         importPeaShooter();
@@ -59,6 +59,14 @@ public class PlantManager {
 
     public void setSunCostHold(int sunCostHold) {
         this.sunCostHold = sunCostHold;
+    }
+    public static PlantManager createPlantManager(Playing playing) {
+        if(instance == null) {
+            instance = new PlantManager(playing);
+        } else {
+            System.out.println("Cannot create another PlantManager");
+        }
+        return instance;
     }
 
     public void shiftPlant(Tile tile){

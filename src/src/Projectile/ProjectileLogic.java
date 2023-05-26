@@ -2,7 +2,7 @@ package Projectile;
 
 import Audio.Audio;
 import HouseOwner.HouseOwner;
-import component.Plant;
+import Plant.Plant;
 import manager.ZombieManager;
 import scenes.Playing;
 import zombie.Zombie;
@@ -164,4 +164,5 @@ public abstract class ProjectileLogic {
 /*    public Image[] getProjectileImage() {
         return projectileImage;
     }*/
+
 }

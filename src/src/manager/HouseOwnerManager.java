@@ -41,6 +41,7 @@ public class HouseOwnerManager {
         projectileOfHouseOwner = new ProjectileOfHouseOwner();
     }
 
+/*
     public HouseOwnerManager(String imageUrl, int x, int y, int speed){
         try {
             URL url = new URL(imageUrl);
@@ -53,6 +54,7 @@ public class HouseOwnerManager {
         this.speed = speed;
 //         projectileManager = new ProjectileLogic();
     }
+*/
 
 
     public void moveUp () {
@@ -67,7 +69,7 @@ public class HouseOwnerManager {
         zImages = new Image[1];
         try {
             Image houseOwnerImg = ImageIO.read(getClass().getResource("/HouseOwner/HouseOwner.png"));
-            zImages[0] = houseOwnerImg.getScaledInstance(120, 150, Image.SCALE_SMOOTH);
+            zImages[0] = houseOwnerImg.getScaledInstance(70, 100, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("ERROR-importImg()-HouseOwner");
@@ -141,7 +143,7 @@ public class HouseOwnerManager {
             // Lấy tọa độ y của HouseOwner
             int houseOwnerY = (int) houseOwner.getY();
 
-            // Lặp qua danh sách zombie để kiểm tra tọa độ y
+            // Lặp qua danh sách zombie để kiểm tra tọa độ y và x
             synchronized (zombieManager.getZombies()) {
                 Iterator<Zombie> iterator = zombieManager.getZombies().iterator();
                 while (iterator.hasNext()) {
@@ -150,7 +152,10 @@ public class HouseOwnerManager {
                     int zombieX = (int) zombie.X();
 
                     // Kiểm tra nếu tọa độ y của HouseOwner gần bằng tọa độ y của zombie
-                    if (Math.abs(houseOwnerY-zombieY) <= 30 && zombieX <= 1024) {
+                    // và tọa độ x của zombie đó < 1024
+       /*             System.out.println("Zombie Y: " + zombieY);
+                    System.out.println("HouseOwnerY: " + houseOwnerY);*/
+                    if (Math.abs(houseOwnerY - zombieY) <= 30 && zombieX < 700 && zombie.isAlived()){ //) {
                         // Tạo một đạn mới và thêm vào ProjectileManager
                         System.out.println("create projectile of HouseOwner");
                         projectileOfHouseOwner.projectileCreated(houseOwner);
@@ -161,6 +166,7 @@ public class HouseOwnerManager {
         }
         projectileOfHouseOwner.isResetTime();
     }
+
 
     public void alertHouseOwner(TileManager tileManager, ZombieManager zombieManager) {
         //Cảnh báo cho chủ nhà khi Zombie gần đến

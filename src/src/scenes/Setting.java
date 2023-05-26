@@ -60,12 +60,20 @@ public class Setting implements SceneMethods{
     @Override
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y)){
-            Audio.stopAudio();
+            Audio.stopRoof();
+            Audio.menu();
+            Audio.stopSetting();
             setGameScenes(MENU);
         } else if (bQuit.getBounds().contains(x, y)){
-            System.exit(0);
+//            System.exit(0);
 //            setGameScenes(LOSE);
+            Audio.stopRoof();
+            Audio.lose();
+            Audio.stopSetting();
+            setGameScenes(LOSE);
         } else if (bPlaying.getBounds().contains(x, y)){
+            Audio.stopSetting();
+            Audio.roofStage();
             setGameScenes(PLAYING);
         }
     }

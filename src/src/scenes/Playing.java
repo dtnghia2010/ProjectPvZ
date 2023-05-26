@@ -32,22 +32,25 @@ public class Playing implements SceneMethods {
 
     public Playing(World w) {
         this.w = w;
-        initComponents();
-        initObjects();
-        initEvents();
-        initNotifs();
+        initManagers();
     }
 
-    private void initNotifs() {
-        notifManager = new NotifManager(this);
-    }
+    private void initManagers() {
+        buttonManager = new ButtonManager(this);
+        mouseMotionManager = new MouseMotionManager(this);
+        //singleton application
+        waveManager = WaveManager.createWaveManager(this);
+        notifManager = NotifManager.createNotifManager(this);
+        zombieManager = ZombieManager.createZombieManager(this);
+        barManager = BarManager.createBar(this);
+        tileManager = TileManager.createTileManager(this);
+        plantManager = PlantManager.createPlantManager(this);
+        sunManager = manager.sunManager.createSunManager(this);
+        keyBoardManager = KeyBoardManager.createKeyBoardManager(this);
 
-    private void initEvents() {
-        waveManager = new WaveManager(this);
-    }
-
-    private void initObjects() {
-        zombieManager = new ZombieManager(this);
+        projectileOfHouseOwner = new ProjectileOfHouseOwner();
+        projectileOfPlant = new ProjectileOfPlant();
+        houseOwnerManager = new HouseOwnerManager(this);
     }
     public boolean isStartWaveForCD() {
         return startWaveForCD;
@@ -65,21 +68,10 @@ public class Playing implements SceneMethods {
         return mouseMotionManager;
     }
 
-    private void initComponents() {
-        barManager = new BarManager(this);
-        tileManager = new TileManager(this);
-        buttonManager = new ButtonManager(this);
-        plantManager = new PlantManager(this);
-        sunManager = new sunManager(this);
-        keyBoardManager = new KeyBoardManager(this);
-        mouseMotionManager = new MouseMotionManager(this);
-        projectileOfHouseOwner = new ProjectileOfHouseOwner();
-        projectileOfPlant = new ProjectileOfPlant();
-        houseOwnerManager = new HouseOwnerManager(this);
-    }
     public ProjectileOfPlant getProjectileOfPlant() {
         return projectileOfPlant;
     }
+
 
     public TileManager getTileManager() {
         return tileManager;
@@ -93,7 +85,6 @@ public class Playing implements SceneMethods {
         mouseMotionManager.drawPlantSelectedByMouse(g);
         keyBoardManager.drawPlantSelectedByKeyBoard(g);
         tileManager.draw(g);
-        //tileManager.drawTiles(g, houseOwnerManager);
         plantManager.draw(g);
         tileManager.drawShovelSprite(g);
         zombieManager.draw(g);
@@ -130,6 +121,9 @@ public class Playing implements SceneMethods {
 
     public void changeScene(int x, int y){
         if (buttonManager.getbSetting().getBounds().contains(x, y)) {
+            Audio.setting();
+            Audio.stopRoof();
+            Audio.stopReadySetPlant();
             setGameScenes(SETTING);
         } else if (buttonManager.getbStart().getBounds().contains(x, y)) {
             if (!startWave && zombieManager.allZombieDead()) {
@@ -212,7 +206,10 @@ public class Playing implements SceneMethods {
         keyBoardManager.startGame(e);
     }
     public void setupZombie(){
-        if(getNotifManager().isEndCDWave()) {
+        if(zombieManager.iszReachedEnd()) {
+//            setGameScenes(LOSE);
+        }
+        if(getNotifManager().getWaveCDTime().isEndCDWave()) {
             System.out.println("startGame");
             startGame();
         }
@@ -237,7 +234,6 @@ public class Playing implements SceneMethods {
         }
     }
     public void updates() {
-//        System.out.println("1");
         setupZombie();
         plantManager.update();
         barManager.update();
@@ -249,7 +245,7 @@ public class Playing implements SceneMethods {
         projectileOfHouseOwner.update(this);
         projectileOfHouseOwner.projectileCollideZombie(this);
         projectileOfPlant.projectileCollideZombie(this);
-        houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
+//        houseOwnerManager.alertHouseOwner(tileManager, zombieManager);
         houseOwnerManager.houseOwnerAttack(projectileOfHouseOwner,zombieManager);
     }
 
@@ -275,7 +271,6 @@ public class Playing implements SceneMethods {
         System.out.println("click on start");
         waveManager.readyNewWave();
         notifManager.reset();
-        notifManager.resetEndCDWave();
     }
 
     public void setCallHorde(boolean callHorde) {

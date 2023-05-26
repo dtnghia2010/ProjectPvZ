@@ -17,17 +17,29 @@ public class TileManager {
     private Tile[] tilesOfHouseOwner = new Tile[5];
     public int wTileOfHouseOwner = 125;
     public int hTileOfHouseOwner = 70;
+    private static TileManager instance;
+
     public boolean isInTile() {
         return isInTile;
     }
-    public TileManager(Playing playing) {
+    private TileManager(Playing playing) {
         initTiles();
         importHardBlurPlant();
         importLightBlurPlant();
         initTilesOfHouseOwner();
         this.playing = playing;
     }
+
+    public static TileManager createTileManager(Playing playing) {
+        if(instance == null) {
+            instance = new TileManager(playing);
+        } else {
+            System.out.println("Cannot create another TileManager");
+        }
+        return instance;
+    }
     private boolean isInTile = false;
+
 
     private void initTiles() {
         int curX = 300, curY = 171, rowCounter = 0;

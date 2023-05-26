@@ -21,7 +21,9 @@ public class ZombieManager {
     private Random random = new Random();
     private static int realTimeCounter = 0;
     private static boolean isReset = false;
+    private static boolean zReachedEnd = false;
     private int counter = 0;
+    private static ZombieManager instance = null;
     public static int getRealTimeCounter() {
         return realTimeCounter;
     }
@@ -37,13 +39,22 @@ public class ZombieManager {
             isReset = false;
         }
     }
-    public ZombieManager(Playing playing) {
+    private ZombieManager(Playing playing) {
         this.playing = playing;
         zombies = new ArrayList<>();
         importImg();
         importNormalZombie();
         importConeHead();
 //        initZombieTest();
+    }
+
+    public static ZombieManager createZombieManager(Playing playing) {
+        if(instance == null) {
+            instance = new ZombieManager(playing);
+        } else {
+            System.out.println("Cannot create another ZombieManager");
+        }
+        return instance;
     }
 
     public void importImg() {
@@ -77,12 +88,12 @@ public class ZombieManager {
         synchronized (zombies) {
             System.out.println("a zombie created");
             if(!allZombieDead()) {
-                zombies.add(new Zombie(1024+rnd(0,1000), 140 + 80 * rnd(0,5), type));
+                zombies.add(new Zombie(1024+rnd(0,1000), 133 + 80 * rnd(0,5), type));
                 if(rnd(0,100) > 90) {
                     Audio.zombieGroaning();
                 }
             } else {
-                zombies.add(new Zombie(1024, 140 + 78 * rnd(0,5), type));
+                zombies.add(new Zombie(1024, 140 + 80 * rnd(0,5), type));
             }
         }
     }
@@ -95,11 +106,11 @@ public class ZombieManager {
                     if (z.isAlived()) {
                         if(z.getType() == 0){
                             if(!z.isCollided()){
-                                g.drawImage(normalZombie_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+30, null);
+                                g.drawImage(normalZombie_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+25, null);
 //                            g.setColor(Color.RED);
 //                            g2d.drawRect((int)z.X()-50,(int)z.Y(),z.getWidth()+100,z.getHeight());
                             } else if(z.isCollided()) {
-                                g.drawImage(normalZombie_Eat[z.getFrameCountEat()],(int) z.X(), (int) z.Y()+20, z.getWidth(), z.getHeight()-20, null);
+                                g.drawImage(normalZombie_Eat[z.getFrameCountEat()],(int) z.X(), (int) z.Y()+8, z.getWidth()+18, z.getHeight(), null);
                             }
                         } else if (z.getType() == 1) {
                             g.drawImage(coneHead_Move[z.getFrameCountMove()],(int) z.X(), (int) z.Y(), z.getWidth()+30, z.getHeight()+10, null);
@@ -118,14 +129,20 @@ public class ZombieManager {
         }
     }
     public void move(Zombie z) {
-        if (z.X() <= 100) {
+/*        if (z.X() <= 100) {
             z.dead();
+            zReachedEnd = true;
         } else {
             if(z.getType() == 0 || z.getType() == 1){
                 z.updateFrameCountMove();
             } else {
                 z.move();
             }
+        }*/
+        if(z.getType() == 0 || z.getType() == 1){
+            z.updateFrameCountMove();
+        } else {
+            z.move();
         }
     }
 
@@ -149,7 +166,12 @@ public class ZombieManager {
         for (Zombie z : zombies) {
             if (z.isAlived()) {
                 // Cập nhật tọa độ di chuyển cho zombie còn sống
-                move(z);
+                if (z.X() <= 100) {
+                    z.dead();
+                    zReachedEnd = true;
+                } else {
+                    move(z);
+                }
             }
         }
     }
@@ -167,6 +189,11 @@ public class ZombieManager {
     public ArrayList<Zombie> getZombies() {
         return zombies;
     }
+
+    public static boolean iszReachedEnd() {
+        return zReachedEnd;
+    }
+
     public void ZombieCollidePlant(){
         synchronized (zombies){
             Iterator<Zombie> iterator = zombies.iterator();

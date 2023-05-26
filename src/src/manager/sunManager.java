@@ -21,9 +21,19 @@ public class sunManager {
     private Random random = new Random();
     private int randomTimeSunDrop = 600;
     private int fakeSize = 6000;
-    public sunManager(Playing playing){
+    private static sunManager instance;
+    private sunManager(Playing playing){
         this.playing = playing;
         sunInit();
+    }
+
+    public static sunManager createSunManager(Playing playing) {
+        if(instance == null) {
+            instance = new sunManager(playing);
+        } else {
+            System.out.println("Cannot create another TileManager");
+        }
+        return instance;
     }
     private void sunInit(){
         for(int i = 0;i< 6000;i++){
