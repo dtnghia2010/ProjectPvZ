@@ -169,12 +169,14 @@ public class KeyBoardManager {
                 Iterator<Plant> iterator = playing.getPlantManager().getPlantList().iterator();
                 while (iterator.hasNext()){
                     Plant plant = iterator.next();
-                    Rectangle plantRect = new Rectangle(plant.getX(),plant.getY(),plant.getWidth(),plant.getHeight());
-                    if(playing.getTileManager().getTiles()[tileSelectedByKeyBoard].isOccupied() && playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(plant.getX(),plant.getY())){
-                        playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setOccupied(false);
-                        playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setPlanted(false);
-                        plant.setAlived(false);
-                        playing.getPlantManager().setShoveled(false);
+                    if(plant.isAlived()){
+                        Rectangle plantRect = new Rectangle(plant.getX(),plant.getY(),plant.getWidth(),plant.getHeight());
+                        if(playing.getTileManager().getTiles()[tileSelectedByKeyBoard].isOccupied() && playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(plant.getX(),plant.getY())){
+                            playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setOccupied(false);
+                            playing.getTileManager().getTiles()[tileSelectedByKeyBoard].setPlanted(false);
+                            plant.setAlived(false);
+                            playing.getPlantManager().setShoveled(false);
+                        }
                     }
                 }
             }

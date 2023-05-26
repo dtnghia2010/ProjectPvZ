@@ -164,7 +164,6 @@ public class TileManager {
         drawPlantPreparedToPlanted(g);
         drawTileSelectedByMouse(g);
         drawTileSelectedByKeyBoard(g);
-        drawShovelSprite(g);
     }
     public Tile[] getTilesOfHouseOwner() {
         return tilesOfHouseOwner;

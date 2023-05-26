@@ -95,6 +95,7 @@ public class Playing implements SceneMethods {
         tileManager.draw(g);
         //tileManager.drawTiles(g, houseOwnerManager);
         plantManager.draw(g);
+        tileManager.drawShovelSprite(g);
         zombieManager.draw(g);
         sunManager.drawSun(g);
         notifManager.drawNotif(g);
@@ -103,8 +104,6 @@ public class Playing implements SceneMethods {
         houseOwnerManager.draw(g);
         projectileOfHouseOwner.drawProjectile(g);
         projectileOfPlant.drawProjectile(g);
-
-
     }
     public PlantManager getPlantManager() {
         return plantManager;
