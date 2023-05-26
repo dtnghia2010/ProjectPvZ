@@ -5,10 +5,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.net.URL;
+import java.util.Random;
 
 public class Audio {
-    private static Clip[] clips = new Clip[16];
-    static URL soundURL[] = new URL[16];
+    private static Clip[] clips = new Clip[18];
+    private static Random random = new Random();
+    static URL soundURL[] = new URL[18];
 
     static {
         try {
@@ -28,6 +30,9 @@ public class Audio {
             soundURL[13] = Audio.class.getResource("/Audio/Lose.wav");
             soundURL[14] = Audio.class.getResource("/Audio/Menu.wav");
             soundURL[15] = Audio.class.getResource("/Audio/Setting.wav");
+            soundURL[16] = Audio.class.getResource("/Audio/CrazyDaveVoice1.wav");
+            soundURL[17] = Audio.class.getResource("/Audio/CrazyDaveVoice2.wav");
+
         } catch(Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Cannot open audio!"); //show error dialog
@@ -115,6 +120,19 @@ public class Audio {
         inputAudio(11);
         clips[11].setFramePosition(0);
         clips[11].start();
+    }
+
+    public static void crazyDaveVoid() {
+        int sound = random.nextInt(16,18);
+        inputAudio(sound);
+        if(sound == 16) {
+            clips[16].setFramePosition(0);
+            clips[16].start();
+        } else {
+            clips[17].setFramePosition(0);
+            clips[17].start();
+        }
+
     }
 
     public static void win(){
