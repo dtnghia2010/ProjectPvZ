@@ -52,7 +52,7 @@ public class Setting implements SceneMethods{
     public void render(Graphics g, Image img) {
         g.drawImage(img, 0,0, w.getWidth(), w.getHeight(),null);
         initButtons();
-        drawButtons(g);
+//        drawButtons(g);
         importImg();
         drawImg(g);
     }
@@ -65,12 +65,12 @@ public class Setting implements SceneMethods{
             Audio.stopSetting();
             setGameScenes(MENU);
         } else if (bQuit.getBounds().contains(x, y)){
-//            System.exit(0);
-//            setGameScenes(LOSE);
-            Audio.stopRoof();
+            System.exit(0);
+            setGameScenes(LOSE);
+/*            Audio.stopRoof();
             Audio.lose();
             Audio.stopSetting();
-            setGameScenes(LOSE);
+            setGameScenes(LOSE);*/
         } else if (bPlaying.getBounds().contains(x, y)){
             Audio.stopSetting();
             Audio.roofStage();

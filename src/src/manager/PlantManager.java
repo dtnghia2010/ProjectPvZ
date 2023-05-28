@@ -311,7 +311,7 @@ public class PlantManager {
         while (iterator.hasNext()){
             Plant plant = iterator.next();
             if(rPlant.contains(plant.getX(),plant.getY())){
-                if(plant.isDangered() && plant.getFrameCountAttack() == plant.getFrameCountAttackLimit()-1){
+                if(plant.isDangered()){
                     plant.setDangered(false);
                     plant.setFrameCountAttack(0);
                 }
@@ -365,7 +365,7 @@ public class PlantManager {
                 Zombie zombie = iterator.next();
                 Rectangle rZombie = new Rectangle((int)zombie.X(),(int)zombie.Y()+70,zombie.getWidth(),zombie.getHeight()-70);
                 if(r.intersects(rZombie) && zombie.isAlived()){
-                    tileStart = i+1;
+                    tileStart = i;
                     return tileStart;
                 }
             }
@@ -488,12 +488,14 @@ public class PlantManager {
                     Iterator<Plant> iterator = plantList.iterator();
                     while (iterator.hasNext()){
                         Plant plant = iterator.next();
-                        Rectangle plantRect = new Rectangle(plant.getX(),plant.getY(),plant.getWidth(),plant.getHeight());
-                        if(playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].isOccupied() && playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(plant.getX(),plant.getY())){
-                            playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].setOccupied(false);
-                            playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].setPlanted(false);
-                            plant.setAlived(false);
-                            isShoveled = false;
+                        if(plant.isAlived()){
+                            Rectangle plantRect = new Rectangle(plant.getX(),plant.getY(),plant.getWidth(),plant.getHeight());
+                            if(playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].isOccupied() && playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().contains(plant.getX(),plant.getY())){
+                                playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].setOccupied(false);
+                                playing.getTileManager().getTiles()[playing.getMouseMotionManager().getTileSelectedByMouse()].setPlanted(false);
+                                plant.setAlived(false);
+                                isShoveled = false;
+                            }
                         }
                     }
                 }

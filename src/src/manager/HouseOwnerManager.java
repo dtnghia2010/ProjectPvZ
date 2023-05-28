@@ -1,5 +1,6 @@
 package manager;
 
+import Audio.Audio;
 import Projectile.ProjectileLogic;
 import Projectile.ProjectileOfHouseOwner;
 import component.Tile;
@@ -159,6 +160,9 @@ public class HouseOwnerManager {
                         // Tạo một đạn mới và thêm vào ProjectileManager
                         System.out.println("create projectile of HouseOwner");
                         projectileOfHouseOwner.projectileCreated(houseOwner);
+                        if(random.nextInt(100) > 80) {
+                            Audio.crazyDaveVoid();
+                        }
                         break; // Nếu đã tìm thấy zombie thích hợp, thoát khỏi vòng lặp
                     }
                 }

@@ -17,7 +17,7 @@ public class sunManager {
     private List<Sun> listOfSun = new ArrayList<>();
     private Playing playing;
     private int realTimeCounter = 0;
-    private int sunHold = 25000;
+    private int sunHold = 2500;
     private Random random = new Random();
     private int randomTimeSunDrop = 600;
     private int fakeSize = 6000;
@@ -37,7 +37,7 @@ public class sunManager {
     }
     private void sunInit(){
         for(int i = 0;i< 6000;i++){
-            int randx = random.nextInt(300)+650;
+            int randx = random.nextInt(300)+550;
             listOfSun.add(new Sun(randx,-300,70,70,400));
         }
     }

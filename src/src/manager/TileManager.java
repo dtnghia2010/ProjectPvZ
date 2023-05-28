@@ -68,9 +68,12 @@ public class TileManager {
         plantHardBlur[3] = t.getImage(getClass().getResource("/Blur_Plants/ShadowPea/ShadowPea (hard - blur).png"));
         plantHardBlur[4] = t.getImage(getClass().getResource("/Blur_Plants/CherryBomb/cherrybomb (hard - blur).png"));
     }
-    public void drawTiles(Graphics g, PlantManager plantManager) {
+    public void drawTiles(Graphics g) {
         for (Tile t : tiles) {
-            Rectangle r = new Rectangle(t.getCurX(), t.getCurY(), t.getwTile(), t.gethTile());
+            Rectangle r = t.getBound();
+            g.setColor(Color.lightGray);
+            g.fillRect(r.x, r.y, r.width, r.height);
+
 //            for (int i = 0; i < plantManager.getPlantList().size(); i++) {
 //                    if (plantManager.isLocated()) {
 //                        g.drawImage(plantManager.getPlantImages(plantManager.getPlantList().get(i).getPlantID()), r.x, r.y, r.width, r.height, null);
@@ -172,11 +175,12 @@ public class TileManager {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(playing.getBarManager().getPickedPlant(),(int)tiles[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().getX(),(int)tiles[playing.getMouseMotionManager().getTileSelectedByMouse()].getBound().getY(),tiles[playing.getMouseMotionManager().getTileSelectedByMouse()].getwTile(),tiles[playing.getMouseMotionManager().getTileSelectedByMouse()].gethTile(),null);
     }
+
     public void draw(Graphics g){
+//        drawTiles(g);
         drawPlantPreparedToPlanted(g);
         drawTileSelectedByMouse(g);
         drawTileSelectedByKeyBoard(g);
-        drawShovelSprite(g);
     }
     public Tile[] getTilesOfHouseOwner() {
         return tilesOfHouseOwner;
