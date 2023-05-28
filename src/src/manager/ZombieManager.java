@@ -120,7 +120,7 @@ public class ZombieManager {
                         } else {
                             g.drawImage(zImages[z.getType()], (int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight(), null);
                             g.setColor(Color.RED);
-                            g.drawRect((int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight());
+//                             g.drawRect((int) z.X(), (int) z.Y(), z.getWidth(), z.getHeight());
 //                            g2d.fillRect((int) z.getBound().getX(),(int) z.getBound().getY(), (int)z.getBound().getWidth(),(int)z.getBound().getHeight());
                         }
                     }
