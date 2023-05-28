@@ -87,6 +87,7 @@ public class Playing implements SceneMethods {
         keyBoardManager.drawPlantSelectedByKeyBoard(g);
         tileManager.draw(g);
         plantManager.draw(g);
+        tileManager.drawShovelSprite(g);
         zombieManager.draw(g);
         sunManager.drawSun(g);
         notifManager.drawNotif(g);
