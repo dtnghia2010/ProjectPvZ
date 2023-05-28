@@ -81,6 +81,7 @@ public class Playing implements SceneMethods {
         g.drawImage(img, 0, 0, w.getWidth(), w.getHeight(), null);
 //        buttonManager.drawButtons(g);
 //        tileManager.drawTiles(g, plantManager);
+//        tileManager.drawTiles(g, houseOwnerManager);
         barManager.draw(g);
         mouseMotionManager.drawPlantSelectedByMouse(g);
         keyBoardManager.drawPlantSelectedByKeyBoard(g);
