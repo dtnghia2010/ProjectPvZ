@@ -65,12 +65,12 @@ public class Setting implements SceneMethods{
             Audio.stopSetting();
             setGameScenes(MENU);
         } else if (bQuit.getBounds().contains(x, y)){
-//            System.exit(0);
-//            setGameScenes(LOSE);
-            Audio.stopRoof();
+            System.exit(0);
+            setGameScenes(LOSE);
+/*            Audio.stopRoof();
             Audio.lose();
             Audio.stopSetting();
-            setGameScenes(LOSE);
+            setGameScenes(LOSE);*/
         } else if (bPlaying.getBounds().contains(x, y)){
             Audio.stopSetting();
             Audio.roofStage();

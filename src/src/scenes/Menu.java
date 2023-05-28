@@ -49,9 +49,10 @@ public class Menu implements SceneMethods {
             setGameScenes(PLAYING);
             w.getPlaying().getBarManager().setCDatStartOfGame();
         } else if (bQuit.getBounds().contains(x,y)) {
-            Audio.lose();
+/*            Audio.lose();
             Audio.stopMenu();
-            setGameScenes(LOSE);
+            setGameScenes(LOSE);*/
+            System.exit(0);
 //            System.out.println("Setting");
         }
 /*        else if (bWin.getBounds().contains(x, y)){
