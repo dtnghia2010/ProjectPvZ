@@ -17,7 +17,7 @@ public class sunManager {
     private List<Sun> listOfSun = new ArrayList<>();
     private Playing playing;
     private int realTimeCounter = 0;
-    private int sunHold = 2500;
+    private int sunHold = 1500;
     private Random random = new Random();
     private int randomTimeSunDrop = 600;
     private int fakeSize = 6000;
@@ -70,7 +70,7 @@ public class sunManager {
     private void collectSun(Sun sun){
         sun.setSunCLicked(true);
         sun.setDistanceTOMoveToStorage(sun.calculateDistanceMoveToStorage());
-        sunHold += 50;
+        sunHold += 25;
         sun.setCollected(true);
     }
     public void clickSun(int x, int y){
