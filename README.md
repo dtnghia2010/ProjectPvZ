@@ -22,7 +22,8 @@ Course: OBJECT - ORIENTED PROGRAMMING
     </div>
   
     
-    <!-- TABLE OF CONTENTS -->
+    
+    
 ## Table of contents :round_pushpin:
 1. [Introduction](# Introduction)
 2. [Game](# Game)
@@ -234,11 +235,16 @@ We would like to express our sincerest thanks to the teachers and people who hel
     - Dr. Tran Thanh Tung - Deputy Faculty of Information Technology - International University - Vietnam National University, Ho Chi Minh City
   <br />
     - MSc. Pham Quoc Son Lam - Lecturer at Faculty of Information Technology - International University - Vietnam National University, Ho Chi Minh City
+	
 </div>
 
 <br />
+</div>
+
+<br />
+	
   ## References<a name="References">  :eye::tongue::eye:
-  1. [Tower defense](https://www.youtube.com/playlist?list=PL4rzdwizLaxb0-TajNIp5DOoT_PAxhx0T)
+1. [Tower defense](https://www.youtube.com/playlist?list=PL4rzdwizLaxb0-TajNIp5DOoT_PAxhx0T)
 2. [Game loop](https://www.youtube.com/watch?v=lW6ZtvQVzyg&t=191s&pp=ygUQZ2FtZWxvb3AgaW4gamF2YQ%3D%3D)
 3. [GUI](https://www.youtube.com/watch?v=7GaAW-DdPuI&pp=ygUOamZyYW1lIGluIGphdmE%3D)
 4. [Mouse listener](https://www.youtube.com/watch?v=jptf1Wd_omw&t=197s&pp=ygUdbW91c2VsaXN0ZW5lciBhbmQga2V5bGlzdGVuZXI%3D)
