@@ -300,7 +300,7 @@ public class BarManager {
         } else if(playing.getSunManager().getSunHold() < 150){
             g.drawImage(plantInCD[3],458+285,20, 80, 70, null);
             g.drawImage(plantInCD[4],458+380,20, 80, 70, null);
-        } else if(playing.getSunManager().getSunHold() < 200){
+        } else if(playing.getSunManager().getSunHold() < 175){
             g.drawImage(plantInCD[3],458+285,20, 80, 70, null);
         }
     }
