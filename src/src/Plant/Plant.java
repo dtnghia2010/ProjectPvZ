@@ -4,6 +4,7 @@ import Projectile.Shooter;
 import component.Tile;
 import manager.*;
 import manager.TileManager;
+import manager.SunManager;
 
 import java.awt.*;
 import java.util.Iterator;

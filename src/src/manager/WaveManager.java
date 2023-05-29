@@ -97,11 +97,13 @@ public class WaveManager {
     }
 
     public void createHorde() {
+        //ini hordeNum = 20
         hordeActive = true;
         playing.getZombieManager().createHorde(hordeNum);
         hordeNum += 15;
     }
     public int getCurWave() {
+
 //        System.out.println("curWave " + curWave);
         return curWave;
     }
