@@ -157,7 +157,7 @@ public class ZombieManager {
 
     public void createHorde(int count) {
         for (int i = 0; i < count; i++) {
-            spawnZombie(rnd(0, 2));
+            spawnZombie(rnd(0, 3));
         }
     }
 
