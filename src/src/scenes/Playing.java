@@ -5,6 +5,7 @@ import Projectile.ProjectileOfHouseOwner;
 import Projectile.ProjectileOfPlant;
 import manager.*;
 import component.MyButtons;
+import manager.SunManager;
 
 import static scenes.GameScenes.*;
 import java.awt.*;
