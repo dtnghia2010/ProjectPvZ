@@ -118,7 +118,7 @@ As a fresher developer, we assume that the Plants vs Zombies game is one of the 
 ### How to play ? :video_game:
 <div style="text-align:justify">
 
-layers must prevent enemy zombies from crossing their front lawn and entering the house. When a horde of zombies begins to approach the house along parallel paths, the player must protect the house by planting trees on the path or use the House Owner to shoot bullets that destroy or harm them. Players collect a currency called "sun" to buy plants. If a zombie arrives at the house in any lane, that level is considered unsuccessful and the player will have to start that level again. After the player destroys all Zombies of this wave, the player will continue to the next wave (we have 3 waves).
+Players must prevent enemy zombies from crossing their front lawn and entering the house. When a horde of zombies begins to approach the house along parallel paths, the player must protect the house by planting trees on the path or use the House Owner to shoot bullets that destroy or harm them. Players collect a currency called "sun" to buy plants. If a zombie arrives at the house in any lane, that level is considered unsuccessful and the player will have to start that level again. After the player destroys all Zombies of this wave, the player will continue to the next wave (we have 3 waves).
 </div>
 
 ### Game logic :bulb: 
