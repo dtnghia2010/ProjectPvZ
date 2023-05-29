@@ -195,21 +195,21 @@ Players must prevent enemy zombies from crossing their front lawn and entering t
 <div>
 	<h3>1.PLANTS AND ZOMBIES CLASS DIAGRAM </h3>
     <div align="center">
-        <img src="UML_Diagrams/PLANTS AND ZOMBIES CLASS DIAGRAM.png" alt="">
+        <img src="UML DIAGRAM/PLANTS AND ZOMBIES CLASS DIAGRAM.png" alt="">
     </div>
     <br />
 	<div align="center">------------------------------------</div>
     <br />
    <h3>2. PLANTS CLASS DIAGRAM </h3>
      <div align="center">
-        <img src="UML_Diagrams/PLANTS CLASS DIAGRAM.png" alt="">
+        <img src="UML DIAGRAM/PLANTS CLASS DIAGRAM.png" alt="">
     </div>
     <br />
   <div align="center">------------------------------------</div>
   <br />
   <h3>3. ZOMBIES CLASS DIAGRAM </h3>
    <div align="center">
-        <img src="UML_Diagrams/ZOMBIES CLASS DIAGRAM.png" alt="">
+        <img src="UML DIAGRAM/ZOMBIE CLASS DIAGRAM.png" alt="">
     </div>
     <br />
 	<div align="center">------------------------------------</div>
