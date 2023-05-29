@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class sunManager {
+public class SunManager {
     private Toolkit t = Toolkit.getDefaultToolkit();
     private Image sunImage = t.getImage(getClass().getResource("/Sun/sun.png"));;
     private List<Sun> listOfSun = new ArrayList<>();
@@ -21,15 +21,15 @@ public class sunManager {
     private Random random = new Random();
     private int randomTimeSunDrop = 600;
     private int fakeSize = 6000;
-    private static sunManager instance;
-    private sunManager(Playing playing){
+    private static SunManager instance;
+    private SunManager(Playing playing){
         this.playing = playing;
         sunInit();
     }
 
-    public static sunManager createSunManager(Playing playing) {
+    public static SunManager createSunManager(Playing playing) {
         if(instance == null) {
-            instance = new sunManager(playing);
+            instance = new SunManager(playing);
         } else {
             System.out.println("Cannot create another TileManager");
         }
