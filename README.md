@@ -1,4 +1,4 @@
-# PLANTS VS. ZOMBIES PROJECT          
+# PLANTS VS ZOMBIES PROJECT          
 Course: OBJECT - ORIENTED PROGRAMMING
 
 <div id="top" align="center">
@@ -22,15 +22,15 @@ Course: OBJECT - ORIENTED PROGRAMMING
     </div>
   
     
-    <!-- TABLE OF CONTENTS -->
+  
 ## Table of contents :round_pushpin:
-1. [Introduction](# Introduction)
-2. [Game](# Game)
-3. [UML-class-diagram](#U ML-class-diagram)
-4. [Features](# Features)
-5. [Challenges](# Challenges)
-6. [Acknowledgments](# Acknowledgments)
-7. [References](# References)
+1. [Introduction](#Introduction)
+2. [Game](#Game)
+3. [UML-class-diagram](#UML-class-diagram)
+4. [Features](#Features)
+5. [Challenges](#Challenges)
+6. [Acknowledgments](#Acknowledgments)
+7. [References](#References)
     <!-- <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -234,9 +234,13 @@ We would like to express our sincerest thanks to the teachers and people who hel
     - Dr. Tran Thanh Tung - Deputy Faculty of Information Technology - International University - Vietnam National University, Ho Chi Minh City
   <br />
     - MSc. Pham Quoc Son Lam - Lecturer at Faculty of Information Technology - International University - Vietnam National University, Ho Chi Minh City
+	
 </div>
 
 <br />
+	<br />
+  </div>
+	
   ## References<a name="References">  :eye::tongue::eye:
   1. [Tower defense](https://www.youtube.com/playlist?list=PL4rzdwizLaxb0-TajNIp5DOoT_PAxhx0T)
 2. [Game loop](https://www.youtube.com/watch?v=lW6ZtvQVzyg&t=191s&pp=ygUQZ2FtZWxvb3AgaW4gamF2YQ%3D%3D)
