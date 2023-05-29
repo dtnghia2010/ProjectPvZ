@@ -41,12 +41,12 @@ public class Playing implements SceneMethods {
         waveManager = WaveManager.createWaveManager(this);
         notifManager = NotifManager.createNotifManager(this);
         zombieManager = ZombieManager.createZombieManager(this);
+//        ZombieManager zombieManager1 = ZombieManager.createZombieManager(this);
         barManager = BarManager.createBar(this);
         tileManager = TileManager.createTileManager(this);
         plantManager = PlantManager.createPlantManager(this);
         sunManager = SunManager.createSunManager(this);
         keyBoardManager = KeyBoardManager.createKeyBoardManager(this);
-
         projectileOfHouseOwner = new ProjectileOfHouseOwner();
         projectileOfPlant = new ProjectileOfPlant();
         houseOwnerManager = new HouseOwnerManager(this);
