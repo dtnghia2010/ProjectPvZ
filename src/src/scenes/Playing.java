@@ -1,7 +1,6 @@
 package scenes;
 
 import Audio.Audio;
-import Projectile.ProjectileLogic;
 import Projectile.ProjectileOfHouseOwner;
 import Projectile.ProjectileOfPlant;
 import manager.*;
@@ -16,7 +15,7 @@ public class Playing implements SceneMethods {
     private BarManager barManager;
     private PlantManager plantManager;
     private ButtonManager buttonManager;
-    private sunManager sunManager;
+    private SunManager sunManager;
     private ProjectileOfPlant projectileOfPlant;
     private ProjectileOfHouseOwner projectileOfHouseOwner;
     private ZombieManager zombieManager;
@@ -45,7 +44,7 @@ public class Playing implements SceneMethods {
         barManager = BarManager.createBar(this);
         tileManager = TileManager.createTileManager(this);
         plantManager = PlantManager.createPlantManager(this);
-        sunManager = manager.sunManager.createSunManager(this);
+        sunManager = SunManager.createSunManager(this);
         keyBoardManager = KeyBoardManager.createKeyBoardManager(this);
 
         projectileOfHouseOwner = new ProjectileOfHouseOwner();
@@ -56,7 +55,7 @@ public class Playing implements SceneMethods {
         return startWaveForCD;
     }
 
-    public manager.sunManager getSunManager() {
+    public SunManager getSunManager() {
         return sunManager;
     }
 

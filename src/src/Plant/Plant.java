@@ -48,7 +48,7 @@ public class Plant implements Shooter {
     public int getFrameCountAttack() {
         return frameCountAttack;
     }
-    public void sunCreatedBySunFlower(sunManager sunManager){
+    public void sunCreatedBySunFlower(SunManager sunManager){
         if(x > 0 && y > 0){
             frameCountSun++;
             if(frameCountSun == frameCountSunLimit){
